@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS products(
   description TEXT NOT NULL DEFAULT '',
   specs_json TEXT NOT NULL DEFAULT '[]',
   search_index TEXT NOT NULL DEFAULT '',
-  stock INTEGER NOT NULL DEFAULT 0,
+  stock INTEGER NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);

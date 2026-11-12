@@ -1,0 +1,75 @@
+
+<div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Mon compte</div>
+<h1 style="font-size:26px">Mon compte</h1>
+<div class="acct-auth" data-acct-logged-out>
+<div class="acct-empty">
+<h2 style="font-size:19px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)">Vous n'êtes pas connecté</h2>
+<p>Connectez-vous ou créez un compte pour retrouver vos coordonnées, vos commandes, vos adresses et vos paniers sauvegardés.</p>
+<div class="acct-actions"><button class="btn" type="button" data-auth-open data-auth-tab="login">Se connecter</button>&nbsp;<button class="btn" type="button" data-auth-open data-auth-tab="create">Créer un compte</button></div>
+<p class="acct-note">Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.</p>
+</div>
+</div>
+<div class="acct" data-acct-logged-in hidden>
+<aside class="acct-side">
+<div class="acct-id" data-acct-id hidden>
+<span class="acct-avatar" data-acct-initials>?</span>
+<div class="hello">Bonjour</div>
+<div class="who" data-acct-name></div>
+<div class="num">N° client : <span data-acct-num></span></div>
+<button class="btn" type="button" data-logout>Me déconnecter</button>
+</div>
+<div class="acct-id" data-acct-guest>
+<span class="acct-avatar">?</span>
+<div class="hello">Bonjour, invité</div>
+<div class="who">Vous n'êtes pas connecté</div>
+<a class="btn" href="compte.html" data-auth-open data-auth-tab="create">Créer un compte</a>
+</div>
+<ul class="acct-menu"><li><a href="compte.html#informations" data-acct-tab="informations" class="on">Mes informations</a></li><li><a href="compte.html#commandes" data-acct-tab="commandes">Mes commandes</a></li><li><a href="compte.html#adresses" data-acct-tab="adresses">Mes adresses</a></li><li><a href="compte.html#paniers" data-acct-tab="paniers">Mes paniers sauvegardés</a></li><li><a href="parametres.html">Mes paramètres</a></li></ul>
+</aside>
+<div class="acct-main">
+<div data-acct-pane="informations">
+<h2>Coordonnées</h2>
+<form class="acct-form" data-infos-form>
+<label>Civilité <span class="radios"><label><input type="radio" name="civilite" value="M."> M.</label><label><input type="radio" name="civilite" value="Mme"> Mme</label></span></label>
+<label>Email <input name="email" type="email" required></label>
+<label>Prénom <input name="prenom" required></label>
+<label>Date de naissance <input name="naissance" type="date"></label>
+<label>Nom de famille <input name="nom" required></label>
+<label>Pseudo <input name="pseudo" placeholder="Utilisé lorsque vous déposez un avis"></label>
+<div class="full acct-actions"><button class="btn" type="submit">Valider</button></div>
+</form>
+<h2 style="margin-top:34px">Changer de mot de passe</h2>
+<form class="acct-form" data-pass-form>
+<label>Mot de passe actuel <input name="actuel" type="password" required></label>
+<label>Nouveau mot de passe <input name="nouveau" type="password" required minlength="6"></label>
+<div class="full acct-actions"><button class="btn" type="submit">Valider</button></div>
+<p class="full acct-note" data-pass-error hidden style="color:#dc3545">Mot de passe actuel incorrect.</p>
+<p class="full acct-note" data-pass-ok hidden style="color:#2e5136">Mot de passe changé.</p>
+</form>
+</div>
+<div data-acct-pane="commandes" hidden>
+<h2>Mes commandes</h2>
+<ul class="acct-list" data-acct-commandes></ul>
+<p class="acct-empty" data-acct-commandes-empty>Aucune commande pour le moment.<br>Commandez depuis votre panier : votre commande part sur notre WhatsApp et apparaît ici.</p>
+</div>
+<div data-acct-pane="adresses" hidden>
+<h2>Mes adresses</h2>
+<form class="acct-form" data-adresse-form>
+<label class="full">Rue / quartier * <input name="rue" required placeholder="Ex. : Rue des Jardins, Cocody"></label>
+<label>Ville * <input name="ville" required placeholder="Ex. : Abidjan"></label>
+<label>Téléphone <input name="tel" type="tel" placeholder="+225 07 00 00 00 00"></label>
+<div class="full acct-actions" style="justify-content:flex-start"><button class="btn" type="submit">Ajouter cette adresse</button></div>
+</form>
+<ul class="acct-list" data-acct-adresses></ul>
+<p class="acct-empty" data-acct-adresses-empty>Aucune adresse enregistrée.</p>
+</div>
+<div data-acct-pane="paniers" hidden>
+<h2>Mes paniers sauvegardés</h2>
+<div class="acct-actions" style="justify-content:flex-start"><button class="btn" type="button" data-save-panier>Sauvegarder mon panier actuel</button></div>
+<ul class="acct-list" data-acct-paniers></ul>
+<p class="acct-empty" data-acct-paniers-empty>Aucun panier sauvegardé.</p>
+</div>
+</div>
+</div>
+</div>

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"database/sql"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -12,6 +10,9 @@ import (
 	"github.com/Hajrudin-Zelef/Marexstore/internal/db"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/handlers"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/middleware"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/site"
+	"github.com/go-chi/chi/v5"
+	chimw "github.com/go-chi/chi/v5/middleware"
 )
 
 func main() {
@@ -20,53 +21,102 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if _, err := os.Stat(cfg.DBPath); err == nil {
-		// Migrations idempotentes (IF NOT EXISTS).
-		_ = db.Migrate(database, "db/migrations/001_init.sql")
+	if err := db.EnsureSchema(database, "db/migrations"); err != nil {
+		log.Fatal("schema: ", err)
 	}
-	tpl := template.Must(template.ParseGlob("templates/pages/*.html"))
-	// Partials inclus dans les pages via {{define}} ; pas de parse séparé nécessaire.
+	st, err := site.LoadStore(database)
+	if err != nil {
+		log.Fatal("load store: ", err)
+	}
+	top, drawer, foot, bodies, err := site.LoadStatic("templates/static")
+	if err != nil {
+		log.Fatal("load templates: ", err)
+	}
 	app := &handlers.App{
-		Cfg: cfg, DB: database, Tpl: tpl,
+		Cfg: cfg, DB: database, Store: st, Recents: nil,
+		Top: top, Drawer: drawer, Foot: foot, Bodies: bodies,
 		SecureCookies: os.Getenv("APP_ENV") == "prod",
 	}
+	app.Recents = app.Store.Recents("")
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /health", app.Health)
-	mux.HandleFunc("GET /", app.Home)
-	mux.HandleFunc("GET /boutique", app.Boutique)
-	mux.HandleFunc("GET /produits/", app.Produit)
-	mux.HandleFunc("POST /panier/ajouter", app.PanierAjouter)
-	mux.HandleFunc("GET /commande", app.Commande)
-	mux.HandleFunc("POST /commande", app.Commande)
-	mux.HandleFunc("GET /compte", app.AuthPage)
-	mux.HandleFunc("POST /auth/inscription", app.Register)
-	mux.HandleFunc("POST /auth/connexion", app.Login)
-	mux.HandleFunc("POST /auth/logout", app.Logout)
-	mux.HandleFunc("GET /admin", app.Admin)
+	r := chi.NewRouter()
+	r.Use(chimw.Recoverer)
+	r.Use(middleware.RequestID)
+	r.Use(middleware.SecurityHeaders(os.Getenv("CSP_REPORT_ONLY") != "0"))
+	r.Use(middleware.RateLimit(40, 80))
 
-	// Statique : cache long + immutable (les fichiers sont versionnés par ?v=).
+	r.Get("/health", app.Health)
+	r.Get("/", app.Index)
+	r.Get("/index.html", app.Index)
+	r.Get("/boutique.html", app.Boutique)
+	r.Get("/categories/{fichier}.html", app.Categorie)
+	r.Get("/produits/{slug}.html", app.Produit)
+
+	// Pages statiques (corps verbatim + chrome partagé).
+	statics := map[string][2]string{
+		"/apropos.html":                     {"apropos", "À propos de nous"},
+		"/cgv.html":                         {"cgv", "Conditions générales de vente"},
+		"/livraison.html":                   {"livraison", "Livraison & retours"},
+		"/confidentialite.html":             {"confidentialite", "Politique de confidentialité"},
+		"/mentions-legales.html":            {"mentions-legales", "Mentions légales"},
+		"/contact.html":                     {"contact", "Contact"},
+		"/contactez-nous.html":              {"contactez-nous", "Contactez-nous"},
+		"/devis.html":                       {"devis", "Demande de devis"},
+		"/suivi-commande.html":              {"suivi-commande", "Suivi de commande"},
+		"/compte.html":                      {"compte", "Mon compte"},
+		"/parametres.html":                  {"parametres", "Mes paramètres"},
+		"/services.html":                    {"services", "Nos Logiciels Metiers"},
+		"/nos-services.html":                {"nos-services", "Nos services"},
+		"/nos-references.html":              {"nos-references", "Nos références"},
+		"/qui-sommes-nous.html":             {"qui-sommes-nous", "Qui sommes-nous ?"},
+		"/solutions-infrastructure-it.html": {"solutions-infrastructure-it", "Infrastructure IT"},
+		"/solutions-collaboration.html":     {"solutions-collaboration", "Collaboration"},
+		"/solutions-cloud-securite.html":    {"solutions-cloud-securite", "Cloud & Sécurité"},
+	}
+	for route, tn := range statics {
+		name, title := tn[0], tn[1]
+		r.Get(route, func(w http.ResponseWriter, req *http.Request) {
+			app.StaticPage(w, req, title, name, "")
+		})
+	}
+
+	r.Get("/assets/facets.js", app.FacetsJS)
 	static := http.FileServer(http.Dir("static"))
-	mux.Handle("GET /static/", http.StripPrefix("/static/", withCache(static)))
-	// Images catalogue (./images monté en volume).
-	mux.Handle("GET /images/", http.StripPrefix("/images/", withImageCache(http.FileServer(http.Dir("./images")))))
+	r.Handle("/static/*", http.StripPrefix("/static/", withCache(static)))
+	r.Handle("/assets/*", http.StripPrefix("/assets/", withCache(http.FileServer(http.Dir("static")))))
+	imgs := http.FileServer(http.Dir("./images"))
+	r.Handle("/images/*", http.StripPrefix("/images/", withImageCache(imgs)))
 
-	reportOnly := os.Getenv("CSP_REPORT_ONLY") != "0"
-	var h http.Handler = mux
-	h = middleware.RequestID(h)
-	h = middleware.SecurityHeaders(reportOnly)(h)
-	// Rate-limit doux global : 40 req/s burst 80 (n'ennuie pas l'acheteur normal).
-	h = middleware.RateLimit(40, 80)(h)
+	// Miroir serveur (mirror.js) + auth.
+	r.Post("/api/panier", app.ApiPanier)
+	r.Post("/api/commande", app.ApiCommande)
+	r.Post("/api/devis", app.ApiDemande("devis"))
+	r.Post("/api/suivi", app.ApiDemande("suivi"))
+	r.Post("/api/contact", app.ApiDemande("contact"))
+	r.Post("/api/infos", app.ApiDemande("infos"))
+	r.Get("/api/csrf", app.ApiCSRF)
+	r.Post("/auth/inscription", app.Register)
+	r.Post("/auth/connexion", app.Login)
+	r.Post("/auth/logout", app.Logout)
+	r.Post("/auth/mot-de-passe", app.Password)
+
+	// Admin maison.
+	r.Get("/admin", app.Admin)
+	r.Get("/admin/produits", app.AdminProduits)
+	r.Get("/admin/produits/{slug}", app.AdminProduitEdit)
+	r.Post("/admin/produits/{slug}", app.AdminProduitEdit)
+	r.Get("/admin/commandes", app.AdminCommandes)
+	r.Post("/admin/commandes", app.AdminCommandes)
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,
-		Handler:           h,
+		Handler:           r,
 		ReadTimeout:       10 * time.Second,
 		ReadHeaderTimeout: 5 * time.Second,
 		WriteTimeout:      15 * time.Second,
 		IdleTimeout:       60 * time.Second,
 	}
-	log.Printf("marexstore :%s env=%s db=%s", cfg.Port, cfg.Env, cfg.DBPath)
+	log.Printf("marexstore :%s env=%s db=%s produits=%d", cfg.Port, cfg.Env, cfg.DBPath, len(app.Store.Products))
 	_ = database.Ping()
 	log.Fatal(srv.ListenAndServe())
 }
@@ -84,5 +134,3 @@ func withImageCache(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
-
-var _ = sql.ErrNoRows

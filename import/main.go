@@ -1,9 +1,8 @@
 package main
 
-// Import V1 : lit sources/produits-v3.json (ou /tmp/opencode/ref/...) -> SQLite.
-// Usage : go run ./import --json <fichier> --db store.db --sql db/migrations/001_init.sql
-// Idempotent : INSERT OR REPLACE par slug.
-
+// Import fidèle : produits-v3.json -> SQLite via internal/catalog
+// (mêmes dérivations que build_site_v3.py : CAT_MAP, live_map, facettes,
+// index de recherche). Idempotent (INSERT OR REPLACE par slug).
 import (
 	"database/sql"
 	"encoding/json"
@@ -11,73 +10,46 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
-	"unicode"
 
+	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	marexdb "github.com/Hajrudin-Zelef/Marexstore/internal/db"
 	_ "modernc.org/sqlite"
-	"golang.org/x/text/runes"
-	"golang.org/x/text/transform"
-	"golang.org/x/text/unicode/norm"
 )
 
-type Spec struct {
-	Label  string `json:"label"`
-	Valeur string `json:"valeur"`
-}
-
-type P struct {
-	Slug        string `json:"slug"`
-	Nom         string `json:"nom"`
-	Marque      string `json:"marque"`
-	Prix        *int64 `json:"prix"`
-	Devise      string `json:"devise"`
-	Dispo       string `json:"disponibilite"`
-	Categorie   string `json:"categorie"`
-	Accroche    string `json:"accroche"`
-	Description string `json:"description"`
-	Image       string `json:"image"`
-	Specs       any    `json:"specs"`
-	Stock       int    `json:"stock"`
-}
-
-func normStr(s string) string {
-	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFC)
-	o, _, _ := transform.String(t, strings.ToLower(s))
-	var b strings.Builder
-	for _, r := range o {
-		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
-			b.WriteRune(r)
-		} else {
-			b.WriteRune(' ')
-		}
-	}
-	return strings.Join(strings.Fields(b.String()), " ")
+func mustJSON(v any) string {
+	b, _ := json.Marshal(v)
+	return string(b)
 }
 
 func main() {
-	jf := flag.String("json", "/tmp/opencode/ref/sources/produits-v3.json", "chemin produits-v3.json")
+	jf := flag.String("json", "catalogdata/produits-v3.json", "chemin produits-v3.json")
 	dbp := flag.String("db", "store.db", "chemin sqlite")
-	sqlp := flag.String("sql", "db/migrations/001_init.sql", "migration")
+	mig1 := flag.String("sql", "db/migrations/001_init.sql", "migration 001")
+	mig2 := flag.String("sql2", "db/migrations/002_fidelite.sql", "migration 002")
 	flag.Parse()
 
-	raw, err := os.ReadFile(*jf)
+	list, err := catalog.LoadRaw(*jf)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var list []P
-	if err := json.Unmarshal(raw, &list); err != nil {
-		log.Fatal(err)
-	}
-	mig, err := os.ReadFile(*sqlp)
-	if err != nil {
-		log.Fatal(err)
-	}
+	catalog.ApplyTaxonomy(list)
+
 	d, err := sql.Open("sqlite", *dbp+"?cache=shared")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer d.Close()
-	if _, err := d.Exec(string(mig)); err != nil {
+	for _, mig := range []string{*mig1, *mig2} {
+		b, err := os.ReadFile(mig)
+		if err != nil {
+			log.Fatal(err)
+		}
+		if _, err := d.Exec(string(b)); err != nil {
+			log.Printf("migration %s partielle (%v) — colonnes manquantes ajoutees si besoin", mig, err)
+			break
+		}
+	}
+	if err := marexdb.EnsureSchema(d, "db/migrations"); err != nil {
 		log.Fatal(err)
 	}
 	tx, _ := d.Begin()
@@ -86,20 +58,21 @@ func main() {
 		if p.Slug == "" || p.Nom == "" {
 			continue
 		}
-		var specsJSON string
-		switch v := p.Specs.(type) {
-		case []any:
-			b, _ := json.Marshal(v)
-			specsJSON = string(b)
-		case map[string]any:
-			var arr []Spec
-			for k, val := range v {
-				arr = append(arr, Spec{Label: k, Valeur: fmt.Sprint(val)})
-			}
-			b, _ := json.Marshal(arr)
-			specsJSON = string(b)
-		default:
-			specsJSON = "[]"
+		facets := catalog.FacetValues(p)
+		si := catalog.SearchIndex(p)
+		var prix, pb, pa any
+		if p.Prix != nil {
+			prix = *p.Prix
+		}
+		if p.PrixBoutique != nil {
+			pb = *p.PrixBoutique
+		}
+		if p.PrixAvant != nil {
+			pa = *p.PrixAvant
+		}
+		var stock any
+		if p.Stock != nil {
+			stock = *p.Stock
 		}
 		devise := p.Devise
 		if devise == "" {
@@ -109,25 +82,35 @@ func main() {
 		if dispo == "" {
 			dispo = "en stock"
 		}
-		si := normStr(p.Nom + " " + p.Marque + " " + p.Categorie + " " + p.Accroche + " " + p.Description)
-		var prix any
-		if p.Prix != nil {
-			prix = *p.Prix
+		specs := mustJSON(p.SpecList())
+		if specs == "null" {
+			specs = "[]"
 		}
-		_, err := tx.Exec(`INSERT INTO products(slug,nom,marque,prix,devise,dispo,categorie,image,accroche,description,specs_json,search_index,stock)
-			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
-			ON CONFLICT(slug) DO UPDATE SET nom=excluded.nom, marque=excluded.marque, prix=excluded.prix,
-			categorie=excluded.categorie, image=excluded.image, accroche=excluded.accroche,
-			description=excluded.description, specs_json=excluded.specs_json, search_index=excluded.search_index, stock=excluded.stock`,
-			p.Slug, p.Nom, p.Marque, prix, devise, dispo, p.Categorie, p.Image, p.Accroche, p.Description, specsJSON, si, p.Stock)
+		_, err := tx.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,devise,dispo,
+			categorie,accroche,description,image,specs_json,pointsforts_json,consommables_json,store_url,ref,ref_fabricant,stock,
+			main,main_slug,sub,sub_slug,live_top,live_sub,facets_json,search_index)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			ON CONFLICT(slug) DO UPDATE SET nom=excluded.nom, marque=excluded.marque,
+			prix=excluded.prix, prix_boutique=excluded.prix_boutique, prix_avant=excluded.prix_avant,
+			devise=excluded.devise, dispo=excluded.dispo, categorie=excluded.categorie,
+			accroche=excluded.accroche, description=excluded.description, image=excluded.image,
+			specs_json=excluded.specs_json, pointsforts_json=excluded.pointsforts_json, consommables_json=excluded.consommables_json, store_url=excluded.store_url,
+			ref=excluded.ref, ref_fabricant=excluded.ref_fabricant, stock=excluded.stock,
+			main=excluded.main, main_slug=excluded.main_slug, sub=excluded.sub, sub_slug=excluded.sub_slug,
+			live_top=excluded.live_top, live_sub=excluded.live_sub,
+			facets_json=excluded.facets_json, search_index=excluded.search_index`,
+			p.Slug, p.Nom, p.Marque, prix, pb, pa, devise, dispo, p.Categorie,
+			p.Accroche, p.Description, p.Image, specs, mustJSON(p.PointsForts), mustJSON(p.Consommables), p.StoreURL,
+			p.Ref, p.RefFabricant, stock, p.Main, p.MainSlug, p.Sub, p.SubSlug,
+			p.LiveTop, p.LiveSub, mustJSON(facets), si)
 		if err != nil {
 			log.Printf("skip %s: %v", p.Slug, err)
 			continue
 		}
-		_, _ = tx.Exec(`INSERT INTO products_fts(slug,nom,marque,categorie,sous_categorie,accroche,description,search_index)
-			VALUES(?,?,?,?,?,?,?,?)`, p.Slug, p.Nom, p.Marque, p.Categorie, "", p.Accroche, p.Description, si)
 		n++
 	}
-	_ = tx.Commit()
-	fmt.Printf("import OK : %d produits -> %s\n", n, *dbp)
+	if err := tx.Commit(); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("import fidèle OK : %d produits -> %s\n", n, *dbp)
 }

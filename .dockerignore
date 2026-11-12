@@ -1,0 +1,11 @@
+.git
+site-orig/
+data/
+images/
+*.db
+*.db-wal
+*.db-shm
+.env
+catalogue-mediatec-v3.25.tar.gz
+plan/
+tools/

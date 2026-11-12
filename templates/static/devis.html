@@ -1,0 +1,93 @@
+
+<div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Demande de devis</div>
+<div class="devis-layout">
+<div class="form-card">
+<div class="form-head">
+<div><h1 style="font-size:26px;margin:0">Demande de devis</h1>
+<p style="color:#666;margin:6px 0 0">Remplissez les 4 étapes : votre demande part directement sur notre WhatsApp, sans compte à créer.</p></div>
+<div class="form-head-badge">Réponse<br>sous 24 h</div></div>
+<ol class="steps" data-step-indicator>
+<li class="on"><span class="dot">1</span><span class="lbl">Vos coordonnées</span></li>
+<li><span class="dot">2</span><span class="lbl">Votre besoin</span></li>
+<li><span class="dot">3</span><span class="lbl">Services associés</span></li>
+<li><span class="dot">4</span><span class="lbl">Délais &amp; budget</span></li>
+</ol>
+<form class="form premium" data-devis-form novalidate>
+<div class="step" data-step="1">
+<h2>1. Vos coordonnées</h2>
+<div class="grid2">
+<label>Nom complet * <input name="nom" required placeholder="Ex. : Kouassi Jean"></label>
+<label>Adresse e-mail * <input name="email" type="email" required placeholder="vous@entreprise.com"></label>
+<label>Téléphone <input name="telephone" type="tel" placeholder="+225 07 00 00 00 00"></label>
+<label>Entreprise / Société <input name="entreprise" placeholder="Nom de votre entreprise"></label>
+</div>
+<div class="form-nav"><span></span><button class="btn" type="button" data-next-step>Continuer →</button></div>
+</div>
+<div class="step" data-step="2" hidden>
+<h2>2. Votre besoin</h2>
+<div class="grid2">
+<label>Type de client * <select name="type_client" required><option value="">— Choisir —</option>
+<option>Particulier</option><option>Entreprise</option><option>Administration</option><option>Revendeur</option></select></label>
+<label>Catégorie de matériel * <select name="categorie" required><option value="">— Choisir —</option>
+<option>Laptops</option><option>Ordinateurs de bureau</option><option>Caméras &amp; vidéosurveillance</option>
+<option>Téléphones &amp; tablettes</option><option>Imprimantes</option><option>Accessoires informatiques</option>
+<option>Reconditionné / Quasi-neuf</option></select></label>
+<label>État souhaité <select name="etat"><option>Peu importe</option><option>Neuf</option><option>Reconditionné</option></select></label>
+<label>Marque souhaitée <select name="marque"><option value="">— Choisir —</option>
+<option>HP</option><option>Dell</option><option>Lenovo</option><option>Asus</option><option>Acer</option>
+<option>Apple</option><option>Epson</option><option>Kyocera</option><option>Cisco</option><option>Autre</option></select></label>
+</div>
+<label>Spécifications souhaitées (processeur, RAM, stockage, écran…) <textarea name="specs" rows="3" placeholder="Ex. : Core i7, 16 Go RAM, SSD 512 Go, écran 15 pouces…"></textarea></label>
+<label>Pièce jointe (liste de matériel, cahier des charges) — à joindre dans WhatsApp après envoi
+<span class="file-drop"><span>Glissez votre fichier ici ou cliquez pour choisir</span><input name="piece_jointe" type="file"></span></label>
+<div class="form-nav"><button class="btn ghost" type="button" data-prev-step>← Retour</button><button class="btn" type="button" data-next-step>Continuer →</button></div>
+</div>
+<div class="step" data-step="3" hidden>
+<h2>3. Services associés</h2>
+<p style="color:#666;margin-top:0">Sélectionnez les services dont vous avez besoin : ils seront inclus dans votre devis.</p>
+<div class="pills">
+<label class="pill"><input type="checkbox" name="services" value="Livraison"><span>Livraison</span></label>
+<label class="pill"><input type="checkbox" name="services" value="Installation / configuration"><span>Installation / configuration</span></label>
+<label class="pill"><input type="checkbox" name="services" value="Garantie étendue"><span>Garantie étendue</span></label>
+<label class="pill"><input type="checkbox" name="services" value="Formation à l'utilisation"><span>Formation à l'utilisation</span></label>
+<label class="pill"><input type="checkbox" name="services" value="Contrat de maintenance"><span>Contrat de maintenance</span></label>
+</div>
+<div class="form-nav"><button class="btn ghost" type="button" data-prev-step>← Retour</button><button class="btn" type="button" data-next-step>Continuer →</button></div>
+</div>
+<div class="step" data-step="4" hidden>
+<h2>4. Délais, budget et compléments</h2>
+<div class="grid2">
+<label>Délai souhaité <input name="delai" placeholder="Ex. : sous 1 semaine"></label>
+<label>Budget envisagé <input name="budget" placeholder="Ex. : 500 000 F CFA"></label>
+<label>Mode de paiement envisagé <select name="paiement"><option value="">— Choisir —</option>
+<option>Espèces</option><option>Virement</option><option>Mobile Money</option><option>Chèque</option></select></label>
+<label>Comment avez-vous connu Mediatec ? <select name="source"><option value="">— Choisir —</option>
+<option>Facebook</option><option>WhatsApp</option><option>Instagram</option><option>TikTok</option>
+<option>Bouche-à-oreille</option><option>Autre</option></select></label>
+</div>
+<label>Message / précisions <textarea name="message" rows="3" placeholder="Dites-nous en plus sur votre besoin…"></textarea></label>
+<label class="check"><input type="checkbox" name="consentement" required> J'accepte que mes données soient utilisées pour traiter ma demande de devis. *</label>
+<div class="form-nav"><button class="btn ghost" type="button" data-prev-step>← Retour</button>
+<button class="btn wa" type="submit">Envoyer ma demande via WhatsApp</button></div>
+</div>
+</form>
+</div>
+<aside class="devis-side">
+<div class="side-card"><h3>Deal de la semaine</h3><div class="hcard"><img src="images/dell-latitude-5310-g10.avif" alt="">
+<div><h4><a href="produits/dell-latitude-5310-g10.html">Dell Latitude 5310 G10 (Reconditionnée)</a></h4>
+<div class="pr">340 000 F CFA <span class="old">360 000 F CFA</span></div></div></div><div class="hcard"><img src="images/lenovo-thinkpad-e14g5-21jk00dagq.jpg" alt="">
+<div><h4><a href="produits/lenovo-thinkpad-e14g5-21jk00dagq.html">Lenovo ThinkPad E14 Gen 5 21JK00DAGQ</a></h4>
+<div class="pr">900 000 F CFA <span class="old">975 000 F CFA</span></div></div></div><div class="hcard"><img src="images/casque-logitech-h111.jpg" alt="">
+<div><h4><a href="produits/casque-logitech-h111.html">Casque Logitech H111</a></h4>
+<div class="pr">14 500 F CFA <span class="old">18 000 F CFA</span></div></div></div><div class="hcard"><img src="images/ecran-hp-serie-527sf-s527sf.jpg" alt="">
+<div><h4><a href="produits/ecran-hp-serie-527sf-s527sf.html">HP Series 5 27 pouces FHD 527sf</a></h4>
+<div class="pr">150 000 F CFA <span class="old">170 000 F CFA</span></div></div></div></div>
+<div class="side-card help"><h3>Besoin d'aide ?</h3>
+<p>Une question avant d'envoyer votre demande ? Notre équipe vous répond.</p>
+<p><b>Tél :</b> (+225) 07 05 08 75 07<br><b>Tél :</b> (+225) 27 20 24 33 19<br><b>E-mail :</b> sales@mediatec-ci.com</p>
+<a class="btn wa" href="https://wa.me/2250705087507">Discuter sur WhatsApp</a>
+<p style="font-size:13px;color:#666">Lun – ven : 8h00 – 17h30<br>Sam : 8h30 – 13h00</p></div>
+</aside>
+</div>
+</div>

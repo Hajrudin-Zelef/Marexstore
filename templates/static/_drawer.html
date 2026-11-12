@@ -1,0 +1,47 @@
+<div class="overlay" data-cart-overlay></div>
+<aside class="drawer" data-cart-drawer data-prefix="" aria-label="Panier">
+<div class="drawer-head"><h3>Votre panier</h3><button type="button" data-cart-close aria-label="Fermer">×</button></div>
+<div class="drawer-items" data-cart-items></div>
+<div class="drawer-foot">
+<div class="drawer-total">Sous-total : <b data-cart-subtotal>0 F CFA</b></div>
+<p class="drawer-note">Frais de livraison à confirmer avec notre équipe sur WhatsApp.</p>
+<a class="btn wa" data-cart-order href="https://wa.me/2250705087507">Commander sur WhatsApp</a>
+<button class="btn ghost" type="button" data-cart-clear>Vider le panier</button>
+<button class="linklike" type="button" data-cart-close>Continuer mes achats</button>
+</div></aside>
+<div class="toast" data-toast></div>
+<div class="overlay" data-auth-overlay></div>
+<div class="auth-modal" data-auth-modal>
+<div class="auth-box">
+<button type="button" class="auth-close" data-auth-close aria-label="Fermer">×</button>
+<div class="auth-tabs">
+<button type="button" data-auth-tab="login" class="on">Connexion</button>
+<button type="button" data-auth-tab="create">Créer un compte</button>
+</div>
+<div data-auth-pane="login">
+<h2>Déjà client ?</h2>
+<form class="acct-form" data-login-form action="{{.Prefix}}auth/connexion" method="post">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<label class="full">Votre email <input name="email" type="email" required placeholder="Votre email"></label>
+<label class="full">Votre mot de passe <input name="password" type="password" required placeholder="Votre mot de passe"></label>
+<div class="full acct-actions" style="justify-content:flex-start"><button class="btn" type="submit">Connexion</button></div>
+<p class="full acct-note" data-login-error hidden style="color:#dc3545">Email ou mot de passe incorrect.</p>
+</form>
+</div>
+<div data-auth-pane="create" hidden>
+<h2>Nouveau client ?</h2>
+<form class="acct-form" data-create-form action="{{.Prefix}}auth/inscription" method="post">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<label>Civilité <select name="civilite"><option>M.</option><option>Mme</option></select></label>
+<label>Prénom * <input name="prenom" required placeholder="Votre prénom"></label>
+<label>Nom de famille * <input name="nom" required placeholder="Votre nom"></label>
+<label>Email * <input name="email" type="email" required placeholder="Votre email"></label>
+<label>Mot de passe * <input name="password" type="password" required minlength="6" placeholder="6 caractères minimum"></label>
+<label>Confirmer le mot de passe * <input name="password2" type="password" required minlength="6" placeholder="Retapez votre mot de passe"></label>
+<div class="full acct-actions" style="justify-content:flex-start"><button class="btn" type="submit">Créez un compte</button></div>
+<p class="full acct-note" data-create-error hidden style="color:#dc3545"></p>
+</form>
+</div>
+<p class="acct-note">Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.</p>
+</div>
+</div>

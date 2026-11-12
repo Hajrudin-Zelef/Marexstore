@@ -6,6 +6,7 @@ binaire
 /tmp/
 reference/
 site-v3/
+site-orig/
 images/
 store.db*
 *.tar.gz
