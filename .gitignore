@@ -1,0 +1,11 @@
+binaire
+*.db
+*.db-wal
+*.db-shm
+.env
+/tmp/
+reference/
+site-v3/
+images/
+store.db*
+*.tar.gz

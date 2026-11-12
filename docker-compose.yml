@@ -1,0 +1,32 @@
+services:
+  store:
+    build: .
+    image: marexstore:latest
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      PORT: "8080"
+      DB_PATH: "/data/store.db"
+      APP_ENV: "prod"
+      BASE_URL: "https://store.neva-ci.pro"
+      WHATSAPP_NUMBER: "2250705087507"
+      CSP_REPORT_ONLY: "1"
+      # SESSION_SECRET: à définir via .env (32+ caractères)
+      # ADMIN_USER / ADMIN_PASS_HASH (bcrypt) via .env
+    volumes:
+      - store-data:/data
+      - ./static:/app/static:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+    restart: unless-stopped
+
+volumes:
+  store-data:

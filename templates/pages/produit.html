@@ -1,0 +1,18 @@
+{{define "produit"}}<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}}</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<div class="wrap"><p><a href="/boutique">← Boutique</a></p>
+<h1>{{.P.Nom}}</h1>
+<p class="muted">{{.P.Marque}} · {{.P.Categorie}}{{if .P.SousCategorie}} / {{.P.SousCategorie}}{{end}}</p>
+{{if .P.Image}}<img src="/{{.P.Image}}" alt="{{.P.Nom}}" style="max-width:520px;width:100%" fetchpriority="high">{{end}}
+<p>{{.P.Accroche}}</p>
+<p>{{if .P.Prix}}<strong>{{.P.Prix}} {{.P.Devise}}</strong>{{else}}<em>Prix sur devis</em>{{end}} — {{.P.Dispo}}</p>
+<form action="/panier/ajouter" method="post">
+<input type="hidden" name="csrf" value="{{.CSRF}}">
+<input type="hidden" name="slug" value="{{.P.Slug}}">
+<label>Qté <input name="qty" type="number" value="1" min="1" max="10"></label>
+<button class="btn">Ajouter au panier</button></form>
+<p><a class="btn ghost" href="{{.WA}}">Commander sur WhatsApp</a></p>
+<h2>Détails</h2><p>{{.P.Description}}</p>
+{{if .P.Specs}}<ul>{{range .P.Specs}}<li><strong>{{.Label}} :</strong> {{.Valeur}}</li>{{end}}</ul>{{end}}
+</div></body></html>{{end}}

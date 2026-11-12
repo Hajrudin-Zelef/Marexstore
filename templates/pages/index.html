@@ -1,0 +1,26 @@
+{{define "index"}}<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}}</title>
+<link rel="stylesheet" href="/static/style.css"></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="/">Marexstore</a>
+<form class="search" action="/boutique" method="get"><input name="q" type="search" placeholder="Rechercher un produit, une référence…" aria-label="Recherche"><button>Rechercher</button></form>
+<nav><a href="/boutique">Boutique</a><a href="/commande">Panier</a><a href="/compte">Compte</a></nav></div></header>
+<main class="wrap">
+<h1>Catalogue — {{.Count}} produits</h1>
+<section class="cats">{{range .Cats}}<a class="chip" href="/boutique?cat={{.Name}}">{{.Name}} ({{.N}})</a>{{end}}</section>
+<section class="grid">{{range .Products}}{{template "card" .}}{{end}}</section>
+</main>
+<script src="/static/app.js" defer></script>
+</body></html>{{end}}
+
+{{define "card"}}<article class="card" data-reveal>
+{{if .Image}}<img src="/{{.Image}}" alt="{{.Nom}}" loading="lazy" width="400" height="300">{{end}}
+<h3><a href="/produits/{{.Slug}}">{{.Nom}}</a></h3>
+<p class="muted">{{.Marque}} · {{.Categorie}}</p>
+<p>{{if .Prix}}<strong>{{.Prix}} {{.Devise}}</strong>{{else}}<em>Sur devis</em>{{end}}</p>
+<form action="/panier/ajouter" method="post">
+<input type="hidden" name="slug" value="{{.Slug}}"><input type="hidden" name="qty" value="1">
+<button class="btn">Ajouter</button></form>
+</article>{{end}}
+
+{{define "cards"}}{{range .}}{{template "card" .}}{{end}}{{end}}
