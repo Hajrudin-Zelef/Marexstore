@@ -94,7 +94,17 @@ wi_end = foot.find("</div></div>\n<div class=\"news\">")
 assert wi_end > 0
 widgets_part = foot[:wi_end + len("</div></div>")]
 rest = foot[wi_end + len("</div></div>"):]
+# Patchs serveur (progressive enhancement + compte synchronisé) appliqués
+# au chrome partagé — reproductibles à chaque régénération.
+d0 = d0.replace('<form class="acct-form" data-login-form>',
+    '<form class="acct-form" data-login-form action="{{.Prefix}}auth/connexion" method="post">\n<input type="hidden" name="csrf" value="{{.CSRF}}">')
+d0 = d0.replace('<form class="acct-form" data-create-form>',
+    '<form class="acct-form" data-create-form action="{{.Prefix}}auth/inscription" method="post">\n<input type="hidden" name="csrf" value="{{.CSRF}}">')
+d0 = d0.replace("Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.",
+    "Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.")
 (OUT / "_top.html").write_text(t0, encoding="utf-8")
 (OUT / "_drawer.html").write_text(d0, encoding="utf-8")
+rest = rest.replace("</body></html>",
+    '<script src="{{.Prefix}}assets/htmx.min.js?v=1912" defer></script><script src="{{.Prefix}}assets/mirror.js?v=1" defer></script></body></html>')
 (OUT / "_foot.html").write_text("{{.Widgets}}" + rest, encoding="utf-8")
 print(f"chrome identique sur {len(pages)} pages ; corps écrits dans {OUT}")

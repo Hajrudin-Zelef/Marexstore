@@ -34,10 +34,12 @@ func testStore(t *testing.T) *catalog.Store {
 // (csrf, scripts htmx/mirror ajoutés, texte compte synchronisé).
 var reHtmx = regexp.MustCompile("<script[^>]*htmx[^>]*></script>\n?")
 var reMirror = regexp.MustCompile("<script[^>]*mirror[^>]*></script>\n?")
+var reVer = regexp.MustCompile(`assets/[a-z0-9_.-]+\.css\?v=\d+|assets/[a-z0-9_.-]+\.js\?v=\d+`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
 	s = reMirror.ReplaceAllString(s, "")
+	s = reVer.ReplaceAllString(s, "assets/X")
 	var out []string
 	for _, ln := range strings.Split(s, "\n") {
 		if strings.Contains(ln, "csrf-token") {
@@ -61,7 +63,7 @@ func readOrig(t *testing.T, path string) string {
 func TestBoutiqueParity(t *testing.T) {
 	s := testStore(t)
 	got := normPage(render.Doc("Store", render.BoutiqueBody(s), "", ""))
-	want := readOrig(t, "boutique.html")
+	want := normPage(readOrig(t, "boutique.html"))
 	if got != want {
 		diffFirst(t, got, want)
 	}
@@ -71,7 +73,7 @@ func TestIndexParity(t *testing.T) {
 	s := testStore(t)
 	recents := s.Recents(rel("../../catalogdata/store-sitemap.xml"))
 	got := normPage(render.Doc("Accueil", render.IndexBody(s, recents), "", ""))
-	want := readOrig(t, "index.html")
+	want := normPage(readOrig(t, "index.html"))
 	if got != want {
 		diffFirst(t, got, want)
 	}
@@ -81,7 +83,7 @@ func TestCategoriesParity(t *testing.T) {
 	s := testStore(t)
 	for _, m := range catalog.MainOrder {
 		got := normPage(render.Doc(m, render.CategoryPage(s, m), "../", ""))
-		want := readOrig(t, "categories/"+catalog.MainSlug[m]+".html")
+		want := normPage(readOrig(t, "categories/"+catalog.MainSlug[m]+".html"))
 		if got != want {
 			t.Logf("catégorie %s", m)
 			diffFirst(t, got, want)
@@ -93,7 +95,7 @@ func TestProduitsParity(t *testing.T) {
 	s := testStore(t)
 	for _, p := range s.Products {
 		got := normPage(render.Doc(p.Nom, render.Header(s, "../", "")+render.FicheBody(s, p)+"\n"+render.Footer(s, "../"), "../", ""))
-		want := readOrig(t, "produits/"+p.Slug+".html")
+		want := normPage(readOrig(t, "produits/"+p.Slug+".html"))
 		if got != want {
 			t.Logf("produit %s", p.Slug)
 			diffFirst(t, got, want)
