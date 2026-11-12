@@ -35,11 +35,13 @@ func testStore(t *testing.T) *catalog.Store {
 var reHtmx = regexp.MustCompile("<script[^>]*htmx[^>]*></script>\n?")
 var reMirror = regexp.MustCompile("<script[^>]*mirror[^>]*></script>\n?")
 var reVer = regexp.MustCompile(`assets/[a-z0-9_.-]+\.css\?v=\d+|assets/[a-z0-9_.-]+\.js\?v=\d+`)
+var reFiltersToggle = regexp.MustCompile(`<button type="button" class="filters-toggle"[^>]*>.*?</button>\n?`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
 	s = reMirror.ReplaceAllString(s, "")
 	s = reVer.ReplaceAllString(s, "assets/X")
+	s = reFiltersToggle.ReplaceAllString(s, "")
 	var out []string
 	for _, ln := range strings.Split(s, "\n") {
 		if strings.Contains(ln, "csrf-token") {

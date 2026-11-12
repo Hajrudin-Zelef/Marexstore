@@ -112,7 +112,8 @@ func FiltersPanel(s *catalog.Store, mode string) string {
 	for _, b := range brands {
 		fmt.Fprintf(&opts, `<option value="%s">%s (%d)</option>`, esc(catalog.NormName(b.k)), esc(b.k), b.n)
 	}
-	return `<div class="filters" data-filters data-facets-mode="` + mode + `"><h3>FILTRER LES PRODUITS :</h3>
+	return `<button type="button" class="filters-toggle" data-f-toggle aria-expanded="false"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg><span>Filtres</span><span class="filters-chev" aria-hidden="true">▾</span></button>
+<div class="filters" data-filters data-facets-mode="` + mode + `"><h3>FILTRER LES PRODUITS :</h3>
 <label>Chercher une référence<input type="search" data-f-q placeholder="Désignation, modèle…"></label>
 <label>Marque<select data-f-marque>` + opts.String() + `</select></label>
 <label>Prix (F CFA)<span class="f-range"><input type="range" data-f-prix-min-range min="0" max="` + fmt.Sprint(s.PrixMax) + `" step="100" value="0"><input type="range" data-f-prix-max-range min="0" max="` + fmt.Sprint(s.PrixMax) + `" step="100" value="` + fmt.Sprint(s.PrixMax) + `"></span><span class="f-prix"><input type="number" data-f-prix-min placeholder="Min" min="0"><span>–</span><input type="number" data-f-prix-max placeholder="Max" min="0"></span></label>

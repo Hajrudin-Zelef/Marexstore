@@ -386,6 +386,17 @@
           apply();
         });
       }
+      /* Bouton « Filtres » discret sur mobile : replié par défaut, l'utilisateur l'ouvre au besoin. */
+      document.querySelectorAll('[data-f-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var panel = btn.nextElementSibling;
+          while (panel && !panel.hasAttribute('data-filters')) panel = panel.nextElementSibling;
+          if (!panel) panel = document.querySelector('[data-filters]');
+          if (!panel) return;
+          var open = panel.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
       /* Filtres latéraux (référence, marque, prix, disponibilité, état) — hors du bloc catalogue. */
       var filters = document.querySelector('[data-filters]');
       if (filters && !filters._wired) {
