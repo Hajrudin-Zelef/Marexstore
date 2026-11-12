@@ -66,6 +66,10 @@ func (a *App) sessionID(r *http.Request) string {
 }
 
 func (a *App) Home(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
 	var n int
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products`).Scan(&n)
 	rows, _ := a.DB.Query(`SELECT categorie, COUNT(*) FROM products GROUP BY categorie ORDER BY 2 DESC LIMIT 8`)

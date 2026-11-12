@@ -48,8 +48,8 @@ func main() {
 	// Statique : cache long + immutable (les fichiers sont versionnés par ?v=).
 	static := http.FileServer(http.Dir("static"))
 	mux.Handle("GET /static/", http.StripPrefix("/static/", withCache(static)))
-	// Images importées de l'archive (transitoire avant thumbs/).
-	mux.Handle("GET /images/", http.StripPrefix("/", http.FileServer(http.Dir(".")) ))
+	// Images catalogue (./images monté en volume).
+	mux.Handle("GET /images/", http.StripPrefix("/images/", withImageCache(http.FileServer(http.Dir("./images")))))
 
 	reportOnly := os.Getenv("CSP_REPORT_ONLY") != "0"
 	var h http.Handler = mux
@@ -74,6 +74,13 @@ func main() {
 func withCache(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
+		next.ServeHTTP(w, r)
+	})
+}
+
+func withImageCache(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "public, max-age=86400")
 		next.ServeHTTP(w, r)
 	})
 }
