@@ -1,0 +1,48 @@
+
+<div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Mes paramètres</div>
+<h1 style="font-size:26px">Mes paramètres</h1>
+<div class="acct">
+<aside class="acct-side">
+<div class="acct-id" data-acct-id hidden>
+<span class="acct-avatar" data-acct-initials>?</span>
+<div class="hello">Bonjour</div>
+<div class="who" data-acct-name></div>
+<div class="num">N° client : <span data-acct-num></span></div>
+<button class="btn" type="button" data-logout>Me déconnecter</button>
+</div>
+<div class="acct-id" data-acct-guest>
+<span class="acct-avatar">?</span>
+<div class="hello">Bonjour, invité</div>
+<div class="who">Vous n'êtes pas connecté</div>
+<a class="btn" href="compte.html" data-auth-open data-auth-tab="create">Créer un compte</a>
+</div>
+<ul class="acct-menu"><li><a href="compte.html#informations" data-acct-tab="informations">Mes informations</a></li><li><a href="compte.html#commandes" data-acct-tab="commandes">Mes commandes</a></li><li><a href="compte.html#adresses" data-acct-tab="adresses">Mes adresses</a></li><li><a href="compte.html#paniers" data-acct-tab="paniers">Mes paniers sauvegardés</a></li><li><a href="parametres.html" class="on">Mes paramètres</a></li></ul>
+</aside>
+<div class="acct-main">
+<div data-param-locked>
+<h2>Compte requis</h2>
+<p class="acct-empty">Les paramètres sont réservés aux clients connectés.<br>Connectez-vous ou créez un compte pour choisir votre thème et votre couleur.</p>
+<div class="acct-actions"><button class="btn" type="button" data-auth-open data-auth-tab="login">Se connecter</button>&nbsp;<button class="btn" type="button" data-auth-open data-auth-tab="create">Créer un compte</button></div>
+</div>
+<div data-param-content hidden>
+<h2>Préférences d'affichage</h2>
+<h3>Thème d'affichage</h3>
+<p style="color:#666;font-size:14px">Choisissez l'apparence du site : elle s'applique immédiatement à tout le site et reste enregistrée dans ce navigateur.</p>
+<div class="theme-pick">
+<label class="theme-opt"><input type="radio" name="theme-mode" value="clair" data-theme-choice="clair"><span><span class="sw clair"></span><span>Clair<small>Le site en clair, fond gris clair.</small></span></span></label>
+<label class="theme-opt"><input type="radio" name="theme-mode" value="sombre" data-theme-choice="sombre"><span><span class="sw sombre"></span><span>Sombre<small>Le site en sombre, reposant pour les yeux.</small></span></span></label>
+</div>
+<h3>Couleur du site</h3>
+<div class="theme-pick">
+<label class="theme-opt"><input type="radio" name="theme-color" value="gazonnier" data-color-choice="gazonnier"><span><span class="sw gazonnier"></span><span>Gazonnier<small>Le vert pur du logo Mediatec (#2E5136).</small></span></span></label>
+<label class="theme-opt"><input type="radio" name="theme-color" value="liquid" data-color-choice="liquid"><span><span class="sw liquid"></span><span>Liquid<small>L'ancien vert lime du site (#A3D133).</small></span></span></label>
+</div>
+<p class="acct-note">Vos préférences sont enregistrées dans ce navigateur et s'appliquent immédiatement à tout le site, même sans compte.</p>
+<h3 style="margin-top:28px">Mon compte</h3>
+<p style="color:#666;font-size:14px">Créez un compte pour retrouver vos coordonnées, vos commandes, vos adresses et vos paniers sauvegardés.</p>
+<a class="btn" href="compte.html">Aller à mon compte</a>
+</div>
+</div>
+</div>
+</div>

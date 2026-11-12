@@ -1,0 +1,232 @@
+package handlers
+
+import (
+	"database/sql"
+	"encoding/json"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/Hajrudin-Zelef/Marexstore/internal/auth"
+)
+
+// Miroir serveur : appelé par mirror.js en parallèle du flux localStorage.
+// Ne change jamais l'UX : 204 même si la donnée est partielle.
+func (a *App) checkCSRF(r *http.Request) bool {
+	return auth.CheckCSRF(a.Cfg.SessionSecret, a.sessionID(r), r.FormValue("csrf"))
+}
+
+func (a *App) mirror(r *http.Request) bool {
+	return r.Header.Get("X-Mirror") == "1" || r.Header.Get("HX-Request") == "true"
+}
+
+func (a *App) ok(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"ok":true}`))
+}
+
+// POST /api/panier {slug, qty} — trace d'ajout.
+func (a *App) ApiPanier(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost || !a.checkCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	slug := strings.TrimSpace(r.FormValue("slug"))
+	qty, _ := strconv.Atoi(r.FormValue("qty"))
+	if qty < 1 {
+		qty = 1
+	}
+	if qty > 10 {
+		qty = 10
+	}
+	var id int64
+	if err := a.DB.QueryRow(`SELECT id FROM products WHERE slug=?`, slug).Scan(&id); err != nil {
+		http.Error(w, "introuvable", http.StatusNotFound)
+		return
+	}
+	a.ok(w)
+}
+
+// POST /api/commande {items: "slugxqty,...", moyen, nom?, tel?}
+// Enregistre la commande WhatsApp (le message wa.me reste construit côté client).
+func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost || !a.checkCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	type item struct {
+		id  int64
+		qty int
+		pr  *int64
+	}
+	var items []item
+	var total int64
+	for _, part := range strings.Split(r.FormValue("items"), ",") {
+		kv := strings.SplitN(strings.TrimSpace(part), "x", 2)
+		if len(kv) != 2 {
+			continue
+		}
+		q, _ := strconv.Atoi(kv[1])
+		if q < 1 {
+			q = 1
+		}
+		if q > 10 {
+			q = 10
+		}
+		var id int64
+		var prix sql.NullInt64
+		if err := a.DB.QueryRow(`SELECT id,prix FROM products WHERE slug=?`, kv[0]).Scan(&id, &prix); err != nil {
+			continue
+		}
+		var p *int64
+		if prix.Valid {
+			v := prix.Int64
+			p = &v
+			total += v * int64(q)
+		}
+		items = append(items, item{id, q, p})
+	}
+	if len(items) == 0 {
+		http.Error(w, "panier vide", http.StatusBadRequest)
+		return
+	}
+	moyen := r.FormValue("moyen")
+	switch moyen {
+	case "whatsapp", "wave", "orange", "mtn", "livraison", "virement":
+	default:
+		moyen = "whatsapp"
+	}
+	client, _ := json.Marshal(map[string]string{"nom": r.FormValue("nom"), "tel": r.FormValue("tel")})
+	var uid any
+	if id := auth.CurrentUserID(a.DB, r); id != nil {
+		uid = *id
+	}
+	res, err := a.DB.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json) VALUES(?,?,?,?,?)`,
+		uid, "whatsapp_recu", moyen, total, string(client))
+	if err != nil {
+		http.Error(w, "indisponible", 500)
+		return
+	}
+	oid, _ := res.LastInsertId()
+	for _, it := range items {
+		var p any
+		if it.pr != nil {
+			p = *it.pr
+		}
+		_, _ = a.DB.Exec(`INSERT INTO order_items(order_id,product_id,qty,prix_unitaire) VALUES(?,?,?,?)`, oid, it.id, it.qty, p)
+	}
+	a.ok(w)
+}
+
+// POST /api/devis|suivi|contact|infos — demandes enregistrées comme commandes "devis".
+func (a *App) ApiDemande(statut string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost || !a.checkCSRF(r) {
+			http.Error(w, "refusé", http.StatusForbidden)
+			return
+		}
+		r.ParseForm()
+		kv := map[string]string{}
+		for k, v := range r.Form {
+			if k == "csrf" || len(v) == 0 {
+				continue
+			}
+			kv[k] = v[0]
+		}
+		client, _ := json.Marshal(kv)
+		var uid any
+		if id := auth.CurrentUserID(a.DB, r); id != nil {
+			uid = *id
+		}
+		_, _ = a.DB.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json) VALUES(?,?,?,?,?)`,
+			uid, statut, "whatsapp", 0, string(client))
+		a.ok(w)
+	}
+}
+
+func (a *App) ApiCSRF(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"csrf": a.csrf(r)})
+}
+
+// ---------- Auth (compte optionnel, sessions + bcrypt) ----------
+
+func (a *App) Register(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost || !a.checkCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	email := strings.ToLower(strings.TrimSpace(r.FormValue("email")))
+	pw := r.FormValue("password")
+	nom := strings.TrimSpace(r.FormValue("nom"))
+	prenom := strings.TrimSpace(r.FormValue("prenom"))
+	if !strings.Contains(email, "@") || len(pw) < 6 || len(email) > 120 {
+		http.Error(w, "données invalides", http.StatusBadRequest)
+		return
+	}
+	h, _ := auth.HashPassword(pw)
+	_, err := a.DB.Exec(`INSERT INTO users(email,pass_hash,nom,tel) VALUES(?,?,?,?)`, email, h, strings.TrimSpace(prenom+" "+nom), "")
+	if err != nil {
+		http.Error(w, "compte existant ou invalide", http.StatusBadRequest)
+		return
+	}
+	var uid int64
+	_ = a.DB.QueryRow(`SELECT id FROM users WHERE email=?`, email).Scan(&uid)
+	tok, _ := auth.CreateSession(a.DB, uid, r, 30*24*time.Hour)
+	auth.SetCookie(w, tok, 30*24*time.Hour, a.SecureCookies)
+	if !a.mirror(r) {
+		http.Redirect(w, r, "/compte.html", http.StatusSeeOther)
+		return
+	}
+	a.ok(w)
+}
+
+func (a *App) Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost || !a.checkCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	email := strings.ToLower(strings.TrimSpace(r.FormValue("email")))
+	var uid int64
+	var hash, nom string
+	if err := a.DB.QueryRow(`SELECT id,pass_hash,nom FROM users WHERE email=?`, email).Scan(&uid, &hash, &nom); err != nil ||
+		!auth.CheckPassword(hash, r.FormValue("password")) {
+		http.Error(w, "identifiants invalides", http.StatusUnauthorized)
+		return
+	}
+	tok, _ := auth.CreateSession(a.DB, uid, r, 30*24*time.Hour)
+	auth.SetCookie(w, tok, 30*24*time.Hour, a.SecureCookies)
+	if !a.mirror(r) {
+		http.Redirect(w, r, "/compte.html", http.StatusSeeOther)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"ok": "1", "nom": nom})
+}
+
+func (a *App) Logout(w http.ResponseWriter, r *http.Request) {
+	auth.ClearCookie(w)
+	a.ok(w)
+}
+
+// POST /auth/mot-de-passe — via page compte (miroir).
+func (a *App) Password(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost || !a.checkCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	uid := auth.CurrentUserID(a.DB, r)
+	if uid == nil {
+		http.Error(w, "non connecté", http.StatusUnauthorized)
+		return
+	}
+	pw := r.FormValue("password")
+	if len(pw) < 6 {
+		http.Error(w, "6 caractères minimum", http.StatusBadRequest)
+		return
+	}
+	h, _ := auth.HashPassword(pw)
+	_, _ = a.DB.Exec(`UPDATE users SET pass_hash=? WHERE id=?`, h, *uid)
+	a.ok(w)
+}
