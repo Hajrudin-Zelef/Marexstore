@@ -284,7 +284,9 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 func bestRepByName(fs []*catalog.RawProduct) map[string]*catalog.RawProduct {
 	rep := map[string]*catalog.RawProduct{}
 	best := map[string]int{}
+	bySlug := map[string]*catalog.RawProduct{}
 	for _, p := range fs {
+		bySlug[p.Slug] = p
 		if p.Image == "" {
 			continue
 		}
@@ -302,6 +304,16 @@ func bestRepByName(fs []*catalog.RawProduct) map[string]*catalog.RawProduct {
 		if score > best[p.Sub] {
 			rep[p.Sub] = p
 			best[p.Sub] = score
+		}
+	}
+	// Forçages explicites (ex. serveur HPE imposé par le marchand).
+	for sub, slug := range catalog.RepOverride {
+		if p, ok := bySlug[slug]; ok && p.Image != "" {
+			for s := range rep {
+				if catalog.Slugify(s) == sub {
+					rep[s] = p
+				}
+			}
 		}
 	}
 	return rep

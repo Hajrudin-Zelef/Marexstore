@@ -147,8 +147,21 @@ func (s *Store) FacetsJS() string {
 	return "/* Facettes des filtres par catégorie / sous-catégorie (généré par le serveur).\n   Valeurs extraites des caractéristiques réelles des fiches, rien d'inventé. */\nwindow.MEDIATEC_FACETS = " + string(b) + ";\n"
 }
 
+// RepOverride : miniature imposée (slug produit) pour une tuile, par slug de
+// top live (tuile boutique) ou de sous-catégorie (tuile de type). Prioritaire
+// sur les préférences et le score automatique.
+var RepOverride = map[string]string{
+	"serveur":       "serveurs-hpe-proliant-dl-rack",
+	"serveurs-rack": "serveurs-hpe-proliant-dl-rack",
+}
+
 // HubPhoto reproduit hub_photo() + HUB_PHOTO_PREF.
 func (s *Store) HubPhoto(top string) *RawProduct {
+	if slug, ok := RepOverride[top]; ok {
+		if p, ok := s.BySlug[slug]; ok && p.Image != "" && p.LiveTop == top {
+			return p
+		}
+	}
 	prefs := map[string][]string{
 		"accessoires-informatiques":   {"toner", "clavier"},
 		"materiels-reseaux":           {"switch", "routeur", "cisco"},

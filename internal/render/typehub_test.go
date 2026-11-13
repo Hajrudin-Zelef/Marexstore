@@ -534,8 +534,8 @@ func TestTypeThumbsRepresentative(t *testing.T) {
 		}
 		return m[1]
 	}
-	if img := repOf("serveur", "Serveurs rack"); strings.Contains(img, "accessoires-serveurs") {
-		t.Errorf("tuile Serveurs rack : encore la barrette RAM (%s)", img)
+	if img := repOf("serveur", "Serveurs rack"); img != "images/serveurs-hpe-proliant-dl-rack.jpg" {
+		t.Errorf("tuile Serveurs rack : %s, HPE ProLiant DL attendu", img)
 	} else {
 		t.Logf("tuile Serveurs rack : %s", img)
 	}
