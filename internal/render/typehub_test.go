@@ -457,8 +457,8 @@ func TestTypePages(t *testing.T) {
 		must(strings.Contains(body, `<div data-catalog-home>`), "liste des produits absente")
 		must(!strings.Contains(body, `<div data-catalog-home hidden`), "liste des produits cachée")
 		must(strings.Contains(body, `class="card"`), "aucune carte produit")
-		must(strings.Contains(body, `<a href="../boutique.html">Store</a>`), "fil d'Ariane incomplet")
-		must(strings.Contains(body, `<a href="`+top+`.html">`), "fil d'Ariane sans lien catégorie")
+		must(strings.Contains(body, `<a href="../../boutique.html">Store</a>`), "fil d'Ariane incomplet")
+		must(strings.Contains(body, `<a href="../`+top+`.html">`), "fil d'Ariane sans lien catégorie")
 	}
 	reType := regexp.MustCompile(`categories/([a-z0-9-]+)/([a-z0-9-]+)\.html`)
 	for _, m := range reType.FindAllStringSubmatch(render.HubHTML(s, ""), -1) {

@@ -65,11 +65,12 @@ func (a *App) Categorie(w http.ResponseWriter, r *http.Request) {
 }
 
 // CategorieType : page dédiée d'un type (/categories/<top>/<type>.html).
+// Profondeur 2 → préfixe "../../" pour le <head> (assets) comme pour le corps.
 func (a *App) CategorieType(w http.ResponseWriter, r *http.Request) {
 	top := chi.URLParam(r, "top")
 	typ := strings.TrimSuffix(chi.URLParam(r, "type"), ".html")
 	if title, body, ok := render.CategoryTypePage(a.Store, top, typ); ok {
-		a.renderDoc(w, r, title, body, "../")
+		a.renderDoc(w, r, title, body, "../../")
 		return
 	}
 	http.NotFound(w, r)

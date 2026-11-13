@@ -306,7 +306,7 @@ func TypeHubHTML(fs []*catalog.RawProduct, active, prefix, topSlug string) strin
 	for _, sub := range subs {
 		img := `<div class="noimg">Photo à venir</div>`
 		if r := rep[sub]; r != nil {
-			img = ImgTag(r, "../")
+			img = ImgTag(r, prefix)
 		}
 		prod := "produits"
 		if counts[sub] == 1 {
@@ -452,16 +452,16 @@ func CategoryTypePage(s *catalog.Store, topSlug, typeSlug string) (title, body s
 	if len(fs) > 1 {
 		n = fmt.Sprintf("%d produits", len(fs))
 	}
-	body = Header(s, "../", "") + `
+	body = Header(s, "../../", "") + `
 <div class="wrap"><div class="home">
 <div>` + FiltersPanel(s, "page") + `</div>
-<div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › <a href="` + esc(topSlug) + `.html">` + esc(topLabel) + `</a> › ` + esc(label) + `</div>
+<div><div class="crumb"><a href="../../index.html">Accueil</a> › <a href="../../boutique.html">Store</a> › <a href="../` + esc(topSlug) + `.html">` + esc(topLabel) + `</a> › ` + esc(label) + `</div>
 <h1 style="font-size:24px">` + esc(label) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(topLabel) + `</p>
-` + TypeHubHTML(topFs, typeSlug, "../", topSlug) + `
+` + TypeHubHTML(topFs, typeSlug, "../../", topSlug) + `
 <div data-catalog-home>
-` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", nil, "") + `</div>
+` + CatalogWrap(s, fs, "../../", "sub_slug", "sub", "list", nil, "") + `</div>
 </div></div></div>
-` + Footer(s, "../")
+` + Footer(s, "../../")
 	return label + " — " + topLabel, body, true
 }
