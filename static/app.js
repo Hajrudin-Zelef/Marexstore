@@ -731,9 +731,12 @@
     if (megaBtn && megaPanel) {
       var closeMega = function () { megaPanel.hidden = true; megaBtn.setAttribute('aria-expanded', 'false'); };
       var openMega = function () { megaPanel.hidden = false; megaBtn.setAttribute('aria-expanded', 'true'); };
-      megaBtn.addEventListener('mouseenter', openMega);
+      /* Survol réservé aux appareils à souris : sur tactile, le tap émule
+         mouseenter puis click, ce qui ouvrait puis refermait aussitôt le menu. */
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      megaBtn.addEventListener('mouseenter', function () { if (canHover) openMega(); });
       var navEl = megaBtn.closest('nav');
-      if (navEl) navEl.addEventListener('mouseleave', closeMega);
+      if (navEl) navEl.addEventListener('mouseleave', function () { if (canHover) closeMega(); });
       megaBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         if (megaPanel.hidden) openMega(); else closeMega();
@@ -756,7 +759,7 @@
           }
           show();
         });
-        b.addEventListener('mouseenter', function () { if (!megaMq.matches) show(); });
+        b.addEventListener('mouseenter', function () { if (canHover && !megaMq.matches) show(); });
       });
       /* Mobile : chaque bloc de sous-catégories déménage juste sous son bouton
          (accordéon) au lieu de s'afficher en bas après « Uncategorized ».
