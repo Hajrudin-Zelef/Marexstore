@@ -71,6 +71,78 @@ func (a *App) Admin(w http.ResponseWriter, r *http.Request) {
 	if ca.Valid {
 		caStr = fmt.Sprint(ca.Int64)
 	}
+	// Produits par catégorie (donut) : libellés lisibles, tops à 0 exclus.
+	topLabel := map[string]string{
+		"materiels-reseaux": "Matériels réseaux", "accessoires-informatiques": "Accessoires informatiques",
+		"imprimantes": "Imprimantes", "laptots": "Laptops neuf",
+		"ordinateurs-de-bureau-neufs": "Ordinateurs de bureau", "serveur": "Serveur",
+		"telephones-tablettes": "Téléphones & tablettes", "casi-neuf": "Reconditionné",
+		"cameras-videosurveillances":       "Caméras & vidéosurveillance",
+		"accessoires-telephones-tablettes": "Accessoires téléphones", "uncategorized": "Non classé",
+	}
+	var catSegs []dashSeg
+	if crows, err := a.DB.Query(`SELECT live_top, COUNT(*) FROM products GROUP BY live_top ORDER BY COUNT(*) DESC`); err == nil && crows != nil {
+		defer crows.Close()
+		i := 0
+		for crows.Next() {
+			var top string
+			var n int
+			_ = crows.Scan(&top, &n)
+			if n <= 0 {
+				continue
+			}
+			lb, ok := topLabel[top]
+			if !ok {
+				lb = top
+			}
+			catSegs = append(catSegs, dashSeg{Label: lb, Count: n, Color: dashColor(i)})
+			i++
+		}
+	}
+	// Commandes par statut (donut).
+	stLabel := map[string]string{
+		"devis": "Devis", "whatsapp_recu": "WhatsApp reçu", "attente_momo": "Attente MoMo",
+		"paye": "Payé", "prepare": "Préparé", "livre": "Livré", "annule": "Annulé",
+	}
+	var stSegs []dashSeg
+	if srows, err := a.DB.Query(`SELECT statut, COUNT(*) FROM orders GROUP BY statut ORDER BY COUNT(*) DESC`); err == nil && srows != nil {
+		defer srows.Close()
+		i := 0
+		for srows.Next() {
+			var st string
+			var n int
+			_ = srows.Scan(&st, &n)
+			if n <= 0 {
+				continue
+			}
+			lb, ok := stLabel[st]
+			if !ok {
+				lb = st
+			}
+			stSegs = append(stSegs, dashSeg{Label: lb, Count: n, Color: dashColor(i)})
+			i++
+		}
+	}
+	// Top marques (barres) : marque vide = « Sans marque ».
+	var brandSegs []dashSeg
+	maxBrand := 0
+	if brows, err := a.DB.Query(`SELECT COALESCE(NULLIF(TRIM(marque),''),'Sans marque'), COUNT(*) FROM products GROUP BY 1 ORDER BY COUNT(*) DESC LIMIT 8`); err == nil && brows != nil {
+		defer brows.Close()
+		i := 0
+		for brows.Next() {
+			var m string
+			var n int
+			_ = brows.Scan(&m, &n)
+			if n <= 0 {
+				continue
+			}
+			if n > maxBrand {
+				maxBrand = n
+			}
+			brandSegs = append(brandSegs, dashSeg{Label: m, Count: n, Color: dashColor(i)})
+			i++
+		}
+	}
 	// Dernières commandes.
 	var last strings.Builder
 	rows, _ := a.DB.Query(`SELECT id,statut,moyen_paiement,total,created_at FROM orders ORDER BY id DESC LIMIT 5`)
@@ -100,16 +172,45 @@ func (a *App) Admin(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(&low, `<tr><td><a href="/admin/produits/%s">%s</a></td><td>%s</td></tr>`, slug, render.Esc(nom), statutBadge("rupture"))
 		}
 	}
-	a.write(w, 200, a.adminPage("Tableau de bord", "", `<div class="mx-grid kpi">
-<div class="mx-card"><h3>Chiffre encaissé</h3><div class="big">`+caStr+`</div><div class="sub">F CFA (payé/préparé/livré)</div></div>
-<div class="mx-card"><h3>Commandes</h3><div class="big">`+fmt.Sprint(nOrders)+`</div><div class="sub"><a href="/admin/commandes">Tout voir →</a></div></div>
-<div class="mx-card"><h3>Produits</h3><div class="big">`+fmt.Sprint(nProd)+`</div><div class="sub"><a href="/admin/produits">Gérer →</a></div></div>
-<div class="mx-card"><h3>Ruptures</h3><div class="big">`+fmt.Sprint(rupt)+`</div><div class="sub"><a href="/admin/produits?vue=rupture">Voir →</a></div></div>
-<div class="mx-card"><h3>Comptes</h3><div class="big">`+fmt.Sprint(nUsers)+`</div><div class="sub"><a href="/admin/clients">Voir →</a></div></div>
-</div><br><div class="mx-grid two">
-<div class="mx-card"><h2>Dernières commandes</h2><div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Statut</th></tr>`+last.String()+`</table></div></div>
-<div class="mx-card"><h2>À réassortir</h2><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>État</th></tr>`+low.String()+`</table></div></div>
-</div>`, r))
+	// Donut statuts : état vide élégant quand aucune commande.
+	stDonut := donutSVG(stSegs, 170, fmt.Sprint(nOrders), "commandes")
+	if nOrders == 0 {
+		stDonut = `<div class="mx-empty"><div class="mx-empty-big">0</div><div class="mx-muted">Aucune commande pour le moment.<br>Les commandes apparaîtront ici.</div></div>`
+	}
+	zeroNote := ""
+	zeroTops := 0
+	for _, t := range []string{"cameras-videosurveillances", "accessoires-telephones-tablettes", "uncategorized"} {
+		found := false
+		for _, s := range catSegs {
+			if s.Label == topLabel[t] {
+				found = true
+				break
+			}
+		}
+		if !found {
+			zeroTops++
+		}
+	}
+	if zeroTops > 0 {
+		zeroNote = `<div class="mx-note">` + fmt.Sprint(zeroTops) + ` catégorie(s) sans produit (Caméras &amp; vidéosurveillance, Accessoires téléphones, Non classé) — exclue(s) du graphique.</div>`
+	}
+	body := `<div class="mx-grid kpi">` +
+		kpiCard(icCash, "#2e5136", "Chiffre encaissé", caStr, `F CFA (payé/préparé/livré)`) +
+		kpiCard(icBag, "#2271b1", "Commandes", fmt.Sprint(nOrders), `<a href="/admin/commandes">Tout voir →</a>`) +
+		kpiCard(icBox, "#2e5136", "Produits", fmt.Sprint(nProd), `<a href="/admin/produits">Gérer →</a>`) +
+		kpiCard(icWarn, "#d63638", "Ruptures", fmt.Sprint(rupt), `<a href="/admin/produits?vue=rupture">Voir →</a>`) +
+		kpiCard(icUser, "#7c3aed", "Comptes", fmt.Sprint(nUsers), `<a href="/admin/clients">Voir →</a>`) +
+		`</div>` +
+		`<div class="mx-grid charts">` +
+		`<div class="mx-card mx-chart"><h2>Produits par catégorie</h2>` + donutSVG(catSegs, 180, fmt.Sprint(nProd), "produits") + zeroNote + `</div>` +
+		`<div class="mx-card mx-chart"><h2>Commandes par statut</h2>` + stDonut + `</div>` +
+		`</div>` +
+		`<div class="mx-card mx-chart"><h2>Top marques</h2>` + barRows(brandSegs, maxBrand) + `</div>` +
+		`<div class="mx-grid two">` +
+		`<div class="mx-card"><h2>Dernières commandes</h2><div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Statut</th></tr>` + last.String() + `</table></div></div>` +
+		`<div class="mx-card"><h2>À réassortir</h2><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>État</th></tr>` + low.String() + `</table></div></div>` +
+		`</div>`
+	a.write(w, 200, a.adminPage("Tableau de bord", "", body, r))
 }
 
 func statutBadge(st string) string {

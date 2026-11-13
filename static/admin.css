@@ -71,6 +71,46 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-pager{display:flex;gap:6px;align-items:center;justify-content:flex-end;padding:10px 12px;font-size:13px}
 .mx-pager a,.mx-pager span{border:1px solid var(--mx-border);border-radius:6px;padding:4px 10px;text-decoration:none;background:#fff;color:var(--mx-ink)}
 .mx-pager span.cur{background:var(--mx-ink);color:#fff;border-color:var(--mx-ink);font-weight:700}
+/* ---------- Dashboard premium ---------- */
+.mx-grid.kpi{grid-template-columns:repeat(5,minmax(0,1fr))}
+.mx-grid.charts{grid-template-columns:2fr 1fr;margin:16px 0}
+.mx-grid.charts + .mx-card{margin-bottom:16px}
+.mx-grid.two{margin-top:16px}
+/* KPI premium : icône + accent couleur + survol */
+.mx-kpi{display:flex;gap:14px;align-items:flex-start;padding:18px;position:relative;overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}
+.mx-kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--mx-kpi,#2271b1)}
+.mx-kpi:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(29,35,39,.12)}
+.mx-kpi-ic{flex:none;width:44px;height:44px;border-radius:12px;background:#eef0f2;background:color-mix(in srgb,var(--mx-kpi,#2271b1) 12%,#fff);color:var(--mx-kpi,#2271b1);display:flex;align-items:center;justify-content:center}
+.mx-kpi-ic svg{width:24px;height:24px}
+.mx-kpi-tx{min-width:0}
+.mx-kpi-tx h3{margin:0 0 2px}
+.mx-kpi .big{font-size:30px}
+.mx-kpi .sub{margin-top:2px}
+/* Cartes graphiques */
+.mx-chart{padding:20px}
+.mx-chart h2{margin:0 0 16px;font-size:15px}
+.mx-donut{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.mx-donut svg{flex:none}
+.mx-donut-total{font-size:22px;font-weight:800;fill:var(--mx-ink)}
+.mx-donut-sub{font-size:11px;fill:var(--mx-muted)}
+.mx-legend{list-style:none;margin:0;padding:0;flex:1;min-width:220px}
+.mx-legend li{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13.5px;border-bottom:1px solid #f0f0f1}
+.mx-legend li:last-child{border-bottom:0}
+.mx-legend .dot{width:11px;height:11px;border-radius:3px;flex:none}
+.mx-legend .lb{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mx-legend .vl{font-weight:700}
+.mx-legend .pc{color:var(--mx-muted);width:38px;text-align:right;font-size:12.5px}
+/* Barres horizontales (top marques) */
+.mx-bar-row{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:13.5px}
+.mx-bar-row .lb{width:170px;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mx-bar-row .tr{flex:1;height:10px;background:#eef0f2;border-radius:6px;overflow:hidden}
+.mx-bar-row .fl{display:block;height:100%;border-radius:6px}
+.mx-bar-row .vl{width:44px;text-align:right;font-weight:700;flex:none}
+/* État vide + note */
+.mx-empty{text-align:center;padding:28px 12px}
+.mx-empty-big{font-size:40px;font-weight:800;color:var(--mx-border)}
+.mx-muted{color:var(--mx-muted);font-size:13px}
+.mx-note{margin-top:14px;font-size:12.5px;color:var(--mx-muted);border-top:1px solid #f0f0f1;padding-top:12px}
 /* ---------- Boutons / formulaires ---------- */
 .mx-btn{display:inline-block;border:1px solid var(--mx-accent);background:var(--mx-accent);color:#fff;border-radius:6px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit}
 .mx-btn:hover{background:var(--mx-accent-dark)}

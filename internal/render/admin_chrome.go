@@ -77,7 +77,7 @@ func MxDoc(title, active string, counts map[string]int, body string) string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=1">
+<link rel="stylesheet" href="/static/admin.css?v=2">
 <script src="/static/theme.js?v=1"></script>
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, counts) +
