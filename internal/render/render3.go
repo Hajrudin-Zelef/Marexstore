@@ -176,15 +176,15 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 <div data-pane="3" hidden><div class="catalog view-grid" style="grid-template-columns:repeat(3,1fr)">` + tabCards(notes) + `</div></div>
 </div></div></div>
 <div class="sec"><h2>Nos produits</h2><div class="sub">Une sélection du stock — voir tout le catalogue dans le <a href="boutique.html">Store</a></div>
-<div class="catalog view-grid">` + grille.String() + `</div></div>
-<div class="sec"><h2>Les plus vendus</h2><div class="sub">Top 8</div><div class="top8">` + top8.String() + `</div></div>
+<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + grille.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
+<div class="sec"><h2>Les plus vendus</h2><div class="sub">Top 8</div><div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="top8 hrow">` + top8.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
 <div class="sec"><div class="banner"><div><h3>Clés USB Imation &amp; disques durs WD Elements</h3>
 <p>Stockage fiable pour tous vos besoins — demandez votre devis.</p></div>
 <div><a class="btn" href="boutique.html">VOIR LE PRODUIT</a>
 <a class="btn dark" href="mailto:` + catalog.Email + `">CONTACT</a>
 <a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>
 <div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
-<div class="catalog view-grid">` + recentsHTML.String() + `</div></div>
+<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
 <div class="sec"><div class="brands"><span>ACER</span><span>APPLE</span><span>ASUS</span><span>CISCO</span><span>DELL</span><span>EPSON</span><span>HP</span><span>KYOCERA</span><span>LENOVO</span></div></div>
 </div>
 ` + Footer(s, "")

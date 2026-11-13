@@ -940,3 +940,16 @@ img{height:auto}
   .mega-rail [data-mega-cols] .mega-groups{column-count:1}
   .mega-rail [data-mega-cols] .mega-links{column-count:1}
 }
+
+/* Rangées défilantes de l'accueil (une ligne + flèches) */
+.hrow-wrap{position:relative}
+.hrow.catalog.view-grid,.top8.hrow{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 0;margin:-8px 0}
+.hrow::-webkit-scrollbar{display:none}
+.hrow>*{flex:0 0 calc((100% - 42px)/4);min-width:0;scroll-snap-align:start}
+.hrow-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;padding:0;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:24px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+.hrow-btn.prev{left:-18px}
+.hrow-btn.next{right:-18px}
+.hrow-btn:hover{border-color:var(--brand);color:var(--brand-dark)}
+.hrow-btn[hidden]{display:none}
+@media(max-width:960px){.hrow>*{flex-basis:calc((100% - 14px)/2)}.hrow-btn.prev{left:4px}.hrow-btn.next{right:4px}}
+@media(max-width:560px){.hrow>*{flex-basis:85%}}

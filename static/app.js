@@ -1154,3 +1154,33 @@
     renderAcct();
   });
 })();
+
+/* Rangées défilantes de l'accueil : flèches précédent / suivant */
+(function () {
+  function upd(w) {
+    var t = w.querySelector('.hrow');
+    if (!t) return;
+    var p = w.querySelector('.hrow-btn.prev'), n = w.querySelector('.hrow-btn.next');
+    if (p) p.hidden = t.scrollLeft <= 2;
+    if (n) n.hidden = t.scrollLeft >= t.scrollWidth - t.clientWidth - 2;
+  }
+  function all() { document.querySelectorAll('.hrow-wrap').forEach(upd); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('[data-hrow]') : null;
+    if (!b) return;
+    var w = b.closest('.hrow-wrap'), t = w ? w.querySelector('.hrow') : null;
+    if (!t) return;
+    t.scrollBy({ left: parseInt(b.getAttribute('data-hrow'), 10) * t.clientWidth, behavior: 'smooth' });
+  });
+  function init() {
+    document.querySelectorAll('.hrow-wrap').forEach(function (w) {
+      var t = w.querySelector('.hrow');
+      if (t) t.addEventListener('scroll', function () { upd(w); }, { passive: true });
+      upd(w);
+    });
+  }
+  window.addEventListener('resize', all);
+  window.addEventListener('load', all);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

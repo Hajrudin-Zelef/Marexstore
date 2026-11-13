@@ -42,6 +42,8 @@ var reHubSub = regexp.MustCompile(`<li><a href="[^"]*">`)
 var reMegaGroups = regexp.MustCompile(`(<div class="mega-groups">).*?(</div><a class="mega-all")`)
 var reMegaCount = regexp.MustCompile(`<span class="mega-count">\(\d+\)</span>`)
 var reThemeJs = regexp.MustCompile(`<script src="[^"]*theme\.js[^"]*"></script>\n?`)
+var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button>`)
+var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
 
 func normPage(s string) string {
@@ -49,6 +51,12 @@ func normPage(s string) string {
 	s = reMirror.ReplaceAllString(s, "")
 	// theme.js : script externe ajouté après v3.25 (zéro script inline).
 	s = reThemeJs.ReplaceAllString(s, "")
+	// Rangées défilantes de l'accueil (ajout volontaire) : retire wrappers et
+	// flèches pour comparer le contenu des cartes à la v3.25.
+	s = reHrowPrev.ReplaceAllString(s, "")
+	s = reHrowNext.ReplaceAllString(s, "")
+	s = strings.ReplaceAll(s, `catalog view-grid hrow"`, `catalog view-grid"`)
+	s = strings.ReplaceAll(s, `top8 hrow"`, `top8"`)
 	// Newsletter : <form action="mailto:"> remplacé par JS (même UX, sans Mixed Content).
 	s = reNewsletter.ReplaceAllString(s, `<form>NEWSLETTER</form>`)
 	s = reVer.ReplaceAllString(s, "assets/X")

@@ -486,3 +486,25 @@ func TestTypePages(t *testing.T) {
 	}
 	t.Logf("pages types vérifiées : %d", len(seen))
 }
+
+// TestHomeRows : les sections Nos produits / Top 8 / Ajouté récemment sont des
+// rangées défilantes (une ligne + flèches), pas des grilles.
+func TestHomeRows(t *testing.T) {
+	s := testStoreFull(t)
+	recents := s.Recents(rel("../../catalogdata/store-sitemap.xml"))
+	body := render.IndexBody(s, recents)
+	if got := strings.Count(body, `class="hrow-wrap"`); got != 3 {
+		t.Errorf("accueil : %d hrow-wrap, 3 attendus (produits, top8, recents)", got)
+	}
+	if got := strings.Count(body, `data-hrow="1"`); got != 3 {
+		t.Errorf("accueil : %d boutons suivant, 3 attendus", got)
+	}
+	if got := strings.Count(body, `data-hrow="-1"`); got != 3 {
+		t.Errorf("accueil : %d boutons precedent, 3 attendus", got)
+	}
+	for _, cls := range []string{`catalog view-grid hrow`, `top8 hrow`} {
+		if !strings.Contains(body, cls) {
+			t.Errorf("accueil : rangee %q absente", cls)
+		}
+	}
+}
