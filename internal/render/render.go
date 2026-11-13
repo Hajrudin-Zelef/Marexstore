@@ -83,7 +83,7 @@ func MegaPanel(s *catalog.Store, prefix string) string {
 		if first {
 			hidden = ""
 		}
-		fmt.Fprintf(&cols, `<div class="mega-cols" data-mega-cols="%s"%s><div class="mega-groups">%s</div><a class="mega-all" href="%sboutique.html?store=%s">Voir tous les %s ›</a></div>`,
+		fmt.Fprintf(&cols, `<div class="mega-cols" data-mega-cols="%s"%s><div class="mega-groups">%s</div><a class="mega-all" href="%scategories/%s.html">Voir tous les %s ›</a></div>`,
 			t.Slug, hidden, groups.String(), prefix, t.Slug, esc(t.Label))
 		first = false
 	}

@@ -39,6 +39,13 @@ func (a *App) Categorie(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	// Tops live du menu « Toutes les catégories » : même page, types d'abord.
+	for _, t := range catalog.LiveCats {
+		if t.Slug == f {
+			a.renderDoc(w, r, t.Label, render.CategoryPageLive(a.Store, t), "../")
+			return
+		}
+	}
 	http.NotFound(w, r)
 }
 

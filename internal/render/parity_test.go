@@ -36,12 +36,17 @@ var reHtmx = regexp.MustCompile("<script[^>]*htmx[^>]*></script>\n?")
 var reMirror = regexp.MustCompile("<script[^>]*mirror[^>]*></script>\n?")
 var reVer = regexp.MustCompile(`assets/[a-z0-9_.-]+\.css\?v=\d+|assets/[a-z0-9_.-]+\.js\?v=\d+`)
 var reFiltersToggle = regexp.MustCompile(`<button type="button" class="filters-toggle"[^>]*>.*?</button>\n?`)
+var reMegaAll = regexp.MustCompile(`<a class="mega-all" href="[^"]*"`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
 	s = reMirror.ReplaceAllString(s, "")
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
+	// « Voir tous » du méga-menu : pointe maintenant vers la page catégorie
+	// (hub des types d'abord), plus vers la boutique filtrée — vérifié par
+	// son propre test, pas par la parité avec l'archive v3.25.
+	s = reMegaAll.ReplaceAllString(s, `<a class="mega-all" href="MEGAALL"`)
 	// Hub des types (pages catégories, nouveau) : la fermeture du bloc
 	// [data-catalog-home] se colle à celle du catalogue.
 	s = strings.ReplaceAll(s, "</div></div>\n</div></div></div>", "</div>\n</div></div></div>")

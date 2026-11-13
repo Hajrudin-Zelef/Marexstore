@@ -120,6 +120,86 @@ func TestHomeFilter(t *testing.T) {
 	t.Logf("filtre : %d types", len(seen))
 }
 
+// TestLiveTopPages : chaque top live du menu « Toutes les catégories » a sa
+// page (/categories/<slug>.html) avec le hub de SES types d'abord, puis la
+// liste cachée — pas la boutique filtrée. (3 tops live n'ont aucun produit
+// dans le catalogue actuel : leur page est vide, c'est normal.)
+func TestLiveTopPages(t *testing.T) {
+	s := testStoreFull(t)
+	for _, lt := range catalog.LiveCats {
+		fs := render.CategoryBodyLive(s, lt.Slug)
+		page := render.CategoryPageLive(s, lt)
+		if !strings.Contains(page, `<h1 style="font-size:24px">`+catalog.Esc(lt.Label)+`</h1>`) {
+			t.Errorf("%s : titre absent", lt.Label)
+		}
+		if len(fs) == 0 {
+			t.Logf("%s : aucun produit (page vide)", lt.Label)
+			continue
+		}
+		if !strings.Contains(page, `data-hub`) {
+			t.Errorf("%s : hub des types absent", lt.Label)
+		}
+		if !strings.Contains(page, `data-catalog-home hidden`) {
+			t.Errorf("%s : liste des produits pas cachée derrière le hub", lt.Label)
+		}
+		// Le hub liste les types de CE top live, avec le bon compteur.
+		counts := map[string]int{}
+		for _, p := range fs {
+			counts[p.Sub]++
+		}
+		hub := render.TypeHubHTML(fs)
+		if got := strings.Count(hub, `class="hub-card"`); got != len(counts) {
+			t.Errorf("%s : %d tuiles, %d types attendus", lt.Label, got, len(counts))
+		}
+		for sub, n := range counts {
+			if !strings.Contains(hub, `href="?type=`+catalog.Slugify(sub)+`"`) {
+				t.Errorf("%s : lien ?type= absent pour %q", lt.Label, sub)
+			}
+			want := fmt.Sprintf(`%d produit`, n)
+			if n > 1 {
+				want = fmt.Sprintf(`%d produits`, n)
+			}
+			if !strings.Contains(hub, want) {
+				t.Errorf("%s : compteur %q absent pour %q", lt.Label, want, sub)
+			}
+		}
+	}
+	// Le cas de Zelef : Matériels réseaux doit montrer ses 5 types.
+	fs := render.CategoryBodyLive(s, "materiels-reseaux")
+	hub := render.TypeHubHTML(fs)
+	for _, sub := range []string{"Réseau & câbles", "Cisco & réseau", "Téléphonie IP", "Réseau Legrand", "Adaptateurs"} {
+		if !strings.Contains(hub, catalog.Esc(sub)) {
+			t.Errorf("Matériels réseaux : type %q absent du hub", sub)
+		}
+	}
+}
+
+// TestMegaMenuVoirTous : « Voir tous les X » du méga-menu mène à la page
+// catégorie (hub des types d'abord), jamais à la boutique filtrée.
+func TestMegaMenuVoirTous(t *testing.T) {
+	s := testStoreFull(t)
+	panel := render.MegaPanel(s, "")
+	re := regexp.MustCompile(`<a class="mega-all" href="([^"]*)">`)
+	matches := re.FindAllStringSubmatch(panel, -1)
+	if len(matches) != len(catalog.LiveCats) {
+		t.Fatalf("méga-menu : %d liens « Voir tous », %d tops live attendus", len(matches), len(catalog.LiveCats))
+	}
+	seen := map[string]bool{}
+	for _, m := range matches {
+		href := m[1]
+		seen[href] = true
+		if strings.Contains(href, "boutique.html?store=") {
+			t.Errorf("« Voir tous » : href=%q pointe encore vers la boutique filtrée", href)
+		}
+	}
+	for _, lt := range catalog.LiveCats {
+		want := "categories/" + lt.Slug + ".html"
+		if !seen[want] {
+			t.Errorf("top %q : pas de lien « Voir tous » vers %q", lt.Label, want)
+		}
+	}
+}
+
 // TestBoutiqueDataSub : les cartes de la boutique portent data-sub = la
 // sous-catégorie (le filtre ?type= s'applique partout, pas seulement sur les
 // pages catégories), jamais le slug d'une catégorie principale.

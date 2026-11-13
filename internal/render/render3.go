@@ -280,8 +280,11 @@ func TypeHubHTML(fs []*catalog.RawProduct) string {
 	return `<div data-hub><h2 style="font-size:20px">Types d'équipements</h2><p style="color:#666">Choisissez un type pour voir ses produits.</p><div class="hub-grid">` + cards.String() + `</div><p style="margin-top:18px"><a class="btn" href="?all=1">Voir tous les produits (` + fmt.Sprint(len(fs)) + `) →</a></p></div>`
 }
 
-func CategoryPage(s *catalog.Store, main string) string {
-	fs := CategoryBody(s, main)
+// categoryPageFor : page d'une catégorie (hub des types d'abord, puis les
+// produits) pour une liste de produits et son titre. Sert pour les familles
+// (pages /categories/<famille>.html) et pour les tops live du menu
+// « Toutes les catégories » (pages /categories/<top-live>.html).
+func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title string) string {
 	subs := map[string]bool{}
 	for _, p := range fs {
 		subs[p.Sub] = true
@@ -302,12 +305,34 @@ func CategoryPage(s *catalog.Store, main string) string {
 	return Header(s, "../", "") + `
 <div class="wrap"><div class="home">
 <div>` + FiltersPanel(s, "page") + `</div>
-<div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › ` + esc(main) + `</div>
-<h1 style="font-size:24px">` + esc(main) + `</h1>
+<div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › ` + esc(title) + `</div>
+<h1 style="font-size:24px">` + esc(title) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(strings.Join(subList, ", ")) + `</p>
 ` + TypeHubHTML(fs) + `
 <div data-catalog-home hidden>
 ` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `</div>
 </div></div></div>
 ` + Footer(s, "../")
+}
+
+func CategoryPage(s *catalog.Store, main string) string {
+	return categoryPageFor(s, CategoryBody(s, main), main)
+}
+
+// CategoryBodyLive : produits d'un top live (catégorie du menu
+// « Toutes les catégories »).
+func CategoryBodyLive(s *catalog.Store, liveTop string) []*catalog.RawProduct {
+	var fs []*catalog.RawProduct
+	for _, p := range s.Products {
+		if p.LiveTop == liveTop {
+			fs = append(fs, p)
+		}
+	}
+	return SortedStockFirst(fs)
+}
+
+// CategoryPageLive : page d'un top live (catégorie du menu) : mêmes types
+// d'équipements d'abord, puis les produits.
+func CategoryPageLive(s *catalog.Store, t catalog.LiveTop) string {
+	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label)
 }
