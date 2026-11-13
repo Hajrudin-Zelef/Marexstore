@@ -336,7 +336,7 @@ func HubHTML(s *catalog.Store) string {
 		var subs strings.Builder
 		for _, sl := range t.Subs {
 			if c := s.SubCounts[[2]string{t.Slug, sl.Slug}]; c > 0 {
-				fmt.Fprintf(&subs, `<li><a href="boutique.html?sub=%s">%s <span>(%d)</span></a></li>`, esc(sl.Slug), esc(sl.Label), c)
+				fmt.Fprintf(&subs, `<li><a href="categories/%s.html?type=%s">%s <span>(%d)</span></a></li>`, esc(t.Slug), esc(sl.Slug), esc(sl.Label), c)
 			}
 		}
 		chev, subsHTML := "", ""
@@ -349,7 +349,7 @@ func HubHTML(s *catalog.Store) string {
 			prod = "produit"
 		}
 		fmt.Fprintf(&cards, `<div class="hub-card" data-hub-card>
-<a class="hub-main" href="boutique.html?store=%s"><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a>
+<a class="hub-main" href="categories/%s.html"><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a>
 %s%s</div>`, esc(t.Slug), img, esc(t.Label), n, prod, chev, subsHTML)
 	}
 	return `<div data-hub>

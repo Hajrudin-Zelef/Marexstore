@@ -174,6 +174,44 @@ func TestLiveTopPages(t *testing.T) {
 	}
 }
 
+// TestBoutiqueHubLinks : les tuiles du hub boutique (« Nos catégories »)
+// mènent à la page catégorie (hub des types d'abord), jamais à la boutique
+// filtrée — sinon le hub s'affiche 1 s puis disparaît (syncHub le masque
+// quand un filtre est posé). Les sous-catégories mènent à la page catégorie
+// filtrée sur le type (?type=).
+func TestBoutiqueHubLinks(t *testing.T) {
+	s := testStoreFull(t)
+	hub := render.HubHTML(s)
+	reMain := regexp.MustCompile(`<a class="hub-main" href="([^"]*)">`)
+	mains := reMain.FindAllStringSubmatch(hub, -1)
+	if len(mains) == 0 {
+		t.Fatalf("hub boutique : aucune tuile « hub-main »")
+	}
+	for _, m := range mains {
+		href := m[1]
+		if strings.Contains(href, "boutique.html?store=") {
+			t.Errorf("tuile hub : href=%q pointe encore vers la boutique filtrée", href)
+		}
+		if !strings.HasPrefix(href, "categories/") || !strings.HasSuffix(href, ".html") {
+			t.Errorf("tuile hub : href=%q attendu categories/<slug>.html", href)
+		}
+	}
+	reSub := regexp.MustCompile(`<li><a href="([^"]*)">`)
+	subs := reSub.FindAllStringSubmatch(hub, -1)
+	if len(subs) == 0 {
+		t.Fatalf("hub boutique : aucun lien de sous-catégorie")
+	}
+	for _, m := range subs {
+		href := m[1]
+		if strings.Contains(href, "boutique.html?sub=") {
+			t.Errorf("sous-catégorie hub : href=%q pointe encore vers la boutique filtrée", href)
+		}
+		if !strings.Contains(href, "?type=") {
+			t.Errorf("sous-catégorie hub : href=%q attendu categories/<top>.html?type=<sub>", href)
+		}
+	}
+}
+
 // TestMegaMenuVoirTous : « Voir tous les X » du méga-menu mène à la page
 // catégorie (hub des types d'abord), jamais à la boutique filtrée.
 func TestMegaMenuVoirTous(t *testing.T) {

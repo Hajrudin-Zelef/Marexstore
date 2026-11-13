@@ -37,6 +37,8 @@ var reMirror = regexp.MustCompile("<script[^>]*mirror[^>]*></script>\n?")
 var reVer = regexp.MustCompile(`assets/[a-z0-9_.-]+\.css\?v=\d+|assets/[a-z0-9_.-]+\.js\?v=\d+`)
 var reFiltersToggle = regexp.MustCompile(`<button type="button" class="filters-toggle"[^>]*>.*?</button>\n?`)
 var reMegaAll = regexp.MustCompile(`<a class="mega-all" href="[^"]*"`)
+var reHubMain = regexp.MustCompile(`<a class="hub-main" href="[^"]*"`)
+var reHubSub = regexp.MustCompile(`<li><a href="[^"]*">`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
@@ -47,6 +49,10 @@ func normPage(s string) string {
 	// (hub des types d'abord), plus vers la boutique filtrée — vérifié par
 	// son propre test, pas par la parité avec l'archive v3.25.
 	s = reMegaAll.ReplaceAllString(s, `<a class="mega-all" href="MEGAALL"`)
+	// Tuiles « Nos catégories » : mènent aux pages catégories (hub des types
+	// d'abord), plus à la boutique filtrée — vérifié par TestBoutiqueHubLinks.
+	s = reHubMain.ReplaceAllString(s, `<a class="hub-main" href="HUBMAIN"`)
+	s = reHubSub.ReplaceAllString(s, `<li><a href="HUBSUB">`)
 	// Hub des types (pages catégories, nouveau) : la fermeture du bloc
 	// [data-catalog-home] se colle à celle du catalogue.
 	s = strings.ReplaceAll(s, "</div></div>\n</div></div></div>", "</div>\n</div></div></div>")
