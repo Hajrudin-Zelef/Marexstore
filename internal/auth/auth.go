@@ -67,6 +67,17 @@ func ClearCookie(w http.ResponseWriter) {
 	http.SetCookie(w, &http.Cookie{Name: cookieName, Path: "/", MaxAge: -1})
 }
 
+// DeleteSession supprime la session en base (le logout ne doit pas se
+// contenter d'effacer le cookie : le token resterait valable 30 jours).
+func DeleteSession(d *sql.DB, r *http.Request) {
+	c, err := r.Cookie(cookieName)
+	if err != nil || c.Value == "" {
+		return
+	}
+	sum := sha256.Sum256([]byte(c.Value))
+	_, _ = d.Exec(`DELETE FROM sessions WHERE token=?`, hexKey(sum[:]))
+}
+
 // CurrentUserID renvoie nil si anonyme (compte optionnel).
 func CurrentUserID(d *sql.DB, r *http.Request) *int64 {
 	c, err := r.Cookie(cookieName)

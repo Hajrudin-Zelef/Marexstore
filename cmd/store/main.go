@@ -24,6 +24,9 @@ func main() {
 	if err := db.EnsureSchema(database, "db/migrations"); err != nil {
 		log.Fatal("schema: ", err)
 	}
+	if err := db.EnsureFTS(database); err != nil {
+		log.Fatal("fts: ", err)
+	}
 	st, err := site.LoadStore(database)
 	if err != nil {
 		log.Fatal("load store: ", err)
@@ -95,6 +98,7 @@ func main() {
 	r.Post("/api/contact", app.ApiDemande("contact"))
 	r.Post("/api/infos", app.ApiDemande("infos"))
 	r.Get("/api/csrf", app.ApiCSRF)
+	r.Get("/api/recherche", app.ApiRecherche)
 	r.Post("/auth/inscription", app.Register)
 	r.Post("/auth/connexion", app.Login)
 	r.Post("/auth/logout", app.Logout)

@@ -54,6 +54,18 @@ func RateLimit(rps int, burst int) func(http.Handler) http.Handler {
 	}
 	var mu sync.Mutex
 	buckets := map[string]*bucket{}
+	// Purge des IP inactives (> 10 min) pour éviter la croissance mémoire.
+	go func() {
+		for range time.Tick(5 * time.Minute) {
+			mu.Lock()
+			for ip, b := range buckets {
+				if time.Since(b.last) > 10*time.Minute {
+					delete(buckets, ip)
+				}
+			}
+			mu.Unlock()
+		}
+	}()
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ip := r.Header.Get("X-Forwarded-For")

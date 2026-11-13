@@ -21,6 +21,28 @@ func Open(path string) (*sql.DB, error) {
 	return d, nil
 }
 
+// EnsureFTS remplit l'index de recherche FTS5 s'il est vide
+// (auto-réparation après déploiement : l'import le remplit aussi).
+func EnsureFTS(d *sql.DB) error {
+	var n int
+	if err := d.QueryRow(`SELECT COUNT(*) FROM products_fts`).Scan(&n); err != nil {
+		return err
+	}
+	if n > 0 {
+		return nil
+	}
+	_, err := d.Exec(`INSERT INTO products_fts(slug, nom, marque, categorie, sous_categorie, accroche, description, search_index)
+		SELECT slug, nom, marque, categorie, sous_categorie, accroche, description, search_index FROM products`)
+	return err
+}
+
+// SyncFTS resynchronise la ligne FTS d'un produit (après édition admin).
+func SyncFTS(d *sql.DB, slug string) {
+	_, _ = d.Exec(`DELETE FROM products_fts WHERE rowid IN (SELECT rowid FROM products_fts WHERE slug=?)`, slug)
+	_, _ = d.Exec(`INSERT INTO products_fts(slug, nom, marque, categorie, sous_categorie, accroche, description, search_index)
+		SELECT slug, nom, marque, categorie, sous_categorie, accroche, description, search_index FROM products WHERE slug=?`, slug)
+}
+
 // Migrate applique un fichier SQL brut (usage : création initiale).
 func Migrate(d *sql.DB, sqlPath string) error {
 	b, err := os.ReadFile(sqlPath)

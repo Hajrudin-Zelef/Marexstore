@@ -1,6 +1,9 @@
 package config
 
 import (
+	"crypto/rand"
+	"encoding/base64"
+	"log"
 	"os"
 	"strconv"
 )
@@ -17,10 +20,20 @@ type Config struct {
 }
 
 func Load() Config {
+	// Secret de session : jamais de valeur connue par défaut. Sans .env,
+	// un secret éphémère est généré (les sessions ne survivent pas au redémarrage).
+	secret := os.Getenv("SESSION_SECRET")
+	if secret == "" {
+		b := make([]byte, 32)
+		if _, err := rand.Read(b); err == nil {
+			secret = base64.RawURLEncoding.EncodeToString(b)
+			log.Println("marexstore: SESSION_SECRET absent — secret éphémère généré (sessions perdues au redémarrage)")
+		}
+	}
 	return Config{
 		Port:          envOr("PORT", "8080"),
 		DBPath:        envOr("DB_PATH", "store.db"),
-		SessionSecret: envOr("SESSION_SECRET", "change-me-en-prod-32-caracteres-min"),
+		SessionSecret: secret,
 		BaseURL:       envOr("BASE_URL", "http://localhost:8080"),
 		WhatsApp:      envOr("WHATSAPP_NUMBER", "2250705087507"),
 		AdminUser:     envOr("ADMIN_USER", "admin"),

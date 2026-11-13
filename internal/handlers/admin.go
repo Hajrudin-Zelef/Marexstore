@@ -8,6 +8,7 @@ import (
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/auth"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/db"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/render"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/site"
 	"github.com/go-chi/chi/v5"
@@ -23,6 +24,16 @@ func (a *App) adminAuth(w http.ResponseWriter, r *http.Request) bool {
 		return false
 	}
 	return true
+}
+
+// CSRF admin : token dérivé du secret serveur + compte admin (l'admin
+// Basic Auth n'a pas de cookie de session, donc pas de sessionID).
+func (a *App) adminCSRF() string {
+	return auth.CSRFToken(a.Cfg.SessionSecret, "admin:"+a.Cfg.AdminUser)
+}
+
+func (a *App) checkAdminCSRF(r *http.Request) bool {
+	return auth.CheckCSRF(a.Cfg.SessionSecret, "admin:"+a.Cfg.AdminUser, r.FormValue("csrf"))
 }
 
 func (a *App) adminPage(title, inner string) string {
@@ -101,6 +112,10 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method == http.MethodPost {
+		if !a.checkAdminCSRF(r) {
+			http.Error(w, "refusé", http.StatusForbidden)
+			return
+		}
 		nn := func(k string) string { return strings.TrimSpace(r.FormValue(k)) }
 		ni := func(k string) any {
 			v := strings.TrimSpace(r.FormValue(k))
@@ -118,6 +133,7 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		a.reload()
+		db.SyncFTS(a.DB, slug)
 		http.Redirect(w, r, "/admin/produits/"+slug, http.StatusSeeOther)
 		return
 	}
@@ -129,6 +145,7 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 	}
 	a.write(w, 200, a.adminPage("Modifier — "+p.Nom,
 		`<form class="acct-form" method="post">
+<input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
 <label class="full">Nom * <input name="nom" required value="`+render.Esc(p.Nom)+`"></label>
 <label>Marque <input name="marque" value="`+render.Esc(p.Marque)+`"></label>
 <label>Prix (vide = devis) <input name="prix" inputmode="numeric" value="`+str(prix)+`"></label>
@@ -152,6 +169,10 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method == http.MethodPost {
+		if !a.checkAdminCSRF(r) {
+			http.Error(w, "refusé", http.StatusForbidden)
+			return
+		}
 		_, _ = a.DB.Exec(`UPDATE orders SET statut=? WHERE id=?`, r.FormValue("statut"), r.FormValue("id"))
 		http.Redirect(w, r, "/admin/commandes", http.StatusSeeOther)
 		return
@@ -169,8 +190,8 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 			if total.Valid {
 				t = fmt.Sprint(total.Int64)
 			}
-			fmt.Fprintf(&tr, `<tr><td>#%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><form method="post" action="/admin/commandes"><input type="hidden" name="id" value="%d"><select name="statut"><option>devis</option><option>whatsapp_recu</option><option>attente_momo</option><option>paye</option><option>prepare</option><option>livre</option><option>annule</option></select> <button class="btn">OK</button></form></td></tr>`,
-				id, render.Esc(at), render.Esc(moyen), t, render.Esc(client), id)
+			fmt.Fprintf(&tr, `<tr><td>#%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><form method="post" action="/admin/commandes"><input type="hidden" name="csrf" value="%s"><input type="hidden" name="id" value="%d"><select name="statut"><option>devis</option><option>whatsapp_recu</option><option>attente_momo</option><option>paye</option><option>prepare</option><option>livre</option><option>annule</option></select> <button class="btn">OK</button></form></td></tr>`,
+				id, render.Esc(at), render.Esc(moyen), t, render.Esc(client), a.adminCSRF(), id)
 		}
 	}
 	a.write(w, 200, a.adminPage("Commandes",

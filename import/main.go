@@ -112,5 +112,13 @@ func main() {
 	if err := tx.Commit(); err != nil {
 		log.Fatal(err)
 	}
+	// L'index de recherche FTS5 est reconstruit à chaque import (il était
+	// créé par le schéma mais jamais rempli).
+	if _, err := d.Exec(`DELETE FROM products_fts`); err == nil {
+		if _, err := d.Exec(`INSERT INTO products_fts(slug, nom, marque, categorie, sous_categorie, accroche, description, search_index)
+			SELECT slug, nom, marque, categorie, sous_categorie, accroche, description, search_index FROM products`); err != nil {
+			log.Printf("fts: %v", err)
+		}
+	}
 	fmt.Printf("import fidèle OK : %d produits -> %s\n", n, *dbp)
 }

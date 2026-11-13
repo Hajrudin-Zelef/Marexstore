@@ -150,6 +150,53 @@ func (a *App) ApiCSRF(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"csrf": a.csrf(r)})
 }
 
+// GET /api/recherche?q=... — recherche serveur (FTS5 sur l'index complet :
+// nom, marque, catégorie, accroche, description, index de recherche).
+// Les mots sont nettoyés et préfixés : "ton" trouve "toner".
+func (a *App) ApiRecherche(w http.ResponseWriter, r *http.Request) {
+	type hit struct {
+		Slug  string `json:"slug"`
+		Nom   string `json:"nom"`
+		Prix  *int64 `json:"prix"`
+		Image string `json:"image"`
+	}
+	out := []hit{}
+	q := strings.TrimSpace(r.URL.Query().Get("q"))
+	if len(q) > 100 {
+		q = q[:100]
+	}
+	var terms []string
+	for _, w0 := range strings.FieldsFunc(q, func(c rune) bool {
+		return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c > 127)
+	}) {
+		if len(w0) >= 2 {
+			terms = append(terms, `"`+w0+`"*`)
+		}
+	}
+	if len(terms) > 0 {
+		match := strings.Join(terms, " AND ")
+		rows, err := a.DB.Query(`SELECT p.slug, p.nom, p.prix, p.image
+			FROM products_fts JOIN products p ON p.slug = products_fts.slug
+			WHERE products_fts MATCH ? ORDER BY rank LIMIT 10`, match)
+		if err == nil {
+			defer rows.Close()
+			for rows.Next() {
+				var h hit
+				var prix sql.NullInt64
+				if err := rows.Scan(&h.Slug, &h.Nom, &prix, &h.Image); err == nil {
+					if prix.Valid {
+						v := prix.Int64
+						h.Prix = &v
+					}
+					out = append(out, h)
+				}
+			}
+		}
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]any{"results": out})
+}
+
 // ---------- Auth (compte optionnel, sessions + bcrypt) ----------
 
 func (a *App) Register(w http.ResponseWriter, r *http.Request) {
@@ -206,6 +253,7 @@ func (a *App) Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) Logout(w http.ResponseWriter, r *http.Request) {
+	auth.DeleteSession(a.DB, r)
 	auth.ClearCookie(w)
 	a.ok(w)
 }
