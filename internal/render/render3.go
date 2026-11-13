@@ -27,7 +27,8 @@ var banners = []banner{
 // homeFilterHTML : « Trouver un produit » — un filtre complet sur l'accueil
 // (marque, catégorie, type, prix, disponibilité) qui envoie vers la boutique
 // déjà filtrée (boutique.html?cat=&type=&marque=&prixmin=&prixmax=&dispo=).
-// Le choix du type dépend de la catégorie (app.js, window.MEDIATEC_TYPES).
+// Le choix du type dépend de la catégorie (app.js lit le bloc JSON
+// #mediatec-types — jamais exécuté, donc hors CSP script-src).
 // Le bloc et le script sont sur une seule ligne chacun (la parité les retire).
 func homeFilterHTML(s *catalog.Store) string {
 	type typeOpt struct {
@@ -63,7 +64,7 @@ func homeFilterHTML(s *catalog.Store) string {
 			fmt.Fprintf(&types, `<option value="%s" data-main="%s">%s</option>`, esc(t.Slug), esc(catalog.MainSlug[m]), esc(t.Label))
 		}
 	}
-	return `<div class="home-filter" data-home-filter><h2>Trouver un produit</h2><p class="sub">Affinez par marque, catégorie, type, prix et disponibilité — la boutique s'ouvre déjà filtrée.</p><form action="boutique.html" method="get"><label>Marque<select name="marque">` + brandOptions(s) + `</select></label><label>Catégorie<select name="cat" data-hf-cat>` + cats.String() + `</select></label><label>Type<select name="type" data-hf-type>` + types.String() + `</select></label><label>Prix min (F CFA)<input type="number" name="prixmin" min="0" placeholder="Min"></label><label>Prix max (F CFA)<input type="number" name="prixmax" min="0" placeholder="Max"></label><label>Disponibilité<select name="dispo"><option value="">Toutes</option><option value="en-stock">En stock</option><option value="rupture-de-stock">Rupture de stock</option></select></label><button class="btn" type="submit">Rechercher</button></form></div>` + "\n" + `<script>window.MEDIATEC_TYPES=` + string(jb) + `;</script>`
+	return `<div class="home-filter" data-home-filter><h2>Trouver un produit</h2><p class="sub">Affinez par marque, catégorie, type, prix et disponibilité — la boutique s'ouvre déjà filtrée.</p><form action="boutique.html" method="get"><label>Marque<select name="marque">` + brandOptions(s) + `</select></label><label>Catégorie<select name="cat" data-hf-cat>` + cats.String() + `</select></label><label>Type<select name="type" data-hf-type>` + types.String() + `</select></label><label>Prix min (F CFA)<input type="number" name="prixmin" min="0" placeholder="Min"></label><label>Prix max (F CFA)<input type="number" name="prixmax" min="0" placeholder="Max"></label><label>Disponibilité<select name="dispo"><option value="">Toutes</option><option value="en-stock">En stock</option><option value="rupture-de-stock">Rupture de stock</option></select></label><button class="btn" type="submit">Rechercher</button></form></div>` + "\n" + `<script type="application/json" id="mediatec-types">` + string(jb) + `</script>`
 }
 
 func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {

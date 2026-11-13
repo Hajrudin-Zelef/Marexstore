@@ -41,10 +41,16 @@ var reHubMain = regexp.MustCompile(`<a class="hub-main" href="[^"]*"`)
 var reHubSub = regexp.MustCompile(`<li><a href="[^"]*">`)
 var reMegaGroups = regexp.MustCompile(`(<div class="mega-groups">).*?(</div><a class="mega-all")`)
 var reMegaCount = regexp.MustCompile(`<span class="mega-count">\(\d+\)</span>`)
+var reThemeJs = regexp.MustCompile(`<script src="[^"]*theme\.js[^"]*"></script>\n?`)
+var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
 	s = reMirror.ReplaceAllString(s, "")
+	// theme.js : script externe ajouté après v3.25 (zéro script inline).
+	s = reThemeJs.ReplaceAllString(s, "")
+	// Newsletter : <form action="mailto:"> remplacé par JS (même UX, sans Mixed Content).
+	s = reNewsletter.ReplaceAllString(s, `<form>NEWSLETTER</form>`)
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
 	// « Voir tous » du méga-menu : pointe maintenant vers la page catégorie
@@ -70,10 +76,16 @@ func normPage(s string) string {
 		if strings.Contains(ln, "csrf-token") {
 			continue
 		}
+		// Scripts inline du v3.25 (thème + flag js) : externalisés en theme.js.
+		t := strings.TrimSpace(ln)
+		if t == `<script>try{var _t=JSON.parse(localStorage.getItem('mediatec-theme')||'{}');var _r=document.documentElement;if(_t.mode==='sombre')_r.setAttribute('data-theme','dark');if(_t.color==='liquid')_r.setAttribute('data-color','liquid');}catch(e){}</script>` ||
+			t == `<script>document.documentElement.classList.add('js')</script>` {
+			continue
+		}
 		// Nouveautés retirées de la parité (vérifiées par leurs propres tests) :
 		// le hub des types, le bloc [data-catalog-home] des pages catégories,
 		// le filtre global de l'accueil et sa carte des types.
-		if strings.Contains(ln, "data-hub") || strings.Contains(ln, "data-catalog-home hidden") || strings.Contains(ln, "data-home-filter") || strings.Contains(ln, "MEDIATEC_TYPES") {
+		if strings.Contains(ln, "data-hub") || strings.Contains(ln, "data-catalog-home hidden") || strings.Contains(ln, "data-home-filter") || strings.Contains(ln, "MEDIATEC_TYPES") || strings.Contains(ln, "mediatec-types") {
 			continue
 		}
 		ln = strings.ReplaceAll(ln, "Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.", "Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.")

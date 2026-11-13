@@ -22,9 +22,14 @@ func RequestID(next http.Handler) http.Handler {
 
 // SecurityHeaders : durcissement sans casser htmx/images/fonts.
 // CSP en Report-Only par défaut (passer en enforce via CSP_REPORT_ONLY=0 quand prêt).
+//   - script-src 'self' strict : aucun script inline dans le HTML (theme.js externe,
+//     JSON inerte application/json, handlers via addEventListener).
+//   - style-src 'unsafe-inline' : les attributs style="" sont partout (rendu Go,
+//     htmx, app.js) — les hasher est ingérable et CSS ≠ exécution de script.
+//   - form-action 'self' : aucun <form action="mailto:"> (newsletter via JS).
 func SecurityHeaders(reportOnly bool) func(http.Handler) http.Handler {
 	csp := "default-src 'self'; img-src 'self' data:; script-src 'self'; " +
-		"style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; " +
+		"style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; " +
 		"connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -110,8 +110,8 @@ func TestHomeFilter(t *testing.T) {
 			t.Errorf("type %q absent du filtre", sub)
 		}
 	}
-	if !strings.Contains(body, `window.MEDIATEC_TYPES=`) {
-		t.Error("carte des types (MEDIATEC_TYPES) absente")
+	if !strings.Contains(body, `id="mediatec-types"`) {
+		t.Error("carte des types (#mediatec-types JSON inerte) absente")
 	}
 	for _, m := range catalog.MainOrder {
 		if !strings.Contains(body, `"`+catalog.MainSlug[m]+`":`) {
@@ -364,4 +364,40 @@ func TestInitialStateFromQuery(t *testing.T) {
 func testQuery(raw string) url.Values {
 	v, _ := url.ParseQuery(raw)
 	return v
+}
+
+// TestNoInlineExecutableScript : zéro <script> exécutable inline dans le HTML
+// rendu (CSP script-src 'self' strict, console sans warning). Seul autorisé :
+// <script type="application/json"> (données inertes, jamais exécutées).
+func TestNoInlineExecutableScript(t *testing.T) {
+	s := testStoreFull(t)
+	pages := map[string]string{
+		"head":      render.Head("T", "", ""),
+		"index":     render.Doc("T", render.IndexBody(s, s.Recents("")), "", ""),
+		"boutique":  render.Doc("T", render.BoutiqueBody(s), "", ""),
+		"categorie": render.Doc("T", render.CategoryPage(s, "Réseaux"), "../", ""),
+		"fiche":     render.Doc("T", render.Header(s, "../", "")+render.FicheBody(s, s.Products[0])+render.Footer(s, "../"), "../", ""),
+	}
+	re := regexp.MustCompile(`<script[^>]*>`)
+	for name, html := range pages {
+		for _, tag := range re.FindAllString(html, -1) {
+			if strings.Contains(tag, "src=") {
+				continue
+			}
+			if strings.Contains(tag, `type="application/json"`) {
+				continue
+			}
+			t.Errorf("%s : script inline exécutable : %s", name, tag)
+		}
+		if strings.Contains(html, "onsubmit=") || strings.Contains(html, "onclick=") {
+			t.Errorf("%s : gestionnaire inline (onclick/onsubmit)", name)
+		}
+		if strings.Contains(html, `action="mailto:`) {
+			t.Errorf("%s : <form action=\"mailto:\"> (Mixed Content + form-action)", name)
+		}
+	}
+	// JSON inerte présent sur l'accueil et lisible.
+	if !strings.Contains(pages["index"], `id="mediatec-types"`) {
+		t.Errorf("accueil : bloc #mediatec-types absent")
+	}
 }

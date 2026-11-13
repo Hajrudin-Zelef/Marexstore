@@ -726,16 +726,23 @@
     /* ---------- Filtre global de l'accueil : le choix du type dépend de la catégorie. ---------- */
     (function () {
       var form = document.querySelector('[data-home-filter] form');
-      if (!form || !window.MEDIATEC_TYPES) return;
+      if (!form) return;
+      // Données servies en JSON inerte (jamais exécuté : CSP-clean), pas en JS inline.
+      var TYPES = {};
+      try {
+        var el = document.getElementById('mediatec-types');
+        if (el) TYPES = JSON.parse(el.textContent || '{}');
+      } catch (e) { TYPES = {}; }
+      if (!Object.keys(TYPES).length) return;
       var cat = form.querySelector('[data-hf-cat]');
       var typ = form.querySelector('[data-hf-type]');
       if (!cat || !typ) return;
       var fill = function () {
         var list = [];
         if (cat.value) {
-          list = window.MEDIATEC_TYPES[cat.value] || [];
+          list = TYPES[cat.value] || [];
         } else {
-          Object.keys(window.MEDIATEC_TYPES).forEach(function (k) { list = list.concat(window.MEDIATEC_TYPES[k]); });
+          Object.keys(TYPES).forEach(function (k) { list = list.concat(TYPES[k]); });
         }
         typ.innerHTML = '<option value="">Tous les types</option>';
         list.forEach(function (t) {
@@ -917,6 +924,20 @@
         window.location.href = 'mailto:infos@mediatec-ci.com?subject=' + encodeURIComponent(g('objet')) + '&body=' + encodeURIComponent(body);
       });
     }
+    /* Newsletter du pied de page : pas de <form action="mailto:"> (Mixed Content
+       + form-action CSP) — même UX via JS, comme le formulaire de contact. */
+    document.querySelectorAll('[data-newsletter]').forEach(function (nl) {
+      var input = nl.querySelector('[data-newsletter-email]');
+      var send = function () {
+        var mail = input ? input.value.trim() : '';
+        if (!mail || mail.indexOf('@') < 0) { if (input) input.focus(); return; }
+        var to = nl.getAttribute('data-newsletter') || 'sales@mediatec-ci.com';
+        window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent('Inscription newsletter') + '&body=' + encodeURIComponent(mail);
+      };
+      nl.addEventListener('submit', function (e) { e.preventDefault(); send(); });
+      var btn = nl.querySelector('[data-newsletter-send]');
+      if (btn) btn.addEventListener('click', send);
+    });
 
     /* ---------- Thèmes : sombre / clair + couleur Liquid / Gazonnier ---------- */
     var THEME_KEY = 'mediatec-theme';

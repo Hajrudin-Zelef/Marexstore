@@ -288,7 +288,7 @@ func WidgetsHTML(s *catalog.Store, prefix string) string {
 func Footer(s *catalog.Store, prefix string) string {
 	return WidgetsHTML(s, prefix) + `
 <div class="news"><div class="in"><div><h3>S'abonner à la newsletter</h3><div>Recevez nos offres et nouveautés. ` + esc(catalog.Tel) + ` / ` + esc(catalog.Tel2) + ` — ` + esc(catalog.Email) + `</div></div>
-<form action="mailto:` + catalog.Email + `" method="get"><input type="email" name="body" placeholder="Votre adresse e-mail" required><button type="submit">S'inscrire</button></form></div></div>
+<form data-newsletter="` + catalog.Email + `" action="#" method="get"><input type="email" data-newsletter-email placeholder="Votre adresse e-mail" required><button type="button" data-newsletter-send>S'inscrire</button></form></div></div>
 <footer><div class="cols">
 <div><h4>Accès Rapide</h4><ul><li><a href="` + prefix + `devis.html">Demande de devis</a></li><li><a href="` + prefix + `boutique.html">Store</a></li><li><a href="` + prefix + `suivi-commande.html">Suivi de commande</a></li><li><a href="` + prefix + `compte.html">Mon compte</a></li><li><a href="` + prefix + `contact.html">Contact</a></li></ul></div>
 <div><h4>Informations</h4><ul><li><a href="` + prefix + `cgv.html">Conditions générales de vente</a></li><li><a href="` + prefix + `livraison.html">Livraison &amp; retours</a></li><li><a href="` + prefix + `confidentialite.html">Politique de confidentialité</a></li><li><a href="` + prefix + `mentions-legales.html">Mentions légales</a></li></ul></div>
@@ -298,7 +298,7 @@ func Footer(s *catalog.Store, prefix string) string {
 </div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=333"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=334"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
@@ -310,8 +310,7 @@ func Head(title, prefix, extraHead string) string {
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="` + prefix + `assets/style.css?v=330">
-` + ThemeInit + `
-<script>document.documentElement.classList.add('js')</script>
+<script src="` + prefix + `assets/theme.js?v=1"></script>
 ` + extraHead
 }
 
