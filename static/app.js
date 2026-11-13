@@ -209,6 +209,115 @@
       });
     }
 
+    /* ---------- Recherche : suggestions automatiques dans l'en-tête ----------
+       Quand on tape dans la recherche de l'en-tête, les produits ciblés
+       s'affichent en propositions (API serveur /api/recherche, FTS).
+       Un clic va directement sur la fiche ; Entrée lance la recherche normale.
+       Si l'API ne répond pas, rien ne s'affiche et le formulaire marche comme avant. */
+    (function () {
+      var form = document.querySelector('form.search');
+      if (!form) return;
+      var input = form.querySelector('input[name="q"]');
+      var catSel = form.querySelector('select[name="cat"]');
+      if (!input) return;
+      input.setAttribute('autocomplete', 'off');
+      // Base des URLs ("" sur la racine, "../" sur les sous-pages) : déduite de l'action du formulaire.
+      var action = form.getAttribute('action') || 'boutique.html';
+      var base = action.replace(/boutique\.html$/, '');
+      // Le menu est rattaché à l'en-tête (position:sticky), PAS au formulaire :
+      // le formulaire a overflow:hidden (pilule arrondie) qui couperait le menu.
+      // Positionné sous le formulaire via ses coordonnées dans l'en-tête.
+      var header = form.closest('header.main') || form.parentNode;
+      var st = document.createElement('style');
+      st.textContent = '.search-suggest{position:absolute;z-index:60;background:#fff;border:1px solid #d8e2d8;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);overflow:hidden;display:none;max-height:340px;overflow-y:auto;text-align:left}'
+        + '.search-suggest.open{display:block}'
+        + '.search-suggest a{display:flex;align-items:center;gap:10px;padding:8px 10px;text-decoration:none;color:#1a1a1a;border-top:1px solid #eef2ee}'
+        + '.search-suggest a:first-child{border-top:0}'
+        + '.search-suggest a.sel,.search-suggest a:hover{background:#e9efe9}'
+        + '.search-suggest img{width:44px;height:44px;object-fit:contain;flex:none;background:#f4f6f4;border-radius:6px}'
+        + '.search-suggest .sg-noimg{width:44px;height:44px;flex:none;background:#f4f6f4;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#888;font-size:11px}'
+        + '.search-suggest .sg-nom{flex:1;min-width:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'
+        + '.search-suggest .sg-prix{flex:none;font-size:13px;font-weight:700;color:#2e5136;white-space:nowrap}'
+        + '.search-suggest .sg-prix.dev{font-weight:400;color:#666}'
+        + '.search-suggest .sg-empty{padding:10px 12px;color:#666;font-size:14px}';
+      document.head.appendChild(st);
+      var box = document.createElement('div');
+      box.className = 'search-suggest';
+      box.setAttribute('role', 'listbox');
+      header.appendChild(box);
+      var timer = null, sel = -1, current = [];
+      function place() {
+        box.style.left = form.offsetLeft + 'px';
+        box.style.top = (form.offsetTop + form.offsetHeight + 6) + 'px';
+        box.style.width = form.offsetWidth + 'px';
+      }
+      window.addEventListener('resize', function () { if (box.classList.contains('open')) place(); });
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function fmtPrix(n) {
+        return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' F CFA';
+      }
+      function hide() { box.classList.remove('open'); box.innerHTML = ''; sel = -1; current = []; }
+      function render(results) {
+        current = results || [];
+        sel = -1;
+        if (!current.length) {
+          box.innerHTML = '<div class="sg-empty">Aucun produit trouvé pour « ' + esc(input.value) + ' ».</div>';
+        } else {
+          var html = '';
+          current.forEach(function (r, i) {
+            var img = r.image ? '<img src="' + base + esc(r.image) + '" alt="">' : '<span class="sg-noimg">—</span>';
+            var prix = (r.prix === null || r.prix === undefined)
+              ? '<span class="sg-prix dev">Prix sur demande</span>'
+              : '<span class="sg-prix">' + fmtPrix(r.prix) + '</span>';
+            html += '<a href="' + base + 'produits/' + encodeURIComponent(r.slug) + '.html" role="option" data-i="' + i + '">' + img + '<span class="sg-nom">' + esc(r.nom) + '</span>' + prix + '</a>';
+          });
+          box.innerHTML = html;
+        }
+        box.classList.add('open');
+        place();
+      }
+      function fetchSuggest(q) {
+        var url = base + 'api/recherche?q=' + encodeURIComponent(q);
+        if (catSel && catSel.value) url += '&cat=' + encodeURIComponent(catSel.value);
+        fetch(url).then(function (resp) { return resp.json(); }).then(function (d) {
+          if (input.value.trim() !== q) return; // une frappe plus récente a eu lieu
+          render((d && d.results) || []);
+        }).catch(function () { hide(); });
+      }
+      input.addEventListener('input', function () {
+        var q = input.value.trim();
+        if (timer) clearTimeout(timer);
+        if (q.length < 2) { hide(); return; }
+        timer = setTimeout(function () { fetchSuggest(q); }, 200);
+      });
+      input.addEventListener('keydown', function (e) {
+        if (!box.classList.contains('open')) return;
+        var links = box.querySelectorAll('a');
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          sel = e.key === 'ArrowDown' ? Math.min(sel + 1, links.length - 1) : Math.max(sel - 1, 0);
+          links.forEach(function (a, i) { a.classList.toggle('sel', i === sel); });
+        } else if (e.key === 'Enter' && sel >= 0 && links[sel]) {
+          e.preventDefault();
+          window.location.href = links[sel].getAttribute('href');
+        } else if (e.key === 'Escape') {
+          hide();
+          input.blur();
+        }
+      });
+      box.addEventListener('mousedown', function (e) {
+        // mousedown (avant blur) pour que le clic parte avant la fermeture.
+        var a = e.target.closest ? e.target.closest('a') : null;
+        if (a) window.location.href = a.getAttribute('href');
+      });
+      document.addEventListener('click', function (e) {
+        if (!form.contains(e.target) && !box.contains(e.target)) hide();
+      });
+      input.addEventListener('blur', function () { setTimeout(hide, 150); });
+    })();
+
     /* ---------- Catalogue : pagination + vues + recherche + sous-catégories ---------- */
     document.querySelectorAll('[data-catalog-wrap]').forEach(function (wrap) {
       var grid = wrap.querySelector('[data-catalog]');

@@ -66,9 +66,9 @@ func TestBoutiqueParity(t *testing.T) {
 	s := testStore(t)
 	got := normPage(render.Doc("Store", render.BoutiqueBody(s), "", ""))
 	want := normPage(readOrig(t, "boutique.html"))
-	if got != want {
-		diffFirst(t, got, want)
-	}
+	// Le tri "stock d'abord" réordonne les cartes : même jeu de cartes,
+	// reste de la page identique à l'octet près.
+	assertSameCards(t, got, want)
 }
 
 func TestIndexParity(t *testing.T) {
@@ -86,10 +86,8 @@ func TestCategoriesParity(t *testing.T) {
 	for _, m := range catalog.MainOrder {
 		got := normPage(render.Doc(m, render.CategoryPage(s, m), "../", ""))
 		want := normPage(readOrig(t, "categories/"+catalog.MainSlug[m]+".html"))
-		if got != want {
-			t.Logf("catégorie %s", m)
-			diffFirst(t, got, want)
-		}
+		t.Logf("catégorie %s", m)
+		assertSameCards(t, got, want)
 	}
 }
 
@@ -127,6 +125,70 @@ func TestFacetsParity(t *testing.T) {
 	gb, _ := json.Marshal(got)
 	if string(wb) != string(gb) {
 		t.Fatalf("facettes différentes:\nwant=%s\ngot=%s", wb, gb)
+	}
+}
+
+// extractCards retire les cartes produit (<div class="card" ...>...</div>,
+// profondeur équilibrée) : renvoie la page sans cartes + slugs dans l'ordre.
+// Sert aux pages dont seul l'ordre des cartes peut changer (tri stock d'abord).
+func extractCards(html string) (string, []string) {
+	var out strings.Builder
+	var slugs []string
+	reSlug := regexp.MustCompile(`data-slug="([^"]+)"`)
+	i := 0
+	for {
+		j := strings.Index(html[i:], `<div class="card"`)
+		if j < 0 {
+			out.WriteString(html[i:])
+			break
+		}
+		j += i
+		out.WriteString(html[i:j])
+		depth := 0
+		k := j
+		for k < len(html) {
+			if strings.HasPrefix(html[k:], "<div") {
+				depth++
+				k += 4
+			} else if strings.HasPrefix(html[k:], "</div>") {
+				depth--
+				k += 6
+				if depth == 0 {
+					break
+				}
+			} else {
+				k++
+			}
+		}
+		if m := reSlug.FindStringSubmatch(html[j:k]); m != nil {
+			slugs = append(slugs, m[1])
+		}
+		out.WriteString("<!--card-->")
+		i = k
+	}
+	return out.String(), slugs
+}
+
+// assertSameCards : hors-cartes strictement identique + même multijeu de cartes.
+func assertSameCards(t *testing.T, got, want string) {
+	t.Helper()
+	gs, gslugs := extractCards(got)
+	ws, wslugs := extractCards(want)
+	if gs != ws {
+		diffFirst(t, gs, ws)
+	}
+	if len(gslugs) != len(wslugs) {
+		t.Fatalf("cartes : got %d, want %d", len(gslugs), len(wslugs))
+	}
+	counts := map[string]int{}
+	for _, s := range wslugs {
+		counts[s]++
+	}
+	for _, s := range gslugs {
+		counts[s]--
+		if counts[s] < 0 {
+			t.Fatalf("carte inattendue ou en trop : %s", s)
+		}
 	}
 }
 

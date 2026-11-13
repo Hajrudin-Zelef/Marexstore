@@ -298,7 +298,7 @@ func Footer(s *catalog.Store, prefix string) string {
 </div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=327"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=328"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------

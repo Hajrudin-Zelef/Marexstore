@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/auth"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
 )
 
 // Miroir serveur : appelé par mirror.js en parallèle du flux localStorage.
@@ -165,6 +166,19 @@ func (a *App) ApiRecherche(w http.ResponseWriter, r *http.Request) {
 	if len(q) > 100 {
 		q = q[:100]
 	}
+	// Filtre optionnel par catégorie principale (sélecteur de l'en-tête) :
+	// le slug vient de catalog.MainSlug, on ne fait confiance qu'aux valeurs connues.
+	cat := strings.TrimSpace(r.URL.Query().Get("cat"))
+	catOK := false
+	for _, m := range catalog.MainOrder {
+		if catalog.MainSlug[m] == cat {
+			catOK = true
+			break
+		}
+	}
+	if !catOK {
+		cat = ""
+	}
 	var terms []string
 	for _, w0 := range strings.FieldsFunc(q, func(c rune) bool {
 		return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c > 127)
@@ -175,9 +189,17 @@ func (a *App) ApiRecherche(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(terms) > 0 {
 		match := strings.Join(terms, " AND ")
-		rows, err := a.DB.Query(`SELECT p.slug, p.nom, p.prix, p.image
+		// Prix affiché = prix boutique s'il existe, sinon prix stock.
+		sqlQ := `SELECT p.slug, p.nom, COALESCE(p.prix_boutique, p.prix), p.image
 			FROM products_fts JOIN products p ON p.slug = products_fts.slug
-			WHERE products_fts MATCH ? ORDER BY rank LIMIT 10`, match)
+			WHERE products_fts MATCH ?`
+		args := []any{match}
+		if cat != "" {
+			sqlQ += ` AND p.main_slug = ?`
+			args = append(args, cat)
+		}
+		sqlQ += ` ORDER BY rank LIMIT 10`
+		rows, err := a.DB.Query(sqlQ, args...)
 		if err == nil {
 			defer rows.Close()
 			for rows.Next() {

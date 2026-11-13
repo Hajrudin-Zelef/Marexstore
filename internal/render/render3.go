@@ -145,10 +145,23 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 
 // ---------- Boutique ----------
 
-func SortedByNom(fs []*catalog.RawProduct) []*catalog.RawProduct {
+// SortedStockFirst : le stock d'abord — produits avec un prix (commandables),
+// puis ceux sans prix (sur devis) ; dans chaque groupe, "en stock" d'abord,
+// puis nom A-Z. C'est l'ordre par défaut de la boutique et des pages catégories
+// (le tri "Défaut" du sélecteur restaure cet ordre).
+func SortedStockFirst(fs []*catalog.RawProduct) []*catalog.RawProduct {
 	out := append([]*catalog.RawProduct{}, fs...)
-	sort.Slice(out, func(i, j int) bool {
-		return strings.ToLower(out[i].Nom) < strings.ToLower(out[j].Nom)
+	sort.SliceStable(out, func(i, j int) bool {
+		a, b := out[i], out[j]
+		pa, pb := a.PrixAffiche(), b.PrixAffiche()
+		if (pa == nil) != (pb == nil) {
+			return pa != nil
+		}
+		da, db := a.Dispo == "en stock", b.Dispo == "en stock"
+		if da != db {
+			return da
+		}
+		return strings.ToLower(a.Nom) < strings.ToLower(b.Nom)
 	})
 	return out
 }
@@ -163,7 +176,7 @@ func BoutiqueBody(s *catalog.Store) string {
 <div><div class="crumb"><a href="boutique.html">← Toutes les catégories</a></div>
 <h1 style="font-size:24px">Store</h1>
 <p style="color:#666">` + fmt.Sprint(len(s.Products)) + ` produits · inventaire du 21 septembre 2026 + produits du store — prix et disponibilités à confirmer avant commande.</p>
-` + CatalogWrap(s, SortedByNom(s.Products), "", "main_slug", "", "list", nil, "") + `
+` + CatalogWrap(s, SortedStockFirst(s.Products), "", "main_slug", "", "list", nil, "") + `
 </div></div></div>
 ` + Footer(s, "")
 }
@@ -177,7 +190,7 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 			fs = append(fs, p)
 		}
 	}
-	return SortedByNom(fs)
+	return SortedStockFirst(fs)
 }
 
 func CategoryPage(s *catalog.Store, main string) string {
