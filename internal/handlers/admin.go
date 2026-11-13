@@ -651,6 +651,11 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 	for _, c := range counts {
 		views = append(views, render.MxView{Key: c.k, Href: "/admin/commandes?vue=" + c.k, Label: c.k, Count: c.n})
 	}
+	// Mini-stats : CA encaissé (payée/préparée/livrée), en cours, livrées.
+	var ca, enCours, livrees int64
+	_ = a.DB.QueryRow(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut IN ('paye','prepare','livre')`).Scan(&ca)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE statut NOT IN ('livre','annule')`).Scan(&enCours)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE statut='livre'`).Scan(&livrees)
 	rows, _ := a.DB.Query(`SELECT id,statut,moyen_paiement,total,client_json,created_at FROM orders WHERE 1=1`+cond+` ORDER BY id DESC LIMIT ? OFFSET ?`, per, (page-1)*per)
 	var tr strings.Builder
 	if rows != nil {
@@ -660,19 +665,22 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 			var statut, moyen, client, at string
 			var tot sql.NullInt64
 			_ = rows.Scan(&id, &statut, &moyen, &tot, &client, &at)
-			t := "devis"
+			t := `<span class="mx-muted">devis</span>`
 			if tot.Valid {
-				t = fmt.Sprint(tot.Int64)
+				t = `<span class="mx-price">` + fmtMoney(tot.Int64) + ` F CFA</span>`
 			}
-			cl := client
-			if len(cl) > 60 {
-				cl = cl[:60] + "…"
-			}
-			fmt.Fprintf(&tr, `<tr><td><a href="/admin/commandes/%d"><strong>#%d</strong></a><div class="row-actions"><a href="/admin/commandes/%d">Détail</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
-				id, id, id, render.Esc(at), render.Esc(moyen), t, render.Esc(cl)+` `+statutBadge(statut))
+			cl := clientLabel(client)
+			fmt.Fprintf(&tr, `<tr><td><a href="/admin/commandes/%d"><strong>#%d</strong></a><div class="row-actions"><a href="/admin/commandes/%d">Détail</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
+				id, id, id, render.Esc(at), render.Esc(moyen), t, render.Esc(cl), statutBadge(statut))
 		}
 	}
 	a.write(w, 200, a.adminPage("Commandes", "commandes",
-		render.MxViews(views, vue)+`
-<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client / Statut</th></tr>`+tr.String()+`</table>`+render.MxPager("/admin/commandes?vue="+vue, page, pages)+`</div>`, r))
+		`<div class="mx-stats">`+
+			miniStat("/admin/commandes?vue=all", "Commandes", fmt.Sprint(total), "#2e5136")+
+			miniStat("/admin/commandes?vue=paye", "CA encaissé", fmtMoney(ca)+" F CFA", "#2271b1")+
+			miniStat("/admin/commandes?vue=all", "En cours", fmt.Sprint(enCours), "#dba617")+
+			miniStat("/admin/commandes?vue=livre", "Livrées", fmt.Sprint(livrees), "#6fa82e")+
+			`</div>`+
+			render.MxViews(views, vue)+`
+<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client</th><th>Statut</th></tr>`+tr.String()+`</table></div>`+render.MxPager("/admin/commandes?vue="+vue, page, pages), r))
 }

@@ -26,7 +26,7 @@ func MxSidebar(active string, counts map[string]int) string {
 		{"reglages", "Réglages", "cog", 0, false},
 	}
 	var b strings.Builder
-	b.WriteString(`<aside class="mx-side"><div class="mx-brand"><img src="/images/logo-mediatec.png" alt=""><div>Marexstore<small>Administration</small></div></div><nav class="mx-nav">`)
+	b.WriteString(`<aside class="mx-side"><div class="mx-brand"><img src="/images/logo-mediatec.png" alt=""><div>Marexstore<small>Administration</small></div></div><nav class="mx-nav"><div class="sep">Administration</div>`)
 	for _, it := range items {
 		href := "/admin"
 		if it.Slug != "" {
@@ -42,7 +42,7 @@ func MxSidebar(active string, counts map[string]int) string {
 		}
 		fmt.Fprintf(&b, `<a href="%s"%s>%s<span>%s</span>%s</a>`, href, cls, MxSVG(it.Icon), it.Label, cnt)
 	}
-	b.WriteString(`<div class="sep">Boutique</div><a href="/"><span>Voir le site</span></a></nav><div class="mx-side-foot">Connecté : admin<br><a href="/">Retour boutique</a></div></aside>`)
+	b.WriteString(`<div class="sep">Boutique</div><a href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span>Voir le site</span></a></nav><div class="mx-user"><span class="mx-user-av">A</span><span class="mx-user-tx"><strong>admin</strong><small>Administrateur</small></span><a class="mx-user-out" href="/" title="Retour boutique">↗</a></div></aside>`)
 	return b.String()
 }
 
@@ -77,7 +77,7 @@ func MxDoc(title, active string, counts map[string]int, body string) string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=4">
+<link rel="stylesheet" href="/static/admin.css?v=5">
 <script src="/static/theme.js?v=1"></script>
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, counts) +
