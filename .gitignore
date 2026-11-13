@@ -10,3 +10,5 @@ site-orig/
 images/
 store.db*
 *.tar.gz
+*.bak
+*.bak2
