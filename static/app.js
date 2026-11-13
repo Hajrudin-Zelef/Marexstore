@@ -729,8 +729,18 @@
     var megaBtn = document.querySelector('[data-mega-btn]');
     var megaPanel = document.querySelector('[data-mega-panel]');
     if (megaBtn && megaPanel) {
-      var closeMega = function () { megaPanel.hidden = true; megaBtn.setAttribute('aria-expanded', 'false'); };
+      var closeMega = function () { megaPanel.hidden = true; megaBtn.setAttribute('aria-expanded', 'false'); megaHoverOpened = false; };
       var openMega = function () { megaPanel.hidden = false; megaBtn.setAttribute('aria-expanded', 'true'); };
+      /* 1er clic : le survol (mouseenter) ouvre déjà le menu, puis le clic le
+         refermait aussitôt (bascule) — le 1er clic semblait ne rien faire et
+         il fallait cliquer une 2e fois. On ignore le clic qui suit juste
+         l'ouverture par survol. */
+      var megaHoverOpened = false;
+      /* Survol des catégories : délai d'intention (120 ms). Sans délai, un
+         trajet en diagonale vers « Voir tous » survole les autres catégories
+         et le panneau change de catégorie en route. Un passage rapide ne
+         déclenche plus le changement ; un survol posé, si. */
+      var megaHoverTimer = null;
       /* Survol réservé aux appareils à souris : sur tactile, le tap émule
          mouseenter puis click, ce qui ouvrait puis refermait aussitôt le menu.
          Le test (hover: hover) ne suffit pas sur les portables à écran tactile
@@ -739,11 +749,12 @@
       var lastTouch = 0;
       document.addEventListener('touchend', function () { lastTouch = Date.now(); }, { passive: true });
       var touchedRecently = function () { return Date.now() - lastTouch < 700; };
-      megaBtn.addEventListener('mouseenter', function () { if (canHover && !touchedRecently()) openMega(); });
+      megaBtn.addEventListener('mouseenter', function () { if (canHover && !touchedRecently()) { openMega(); megaHoverOpened = true; } });
       var navEl = megaBtn.closest('nav');
       if (navEl) navEl.addEventListener('mouseleave', function () { if (canHover && !touchedRecently()) closeMega(); });
       megaBtn.addEventListener('click', function (e) {
         e.stopPropagation();
+        if (megaHoverOpened) { megaHoverOpened = false; return; }
         if (megaPanel.hidden) openMega(); else closeMega();
       });
       megaPanel.querySelectorAll('[data-mega-top]').forEach(function (b) {
@@ -764,7 +775,14 @@
           }
           show();
         });
-        b.addEventListener('mouseenter', function () { if (canHover && !megaMq.matches && !touchedRecently()) show(); });
+        b.addEventListener('mouseenter', function () {
+          if (!canHover || megaMq.matches || touchedRecently()) return;
+          if (megaHoverTimer) clearTimeout(megaHoverTimer);
+          megaHoverTimer = setTimeout(function () { megaHoverTimer = null; show(); }, 120);
+        });
+        b.addEventListener('mouseleave', function () {
+          if (megaHoverTimer) { clearTimeout(megaHoverTimer); megaHoverTimer = null; }
+        });
       });
       /* Mobile : chaque bloc de sous-catégories déménage juste sous son bouton
          (accordéon) au lieu de s'afficher en bas après « Uncategorized ».
