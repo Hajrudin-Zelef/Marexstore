@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -240,7 +241,20 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 	}
 	const per = 50
 	cond := ""
-	args := []any{"%" + q + "%", "%" + q + "%"}
+	// Recherche multi-mots : chaque mot doit apparaître (nom ou slug),
+	// sinon « toner 650a » ne trouve rien alors que « Toner HP 650A » existe.
+	var args []any
+	words := strings.Fields(q)
+	if len(words) == 0 {
+		cond = ""
+	} else {
+		var ands []string
+		for _, w := range words {
+			ands = append(ands, `(nom LIKE ? OR slug LIKE ?)`)
+			args = append(args, "%"+w+"%", "%"+w+"%")
+		}
+		cond = " AND " + strings.Join(ands, " AND ")
+	}
 	switch vue {
 	case "stock":
 		cond = ` AND dispo='en stock'`
@@ -261,7 +275,7 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		order = "stock"
 	}
 	var total int
-	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond, args...).Scan(&total)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE 1=1`+cond, args...).Scan(&total)
 	pages := (total + per - 1) / per
 	if pages < 1 {
 		pages = 1
@@ -302,7 +316,7 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		miniStat("/admin/produits?vue=rupture", "Rupture", fmt.Sprint(cRupt), "#d63638") +
 		miniStat("/admin/produits?vue=sansprix", "Sans prix", fmt.Sprint(cSP), "#dba617") +
 		`</div>`
-	base := "/admin/produits?q=" + q + "&tri=" + tri + "&cat=" + cat
+	base := "/admin/produits?q=" + url.QueryEscape(q) + "&tri=" + tri + "&cat=" + cat
 	views := render.MxViews([]render.MxView{
 		render.MxView{Key: "all", Href: base + "&vue=all", Label: "Tous", Count: cAll},
 		render.MxView{Key: "stock", Href: base + "&vue=stock", Label: "En stock", Count: cStock},
@@ -315,26 +329,39 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		}
 		return ""
 	}
-	rows, err := a.DB.Query(`SELECT slug,nom,marque,prix,prix_boutique,dispo,stock,image,live_top FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond+` ORDER BY `+order+` LIMIT ? OFFSET ?`, append(args, per, (page-1)*per)...)
+	rows, err := a.DB.Query(`SELECT slug,nom,marque,prix,prix_boutique,dispo,stock,image,live_top FROM products WHERE 1=1`+cond+` ORDER BY `+order+` LIMIT ? OFFSET ?`, append(args, per, (page-1)*per)...)
 	if err != nil {
 		http.Error(w, "indisponible", 500)
 		return
 	}
 	defer rows.Close()
-	var tr strings.Builder
+	var tr, cards, minis strings.Builder
 	for rows.Next() {
 		var slug, nom, marque, dispo, img, top string
 		var prix, pb, stock sql.NullInt64
 		_ = rows.Scan(&slug, &nom, &marque, &prix, &pb, &dispo, &stock, &img, &top)
 		pp := `<span class="mx-muted">devis</span>`
+		ppTxt := "devis"
 		if pb.Valid {
 			pp = `<span class="mx-price">` + fmtMoney(pb.Int64) + ` F CFA</span>`
+			ppTxt = fmtMoney(pb.Int64) + ` F CFA`
 		} else if prix.Valid {
 			pp = `<span class="mx-price">` + fmtMoney(prix.Int64) + ` F CFA</span>`
+			ppTxt = fmtMoney(prix.Int64) + ` F CFA`
 		}
-		st := `<span class="mx-muted">—</span>`
-		if stock.Valid {
+		// Stock : nombre suivi ; sinon pastille explicite (jamais « — » vide).
+		st := ""
+		switch {
+		case stock.Valid && stock.Int64 <= 0:
+			st = `<span class="mx-badge bad" title="Stock épuisé">0</span>`
+		case stock.Valid && stock.Int64 <= 3:
+			st = `<span class="mx-badge warn" title="Stock faible">` + fmt.Sprint(stock.Int64) + `</span>`
+		case stock.Valid:
 			st = fmt.Sprint(stock.Int64)
+		case !pb.Valid && !prix.Valid:
+			st = `<span class="mx-badge info" title="Prix sur devis : pas de stock suivi">Devis</span>`
+		default:
+			st = `<span class="mx-badge" title="Sur commande : stock non suivi">Cde</span>`
 		}
 		catLb, ok := topLabels[top]
 		if !ok || top == "" {
@@ -346,15 +373,28 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(&tr, `<tr><td><div class="mx-prod">%s<div><a class="mx-prod-nm" href="/admin/produits/%s">%s</a><div class="mx-prod-cat">%s</div><div class="row-actions"><a href="/admin/produits/%s">Modifier</a> · <a href="/produits/%s.html">Voir</a> · <a href="/admin/produits/%s?dupliquer=1" data-mx-confirm="Dupliquer ce produit ?">Dupliquer</a></div></div></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
 			im, slug, render.Esc(nom), render.Esc(catLb), slug, slug, slug, render.Esc(marque), pp, statutBadge(dispo), st)
+		fmt.Fprintf(&cards, `<div class="mx-gcard"><a href="/admin/produits/%s">%s</a><div class="in"><a class="mx-prod-nm" href="/admin/produits/%s">%s</a><div class="mx-prod-cat">%s · %s</div><div class="mx-gmeta">%s %s %s</div><div class="row-actions"><a href="/admin/produits/%s">Modifier</a> · <a href="/produits/%s.html">Voir</a> · <a href="/admin/produits/%s?dupliquer=1" data-mx-confirm="Dupliquer ce produit ?">Dupliquer</a></div></div></div>`,
+			slug, im, slug, render.Esc(nom), render.Esc(catLb), render.Esc(marque), pp, statutBadge(dispo), st, slug, slug, slug)
+		fmt.Fprintf(&minis, `<a class="mx-mini" href="/admin/produits/%s" title="%s — %s">%s<span>%s</span></a>`,
+			slug, render.Esc(nom), render.Esc(ppTxt), im, render.Esc(nom))
 	}
+	nbTxt := fmt.Sprintf(`<span class="mx-count">%d produit%s</span>`, total, func() string {
+		if total > 1 {
+			return "s"
+		}
+		return ""
+	}())
 	a.write(w, 200, a.adminPage("Produits", "produits",
 		`<p><a class="mx-btn" href="/admin/produits/nouveau">+ Ajouter un produit</a></p>`+stats+views+`
 <form class="mx-tools" method="get" action="/admin/produits"><input type="hidden" name="vue" value="`+render.Esc(vue)+`">
 <input type="search" name="q" value="`+render.Esc(q)+`" placeholder="Rechercher nom, slug…">
 <select name="cat">`+catOpts.String()+`</select>
 <select name="tri"><option value="nom"`+selTri("nom")+`>Tri : nom</option><option value="prix"`+selTri("prix")+`>Tri : prix</option><option value="stock"`+selTri("stock")+`>Tri : stock</option></select>
-<button class="mx-btn">OK</button></form>
-<div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Dispo</th><th>Stock</th></tr>`+tr.String()+`</table>`+render.MxPager(base+"&vue="+vue, page, pages)+`</div>`, r))
+<button class="mx-btn">OK</button>`+nbTxt+`
+<span class="mx-aff" role="group" aria-label="Affichage"><button type="button" data-aff="list" class="on" title="Liste">☰ Liste</button><button type="button" data-aff="grid" title="Grille">▦ Grille</button><button type="button" data-aff="minis" title="Miniatures">▦ Minis</button></span></form>
+<div data-mx-aff="list"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Dispo</th><th>Stock</th></tr>`+tr.String()+`</table>`+render.MxPager(base+"&vue="+vue, page, pages)+`</div>
+<div class="mx-gridcards">`+cards.String()+`</div>
+<div class="mx-minis">`+minis.String()+`</div></div>`, r))
 }
 
 func nullStr(v sql.NullInt64) string {

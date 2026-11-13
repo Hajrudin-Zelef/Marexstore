@@ -212,3 +212,32 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
   .mx-fgrid{grid-template-columns:1fr}
   .mx-fgrid .span2{grid-column:span 1}
 }
+
+/* ---------- Liste produits : 3 affichages ---------- */
+.mx-count{font-size:13px;color:var(--mx-muted);white-space:nowrap}
+.mx-aff{display:inline-flex;border:1px solid var(--mx-border);border-radius:6px;overflow:hidden;background:#fff;margin-left:auto}
+.mx-aff button{border:0;background:#fff;padding:7px 12px;cursor:pointer;font-size:13px;color:var(--mx-muted);font-family:inherit;font-weight:600}
+.mx-aff button+button{border-left:1px solid var(--mx-border)}
+.mx-aff button.on{background:var(--mx-ink);color:#fff}
+[data-mx-aff="list"] .mx-gridcards,[data-mx-aff="list"] .mx-minis{display:none}
+[data-mx-aff="grid"] .mx-tablewrap,[data-mx-aff="grid"] .mx-minis{display:none}
+[data-mx-aff="minis"] .mx-tablewrap,[data-mx-aff="minis"] .mx-gridcards{display:none}
+.mx-gridcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}
+.mx-gcard{background:#fff;border:1px solid var(--mx-border);border-radius:8px;overflow:hidden}
+.mx-gcard>a:first-child{display:block;background:#f6f7f7}
+.mx-gcard img{width:100%;height:150px;object-fit:contain;display:block}
+.mx-gcard .in{padding:10px 12px}
+.mx-gcard .mx-gmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:13px}
+.mx-minis{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:12px}
+.mx-mini{background:#fff;border:1px solid var(--mx-border);border-radius:8px;overflow:hidden;text-decoration:none;color:var(--mx-ink)}
+.mx-mini:hover{border-color:var(--mx-accent)}
+.mx-mini img{width:100%;height:92px;object-fit:contain;background:#f6f7f7;display:block}
+.mx-mini span{display:block;font-size:11.5px;padding:6px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ---------- Fiche : grande photo ---------- */
+.pv-avatar{width:200px;height:200px;border-radius:20px}
+.pv-avatar img{width:100%;height:100%}
+.pv-img-ph{min-height:120px;display:flex;align-items:center;justify-content:center}
+@media(max-width:900px){
+  .mx-aff{margin-left:0}
+  .pv-avatar{width:160px;height:160px}
+}

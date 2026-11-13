@@ -63,6 +63,25 @@
   upd();
 })();
 
+// Bascule d'affichage liste/grille/miniatures (préférence mémorisée).
+(function () {
+  var wrap = document.querySelector('[data-mx-aff]');
+  if (!wrap) return;
+  var btns = document.querySelectorAll('[data-aff]');
+  function apply(v) {
+    wrap.setAttribute('data-mx-aff', v);
+    btns.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-aff') === v); });
+    try { localStorage.setItem('mx-aff', v); } catch (e) {}
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-aff')); });
+  });
+  try {
+    var saved = localStorage.getItem('mx-aff');
+    if (saved === 'grid' || saved === 'minis' || saved === 'list') apply(saved);
+  } catch (e) {}
+})();
+
 // Postboxes repliables + confirmations destructives (dupliquer, supprimer).
 (function () {
   document.addEventListener('click', function (e) {
