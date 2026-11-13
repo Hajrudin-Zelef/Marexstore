@@ -490,6 +490,15 @@ nav.main .mega-all{display:inline-block;margin-top:16px;color:var(--link);font-w
 .filters .f-prix{display:flex;gap:8px;align-items:center}
 .filters .f-prix input{flex:1;min-width:0}
 .filters .btn{width:100%;margin-top:4px}
+/* Filtre global « Trouver un produit » (accueil) : marque, catégorie, type, prix, disponibilité. */
+.home-filter{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-top:16px}
+.home-filter h2{margin:0 0 4px;font-size:20px}
+.home-filter .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.home-filter form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.home-filter label{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+.home-filter select,.home-filter input{width:100%;margin-top:5px;padding:9px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;background:var(--surface)}
+.home-filter .btn{grid-column:1/-1;width:auto;justify-self:start}
+@media(max-width:720px){.home-filter form{grid-template-columns:1fr 1fr}}
 @media(max-width:860px){
 .mega-panel .in{grid-template-columns:1fr}
 .mega-rail{border-right:0;border-bottom:1px solid var(--border)}

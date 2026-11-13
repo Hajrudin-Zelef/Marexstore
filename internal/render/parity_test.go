@@ -42,9 +42,18 @@ func normPage(s string) string {
 	s = reMirror.ReplaceAllString(s, "")
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
+	// Hub des types (pages catégories, nouveau) : la fermeture du bloc
+	// [data-catalog-home] se colle à celle du catalogue.
+	s = strings.ReplaceAll(s, "</div></div>\n</div></div></div>", "</div>\n</div></div></div>")
 	var out []string
 	for _, ln := range strings.Split(s, "\n") {
 		if strings.Contains(ln, "csrf-token") {
+			continue
+		}
+		// Nouveautés retirées de la parité (vérifiées par leurs propres tests) :
+		// le hub des types, le bloc [data-catalog-home] des pages catégories,
+		// le filtre global de l'accueil et sa carte des types.
+		if strings.Contains(ln, "data-hub") || strings.Contains(ln, "data-catalog-home hidden") || strings.Contains(ln, "data-home-filter") || strings.Contains(ln, "MEDIATEC_TYPES") {
 			continue
 		}
 		ln = strings.ReplaceAll(ln, "Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.", "Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.")

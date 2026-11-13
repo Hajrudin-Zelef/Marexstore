@@ -456,6 +456,36 @@
       if (presetStore) state.store = presetStore;
       var presetSub = params.get('sub');
       if (presetSub) state.liveSubs = presetSub.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      /* Présélections du filtre global de l'accueil et du hub des types :
+         ?type= (type d'équipement, sous-catégorie), ?marque=, ?prixmin=,
+         ?prixmax=, ?dispo= — les contrôles latéraux sont synchronisés juste après. */
+      var presetType = params.get('type');
+      if (presetType) state.sub = presetType;
+      var presetMarque = params.get('marque');
+      if (presetMarque) state.marque = presetMarque;
+      var presetPrixMin = params.get('prixmin');
+      if (presetPrixMin) { var vmin = parseInt(presetPrixMin, 10); if (vmin > 0) state.prixMin = vmin; }
+      var presetPrixMax = params.get('prixmax');
+      if (presetPrixMax) { var vmax = parseInt(presetPrixMax, 10); if (vmax > 0) state.prixMax = vmax; }
+      var presetDispo = params.get('dispo');
+      if (presetDispo) state.dispo = presetDispo;
+      /* Synchronise les contrôles de filtre et la pastille du type avec les
+         présélections URL (filtre global de l'accueil, hub des types). */
+      (function () {
+        var f = document.querySelector('[data-filters]');
+        if (f) {
+          var mq = f.querySelector('[data-f-marque]'); if (mq && state.marque) mq.value = state.marque;
+          var pmn = f.querySelector('[data-f-prix-min]'); if (pmn && state.prixMin !== null) pmn.value = state.prixMin;
+          var pmx = f.querySelector('[data-f-prix-max]'); if (pmx && state.prixMax !== null) pmx.value = state.prixMax;
+          var rmn = f.querySelector('[data-f-prix-min-range]'); if (rmn && state.prixMin !== null) rmn.value = state.prixMin;
+          var rmx = f.querySelector('[data-f-prix-max-range]'); if (rmx && state.prixMax !== null) rmx.value = state.prixMax;
+          var ds = f.querySelector('[data-f-dispo]'); if (ds && state.dispo) ds.value = state.dispo;
+          var sk = f.querySelector('[data-f-stock]'); if (sk) sk.checked = state.dispo === 'en-stock';
+        }
+        if (state.sub !== 'all') {
+          wrap.querySelectorAll('[data-sub]').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-sub') === state.sub); });
+        }
+      })();
       wrap.querySelectorAll('[data-view]').forEach(function (b) {
         b.addEventListener('click', function () {
           wrap.querySelectorAll('[data-view]').forEach(function (x) { x.classList.remove('on'); });
@@ -668,6 +698,32 @@
       card.classList.toggle('open');
       if (subs) subs.hidden = !card.classList.contains('open');
     });
+
+    /* ---------- Filtre global de l'accueil : le choix du type dépend de la catégorie. ---------- */
+    (function () {
+      var form = document.querySelector('[data-home-filter] form');
+      if (!form || !window.MEDIATEC_TYPES) return;
+      var cat = form.querySelector('[data-hf-cat]');
+      var typ = form.querySelector('[data-hf-type]');
+      if (!cat || !typ) return;
+      var fill = function () {
+        var list = [];
+        if (cat.value) {
+          list = window.MEDIATEC_TYPES[cat.value] || [];
+        } else {
+          Object.keys(window.MEDIATEC_TYPES).forEach(function (k) { list = list.concat(window.MEDIATEC_TYPES[k]); });
+        }
+        typ.innerHTML = '<option value="">Tous les types</option>';
+        list.forEach(function (t) {
+          var o = document.createElement('option');
+          o.value = t.slug;
+          o.textContent = t.label;
+          typ.appendChild(o);
+        });
+      };
+      cat.addEventListener('change', fill);
+      fill();
+    })();
 
     /* ---------- Méga-menu « Toutes les Catégories » (comme LDLC : survol pour ouvrir) ---------- */
     var megaBtn = document.querySelector('[data-mega-btn]');

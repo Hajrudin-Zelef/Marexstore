@@ -1,6 +1,7 @@
 package render
 
 import (
+	"encoding/json"
 	"fmt"
 	"sort"
 	"strings"
@@ -18,6 +19,50 @@ var banners = []banner{
 	{"images/banners/oukitel-rt3.jpg", "OUKITEL", "RT3 PLUS<br>16GO / 128GO", "TABLETTE PROFESSIONELLE", "200.000 CFA", "Acheter", "produits/oukitel-rt3-plus-16-go-ram-128-go.html"},
 	{"images/banners/kyocera-copieurs.jpg", "DÉCOUVREZ", "NOS COPIEURS<br>KYOCERA <b>EN STOCK</b>", "A ne pas rater", "", "En savoir +", "categories/imprimantes-consommables.html"},
 	{"images/banners/elitebook-850-g3.jpg", "HP ELITEBOOK 850 G3", "15\", 8Go - 256ssd", "", "185.000F", "ACHETER", "produits/hp-elitebook-elitebook-850.html"},
+}
+
+// ---------- Filtre global (accueil) ----------
+
+// homeFilterHTML : « Trouver un produit » — un filtre complet sur l'accueil
+// (marque, catégorie, type, prix, disponibilité) qui envoie vers la boutique
+// déjà filtrée (boutique.html?cat=&type=&marque=&prixmin=&prixmax=&dispo=).
+// Le choix du type dépend de la catégorie (app.js, window.MEDIATEC_TYPES).
+// Le bloc et le script sont sur une seule ligne chacun (la parité les retire).
+func homeFilterHTML(s *catalog.Store) string {
+	type typeOpt struct {
+		Slug  string `json:"slug"`
+		Label string `json:"label"`
+	}
+	typesByMain := map[string][]typeOpt{}
+	seen := map[string]map[string]bool{}
+	for _, p := range s.Products {
+		m := catalog.MainSlug[p.Main]
+		if seen[m] == nil {
+			seen[m] = map[string]bool{}
+		}
+		sl := catalog.Slugify(p.Sub)
+		if !seen[m][sl] {
+			seen[m][sl] = true
+			typesByMain[m] = append(typesByMain[m], typeOpt{Slug: sl, Label: p.Sub})
+		}
+	}
+	for _, list := range typesByMain {
+		sort.Slice(list, func(i, j int) bool { return list[i].Label < list[j].Label })
+	}
+	jb, _ := json.Marshal(typesByMain)
+	var cats strings.Builder
+	cats.WriteString(`<option value="">Toutes les catégories</option>`)
+	for _, m := range catalog.MainOrder {
+		fmt.Fprintf(&cats, `<option value="%s">%s</option>`, esc(catalog.MainSlug[m]), esc(m))
+	}
+	var types strings.Builder
+	types.WriteString(`<option value="">Tous les types</option>`)
+	for _, m := range catalog.MainOrder {
+		for _, t := range typesByMain[catalog.MainSlug[m]] {
+			fmt.Fprintf(&types, `<option value="%s" data-main="%s">%s</option>`, esc(t.Slug), esc(catalog.MainSlug[m]), esc(t.Label))
+		}
+	}
+	return `<div class="home-filter" data-home-filter><h2>Trouver un produit</h2><p class="sub">Affinez par marque, catégorie, type, prix et disponibilité — la boutique s'ouvre déjà filtrée.</p><form action="boutique.html" method="get"><label>Marque<select name="marque">` + brandOptions(s) + `</select></label><label>Catégorie<select name="cat" data-hf-cat>` + cats.String() + `</select></label><label>Type<select name="type" data-hf-type>` + types.String() + `</select></label><label>Prix min (F CFA)<input type="number" name="prixmin" min="0" placeholder="Min"></label><label>Prix max (F CFA)<input type="number" name="prixmax" min="0" placeholder="Max"></label><label>Disponibilité<select name="dispo"><option value="">Toutes</option><option value="en-stock">En stock</option><option value="rupture-de-stock">Rupture de stock</option></select></label><button class="btn" type="submit">Rechercher</button></form></div>` + "\n" + `<script>window.MEDIATEC_TYPES=` + string(jb) + `;</script>`
 }
 
 func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
@@ -114,6 +159,7 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 <button type="button" class="nav next" data-next aria-label="Suivant">›</button>
 <div class="dots">` + dots.String() + `</div></div>
 ` + minis + `
+` + homeFilterHTML(s) + `
 <div class="sec"><div class="deal">
 <div class="dealcard"><div>` + ImgTag(deal, "") + `</div><div>
 <div class="cat">Offre spéciale <span class="save">Save 10%</span></div><h2 style="margin:4px 0">` + esc(deal.Nom) + `</h2>
@@ -176,7 +222,7 @@ func BoutiqueBody(s *catalog.Store) string {
 <div><div class="crumb"><a href="boutique.html">← Toutes les catégories</a></div>
 <h1 style="font-size:24px">Store</h1>
 <p style="color:#666">` + fmt.Sprint(len(s.Products)) + ` produits · inventaire du 21 septembre 2026 + produits du store — prix et disponibilités à confirmer avant commande.</p>
-` + CatalogWrap(s, SortedStockFirst(s.Products), "", "main_slug", "", "list", nil, "") + `
+` + CatalogWrap(s, SortedStockFirst(s.Products), "", "sub_slug", "", "list", nil, "") + `
 </div></div></div>
 ` + Footer(s, "")
 }
@@ -191,6 +237,47 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 		}
 	}
 	return SortedStockFirst(fs)
+}
+
+// ---------- Hub des types (pages catégories) ----------
+
+// TypeHubHTML : la page d'une catégorie liste d'abord ses types d'équipements
+// (les sous-catégories du catalogue, avec photo et compteur) ; un clic sur un
+// type affiche ses produits (même page, ?type=<slug>), comme le hub des
+// catégories de la boutique. Un seul type par tuile, aucun type vide.
+// Le bloc est sur une seule ligne (la parité le retire d'un coup).
+func TypeHubHTML(fs []*catalog.RawProduct) string {
+	counts := map[string]int{}
+	rep := map[string]*catalog.RawProduct{}
+	for _, p := range fs {
+		counts[p.Sub]++
+		if rep[p.Sub] == nil && p.Image != "" {
+			rep[p.Sub] = p
+		}
+	}
+	var subs []string
+	for x := range counts {
+		subs = append(subs, x)
+	}
+	sort.Slice(subs, func(i, j int) bool {
+		if counts[subs[i]] != counts[subs[j]] {
+			return counts[subs[i]] > counts[subs[j]]
+		}
+		return subs[i] < subs[j]
+	})
+	var cards strings.Builder
+	for _, sub := range subs {
+		img := `<div class="noimg">Photo à venir</div>`
+		if r := rep[sub]; r != nil {
+			img = ImgTag(r, "../")
+		}
+		prod := "produits"
+		if counts[sub] == 1 {
+			prod = "produit"
+		}
+		fmt.Fprintf(&cards, `<div class="hub-card"><a class="hub-main" href="?type=%s"><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a></div>`, esc(catalog.Slugify(sub)), img, esc(sub), counts[sub], prod)
+	}
+	return `<div data-hub><h2 style="font-size:20px">Types d'équipements</h2><p style="color:#666">Choisissez un type pour voir ses produits.</p><div class="hub-grid">` + cards.String() + `</div><p style="margin-top:18px"><a class="btn" href="?all=1">Voir tous les produits (` + fmt.Sprint(len(fs)) + `) →</a></p></div>`
 }
 
 func CategoryPage(s *catalog.Store, main string) string {
@@ -218,7 +305,9 @@ func CategoryPage(s *catalog.Store, main string) string {
 <div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › ` + esc(main) + `</div>
 <h1 style="font-size:24px">` + esc(main) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(strings.Join(subList, ", ")) + `</p>
-` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `
+` + TypeHubHTML(fs) + `
+<div data-catalog-home hidden>
+` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `</div>
 </div></div></div>
 ` + Footer(s, "../")
 }
