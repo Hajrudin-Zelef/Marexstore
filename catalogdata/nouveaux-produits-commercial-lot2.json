@@ -1,0 +1,5035 @@
+[
+ {
+  "slug": "canon-maxify-gx3050",
+  "nom": "Canon MAXIFY GX3050",
+  "marque": "Canon",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Imprimantes",
+  "famille": "Imprimantes",
+  "accroche": "Megatank couleur",
+  "description": "La Canon MAXIFY GX3050 est une imprimante multifonction jet d'encre couleur à réservoirs rechargeables MegaTank, conçue pour les petits bureaux et les indépendants qui impriment en gros volumes. Elle imprime, copie et scanne en A4, avec un coût par page très bas grâce à ses bouteilles d'encre haute capacité. Son chargeur de 350 feuilles, son recto verso automatique et sa connectivité Wi-Fi, Ethernet et USB en font un outil de travail quotidien fiable et économique.",
+  "image": "images/canon-maxify-gx3050.jpg",
+  "specs": [
+   {
+    "label": "Technologie",
+    "valeur": "Jet d'encre couleur, 4 encres (noir, cyan, magenta, jaune)"
+   },
+   {
+    "label": "Vitesse d'impression",
+    "valeur": "Jusqu'à 18 ipm en noir, 13 ipm en couleur"
+   },
+   {
+    "label": "Résolution d'impression",
+    "valeur": "Jusqu'à 600 x 1 200 dpi"
+   },
+   {
+    "label": "Fonctions",
+    "valeur": "Impression, copie, numérisation (3-en-1)"
+   },
+   {
+    "label": "Capacité papier",
+    "valeur": "350 feuilles"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "Wi-Fi, Ethernet, USB 2.0"
+   },
+   {
+    "label": "Encres",
+    "valeur": "Bouteilles Canon GI-56 (BK, C, M, Y)"
+   },
+   {
+    "label": "Cycle mensuel",
+    "valeur": "Jusqu'à 33 000 pages/mois"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Canon MAXIFY GX3050",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Réservoirs MegaTank rechargeables : jusqu'à 6 000 pages en noir et 14 000 pages en couleur par jeu de bouteilles",
+   "Vitesse d'impression jusqu'à 18 ipm en noir et 13 ipm en couleur",
+   "Fonctions 3-en-1 : impression, copie et numérisation A4",
+   "Recto verso automatique et chargeur de 350 feuilles",
+   "Connectivité Wi-Fi, Ethernet et USB"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "qnap-ts-855x-8g",
+  "nom": "QNAP TS-855X-8G",
+  "marque": "QNAP",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "8 baies 10GbE",
+  "description": "Le QNAP TS-855X-8G est un NAS tour 8 baies haute performance, conçu pour les PME qui déploient un stockage hybride et des applications de virtualisation. Son processeur Intel Atom C5125 8 cœurs, ses 8 Go de RAM DDR4 extensibles à 128 Go et sa connectivité 10GbE intégrée offrent un accès rapide aux données, aux sauvegardes et aux machines virtuelles. Il accepte disques durs, SSD SATA et SSD NVMe M.2 en cache, et fonctionne sous QTS ou QuTS hero.",
+  "image": "images/qnap-ts-855x-8g.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Atom C5125 8 cœurs, 2,8 GHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 Go DDR4 (extensible jusqu'à 128 Go, ECC possible)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "6 x 3,5\" SATA + 2 x 2,5\" SATA"
+   },
+   {
+    "label": "Emplacements M.2",
+    "valeur": "2 x M.2 PCIe Gen3 x4 NVMe"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "1 x 10GbE + 2 x 2,5GbE"
+   },
+   {
+    "label": "Système",
+    "valeur": "QTS ou QuTS hero"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Stockage hybride, sauvegarde, virtualisation"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "QNAP TS-855X-8G",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Processeur Intel Atom C5125 8 cœurs à 2,8 GHz avec Intel QuickAssist",
+   "Connectivité 10GbE + 2 x 2,5GbE intégrée",
+   "8 baies : 6 x 3,5 pouces SATA et 2 x 2,5 pouces SATA",
+   "8 Go de RAM DDR4 extensibles jusqu'à 128 Go",
+   "2 emplacements M.2 NVMe pour le cache SSD"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "qnap-ts-h1277axu",
+  "nom": "QNAP TS-h1277AXU",
+  "marque": "QNAP",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "Rack 12 baies",
+  "description": "Le QNAP TS-h1277AXU est un NAS rack 2U 12 baies d'entreprise, basé sur le système de fichiers ZFS (QuTS hero) pour une intégrité des données renforcée. Propulsé par un processeur AMD Ryzen série 7000 et de la mémoire DDR5, il est conçu pour le stockage secondaire, la sauvegarde, la virtualisation et le montage vidéo 4K. Ses deux ports 10GbE, ses emplacements M.2 PCIe Gen5 et ses trois slots PCIe Gen4 permettent d'étendre réseau et stockage jusqu'à l'échelle du pétaoctet.",
+  "image": "images/qnap-ts-h1277axu.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen série 7000 (variante selon configuration)"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "DDR5 UDIMM, extensible (ECC possible)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "12 x 3,5\" SATA 6 Gbit/s"
+   },
+   {
+    "label": "Emplacements M.2",
+    "valeur": "2 x M.2 2280 PCIe Gen5 x2"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "2 x 10GBASE-T + 2 x 2,5GbE"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U (88,6 x 482 x 550 mm)"
+   },
+   {
+    "label": "Système",
+    "valeur": "QuTS hero (ZFS)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "QNAP TS-h1277AXU",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "12 baies 3,5 pouces SATA en rack 2U",
+   "Processeur AMD Ryzen série 7000 (socket AM5)",
+   "2 ports 10GbE + 2 ports 2,5GbE intégrés",
+   "Système QuTS hero basé sur ZFS (auto-réparation des données)",
+   "2 emplacements M.2 PCIe Gen5 pour le cache NVMe"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "qnap-ts-h3077afu",
+  "nom": "QNAP TS-h3077AFU",
+  "marque": "QNAP",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "30 baies U.2 NVMe",
+  "description": "Le QNAP TS-h3077AFU est un NAS rack 2U tout-flash de 30 baies, conçu pour les environnements d'entreprise exigeants : virtualisation, montage vidéo 4K/8K et stockage de données à grande échelle. Basé sur QuTS hero (ZFS) et propulsé par un processeur AMD Ryzen série 7000 avec mémoire DDR5, il combine des baies SSD 2,5 pouces, le support U.2 NVMe et une connectivité très haut débit. Il peut être étendu jusqu'à 204 disques pour atteindre l'échelle du pétaoctet.",
+  "image": "images/qnap-ts-h3077afu.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen série 7000 (variante selon configuration)"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "DDR5 UDIMM, extensible (ECC possible)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "30 x 2,5\" SATA 6 Gbit/s (SSD)"
+   },
+   {
+    "label": "Support NVMe",
+    "valeur": "U.2 NVMe + 2 x M.2 2280 PCIe Gen4 x4"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "10GbE intégré, 25/50/100GbE possibles via PCIe"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   },
+   {
+    "label": "Système",
+    "valeur": "QuTS hero (ZFS)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "QNAP TS-h3077AFU",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "30 baies 2,5 pouces pour SSD, avec support U.2 NVMe",
+   "NAS tout-flash (all-flash) pour des performances maximales",
+   "Processeur AMD Ryzen série 7000 et mémoire DDR5",
+   "Système QuTS hero basé sur ZFS",
+   "Extension jusqu'à 204 disques (capacité pétaoctet)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "synology-beestation-plus-4to",
+  "nom": "Synology BeeStation Plus 4To",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "Personnel Plus",
+  "description": "La Synology BeeStation Plus 4 To (BST170-4T) est un cloud personnel tout-en-un, prêt à l'emploi, conçu pour les professionnels et les familles qui veulent centraliser fichiers, photos et sauvegardes sans abonnement mensuel. Son disque de 4 To intégré, son processeur Intel Celeron J4125 et ses 4 Go de mémoire offrent des performances réactives au quotidien. Elle prend en charge Plex Media Server, la reconnaissance photo par IA en local et jusqu'à 4 caméras Synology pour la vidéosurveillance domestique.",
+  "image": "images/synology-beestation-plus-4to.jpg",
+  "specs": [
+   {
+    "label": "Capacité",
+    "valeur": "4 To intégrés (disque HAT3300-4T)"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "Intel Celeron J4125 quadricœur"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 Go DDR4"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "1 x 1GbE RJ-45"
+   },
+   {
+    "label": "Système",
+    "valeur": "BeeStation OS"
+   },
+   {
+    "label": "Utilisateurs",
+    "valeur": "Jusqu'à 8 utilisateurs"
+   },
+   {
+    "label": "Caméras",
+    "valeur": "Jusqu'à 4 caméras Synology (BeeCamera)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Synology BeeStation Plus 4To",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "4 To de stockage intégré, prêt à l'emploi",
+   "Processeur Intel Celeron J4125 et 4 Go de RAM DDR4",
+   "Cloud privé sans abonnement mensuel",
+   "Serveur multimédia Plex intégré",
+   "Reconnaissance photo par IA en local et sauvegarde des postes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "synology-sa3410",
+  "nom": "Synology SA3410",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "Rack 12 baies",
+  "description": "Le Synology SA3410 est un NAS rack 2U 12 baies pour datacenters, studios et entreprises en croissance, conçu pour un stockage évolutif jusqu'à l'échelle du pétaoctet. Son processeur Intel Xeon D-1541 8 cœurs, ses 16 Go de RAM ECC et ses deux ports 10GbE délivrent des débits séquentiels jusqu'à 6 200 Mo/s en lecture. Avec sept unités d'extension RX1222sas, il passe de 12 à 96 baies, soit jusqu'à 1,7 Po de capacité brute.",
+  "image": "images/synology-sa3410.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon D-1541, 8 cœurs, 2,1 / 2,7 GHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "16 Go DDR4 ECC RDIMM (max 128 Go)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "12 x 2,5\"/3,5\" SAS/SATA"
+   },
+   {
+    "label": "Extension",
+    "valeur": "Jusqu'à 96 baies avec 7 x RX1222sas (1,7 Po)"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "2 x 10GbE"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Lecture jusqu'à 6 200 Mo/s, écriture jusqu'à 3 000 Mo/s"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U (88 x 482 x 724 mm)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Synology SA3410",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Processeur Intel Xeon D-1541 8 cœurs à 2,1 GHz (turbo 2,7 GHz)",
+   "Débits séquentiels jusqu'à 6 200 Mo/s en lecture et 3 000 Mo/s en écriture",
+   "12 baies SAS/SATA, extensible à 96 baies (1,7 Po)",
+   "2 ports 10GbE intégrés",
+   "16 Go de RAM DDR4 ECC, extensible à 128 Go"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "synology-ds1823xs",
+  "nom": "Synology DS1823xs+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "8 baies 10GbE",
+  "description": "Le Synology DS1823xs+ est un NAS tour 8 baies haute performance pour les petites et moyennes entreprises qui ont besoin d'un stockage centralisé rapide sans salle serveur dédiée. Son processeur AMD Ryzen V1780B, ses 8 Go de RAM ECC et son port 10GbE intégré offrent plus de 3 100 Mo/s en lecture séquentielle. Il se déploie pour la sauvegarde, le partage de fichiers, le stockage de machines virtuelles et la vidéosurveillance, et s'étend jusqu'à 18 baies.",
+  "image": "images/synology-ds1823xs.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen V1780B, 4 cœurs, 3,35 / 3,6 GHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 Go DDR4 ECC SO-DIMM (max 32 Go)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "8 x 3,5\"/2,5\" SATA + 2 x M.2 2280 NVMe"
+   },
+   {
+    "label": "Extension",
+    "valeur": "Jusqu'à 18 baies avec 2 x DX517"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "1 x 10GbE + 2 x 1GbE + 1 port de gestion"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Lecture jusqu'à 3 100 Mo/s, écriture jusqu'à 2 600 Mo/s"
+   },
+   {
+    "label": "Système",
+    "valeur": "Synology DSM"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Synology DS1823xs+",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Processeur AMD Ryzen V1780B 4 cœurs à 3,35 GHz (turbo 3,6 GHz)",
+   "Port 10GbE intégré, débits jusqu'à 3 100 Mo/s en lecture",
+   "8 baies SATA + 2 emplacements M.2 NVMe",
+   "8 Go de RAM DDR4 ECC, extensible à 32 Go",
+   "Extensible à 18 baies avec 2 unités DX517"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "kingston-dc600me",
+  "nom": "Kingston DC600ME",
+  "marque": "Kingston",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Stockage",
+  "accroche": "SATA datacenter",
+  "description": "Le Kingston DC600ME est un SSD d'entreprise 2,5 pouces SATA, conçu pour les serveurs et les datacenters qui traitent des charges mixtes (lecture et écriture). Basé sur de la NAND 3D TLC, il atteint 560 Mo/s en lecture et offre une endurance d'une écriture complète par jour pendant 5 ans. Sa variante ME ajoute le chiffrement matériel AES 256 bits et TCG Opal 2.0, ainsi qu'une protection contre les coupures de courant pour protéger les données en vol.",
+  "image": "images/kingston-dc600me.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "SATA Rev. 3.0 (6 Gbit/s)"
+   },
+   {
+    "label": "Format",
+    "valeur": "2,5 pouces, 7 mm"
+   },
+   {
+    "label": "NAND",
+    "valeur": "3D TLC"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Lecture jusqu'à 560 Mo/s, écriture jusqu'à 530 Mo/s"
+   },
+   {
+    "label": "Endurance",
+    "valeur": "1 DWPD sur 5 ans"
+   },
+   {
+    "label": "Fiabilité",
+    "valeur": "MTBF de 2 millions d'heures"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "480 Go à 7,68 To"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Kingston DC600ME",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "SSD datacenter SATA 2,5 pouces, charges mixtes (mixed-use)",
+   "Lecture séquentielle jusqu'à 560 Mo/s",
+   "Endurance 1 DWPD sur 5 ans",
+   "Chiffrement matériel AES 256 bits et TCG Opal 2.0 (variante ME)",
+   "Protection matérielle contre les coupures de courant"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "samsung-870-evo",
+  "nom": "Samsung 870 EVO",
+  "marque": "Samsung",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Stockage",
+  "accroche": "SATA 2.5\"",
+  "description": "Le Samsung 870 EVO est le SSD SATA 2,5 pouces de référence pour mettre à niveau un PC de bureau ou un ordinateur portable vieillissant. Il exploite pleinement l'interface SATA 6 Gbit/s avec des vitesses jusqu'à 560 Mo/s en lecture et 530 Mo/s en écriture, grâce à la mémoire V-NAND TLC et à la technologie Intelligent TurboWrite. Disponible de 250 Go à 4 To (jusqu'à 8 To), il convient aux postes de travail, aux bureaux et aux créateurs qui veulent un stockage rapide et fiable.",
+  "image": "images/samsung-870-evo.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "SATA 6 Gbit/s"
+   },
+   {
+    "label": "Format",
+    "valeur": "2,5 pouces, 7 mm (100 x 69,85 x 6,8 mm)"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Lecture jusqu'à 560 Mo/s, écriture jusqu'à 530 Mo/s"
+   },
+   {
+    "label": "NAND",
+    "valeur": "Samsung V-NAND TLC"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "250 Go, 500 Go, 1 To, 2 To, 4 To (8 To)"
+   },
+   {
+    "label": "Chiffrement",
+    "valeur": "AES 256 bits"
+   },
+   {
+    "label": "Garantie",
+    "valeur": "5 ans (limitée)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Samsung 870 EVO",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Vitesses jusqu'à 560 Mo/s en lecture et 530 Mo/s en écriture",
+   "Mémoire Samsung V-NAND TLC avec Intelligent TurboWrite",
+   "Capacités de 250 Go à 4 To (jusqu'à 8 To)",
+   "Chiffrement matériel AES 256 bits",
+   "Garantie limitée de 5 ans"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "patriot-p400-v4",
+  "nom": "Patriot P400 V4",
+  "marque": "Patriot",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Stockage",
+  "accroche": "NVMe PCIe 4.0",
+  "description": "Le Patriot P400 V4 est un SSD M.2 NVMe PCIe 4.0 conçu pour accélérer les PC, les portables et même la PlayStation 5. Il atteint jusqu'à 6 200 Mo/s en lecture et 5 200 Mo/s en écriture (selon la capacité), pour des chargements quasi instantanés en jeu, en création de contenu et en multitâche. Son dissipateur thermique fin et son format M.2 2280 standard facilitent l'installation dans la plupart des machines modernes.",
+  "image": "images/patriot-p400-v4.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "M.2 2280, PCIe 4.0 x4, NVMe 2.0"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Lecture jusqu'à 6 200 Mo/s, écriture jusqu'à 5 200 Mo/s (selon capacité)"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "500 Go, 1 To, 2 To, 4 To"
+   },
+   {
+    "label": "Endurance",
+    "valeur": "Jusqu'à 1 280 TBW (modèle 4 To)"
+   },
+   {
+    "label": "Compatibilité",
+    "valeur": "PC, portable, PS5"
+   },
+   {
+    "label": "Refroidissement",
+    "valeur": "Dissipateur thermique fin"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Patriot P400 V4",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Lecture jusqu'à 6 200 Mo/s, écriture jusqu'à 5 200 Mo/s",
+   "Interface PCIe 4.0 x4, protocole NVMe 2.0",
+   "Compatible PC, portable et PS5",
+   "Dissipateur thermique fin intégré",
+   "Capacités de 500 Go à 4 To"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "wd-gold",
+  "nom": "WD Gold",
+  "marque": "Western Digital",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Stockage",
+  "accroche": "Datacenter",
+  "description": "Le WD Gold est un disque dur d'entreprise 3,5 pouces conçu pour les datacenters et les systèmes de stockage soumis à de lourdes charges de travail, 24h/24 et 7j/7. Il tourne à 7 200 tr/min, utilise la technologie d'enregistrement CMR et supporte jusqu'à 550 To de données écrites par an, avec une fiabilité (MTBF) pouvant atteindre 2,5 millions d'heures. Disponible de 1 To à 26 To, il convient aux serveurs, aux baies de stockage et aux charges de travail d'IA en local.",
+  "image": "images/wd-gold.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "SATA 6 Gbit/s"
+   },
+   {
+    "label": "Format",
+    "valeur": "3,5 pouces"
+   },
+   {
+    "label": "Vitesse",
+    "valeur": "7 200 tr/min"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "1 To à 26 To"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Jusqu'à 291 Mo/s (selon capacité)"
+   },
+   {
+    "label": "Charge de travail",
+    "valeur": "Jusqu'à 550 To/an"
+   },
+   {
+    "label": "Garantie",
+    "valeur": "5 ans (limitée)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "WD Gold",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Disque dur d'entreprise 3,5 pouces, 7 200 tr/min",
+   "Capacités de 1 To à 26 To",
+   "Charge de travail jusqu'à 550 To/an",
+   "Fiabilité MTBF jusqu'à 2,5 millions d'heures",
+   "Technologie CMR et garantie de 5 ans"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-cs4006-4et2gt-60",
+  "nom": "Dahua CS4006-4ET2GT-60",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Switch PoE 4+2 ports",
+  "description": "Le Dahua CS4006-4ET2GT-60 est un switch desktop manageable de 6 ports, pensé pour les petits systèmes de vidéosurveillance IP et les réseaux de bureaux. Il alimente jusqu'à 4 caméras ou points d'accès en PoE (budget total 60 W, avec Hi-PoE 60 W sur le premier port) et remonte vers le réseau via 2 ports Gigabit. Il se gère en local (Web) ou dans le cloud via l'application DoLynk, avec VLAN, protection de boucle et PoE longue distance jusqu'à 250 m.",
+  "image": "images/dahua-cs4006-4et2gt-60.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "4 x RJ45 10/100 PoE + 2 x RJ45 Gigabit (uplink)"
+   },
+   {
+    "label": "Budget PoE",
+    "valeur": "60 W (Hi-PoE 60 W sur le port 1)"
+   },
+   {
+    "label": "Normes PoE",
+    "valeur": "IEEE 802.3af, 802.3at, Hi-PoE"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "4,8 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "3,57 Mpps"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Web locale et cloud DoLynk"
+   },
+   {
+    "label": "Température",
+    "valeur": "-10 °C à +55 °C"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua CS4006-4ET2GT-60",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "4 ports PoE 10/100 Mbit/s + 2 ports Gigabit en uplink",
+   "Budget PoE total de 60 W (802.3af/at et Hi-PoE)",
+   "Gestion cloud via DoLynk et interface Web",
+   "PoE longue distance jusqu'à 250 m (mode étendu)",
+   "VLAN, protection de boucle et PoE Watchdog"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-ipc-hdbw1230de-sw",
+  "nom": "Dahua IPC-HDBW1230DE-SW",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Dôme Entry 2MP",
+  "description": "La Dahua IPC-HDBW1230DE-SW est une caméra dôme IP 2 MP avec Wi-Fi intégré, conçue pour la surveillance intérieure et extérieure sans câblage réseau lourd. Elle filme en Full HD 1080p, voit jusqu'à 30 m dans le noir grâce à ses LED infrarouges et se connecte en Wi-Fi 2,4 GHz (jusqu'à 80 m en champ libre) ou en Ethernet. Son boîtier étanche IP67 et antivandalisme IK10, son emplacement microSD jusqu'à 256 Go et sa compression H.265 en font une caméra d'entrée de gamme robuste et simple à installer.",
+  "image": "images/dahua-ipc-hdbw1230de-sw.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "2 MP (1920 x 1080) à 25/30 ips"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/2,8 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "Focale fixe 2,8 mm ou 3,6 mm, F2.0"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "LED IR jusqu'à 30 m"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "Wi-Fi 2,4 GHz + RJ-45 10/100"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "MicroSD jusqu'à 256 Go"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP67, IK10"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua IPC-HDBW1230DE-SW",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Résolution 2 MP Full HD 1080p à 25/30 ips",
+   "Wi-Fi 2,4 GHz intégré (portée jusqu'à 80 m en champ libre)",
+   "Vision nocturne infrarouge jusqu'à 30 m",
+   "Protection IP67 (étanche) et IK10 (antivandalisme)",
+   "Emplacement microSD jusqu'à 256 Go, compression H.265"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-ipc-hdbw1230de-sw-2-8mm",
+  "nom": "Dahua IPC-HDBW1230DE-SW (2.8mm)",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Dôme Entry 2.8mm",
+  "description": "La Dahua IPC-HDBW1230DE-SW en version 2,8 mm est une caméra dôme IP 2 MP avec Wi-Fi intégré, idéale pour surveiller une pièce, une entrée ou une cour avec un large angle de vue (100° à l'horizontale). Elle filme en Full HD 1080p, voit jusqu'à 30 m dans le noir et se connecte en Wi-Fi 2,4 GHz ou en Ethernet. Son boîtier IP67 et IK10 résiste aux intempéries et aux actes de vandalisme, et son emplacement microSD jusqu'à 256 Go permet l'enregistrement local.",
+  "image": "images/dahua-ipc-hdbw1230de-sw-2-8mm.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "2 MP (1920 x 1080) à 25/30 ips"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/2,8 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "Focale fixe 2,8 mm, F2.0 (angle horizontal 100°)"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "LED IR jusqu'à 30 m"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "Wi-Fi 2,4 GHz + RJ-45 10/100"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "MicroSD jusqu'à 256 Go"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP67, IK10"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua IPC-HDBW1230DE-SW (2.8mm)",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Objectif 2,8 mm grand angle (100° à l'horizontale)",
+   "Résolution 2 MP Full HD 1080p à 25/30 ips",
+   "Wi-Fi 2,4 GHz intégré (portée jusqu'à 80 m en champ libre)",
+   "Vision nocturne infrarouge jusqu'à 30 m",
+   "Protection IP67 et IK10, microSD jusqu'à 256 Go"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-ipc-hdw3449t-zs-il-2-7-13-5mm",
+  "nom": "Dahua IPC-HDW3449T-ZS-IL (2.7- 13.5mm)",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "WizSense 4MP",
+  "description": "La Dahua IPC-HDW3449T-ZS-IL est une caméra eyeball IP 4 MP de la gamme WizSense, conçue pour la surveillance extérieure intelligente. Son objectif varifocal motorisé 2,7–13,5 mm permet d'ajuster le champ de vue à distance, tandis que son double éclairage (infrarouge jusqu'à 50 m et lumière chaude jusqu'à 40 m) donne des images couleur la nuit. Son IA embarquée distingue personnes et véhicules pour réduire les fausses alertes, avec un WDR de 120 dB, un micro intégré et un emplacement microSD jusqu'à 512 Go.",
+  "image": "images/dahua-ipc-hdw3449t-zs-il-2-7-13-5mm.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "4 MP (2688 x 1520) à 25/30 ips"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/2,9 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "Varifocal motorisé 2,7–13,5 mm, F1.4"
+   },
+   {
+    "label": "Éclairage",
+    "valeur": "IR jusqu'à 50 m, lumière chaude jusqu'à 40 m"
+   },
+   {
+    "label": "IA",
+    "valeur": "WizSense (classification personne/véhicule)"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE 802.3af ou 12 VDC"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP67"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua IPC-HDW3449T-ZS-IL (2.7- 13.5mm)",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Résolution 4 MP (2688 x 1520) à 25/30 ips",
+   "Objectif varifocal motorisé 2,7–13,5 mm, F1.4",
+   "Double éclairage : IR jusqu'à 50 m, lumière chaude jusqu'à 40 m",
+   "IA WizSense : détection personnes et véhicules (SMD)",
+   "WDR 120 dB, micro intégré, microSD jusqu'à 512 Go"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "hikvision-ds-2cd2046g3-iz-2u-y",
+  "nom": "Hikvision DS-2CD2046G3-IZ(2U)Y",
+  "marque": "Hikvision",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Bullet 4MP varifocale",
+  "description": "La Hikvision DS-2CD2046G3-IZ(2U)Y est une caméra bullet IP 4 MP AcuSense, conçue pour la sécurisation périmétrique en extérieur, y compris en environnement difficile. Son objectif varifocal motorisé 2,8–4 mm, sa technologie DarkFighter et son boîtier anticorrosion NEMA 4X garantissent des images nettes de jour comme de nuit, même en zone côtière ou industrielle. L'IA AcuSense classe personnes et véhicules pour des alertes fiables, et ses deux micros intégrés capturent le son ambiant.",
+  "image": "images/hikvision-ds-2cd2046g3-iz-2u-y.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "4 MP (2688 x 1520) à 25 ips"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/3 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "Varifocal motorisé 2,8–4 mm, F1.6"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "IR jusqu'à 40 m"
+   },
+   {
+    "label": "Audio",
+    "valeur": "Double micro intégré (modèle 2U)"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP67, NEMA 4X anticorrosion"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "Ø 74,4 x 176,3 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Hikvision DS-2CD2046G3-IZ(2U)Y",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Résolution 4 MP (2688 x 1520) à 25 ips",
+   "Objectif varifocal motorisé 2,8–4 mm (zoom point à point)",
+   "Technologie DarkFighter pour la faible luminosité",
+   "IA AcuSense : classification personnes et véhicules",
+   "Boîtier anticorrosion NEMA 4X, protection IP67"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "tp-link-tapo-a201",
+  "nom": "TP-Link Tapo A201",
+  "marque": "TP-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Solaires extérieure",
+  "description": "Le TP-Link Tapo A201 est un panneau solaire conçu pour alimenter en continu les caméras Tapo sur batterie, sans jamais avoir à les recharger. Avec seulement 45 minutes d'ensoleillement standard par jour, il maintient la caméra en fonctionnement 24h/24 grâce à ses cellules monocristallines haute efficacité (2,5 W max). Étanche IP65, il s'installe au mur ou sur le toit, séparément de la caméra grâce à son câble de 4 m, et se connecte en USB-C (adaptateur Micro-USB inclus).",
+  "image": "images/tp-link-tapo-a201.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Panneau solaire pour caméras Tapo sur batterie"
+   },
+   {
+    "label": "Puissance",
+    "valeur": "2,5 W max (tension 5,2 V)"
+   },
+   {
+    "label": "Cellules",
+    "valeur": "Silicium monocristallin"
+   },
+   {
+    "label": "Câble",
+    "valeur": "0,25 m + rallonge 3,8 m (environ 4 m)"
+   },
+   {
+    "label": "Connecteur",
+    "valeur": "USB-C (adaptateur Micro-USB inclus)"
+   },
+   {
+    "label": "Étanchéité",
+    "valeur": "IP65"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "173,42 x 120,42 x 15,7 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "TP-Link Tapo A201",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Alimentation solaire continue pour caméras Tapo sur batterie",
+   "45 minutes de soleil par jour suffisent pour 24h de fonctionnement",
+   "Cellules monocristallines haute efficacité, 2,5 W max",
+   "Étanche IP65, câble de 4 m pour une installation flexible",
+   "Compatible avec toutes les caméras Tapo sur batterie"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "tp-link-tapo-c100",
+  "nom": "TP-Link Tapo C100",
+  "marque": "TP-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Intérieure 1080p",
+  "description": "La TP-Link Tapo C100 est une caméra Wi-Fi d'intérieur Full HD, simple et abordable, pour garder un œil sur la maison, les enfants ou les animaux depuis son téléphone. Elle filme en 1080p, voit jusqu'à 9 m dans le noir et propose un audio bidirectionnel pour parler à distance. La détection de mouvement envoie des notifications instantanées, et les vidéos se stockent localement sur carte microSD ou dans le cloud Tapo Care.",
+  "image": "images/tp-link-tapo-c100.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "1080p Full HD (1920 x 1080)"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/3,2 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "3,3 mm, F2.0 (champ de vision 105°)"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "LED IR 850 nm jusqu'à 9 m"
+   },
+   {
+    "label": "Audio",
+    "valeur": "Bidirectionnel"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Carte microSD (locale) ou cloud"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "67,6 x 54,8 x 98,9 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "TP-Link Tapo C100",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Vidéo Full HD 1080p à 15 ips",
+   "Vision nocturne infrarouge jusqu'à 9 m",
+   "Audio bidirectionnel (micro et haut-parleur intégrés)",
+   "Détection de mouvement avec notifications push",
+   "Stockage local microSD et cloud Tapo Care"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "tp-link-tapo-c310",
+  "nom": "TP-Link Tapo C310",
+  "marque": "TP-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Extérieure 3MP",
+  "description": "La TP-Link Tapo C310 est une caméra Wi-Fi d'extérieur 3 MP, conçue pour surveiller une cour, une entrée ou un parking en haute définition. Elle filme en 2304 x 1296, voit jusqu'à 30 m dans le noir et résiste aux intempéries grâce à son boîtier IP66. Elle se connecte en Wi-Fi ou en Ethernet, détecte les mouvements, déclenche une alarme sonore et lumineuse et permet de parler à distance grâce à son audio bidirectionnel. Les vidéos se stockent sur microSD jusqu'à 512 Go ou dans le cloud.",
+  "image": "images/tp-link-tapo-c310.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "3 MP (2304 x 1296)"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 1/2,7 pouce"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "3,89 mm, F2.2"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "LED IR 850 nm jusqu'à 30 m"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "Wi-Fi 2,4 GHz ou Ethernet"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "MicroSD jusqu'à 512 Go ou cloud"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "142,3 x 103,4 x 64,3 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "TP-Link Tapo C310",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Vidéo 3 MP (2304 x 1296) à 15 ips",
+   "Vision nocturne infrarouge jusqu'à 30 m",
+   "Boîtier étanche IP66 pour l'extérieur",
+   "Connexion Wi-Fi ou Ethernet",
+   "Détection de mouvement, alarme sonore et lumineuse, audio bidirectionnel"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "ubiquiti-uvc-g5-bullet",
+  "nom": "Ubiquiti UVC-G5-BULLET",
+  "marque": "Ubiquiti",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "G5 Bullet",
+  "description": "L'Ubiquiti UVC-G5-BULLET est une caméra bullet 2K pour l'écosystème UniFi Protect, conçue pour la surveillance intérieure et extérieure. Son capteur CMOS 5 MP filme en 2688 x 1512 à 30 ips avec HDR, et ses LED infrarouges voient jusqu'à 9 m la nuit. Alimentée en PoE par un seul câble Ethernet, elle s'intègre à UniFi Protect pour l'enregistrement, la détection de mouvement et la consultation à distance, avec un boîtier IPX4 et un support orientable sur 3 axes.",
+  "image": "images/ubiquiti-uvc-g5-bullet.jpg",
+  "specs": [
+   {
+    "label": "Résolution",
+    "valeur": "2K (2688 x 1512, 4 MP) à 30 ips"
+   },
+   {
+    "label": "Capteur",
+    "valeur": "CMOS 5 MP"
+   },
+   {
+    "label": "Objectif",
+    "valeur": "Focale fixe 4 mm (angle horizontal 84,4°)"
+   },
+   {
+    "label": "Vision nocturne",
+    "valeur": "LED IR jusqu'à 9 m"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE 802.3af (37–57 V DC, max 4 W)"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "1 x RJ45 10/100 MbE"
+   },
+   {
+    "label": "Système",
+    "valeur": "UniFi Protect"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Ubiquiti UVC-G5-BULLET",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Vidéo 2K (2688 x 1512) à 30 ips, capteur CMOS 5 MP",
+   "Vision nocturne infrarouge jusqu'à 9 m",
+   "Alimentation PoE 802.3af par un seul câble",
+   "Intégration UniFi Protect (enregistrement et alertes)",
+   "Boîtier IPX4, support orientable sur 3 axes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "coffret-12u-mural",
+  "nom": "Coffret 12U mural",
+  "marque": "",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Énergie & protection",
+  "accroche": "600x450x650, 19 pouces",
+  "description": "Ce coffret mural 12U est une armoire réseau 19 pouces conçue pour installer switchs, routeurs, panneaux de brassage et petits équipements dans un bureau ou une salle technique. Ses dimensions de 600 x 450 x 650 mm offrent un volume utile pour 12 unités de hauteur, tout en restant compacte au mur. Sa structure en acier, sa porte avant verrouillable et ses ouvertures de ventilation et de passage de câbles protègent les équipements tout en gardant l'installation propre et accessible.",
+  "image": "images/coffret-12u-mural.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "19 pouces, 12U"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "600 x 450 x 650 mm"
+   },
+   {
+    "label": "Montage",
+    "valeur": "Mural"
+   },
+   {
+    "label": "Structure",
+    "valeur": "Acier"
+   },
+   {
+    "label": "Porte",
+    "valeur": "Avant, verrouillable"
+   },
+   {
+    "label": "Ventilation",
+    "valeur": "Ouvertures de ventilation"
+   },
+   {
+    "label": "Câblage",
+    "valeur": "Passages de câbles"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Coffret 12U mural",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Format 19 pouces, 12 unités de hauteur",
+   "Montage mural, dimensions 600 x 450 x 650 mm",
+   "Structure acier robuste",
+   "Porte avant verrouillable",
+   "Ventilation et passages de câbles intégrés"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "baie-25u",
+  "nom": "Baie 25U",
+  "marque": "",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Énergie & protection",
+  "accroche": "Armoire serveur sur pied",
+  "description": "Cette baie 25U est une armoire serveur sur pied au format 19 pouces, conçue pour accueillir serveurs, switchs, onduleurs et panneaux de brassage dans une salle technique ou un datacenter. Ses 25 unités de hauteur offrent une capacité généreuse pour une infrastructure de taille moyenne, avec une structure en acier, une porte avant verrouillable, une ventilation adaptée et des passages de câbles pour une installation propre et évolutive.",
+  "image": "images/baie-25u.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "19 pouces, 25U"
+   },
+   {
+    "label": "Montage",
+    "valeur": "Sur pied (armoire au sol)"
+   },
+   {
+    "label": "Structure",
+    "valeur": "Acier"
+   },
+   {
+    "label": "Porte",
+    "valeur": "Avant, verrouillable"
+   },
+   {
+    "label": "Ventilation",
+    "valeur": "Ouvertures de ventilation"
+   },
+   {
+    "label": "Câblage",
+    "valeur": "Passages de câbles"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Serveurs, switchs, onduleurs, brassage"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Baie 25U",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Format 19 pouces, 25 unités de hauteur",
+   "Armoire serveur sur pied",
+   "Structure acier robuste",
+   "Porte avant verrouillable",
+   "Ventilation et gestion des câbles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "baie-48u",
+  "nom": "Baie 48U",
+  "marque": "",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Énergie & protection",
+  "accroche": "Armoire serveur sur pied",
+  "description": "Cette baie 48U est une armoire serveur sur pied au format 19 pouces, conçue pour les grandes infrastructures : datacenters, salles serveurs et réseaux d'entreprise. Ses 48 unités de hauteur offrent une capacité maximale pour empiler serveurs, baies de stockage, switchs et onduleurs dans un seul meuble. Sa structure en acier, sa porte avant verrouillable, sa ventilation et ses passages de câbles garantissent une installation sécurisée, aérée et évolutive.",
+  "image": "images/baie-48u.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "19 pouces, 48U"
+   },
+   {
+    "label": "Montage",
+    "valeur": "Sur pied (armoire au sol)"
+   },
+   {
+    "label": "Structure",
+    "valeur": "Acier"
+   },
+   {
+    "label": "Porte",
+    "valeur": "Avant, verrouillable"
+   },
+   {
+    "label": "Ventilation",
+    "valeur": "Ouvertures de ventilation"
+   },
+   {
+    "label": "Câblage",
+    "valeur": "Passages de câbles"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Serveurs, stockage, switchs, onduleurs"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Baie 48U",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Format 19 pouces, 48 unités de hauteur",
+   "Armoire serveur sur pied, grande capacité",
+   "Structure acier robuste",
+   "Porte avant verrouillable",
+   "Ventilation et gestion des câbles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "apc-smart-ups-smt-1500va-tour-smt1500ic",
+  "nom": "APC Smart-UPS SMT 1500VA Tour / SMT1500IC",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Énergie & protection",
+  "accroche": "Onduleur 1000W, tour",
+  "description": "L'APC Smart-UPS SMT1500IC est un onduleur tour line-interactive de 1500 VA / 1000 W, conçu pour protéger serveurs, équipements réseau et points de vente contre les coupures et les variations de tension. Il délivre une onde sinusoïdale pure, régule automatiquement la tension (AVR) et offre environ 6 minutes 30 d'autonomie à pleine charge (23 minutes à mi-charge). Son écran LCD, ses 8 prises IEC C13, son port SmartConnect et ses batteries remplaçables à chaud en font une protection fiable et facile à gérer.",
+  "image": "images/apc-smart-ups-smt-1500va-tour-smt1500ic.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1500 VA / 1000 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Line-interactive, onde sinusoïdale pure"
+   },
+   {
+    "label": "Autonomie",
+    "valeur": "6 min 30 s à 1000 W, 23,1 min à 500 W"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 x IEC C13 + 2 cavaliers IEC"
+   },
+   {
+    "label": "Entrée",
+    "valeur": "IEC C14, 230 V, 50/60 Hz"
+   },
+   {
+    "label": "Affichage",
+    "valeur": "Écran LCD multifonction"
+   },
+   {
+    "label": "Poids",
+    "valeur": "24,09 kg"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "APC Smart-UPS SMT 1500VA Tour / SMT1500IC",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Puissance 1500 VA / 1000 W, onde sinusoïdale pure",
+   "Technologie line-interactive avec régulation automatique de tension (AVR)",
+   "Autonomie 6 min 30 s à pleine charge, 23 min à mi-charge",
+   "Écran LCD intuitif et port SmartConnect (supervision à distance)",
+   "8 prises IEC C13, batteries remplaçables à chaud"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "synology-hat5320",
+  "nom": "Synology HAT5320",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Stockage",
+  "accroche": "NAS Haute capacité",
+  "description": "Le Synology HAT5320 est un disque dur d'entreprise 3,5 pouces SATA, conçu pour les NAS et les serveurs de stockage Synology en fonctionnement continu. Il tourne à 7 200 tr/min, atteint jusqu'à 295 Mo/s en transfert soutenu (modèle 20 To) et supporte une charge de travail de 550 To par an. Avec une fiabilité (MTBF) de 2,5 millions d'heures et une garantie de 5 ans, il est taillé pour les sauvegardes, les archives et les volumes partagés d'entreprise.",
+  "image": "images/synology-hat5320.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Disque dur d'entreprise 3,5 pouces (pour NAS)"
+   },
+   {
+    "label": "Interface",
+    "valeur": "SATA 6 Gbit/s"
+   },
+   {
+    "label": "Vitesse",
+    "valeur": "7 200 tr/min"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "4 To, 8 To, 12 To, 16 To, 20 To, 24 To"
+   },
+   {
+    "label": "Débit",
+    "valeur": "Jusqu'à 295 Mo/s (20 To), 309 Mo/s (24 To)"
+   },
+   {
+    "label": "Charge de travail",
+    "valeur": "550 To/an"
+   },
+   {
+    "label": "Garantie",
+    "valeur": "5 ans (limitée)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Synology HAT5320",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Disque dur d'entreprise 3,5 pouces pour NAS Synology",
+   "Vitesse 7 200 tr/min, interface SATA 6 Gbit/s",
+   "Transfert soutenu jusqu'à 295 Mo/s (modèle 20 To)",
+   "Charge de travail jusqu'à 550 To/an",
+   "Fiabilité MTBF de 2,5 millions d'heures, garantie 5 ans"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "fg-61f",
+  "nom": "FG-61F",
+  "marque": "Fortinet",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le Fortinet FortiGate 61F (FG-61F) est un pare-feu de nouvelle génération (NGFW) compact et sans ventilateur, conçu pour les agences et les PME. Basé sur le processeur de sécurité SoC4, il délivre 10 Gbit/s de débit pare-feu, 1,4 Gbit/s d'IPS et 1 Gbit/s en NGFW, avec SD-WAN intégré et VPN IPsec à 6,5 Gbit/s. Ses 10 ports Gigabit Ethernet et son SSD interne de 128 Go pour les journaux locaux en font une protection complète et silencieuse pour les petits sites.",
+  "image": "images/fg-61f.jpg",
+  "specs": [
+   {
+    "label": "Débit pare-feu",
+    "valeur": "10 Gbit/s"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "1,4 Gbit/s"
+   },
+   {
+    "label": "Débit NGFW",
+    "valeur": "1 Gbit/s"
+   },
+   {
+    "label": "Protection menaces",
+    "valeur": "700 Mbit/s"
+   },
+   {
+    "label": "VPN IPsec",
+    "valeur": "6,5 Gbit/s"
+   },
+   {
+    "label": "Ports",
+    "valeur": "10 x GE RJ45 (2 WAN, 1 DMZ, 5 internes, 2 FortiLink)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "SSD interne 128 Go"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "FG-61F",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu jusqu'à 10 Gbit/s",
+   "IPS 1,4 Gbit/s et NGFW 1 Gbit/s",
+   "10 ports Gigabit Ethernet (2 WAN, 1 DMZ, 5 internes, 2 FortiLink)",
+   "SSD interne de 128 Go pour les journaux locaux",
+   "SD-WAN intégré, processeur SoC4, format desktop sans ventilateur"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "fg-100f",
+  "nom": "FG-100F",
+  "marque": "Fortinet",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le Fortinet FortiGate 100F (FG-100F) est un pare-feu de nouvelle génération (NGFW) rack 1U, conçu pour les entreprises de taille moyenne et les sites distribués. Basé sur le processeur de sécurité SoC4, il délivre 20 Gbit/s de débit pare-feu, 2,6 Gbit/s d'IPS et 1,6 Gbit/s en NGFW, avec SD-WAN intégré et VPN IPsec à 11,5 Gbit/s. Ses 22 ports Gigabit Ethernet, ses 4 ports SFP et ses 2 ports 10 GE SFP+ FortiLink offrent une connectivité étendue pour les réseaux exigeants.",
+  "image": "images/fg-100f.jpg",
+  "specs": [
+   {
+    "label": "Débit pare-feu",
+    "valeur": "20 Gbit/s"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "2,6 Gbit/s"
+   },
+   {
+    "label": "Débit NGFW",
+    "valeur": "1,6 Gbit/s"
+   },
+   {
+    "label": "Protection menaces",
+    "valeur": "1 Gbit/s"
+   },
+   {
+    "label": "VPN IPsec",
+    "valeur": "11,5 Gbit/s"
+   },
+   {
+    "label": "Ports",
+    "valeur": "22 x GE RJ45, 4 x SFP, 2 x 10 GE SFP+"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U, double alimentation"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "FG-100F",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu jusqu'à 20 Gbit/s",
+   "IPS 2,6 Gbit/s et NGFW 1,6 Gbit/s",
+   "22 ports GE RJ45, 4 ports SFP, 2 ports 10 GE SFP+ FortiLink",
+   "VPN IPsec 11,5 Gbit/s, 1,5 million de sessions simultanées",
+   "SD-WAN intégré, processeur SoC4, format rack 1U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "firepower-2110",
+  "nom": "Firepower 2110",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "",
+  "description": "Le Cisco Firepower 2110 (FPR2110-NGFW-K9) est un pare-feu de nouvelle génération (NGFW) rack 1U, conçu pour les agences et les entreprises de taille moyenne. Il exécute Cisco Firepower Threat Defense avec contrôle applicatif, IPS nouvelle génération et protection antimalware, pour un débit NGFW de 2,6 Gbit/s et un débit pare-feu jusqu'à 3 Gbit/s. Ses 12 ports RJ45 Gigabit, ses 4 ports SFP et son port de gestion dédié offrent une connectivité complète pour sécuriser le périmètre du réseau.",
+  "image": "images/firepower-2110.jpg",
+  "specs": [
+   {
+    "label": "Débit pare-feu",
+    "valeur": "Jusqu'à 3 Gbit/s"
+   },
+   {
+    "label": "Débit NGFW",
+    "valeur": "2,6 Gbit/s (pare-feu + contrôle applicatif + IPS)"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "2,6 Gbit/s"
+   },
+   {
+    "label": "VPN IPsec",
+    "valeur": "950 Mbit/s"
+   },
+   {
+    "label": "Ports",
+    "valeur": "12 x RJ45 1G + 4 x SFP 1G + 1 port de gestion"
+   },
+   {
+    "label": "Sessions",
+    "valeur": "1 million de sessions simultanées"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Firepower 2110",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu jusqu'à 3 Gbit/s, NGFW 2,6 Gbit/s",
+   "IPS nouvelle génération et protection antimalware (Firepower Threat Defense)",
+   "12 ports RJ45 Gigabit + 4 ports SFP",
+   "1 million de sessions simultanées, 1 500 pairs VPN",
+   "VPN IPsec 950 Mbit/s, format rack 1U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "firepower-2140",
+  "nom": "Firepower 2140",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "",
+  "description": "Le Cisco Firepower 2140 est un pare-feu nouvelle génération (NGFW) conçu pour les entreprises de taille moyenne et les sites distants exigeants. Il combine pare-feu applicatif, prévention d'intrusion (IPS), protection anti-malware et filtrage URL dans un boîtier 1U, avec une inspection approfondie qui ne dégrade pas les performances. Il convient aux sièges, aux datacenters de taille moyenne et aux périmètres Internet à fort trafic.",
+  "image": "images/firepower-2140.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Firepower 2140 (série 2100)"
+   },
+   {
+    "label": "Débit pare-feu (stateful)",
+    "valeur": "20 Gbps"
+   },
+   {
+    "label": "Débit NGFW (FW + AVC + IPS)",
+    "valeur": "9 Gbps"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "9 Gbps"
+   },
+   {
+    "label": "Débit TLS",
+    "valeur": "1,4 Gbps"
+   },
+   {
+    "label": "Débit VPN IPsec",
+    "valeur": "3,2 Gbps"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "3 millions"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "12 × RJ-45 1G + 4 × SFP+ 10G, 1 baie NetMod"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable, double alimentation 400 W"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Firepower 2140",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit NGFW de 9 Gbps avec inspection IPS active",
+   "12 ports Gigabit RJ-45 et 4 ports SFP+ 10G",
+   "3 millions de sessions simultanées",
+   "VPN IPsec jusqu'à 3,2 Gbps pour les sites distants",
+   "Baie de module réseau pour étendre la connectivité"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "firepower-4140",
+  "nom": "Firepower 4140",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "datacenter",
+  "description": "Le Cisco Firepower 4140 est un pare-feu nouvelle génération haut de gamme destiné aux datacenters et aux grands périmètres d'entreprise. Il délivre un débit pare-feu de 70 Gbps et supporte 25 millions de connexions simultanées, avec IPS, protection anti-malware et filtrage URL intégrés. Ses deux baies de modules réseau permettent d'adapter la connectivité aux liaisons 10G et 40G des environnements à très fort trafic.",
+  "image": "images/firepower-4140.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Firepower 4140 (série 4100)"
+   },
+   {
+    "label": "Débit pare-feu (stateful)",
+    "valeur": "70 Gbps"
+   },
+   {
+    "label": "Débit pare-feu (multiprotocole)",
+    "valeur": "40 Gbps"
+   },
+   {
+    "label": "Connexions simultanées",
+    "valeur": "25 millions"
+   },
+   {
+    "label": "Nouvelles connexions / seconde",
+    "valeur": "350 000"
+   },
+   {
+    "label": "Débit VPN IPsec",
+    "valeur": "14 Gbps"
+   },
+   {
+    "label": "Pairs VPN IPsec / AnyConnect",
+    "valeur": "20 000"
+   },
+   {
+    "label": "VLAN",
+    "valeur": "1 024"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable, 2 baies NetMod"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Firepower 4140",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu de 70 Gbps pour les datacenters",
+   "25 millions de connexions simultanées",
+   "VPN IPsec jusqu'à 14 Gbps, 20 000 pairs",
+   "2 baies de modules réseau (NetMod)",
+   "IPS et protection anti-malware intégrés"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "secure-firewall-1210cp",
+  "nom": "Secure Firewall 1210CP",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "compact, PoE, 6,5 Gbps",
+  "description": "Le Cisco Secure Firewall 1210CP est un pare-feu compact de bureau pensé pour les petites agences et les succursales. Il protège le réseau local avec un débit de 6,5 Gbps, alimente directement téléphones IP et caméras grâce à ses 4 ports PoE+, et se pilote avec les logiciels ASA ou Threat Defense. Sa taille réduite et son alimentation externe lui permettent de se poser sur un bureau ou dans une petite baie.",
+  "image": "images/secure-firewall-1210cp.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Secure Firewall 1210CP (série 1200)"
+   },
+   {
+    "label": "Débit pare-feu",
+    "valeur": "6,5 Gbps"
+   },
+   {
+    "label": "Débit Threat Defense",
+    "valeur": "6,0 Gbps"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "6,0 Gbps"
+   },
+   {
+    "label": "Débit TLS",
+    "valeur": "1,0 Gbps"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "8 × RJ-45 1GbE, dont 4 PoE+ (120 W au total)"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "175 000"
+   },
+   {
+    "label": "Format",
+    "valeur": "Compact de bureau, alimentation externe"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Secure Firewall 1210CP",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu de 6,5 Gbps en format compact",
+   "4 ports PoE+ (120 W) pour téléphones et caméras",
+   "8 ports Gigabit Ethernet",
+   "Logiciels ASA ou Threat Defense au choix",
+   "Idéal pour les petites agences et succursales"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "secure-firewall-1210-ngfw",
+  "nom": "Secure Firewall 1210-NGFW",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "compact, PoE, 6,5 Gbps",
+  "description": "Le Cisco Secure Firewall 1210 (version NGFW) est un pare-feu compact destiné aux petites entreprises et aux agences qui ont besoin d'une protection de niveau entreprise sans occuper une baie. Il offre un débit pare-feu de 6,5 Gbps avec inspection des applications et prévention d'intrusion, dans un boîtier de bureau silencieux. Il se gère avec les logiciels ASA ou Threat Defense selon les besoins.",
+  "image": "images/secure-firewall-1210-ngfw.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Secure Firewall 1210 (série 1200)"
+   },
+   {
+    "label": "Débit pare-feu",
+    "valeur": "6,5 Gbps"
+   },
+   {
+    "label": "Débit Threat Defense",
+    "valeur": "6,0 Gbps"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "6,0 Gbps"
+   },
+   {
+    "label": "Débit TLS",
+    "valeur": "1,0 Gbps"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "8 × RJ-45 1GbE"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "175 000"
+   },
+   {
+    "label": "Format",
+    "valeur": "Compact de bureau, alimentation externe"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Secure Firewall 1210-NGFW",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu de 6,5 Gbps en format compact",
+   "IPS et contrôle applicatif intégrés",
+   "8 ports Gigabit Ethernet",
+   "Logiciels ASA ou Threat Defense au choix",
+   "Format de bureau, idéal pour les petites agences"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "secure-firewall-1230",
+  "nom": "Secure Firewall 1230",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "PME/ETI",
+  "description": "Le Cisco Secure Firewall 1230 est un pare-feu rackable 1U conçu pour les PME et ETI qui ont besoin d'un débit élevé et d'une connectivité 10G. Avec 13 Gbps de débit pare-feu, 8 ports Gigabit et 4 ports SFP+ 10G, il protège les sièges et les sites distants importants. Il fonctionne avec les logiciels ASA ou Threat Defense et s'intègre à la gestion centralisée Cisco Secure Firewall Management Center.",
+  "image": "images/secure-firewall-1230.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Secure Firewall 1230 (série 1200)"
+   },
+   {
+    "label": "Débit pare-feu",
+    "valeur": "13 Gbps"
+   },
+   {
+    "label": "Débit Threat Defense",
+    "valeur": "9,0 Gbps"
+   },
+   {
+    "label": "Débit IPS",
+    "valeur": "13 Gbps"
+   },
+   {
+    "label": "Débit TLS",
+    "valeur": "2,5 Gbps"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "8 × RJ-45 1GbE + 4 × SFP+ 1/10G"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "400 000"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "SSD NVMe 960 Go"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Secure Firewall 1230",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit pare-feu de 13 Gbps",
+   "8 ports Gigabit + 4 ports SFP+ 10G",
+   "IPS jusqu'à 13 Gbps",
+   "400 000 sessions simultanées",
+   "Format 1U rackable pour les PME et ETI"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "isa3000-8c",
+  "nom": "ISA3000-8C",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "environnements industriels (OT)",
+  "description": "Le Cisco Secure Firewall ISA3000 est un pare-feu industriel durci, conçu pour protéger les environnements de technologie opérationnelle (OT) : usines, sous-stations électriques, transports et infrastructures critiques. Monté sur rail DIN dans une armoire de commande, il fonctionne sans ventilateur de -40 à +70 °C et inspecte les protocoles industriels (Modbus, DNP3, EtherNet/IP, IEC 61850). Il fait le lien entre le monde industriel et la sécurité réseau d'entreprise.",
+  "image": "images/isa3000-8c.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Secure Firewall ISA3000 (série ISA3000)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "4 × Gigabit Ethernet (4 cuivre ou 2 cuivre + 2 SFP selon version)"
+   },
+   {
+    "label": "Débit pare-feu + AVC",
+    "valeur": "375 Mbps"
+   },
+   {
+    "label": "Débit pare-feu + AVC + IPS",
+    "valeur": "350 Mbps"
+   },
+   {
+    "label": "Débit VPN IPsec",
+    "valeur": "50 Mbps"
+   },
+   {
+    "label": "Température de fonctionnement",
+    "valeur": "-40 à +70 °C"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Double entrée DC 9,6 à 60 V, 24 W"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "11,2 × 13 × 16 cm, 1,9 kg"
+   },
+   {
+    "label": "Certifications",
+    "valeur": "Classe I Div 2, ATEX Zone 2, IEC 61850-3, IEEE 1613"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "ISA3000-8C",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Conçu pour les environnements industriels (OT)",
+   "Fonctionnement de -40 à +70 °C, sans ventilateur",
+   "Montage sur rail DIN dans l'armoire de commande",
+   "Inspection des protocoles industriels (Modbus, DNP3, IEC 61850)",
+   "Alimentation DC redondante 12/24/48 V"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "6500e",
+  "nom": "6500E",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "PME, 1U",
+  "description": "Le Huawei HiSecEngine USG6500E est une gamme de pare-feux nouvelle génération à configuration fixe, conçue pour les PME et les organisations en réseau (chaînes, agences). En format 1U, elle combine pare-feu, prévention d'intrusion, antivirus et contrôle applicatif, avec des débits de 2 à 9 Gbps selon le modèle. Elle se gère sur site ou dans le cloud, et convient aux sièges de PME comme aux succursales.",
+  "image": "images/6500e.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "Huawei HiSecEngine USG6500E (configuration fixe)"
+   },
+   {
+    "label": "Débit pare-feu",
+    "valeur": "2 à 9 Gbps selon le modèle (USG6525E à USG6585E)"
+   },
+   {
+    "label": "Débit FW + IPS",
+    "valeur": "1,5 à 2,2 Gbps"
+   },
+   {
+    "label": "Débit VPN IPsec",
+    "valeur": "2 à 6 Gbps"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "3 à 4 millions"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "2 × 10GE SFP+ + 8 × GE Combo + 2 × GE WAN"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "6500E",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Pare-feu nouvelle génération pour PME, en 1U",
+   "Débit pare-feu de 2 à 9 Gbps selon le modèle",
+   "IPS, antivirus et contrôle applicatif intégrés",
+   "2 ports 10GE SFP+ et 8 ports GE Combo",
+   "Gestion sur site ou dans le cloud"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "usg6700e",
+  "nom": "USG6700E",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "hautes performances",
+  "description": "Le Huawei HiSecEngine USG6700E est une gamme de pare-feux nouvelle génération très hautes performances, destinée aux grands sièges, aux datacenters et aux cœurs de réseau. En format 1U, elle atteint jusqu'à 160 Gbps de débit pare-feu et gère jusqu'à 50 millions de sessions simultanées, avec des ports 100G pour les interconnexions à très haut débit. Elle intègre IPS, antivirus, inspection SSL et VPN pour protéger les environnements les plus exigeants.",
+  "image": "images/usg6700e.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "Huawei HiSecEngine USG6700E (USG6712E / USG6716E)"
+   },
+   {
+    "label": "Débit pare-feu IPv4",
+    "valeur": "120 à 160 Gbps"
+   },
+   {
+    "label": "Débit FW + IPS",
+    "valeur": "40 Gbps"
+   },
+   {
+    "label": "Débit VPN IPsec",
+    "valeur": "100 à 120 Gbps"
+   },
+   {
+    "label": "Sessions simultanées",
+    "valeur": "35 à 50 millions"
+   },
+   {
+    "label": "Nouvelles sessions / seconde",
+    "valeur": "1,4 à 1,6 million"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "2 × 100G QSFP28 + 2 × 40G QSFP+ + 20 × 10GE SFP+"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "USG6700E",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Très hautes performances : jusqu'à 160 Gbps",
+   "Ports 100G (2 × QSFP28) pour les cœurs de réseau",
+   "Jusqu'à 50 millions de sessions simultanées",
+   "VPN IPsec jusqu'à 120 Gbps",
+   "IPS, antivirus et inspection SSL intégrés"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "hp-415x",
+  "nom": "HP 415X",
+  "marque": "HP",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Toners & consommables",
+  "famille": "Toners & consommables",
+  "accroche": "",
+  "description": "Le toner HP 415X est la cartouche laser haute capacité d'origine HP pour les imprimantes couleur LaserJet Pro et Enterprise. Le noir (W2030X) imprime jusqu'à 7 500 pages et chaque couleur (W2031X, W2032X, W2033X) jusqu'à 6 000 pages, ce qui réduit la fréquence des remplacements dans les bureaux à fort volume. La technologie JetIntelligence assure des couleurs fidèles et une protection contre la contrefaçon.",
+  "image": "images/hp-415x.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "HP 415X (haute capacité)"
+   },
+   {
+    "label": "Références",
+    "valeur": "Noir W2030X, cyan W2031X, magenta W2032X, jaune W2033X"
+   },
+   {
+    "label": "Rendement noir",
+    "valeur": "Jusqu'à 7 500 pages"
+   },
+   {
+    "label": "Rendement couleurs",
+    "valeur": "Jusqu'à 6 000 pages par couleur"
+   },
+   {
+    "label": "Norme de rendement",
+    "valeur": "ISO/IEC 19798"
+   },
+   {
+    "label": "Imprimantes compatibles",
+    "valeur": "Color LaserJet Pro M454dn/dw, MFP M479dw/fdn/fdw/fnw"
+   },
+   {
+    "label": "Imprimantes compatibles (suite)",
+    "valeur": "Color LaserJet Enterprise M455dn, MFP M480f"
+   },
+   {
+    "label": "Type",
+    "valeur": "Toner laser couleur, cartouche d'origine HP"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "HP 415X",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Noir jusqu'à 7 500 pages, couleurs jusqu'à 6 000 pages",
+   "Toner d'origine HP, technologie JetIntelligence",
+   "Compatible LaserJet Pro M454 et MFP M479",
+   "Compatible LaserJet Enterprise M455 et M480f",
+   "Haute capacité : moins de remplacements"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "kyocera-tk-1260",
+  "nom": "Kyocera TK-1260",
+  "marque": "Kyocera",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Toners & consommables",
+  "famille": "Toners & consommables",
+  "accroche": "",
+  "description": "Le toner Kyocera TK-1260 est la cartouche noire d'origine pour les imprimantes laser ECOSYS PA4000x et PA4000wx. Avec un rendement de 10 000 pages A4, il convient aux bureaux qui impriment beaucoup en noir et blanc. La technologie Microfine de Kyocera garantit un texte net et régulier du premier au dernier tirage.",
+  "image": "images/kyocera-tk-1260.jpg",
+  "specs": [
+   {
+    "label": "Référence",
+    "valeur": "Kyocera TK-1260 (1T0C150NL0)"
+   },
+   {
+    "label": "Couleur",
+    "valeur": "Noir"
+   },
+   {
+    "label": "Rendement",
+    "valeur": "10 000 pages A4"
+   },
+   {
+    "label": "Norme de rendement",
+    "valeur": "ISO/IEC 19752"
+   },
+   {
+    "label": "Imprimantes compatibles",
+    "valeur": "ECOSYS PA4000x, PA4000wx (et versions Plus)"
+   },
+   {
+    "label": "Type",
+    "valeur": "Toner laser noir, cartouche d'origine"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Kyocera TK-1260",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Rendement de 10 000 pages A4",
+   "Toner noir d'origine Kyocera",
+   "Compatible ECOSYS PA4000x et PA4000wx",
+   "Texte net grâce au toner Microfine",
+   "Idéal pour les gros volumes noir et blanc"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "epson-502",
+  "nom": "Epson 502",
+  "marque": "Epson",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartouches d'encre",
+  "famille": "Cartouches d'encre",
+  "accroche": "EcoTank / WorkForce",
+  "description": "L'encre Epson 502 est la recharge d'origine pour les imprimantes EcoTank et WorkForce à réservoirs. Le flacon noir de 127 ml imprime jusqu'à 7 500 pages et chaque flacon couleur de 70 ml jusqu'à 6 000 pages, pour un coût par page très bas. Le remplissage se fait sans cartouche, directement dans le réservoir, avec un bec anti-débordement.",
+  "image": "images/epson-502.jpg",
+  "specs": [
+   {
+    "label": "Référence",
+    "valeur": "Epson 502 (T502)"
+   },
+   {
+    "label": "Contenance",
+    "valeur": "Noir 127 ml, cyan/magenta/jaune 70 ml"
+   },
+   {
+    "label": "Rendement noir",
+    "valeur": "Jusqu'à 7 500 pages"
+   },
+   {
+    "label": "Rendement couleurs",
+    "valeur": "Jusqu'à 6 000 pages par couleur"
+   },
+   {
+    "label": "Méthode de rendement",
+    "valeur": "ISO/IEC 24712 (méthodologie Epson)"
+   },
+   {
+    "label": "Imprimantes compatibles",
+    "valeur": "EcoTank ET-2700, ET-2750, ET-2760, ET-2850, ET-3700, ET-3750, ET-3760, ET-3850, ET-4750, ET-4760, ET-4850, ET-15000"
+   },
+   {
+    "label": "Imprimantes compatibles (suite)",
+    "valeur": "WorkForce ST-2000, ST-3000, ST-4000, ST-C2100, ST-C4100"
+   },
+   {
+    "label": "Type",
+    "valeur": "Flacons d'encre pour réservoirs EcoTank"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Epson 502",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Noir jusqu'à 7 500 pages, couleurs jusqu'à 6 000 pages",
+   "Flacons grande capacité : noir 127 ml, couleurs 70 ml",
+   "Compatible EcoTank ET-2750, ET-3750, ET-4850 et autres",
+   "Remplissage propre, sans cartouche",
+   "Encre pigmentée noire, encres couleur à base de colorant"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "isr-4431",
+  "nom": "ISR 4431",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "agences",
+  "description": "Le Cisco ISR 4431 est un routeur de services intégrés conçu pour les agences et les sites distants de taille moyenne. Il délivre 500 Mbps à 1 Gbps de débit agrégé et regroupe routage, sécurité, voix et SD-WAN dans un seul boîtier 1U. Ses trois emplacements de modules (NIM) permettent d'ajouter des liaisons WAN, 4G ou voix selon les besoins du site.",
+  "image": "images/isr-4431.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco ISR 4431 (série ISR 4000)"
+   },
+   {
+    "label": "Débit agrégé",
+    "valeur": "500 Mbps (1 Gbps avec licence Performance)"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "4 × Gigabit Ethernet (2 RJ-45 + 2 combo RJ-45/SFP)"
+   },
+   {
+    "label": "Emplacements d'extension",
+    "valeur": "3 × NIM, 1 × ISM"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 Go DRAM, 8 Go flash"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS XE, prêt SD-WAN"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "ISR 4431",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit agrégé de 500 Mbps à 1 Gbps",
+   "3 emplacements NIM pour extensions WAN, 4G ou voix",
+   "Routage, sécurité, voix et SD-WAN intégrés",
+   "4 ports Gigabit Ethernet",
+   "Idéal pour les agences et sites distants"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "isr-4461",
+  "nom": "ISR 4461",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "agences",
+  "description": "Le Cisco ISR 4461 est le routeur le plus puissant de la série ISR 4000, destiné aux grandes agences et aux sièges régionaux. Il délivre 1,5 Gbps de débit agrégé, extensible à 3 Gbps avec la licence Performance, et regroupe routage, sécurité, voix et SD-WAN. Ses trois emplacements NIM et son débit VPN élevé en font un routeur de périmètre pour les sites à fort trafic.",
+  "image": "images/isr-4461.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco ISR 4461 (série ISR 4000)"
+   },
+   {
+    "label": "Débit agrégé",
+    "valeur": "1,5 Gbps (3 Gbps avec licence Performance)"
+   },
+   {
+    "label": "Débit CEF (licence Boost)",
+    "valeur": "Plus de 7 Gbps"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "4 × Gigabit Ethernet (2 RJ-45 + 2 combo RJ-45/SFP)"
+   },
+   {
+    "label": "Emplacements d'extension",
+    "valeur": "3 × NIM, 1 × ISM"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS XE, prêt SD-WAN"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "ISR 4461",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit agrégé de 1,5 Gbps (3 Gbps avec licence Performance)",
+   "Le plus puissant de la série ISR 4000",
+   "3 emplacements NIM pour extensions WAN, 4G ou voix",
+   "VPN IPsec jusqu'à 10 Gbps avec licence Boost",
+   "Idéal pour les grandes agences et sièges régionaux"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "asr-1001-x",
+  "nom": "ASR 1001-X",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "",
+  "description": "Le Cisco ASR 1001-X est un routeur d'agrégation compact pour les bordures de réseau d'entreprise et les sites de fournisseurs de services. En format 1U, il combine six ports Gigabit SFP et deux ports 10G SFP+, avec un processeur de services embarqué dont le débit passe de 2,5 à 20 Gbps par licence logicielle. Le chiffrement matériel jusqu'à 8 Gbps sécurise les liaisons WAN sans ralentir le trafic.",
+  "image": "images/asr-1001-x.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco ASR 1001-X (série ASR 1000)"
+   },
+   {
+    "label": "Débit ESP",
+    "valeur": "2,5 Gbps par défaut, 5/10/20 Gbps par licence"
+   },
+   {
+    "label": "Débit de transfert maximal",
+    "valeur": "20 Gbps"
+   },
+   {
+    "label": "Débit de chiffrement",
+    "valeur": "Jusqu'à 8 Gbps"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "6 × 1GE SFP + 2 × 10GE SFP+"
+   },
+   {
+    "label": "Processeur de routage",
+    "valeur": "Quad-core 2,13 GHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 Go DRAM (extensible à 16 Go), 8 Go flash"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "ASR 1001-X",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Débit de 2,5 Gbps, extensible à 20 Gbps par licence",
+   "6 ports 1GE SFP + 2 ports 10GE SFP+",
+   "Chiffrement matériel jusqu'à 8 Gbps",
+   "Format compact 1U pour la bordure de réseau",
+   "Processeur Quad-core, mémoire extensible à 16 Go"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "c819-m2m",
+  "nom": "C819 M2M",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "4G, distant, voix",
+  "description": "Le Cisco C819 M2M est un routeur 4G LTE compact conçu pour les applications machine-à-machine : compteurs, bornes, automates et sites distants sans liaison filaire. Il embarque un modem LTE avec double SIM et repli 3G, et apporte les fonctions IOS d'entreprise (VPN, QoS, routage multi-VRF, communications unifiées) sur le réseau mobile. Son format compact et sa faible consommation conviennent aux armoires et aux installations extérieures.",
+  "image": "images/c819-m2m.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco C819 4G LTE M2M (série 819)"
+   },
+   {
+    "label": "Débit LTE",
+    "valeur": "Jusqu'à 100 Mbps en descendant, 50 Mbps en montant (Cat. 3)"
+   },
+   {
+    "label": "Bandes LTE (version G, Europe)",
+    "valeur": "800, 900, 1800, 2100, 2600 MHz"
+   },
+   {
+    "label": "Repli",
+    "valeur": "UMTS/HSPA+ 850, 900, 1900, 2100 MHz"
+   },
+   {
+    "label": "Cartes SIM",
+    "valeur": "2 emplacements"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS (VPN, QoS, multi-VRF, communications unifiées)"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "196 × 183 × 42 mm"
+   },
+   {
+    "label": "MTBF",
+    "valeur": "508 000 heures"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "C819 M2M",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "4G LTE intégré pour les sites sans filaire",
+   "Double SIM et repli 3G (UMTS/HSPA+)",
+   "VPN, QoS et routage multi-VRF d'IOS",
+   "Conçu pour les applications machine-à-machine (M2M)",
+   "Format compact, faible consommation"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "nim-1mft-t1",
+  "nom": "NIM-1MFT-T1",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "4G, distant, voix",
+  "description": "Le module Cisco NIM-1MFT-T1/E1 ajoute un port T1/E1 voix et données aux routeurs ISR 4000 et Catalyst 8300/8200. Il relie le routeur aux liaisons louées T1 (1,544 Mbps) ou E1 (2,048 Mbps) des opérateurs, pour la voix (RNIS PRI, signalisation CAS) comme pour les données. Il intègre un emplacement pour module DSP voix PVDM4 et se configure pour du T1/E1 complet ou fractionné.",
+  "image": "images/nim-1mft-t1.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco NIM-1MFT-T1/E1 (4e génération)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "1 × T1/E1 multiflex"
+   },
+   {
+    "label": "Débit T1",
+    "valeur": "1,544 Mbps"
+   },
+   {
+    "label": "Débit E1",
+    "valeur": "2,048 Mbps (1,984 Mbps en mode tramé)"
+   },
+   {
+    "label": "Voix",
+    "valeur": "24 canaux DS0 (T1) / 31 canaux (E1), PRI 1 par port"
+   },
+   {
+    "label": "Emplacement DSP",
+    "valeur": "1 × PVDM4"
+   },
+   {
+    "label": "Compatibilité",
+    "valeur": "Routeurs ISR 4000, Catalyst 8300/8200 (IOS XE)"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "3,18 × 8,89 × 18,39 cm, 181 g"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "NIM-1MFT-T1",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "1 port T1/E1 voix et données pour ISR 4000",
+   "T1 1,544 Mbps ou E1 2,048 Mbps, complet ou fractionné",
+   "Voix : RNIS PRI et signalisation CAS",
+   "Emplacement DSP voix PVDM4 intégré",
+   "Compatible Catalyst 8300 et 8200"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "xe9680l",
+  "nom": "XE9680L",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Serveurs",
+  "accroche": "2025",
+  "description": "Le Dell PowerEdge XE9680L est un serveur rack 4U à refroidissement liquide direct, conçu pour l'entraînement des modèles d'IA et le calcul haute performance. Il embarque deux processeurs Intel Xeon Scalable de 5e génération et jusqu'à huit GPU NVIDIA HGX H200 ou B200 interconnectés en NVLink. Avec jusqu'à 4 To de mémoire DDR5 et 12 emplacements PCIe Gen5, il s'adresse aux datacenters qui entraînent de grands modèles de langage et des charges HPC.",
+  "image": "images/xe9680l.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Dell PowerEdge XE9680L"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 4U, refroidissement liquide direct"
+   },
+   {
+    "label": "Processeurs",
+    "valeur": "2 × Intel Xeon Scalable 5e génération, jusqu'à 64 cœurs chacun"
+   },
+   {
+    "label": "GPU",
+    "valeur": "8 × NVIDIA HGX H200 141 Go ou HGX B200 180 Go, NVLink"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "32 emplacements DDR5, jusqu'à 4 To, 5 600 MT/s"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 8 × NVMe 2,5 pouces, 122,88 To max"
+   },
+   {
+    "label": "Extensions",
+    "valeur": "Jusqu'à 12 × PCIe Gen5 x16"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "6 × 2 800 W (H200) ou 3 000 W (B200) Titanium, redondantes"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "iDRAC9, OpenManage"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "XE9680L",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "8 GPU NVIDIA HGX H200 ou B200 en NVLink",
+   "Refroidissement liquide direct en 4U",
+   "2 processeurs Intel Xeon Scalable 5e génération, jusqu'à 64 cœurs chacun",
+   "Jusqu'à 4 To de mémoire DDR5",
+   "Jusqu'à 8 disques NVMe (122,88 To max)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "xr7620",
+  "nom": "XR7620",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Serveurs",
+  "accroche": "2025",
+  "description": "Le Dell PowerEdge XR7620 est un serveur rack 2U durci et compact, conçu pour l'informatique en périphérie (edge) : sites télécoms, usines et environnements difficiles. Sa faible profondeur (449 mm) et sa résistance aux températures de -5 à +55 °C, aux poussières et aux vibrations lui permettent de fonctionner hors datacenter. Il embarque deux processeurs Intel Xeon Scalable de 4e génération et jusqu'à quatre GPU pour l'inférence IA et l'automatisation industrielle.",
+  "image": "images/xr7620.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Dell PowerEdge XR7620"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U durci, faible profondeur"
+   },
+   {
+    "label": "Processeurs",
+    "valeur": "2 × Intel Xeon Scalable 4e génération, jusqu'à 32 cœurs chacun"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "16 emplacements DDR5, jusqu'à 1 To, 4 800 MT/s"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 4 × SSD 2,5 pouces (61,44 To) ou 8 × E3.S NVMe (51,2 To)"
+   },
+   {
+    "label": "Accélérateurs",
+    "valeur": "Jusqu'à 4 × 150 W ou 2 × 300 W"
+   },
+   {
+    "label": "Température de fonctionnement",
+    "valeur": "-5 à +55 °C"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "86,8 × 482,6 × 448,8 mm, 21,16 kg max"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "iDRAC9"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "XR7620",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Serveur edge durci 2U, faible profondeur (449 mm)",
+   "Fonctionne de -5 à +55 °C, testé MIL 810H et NEBS niveau 3",
+   "2 processeurs Intel Xeon Scalable 4e génération, jusqu'à 32 cœurs chacun",
+   "Jusqu'à 4 GPU 150 W ou 2 GPU 300 W pour l'IA en périphérie",
+   "Jusqu'à 1 To de mémoire DDR5"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "ucs-b200-m6",
+  "nom": "UCS B200 M6",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Serveurs",
+  "accroche": "2021",
+  "description": "Le Cisco UCS B200 M6 est une lame serveur demi-largeur pour le châssis UCS 5108, conçue pour les datacenters qui densifient leur calcul. Elle embarque deux processeurs Intel Xeon Scalable de 3e génération (jusqu'à 40 cœurs chacun) et 32 emplacements mémoire DDR4, avec un débit d'E/S pouvant atteindre 80 Gbps. Jusqu'à huit lames tiennent dans un châssis 6U, pour la virtualisation, les bases de données et les infrastructures IT.",
+  "image": "images/ucs-b200-m6.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco UCS B200 M6"
+   },
+   {
+    "label": "Format",
+    "valeur": "Lame demi-largeur, châssis UCS 5108"
+   },
+   {
+    "label": "Processeurs",
+    "valeur": "2 × Intel Xeon Scalable 3e génération, jusqu'à 40 cœurs chacun"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "32 emplacements DDR4, jusqu'à 3 200 MHz"
+   },
+   {
+    "label": "Mémoire maximale",
+    "valeur": "8 To DDR4 (12 To avec mémoire persistante Intel Optane)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "2 × disques 2,5 pouces (SAS/SATA/NVMe) ou 4 × M.2 SATA"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "Carte VIC 1440/15411, jusqu'à 80 Gbps d'E/S"
+   },
+   {
+    "label": "Chipset",
+    "valeur": "Intel C621A"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "UCS B200 M6",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "2 processeurs Intel Xeon Scalable 3e génération, jusqu'à 40 cœurs chacun",
+   "32 emplacements DDR4, jusqu'à 8 To de mémoire",
+   "Débit d'E/S jusqu'à 80 Gbps",
+   "Lame demi-largeur : 8 lames par châssis UCS 5108 (6U)",
+   "Gestion centralisée UCS Manager / Intersight"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "synology-ds925",
+  "nom": "Synology DS925+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Stockage / NAS",
+  "accroche": "4 baies",
+  "description": "Le Synology DS925+ est un NAS 4 baies pour les petites entreprises et les bureaux qui centralisent fichiers, sauvegardes et vidéosurveillance. Son processeur AMD Ryzen quadricœur, ses 4 Go de mémoire ECC extensible à 32 Go et ses deux ports 2,5 GbE assurent un partage de fichiers rapide pour plusieurs utilisateurs. Le système DSM apporte sauvegarde, synchronisation, snapshots et applications, avec une extension possible à 9 baies.",
+  "image": "images/synology-ds925.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Synology DiskStation DS925+"
+   },
+   {
+    "label": "Baies",
+    "valeur": "4 × 3,5/2,5 pouces SATA, extensible à 9 avec DX525"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen V1500B, 4 cœurs, 2,2 GHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 Go DDR4 ECC (2 emplacements SODIMM, 32 Go max)"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "2 × 2,5GbE RJ-45 (agrégation de liens)"
+   },
+   {
+    "label": "Emplacements M.2",
+    "valeur": "2 × NVMe 2280 (cache ou volumes)"
+   },
+   {
+    "label": "Capacité brute maximale",
+    "valeur": "96 To (216 To avec DX525)"
+   },
+   {
+    "label": "Débits séquentiels",
+    "valeur": "Lecture 522 Mo/s, écriture 565 Mo/s"
+   },
+   {
+    "label": "Système",
+    "valeur": "Synology DSM"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Synology DS925+",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "4 baies extensibles à 9 avec l'unité DX525",
+   "Processeur AMD Ryzen V1500B quadricœur 2,2 GHz",
+   "2 ports réseau 2,5 GbE avec agrégation",
+   "Mémoire ECC 4 Go, extensible à 32 Go",
+   "Système DSM : sauvegarde, snapshots, synchronisation"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-1300-48t",
+  "nom": "Catalyst 1300-48T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2022",
+  "description": "Le Cisco Catalyst 1300-48T est un switch managé 48 ports Gigabit pour les PME et les agences qui déploient un réseau local fiable. Il offre 48 ports 10/100/1000 et 4 liaisons montantes SFP 1G, avec des fonctions de routage de niveau 3 (routage inter-VLAN, statique, RIP) et une gestion par interface web, CLI ou tableau de bord Cisco Business. Son format 1U rackable et sa capacité de 104 Gbps conviennent aux réseaux d'accès denses.",
+  "image": "images/catalyst-1300-48t.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C1300-48T-4G"
+   },
+   {
+    "label": "Ports",
+    "valeur": "48 × RJ-45 10/100/1000 + 4 × SFP 1G"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "104 Gbps"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "77,38 Mpps"
+   },
+   {
+    "label": "Couche",
+    "valeur": "L2/L3 (routage inter-VLAN, statique, RIP)"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "1 Go DDR4, 1 Go flash"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "100–240 V CA"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "445 × 350 × 44 mm"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 1300-48T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports Gigabit + 4 liaisons SFP 1G",
+   "Capacité de commutation de 104 Gbps",
+   "Routage de niveau 3 (inter-VLAN, statique, RIP)",
+   "Gestion web, CLI et Cisco Business Dashboard",
+   "Format 1U rackable pour les PME"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-1300-24xts",
+  "nom": "Catalyst 1300-24XTS",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2022",
+  "description": "Le Cisco Catalyst 1300-24XTS est un switch managé 24 ports 10G pour les PME qui ont besoin d'un cœur de réseau rapide : serveurs, stockage et liaisons d'agrégation. Il combine 12 ports cuivre 10GBASE-T et 12 ports fibre SFP+ 10G, avec une capacité de commutation de 480 Gbps et des fonctions de routage de niveau 3. Il convient comme commutateur d'agrégation ou comme cœur de petit réseau.",
+  "image": "images/catalyst-1300-24xts.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C1300-24XTS"
+   },
+   {
+    "label": "Ports",
+    "valeur": "12 × 10GBASE-T + 12 × 10G SFP+"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "480 Gbps"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "357,12 Mpps"
+   },
+   {
+    "label": "Couche",
+    "valeur": "L2/L3 (routage inter-VLAN, statique, RIP)"
+   },
+   {
+    "label": "PoE",
+    "valeur": "Non (modèle sans PoE)"
+   },
+   {
+    "label": "VLAN",
+    "valeur": "4 094, table MAC 16 000 entrées"
+   },
+   {
+    "label": "Consommation maximale",
+    "valeur": "88,2 W"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable, 4,2 kg"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 1300-24XTS",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports 10G : 12 cuivre + 12 fibre SFP+",
+   "Capacité de commutation de 480 Gbps",
+   "Routage de niveau 3 (inter-VLAN, statique, RIP)",
+   "Idéal en agrégation ou cœur de petit réseau",
+   "Gestion web, CLI et Cisco Business Dashboard"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-1200-48t",
+  "nom": "Catalyst 1200-48T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2022",
+  "description": "Le Cisco Catalyst 1200-48T est un switch smart managé 48 ports Gigabit pour les petites entreprises et les agences. Il offre 48 ports 10/100/1000 et 4 liaisons montantes SFP 1G, avec des fonctions de niveau 2 (VLAN, QoS, agrégation de liens) et une gestion simple par interface web, CLI ou tableau de bord Cisco Business. Son format 1U rackable en fait un commutateur d'accès économique et fiable.",
+  "image": "images/catalyst-1200-48t.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C1200-48T-4G"
+   },
+   {
+    "label": "Ports",
+    "valeur": "48 × RJ-45 1G + 4 × SFP 1G"
+   },
+   {
+    "label": "Couche",
+    "valeur": "L2 (VLAN, QoS, agrégation de liens)"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Interface web, CLI, SNMP, Cisco Business Dashboard"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "444 × 288 × 44 mm (17,48 × 11,34 × 1,73 pouces)"
+   },
+   {
+    "label": "Poids",
+    "valeur": "3,95 kg"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 1200-48T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports Gigabit + 4 liaisons SFP 1G",
+   "Switch managé de niveau 2, idéal pour les PME",
+   "VLAN, QoS et agrégation de liens",
+   "Gestion web, CLI et Cisco Business Dashboard",
+   "Format 1U rackable"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-1000-24t",
+  "nom": "Catalyst 1000-24T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2022",
+  "description": "Le Cisco Catalyst 1000-24T est un switch managé 24 ports Gigabit pour les petites entreprises et les agences. Il offre 24 ports 10/100/1000 et 4 liaisons montantes SFP 1G, avec le système Cisco IOS, des VLAN, la QoS et une gestion par CLI ou interface web. Jusqu'à huit commutateurs se gèrent depuis une seule adresse IP, ce qui simplifie les déploiements multi-sites.",
+  "image": "images/catalyst-1000-24t.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C1000-24T-4G-L"
+   },
+   {
+    "label": "Ports",
+    "valeur": "24 × RJ-45 10/100/1000 + 4 × SFP 1G"
+   },
+   {
+    "label": "Couche",
+    "valeur": "L2 managé, Cisco IOS"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "CLI, interface web, SNMP"
+   },
+   {
+    "label": "Gestion centralisée",
+    "valeur": "Jusqu'à 8 commutateurs depuis une seule adresse IP"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 1000-24T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit + 4 liaisons SFP 1G",
+   "Système Cisco IOS, gestion CLI et web",
+   "VLAN, QoS et sécurité de port",
+   "Jusqu'à 8 commutateurs gérés depuis une seule IP",
+   "Idéal pour les PME et les agences"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cbs110-8t",
+  "nom": "CBS110-8T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2022",
+  "description": "Le Cisco CBS110-8T est un switch non managé 8 ports Gigabit pour les très petites entreprises et les bureaux à domicile. Il fonctionne dès la sortie de la boîte, sans aucune configuration : on branche les câbles et le réseau est en service. Son boîtier métallique compact et silencieux (sans ventilateur) se pose sur un bureau ou se fixe au mur, avec une capacité de 16 Gbps pour les usages quotidiens.",
+  "image": "images/cbs110-8t.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco CBS110-8T-D (série Business 110)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "8 × RJ-45 10/100/1000"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "16 Gbps"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "11,9 Mpps"
+   },
+   {
+    "label": "Type",
+    "valeur": "Non managé, plug-and-play, couche 2"
+   },
+   {
+    "label": "PoE",
+    "valeur": "Non"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "160 × 104 × 30 mm, 0,43 kg"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Externe, 100–240 V"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "CBS110-8T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "8 ports Gigabit, prêt à l'emploi sans configuration",
+   "Capacité de commutation de 16 Gbps",
+   "Silencieux, sans ventilateur",
+   "QoS et détection de boucle intégrées",
+   "Boîtier métal compact pour bureau ou mur"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cbs350",
+  "nom": "CBS350",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2022",
+  "description": "La gamme Cisco CBS350 est une famille de switches managés pour les PME, disponible de 8 à 48 ports Gigabit avec des options PoE+ et des liaisons montantes 1G ou 10G. Elle apporte la gestion web, les VLAN, la QoS et le routage de niveau 3, avec un empilage jusqu'à quatre unités (192 ports gérés comme un seul système). Elle convient aux bureaux qui veulent un réseau administrable sans passer aux gammes Catalyst d'entreprise.",
+  "image": "images/cbs350.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "Cisco Business 350 (CBS350)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "8 à 48 × Gigabit Ethernet selon le modèle"
+   },
+   {
+    "label": "PoE",
+    "valeur": "PoE+ 802.3af/at, jusqu'à 48 ports (740 W max)"
+   },
+   {
+    "label": "Liaisons montantes",
+    "valeur": "1G SFP ou 10G SFP+ selon le modèle"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "Jusqu'à 4 unités, 192 ports gérés comme un seul système"
+   },
+   {
+    "label": "Couche",
+    "valeur": "L2/L3 managé (VLAN 4 094, table MAC 16 000)"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Interface web, CLI, SNMP, Cisco Business Dashboard"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "CBS350",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Switches managés de 8 à 48 ports Gigabit",
+   "PoE+ disponible, jusqu'à 48 ports alimentés",
+   "Liaisons montantes 1G ou 10G SFP+",
+   "Empilage jusqu'à 4 unités (192 ports)",
+   "Gestion web, VLAN, QoS et routage L3"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-48t",
+  "nom": "Catalyst 48T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "accès, stackables",
+  "description": "Le Catalyst 48T (série Catalyst 9300) est un switch d'accès empilable 48 ports Gigabit pour les campus d'entreprise et les réseaux de taille moyenne. Il offre 48 ports 10/100/1000 sans PoE, des liaisons montantes modulaires 1G/10G/25G/40G et l'empilage StackWise-480 jusqu'à 8 unités. Avec le système IOS XE, le routage de niveau 3 et la sécurité MACsec, il forme la brique d'accès des architectures SD-Access de Cisco.",
+  "image": "images/catalyst-48t.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C9300-48T (série 9300)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "48 × RJ-45 10/100/1000"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "256 Gbps"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "190,48 Mpps"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "StackWise-480, jusqu'à 8 unités, 480 Gbps"
+   },
+   {
+    "label": "Liaisons montantes",
+    "valeur": "Modulaires (1G/10G/25G/40G)"
+   },
+   {
+    "label": "PoE",
+    "valeur": "Non (modèle données uniquement)"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 Go DRAM, 16 Go flash"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 48T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports Gigabit d'accès, sans PoE",
+   "Empilage StackWise-480 jusqu'à 8 unités (480 Gbps)",
+   "Liaisons montantes modulaires 1G/10G/25G/40G",
+   "Capacité de commutation de 256 Gbps",
+   "Routage L3 et sécurité MACsec, IOS XE"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-9300-24p",
+  "nom": "Catalyst 9300 24P",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "multi-gig",
+  "description": "Le Cisco Catalyst 9300-24P est un switch d'accès empilable 24 ports Gigabit PoE+ pour les campus d'entreprise. Il alimente téléphones IP, caméras et bornes Wi-Fi avec un budget PoE+ de 445 W, et se relie au cœur de réseau par des liaisons montantes modulaires 1G/10G/25G/40G. L'empilage StackWise-480 (jusqu'à 8 unités, 480 Gbps) et le système IOS XE en font une brique d'accès fiable pour les architectures SD-Access.",
+  "image": "images/catalyst-9300-24p.jpg",
+  "specs": [
+   {
+    "label": "Modèle",
+    "valeur": "Cisco Catalyst C9300-24P"
+   },
+   {
+    "label": "Ports",
+    "valeur": "24 × RJ-45 10/100/1000 PoE+"
+   },
+   {
+    "label": "Budget PoE+",
+    "valeur": "445 W (extensible à 720 W)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "208 Gbps"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "154,76 Mpps"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "StackWise-480, jusqu'à 8 unités, 480 Gbps"
+   },
+   {
+    "label": "Liaisons montantes",
+    "valeur": "Modulaires (1G/10G/25G/40G)"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "715 W CA, redondance 1+1"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 9300 24P",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit PoE+ (budget 445 W)",
+   "Empilage StackWise-480 jusqu'à 8 unités (480 Gbps)",
+   "Liaisons montantes modulaires 1G/10G/25G/40G",
+   "Capacité de commutation de 208 Gbps",
+   "Routage L3, IOS XE, prêt SD-Access"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-9300-48uxm",
+  "nom": "Catalyst 9300 48UXM",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "multi-gig",
+  "description": "Le commutateur d'accès Cisco Catalyst 9300 48UXM est conçu pour les réseaux d'entreprise denses en Wi-Fi 6/6E et en IoT. Il combine 36 ports multigigabit jusqu'à 2,5 Gbit/s et 12 ports multigigabit jusqu'à 10 Gbit/s, tous alimentés en UPOE jusqu'à 60 W par port. Empilable avec StackWise-480, il offre une commutation à 580 Gbit/s et les fonctions de sécurité et de routage de Cisco IOS XE, ce qui en fait un choix solide pour les bureaux, les campus et les bâtiments intelligents.",
+  "image": "images/catalyst-9300-48uxm.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "36 × 100M/1G/2,5G + 12 × 100M/1G/2,5G/5G/10G (RJ-45)"
+   },
+   {
+    "label": "Alimentation PoE",
+    "valeur": "Cisco UPOE jusqu'à 60 W par port (budget 490 W)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "580 Gbit/s (1 060 Gbit/s avec empilage)"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "431,54 Mpps"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "Cisco StackWise-480 (jusqu'à 8 unités, 480 Gbit/s)"
+   },
+   {
+    "label": "Uplinks",
+    "valeur": "Modulaires (1/10/25/40 Gbit/s)"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS XE, licences Network Essentials ou Network Advantage"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "1 100 W CA (redondante en option)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 9300 48UXM",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports multigigabit : 36 ports jusqu'à 2,5 Gbit/s et 12 ports jusqu'à 10 Gbit/s",
+   "UPOE jusqu'à 60 W par port pour les bornes Wi-Fi, caméras et capteurs IoT",
+   "Commutation à 580 Gbit/s et empilage StackWise-480 jusqu'à 8 commutateurs",
+   "Routage de couche 3 et sécurité intégrée sous Cisco IOS XE",
+   "Uplinks modulaires 1/10/25/40 Gbit/s selon les besoins"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-9300-48un",
+  "nom": "Catalyst 9300 48UN",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "multi-gig",
+  "description": "Le Cisco Catalyst 9300 48UN est un commutateur d'accès multigigabit pensé pour les déploiements Wi-Fi 6/6E à très haute densité. Ses 48 ports cuivre acceptent des débits de 100 Mbit/s à 5 Gbit/s et délivrent l'UPOE+ pour alimenter les bornes Wi-Fi les plus gourmandes. Avec 640 Gbit/s de commutation et l'empilage StackWise-480, il convient aux campus, aux hôtels et aux grands bureaux qui concentrent beaucoup de clients sans fil.",
+  "image": "images/catalyst-9300-48un.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "48 × 100M/1G/2,5G/5G (RJ-45, UPOE+)"
+   },
+   {
+    "label": "Alimentation PoE",
+    "valeur": "UPOE+ jusqu'à 90 W par port (budget 645 W)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "640 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "476,19 Mpps"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "Cisco StackWise-480 (jusqu'à 8 unités, 480 Gbit/s)"
+   },
+   {
+    "label": "Uplinks",
+    "valeur": "Modulaires (1/10/25/40 Gbit/s)"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS XE"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "1,73 × 17,5 × 17,5 pouces (1U)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 9300 48UN",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports multigigabit jusqu'à 5 Gbit/s sur cuivre",
+   "UPOE+ jusqu'à 90 W par port pour les bornes Wi-Fi 6/6E",
+   "Commutation à 640 Gbit/s et empilage StackWise-480",
+   "Uplinks modulaires jusqu'à 40 Gbit/s",
+   "Cisco IOS XE avec routage de couche 3 et sécurité intégrée"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "9410r-cartes-lc-24t",
+  "nom": "9410R + cartes LC-24T",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "",
+  "description": "Le châssis modulaire Cisco Catalyst 9410R est la plateforme d'accès et d'agrégation de la série Catalyst 9400, prévue pour les campus et les cœurs de réseau d'entreprise. Ses 10 emplacements accueillent 8 cartes de ligne, dont les cartes LC-24T à 24 ports Gigabit cuivre, pour un total pouvant atteindre 384 ports d'accès. Avec des superviseurs redondants, des alimentations jusqu'à 3 200 W et une bande passante de 480 Gbit/s par emplacement, il garantit disponibilité et évolutivité.",
+  "image": "images/9410r-cartes-lc-24t.jpg",
+  "specs": [
+   {
+    "label": "Châssis",
+    "valeur": "10 emplacements (8 cartes de ligne + 2 superviseurs)"
+   },
+   {
+    "label": "Cartes",
+    "valeur": "C9400-LC-24T : 24 ports 10/100/1000BASE-T (RJ-45)"
+   },
+   {
+    "label": "Densité maximale",
+    "valeur": "Jusqu'à 384 ports Gigabit par châssis"
+   },
+   {
+    "label": "Bande passante par emplacement",
+    "valeur": "Jusqu'à 480 Gbit/s"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Jusqu'à 8 modules 3 200 W CA"
+   },
+   {
+    "label": "PoE maximal par emplacement",
+    "valeur": "2 880 W"
+   },
+   {
+    "label": "Format",
+    "valeur": "13U, 57,43 × 43,94 × 41,40 cm, 29,48 kg (châssis + ventilateur)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "9410R + cartes LC-24T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Châssis modulaire 10 emplacements : 8 cartes de ligne et 2 superviseurs redondants",
+   "Cartes LC-24T : 24 ports 10/100/1000BASE-T chacune, jusqu'à 384 ports par châssis",
+   "Bande passante jusqu'à 480 Gbit/s par emplacement",
+   "Alimentations redondantes jusqu'à 3 200 W CA et PoE jusqu'à 2 880 W par emplacement",
+   "Cisco IOS XE avec haute disponibilité (SSO/NSF)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "catalyst-9500-40x",
+  "nom": "Catalyst 9500-40X",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "",
+  "description": "Le Cisco Catalyst 9500-40X est un commutateur fixe de cœur et d'agrégation pour les campus d'entreprise. Ses 40 ports SFP+ à 10 Gbit/s offrent une commutation à 960 Gbit/s avec un débit de 720 Mpps, pour agréger sans goulot les commutateurs d'accès et les serveurs. Basé sur un processeur x86 et Cisco IOS XE, il intègre la sécurité, la programmabilité et la haute disponibilité attendues d'un cœur de réseau.",
+  "image": "images/catalyst-9500-40x.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "40 × 10 Gbit/s SFP+ (1/10 Gbit/s)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "960 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "720 Mpps"
+   },
+   {
+    "label": "Adresses MAC",
+    "valeur": "Jusqu'à 64 000"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "16 Go de RAM, 16 Go de flash"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "950 W CA (consommation max. 850 W)"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U, 1,73 × 17,5 × 21,52 pouces"
+   },
+   {
+    "label": "Système",
+    "valeur": "Cisco IOS XE (Network Advantage)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Catalyst 9500-40X",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "40 ports 10 Gigabit SFP+ (compatibles 1 Gbit/s) pour l'agrégation",
+   "Commutation à 960 Gbit/s et 720 Mpps en vitesse filaire",
+   "Processeur x86, 16 Go de RAM et 16 Go de mémoire flash",
+   "Cisco IOS XE avec licence Network Advantage et routage complet",
+   "Format 1U avec alimentations redondantes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "nexus-9336c-fx2",
+  "nom": "Nexus 9336C-FX2",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "datacenter",
+  "description": "Le Cisco Nexus 9336C-FX2 est un commutateur fixe de datacenter conçu pour les rôles de spine et d'agrégation dans les fabrics leaf-spine. Ses 36 ports QSFP28 à 40/100 Gbit/s délivrent 7,2 Tbit/s de commutation et plus de 2,4 milliards de paquets par seconde, avec la possibilité de découper chaque port en 4 × 10/25 Gbit/s. Il fonctionne sous NX-OS en mode autonome ou en mode ACI, avec chiffrement MACsec et télémétrie en temps réel.",
+  "image": "images/nexus-9336c-fx2.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "36 × 40/100 Gbit/s QSFP28 (breakout 4 × 10/25 Gbit/s)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "7,2 Tbit/s (full-duplex)"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "Plus de 2,4 Bpps"
+   },
+   {
+    "label": "Mémoire système",
+    "valeur": "24 Go de RAM, 128 Go de SSD"
+   },
+   {
+    "label": "Mémoire tampon",
+    "valeur": "40 Mo"
+   },
+   {
+    "label": "Modes",
+    "valeur": "Cisco NX-OS ou Cisco ACI"
+   },
+   {
+    "label": "Sécurité",
+    "valeur": "MACsec IEEE 802.1AE"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Nexus 9336C-FX2",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "36 ports QSFP28 40/100 Gbit/s en 1U pour les fabrics spine-leaf",
+   "Commutation à 7,2 Tbit/s et plus de 2,4 Bpps en vitesse filaire",
+   "Breakout sur tous les ports : 4 × 10/25 Gbit/s par interface",
+   "NX-OS autonome ou Cisco ACI, avec VXLAN EVPN",
+   "Chiffrement MACsec au niveau physique et télémétrie en temps réel"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "s110-24t",
+  "nom": "S110-24T",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2023",
+  "description": "Le commutateur Huawei eKitEngine S110-24T est un commutateur non managé pensé pour les petits bureaux, les commerces et les salles de classe. Il offre 24 ports Gigabit et 2 ports SFP Gigabit pour relier postes, imprimantes et bornes Wi-Fi sans aucune configuration : il suffit de le brancher. Silencieux et économe en énergie, avec une consommation typique de 16 W, il se monte en rack 19 pouces.",
+  "image": "images/s110-24t.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "24 × 10/100/1000BASE-T + 2 × GE SFP"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Non managé (plug-and-play)"
+   },
+   {
+    "label": "Table MAC",
+    "valeur": "8 000 entrées"
+   },
+   {
+    "label": "Consommation typique",
+    "valeur": "16 W (max. 17 W)"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "CA intégrée, 100–240 V"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "43,6 × 442 × 160 mm (1U)"
+   },
+   {
+    "label": "MTBF",
+    "valeur": "76,10 ans"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "S110-24T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit + 2 ports SFP Gigabit en uplink",
+   "Non managé : prêt à l'emploi, sans configuration",
+   "Fonctionnement silencieux, sans ventilateur",
+   "Consommation typique de seulement 16 W",
+   "Montage en rack 19 pouces (1U)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "s220-8t",
+  "nom": "S220-8T",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2023",
+  "description": "Le Huawei eKitEngine S220-8T4S est un commutateur managé de couche 2 pour les petits bureaux et les agences. Il propose 8 ports Gigabit et 4 ports SFP Gigabit en uplink, avec une commutation à 24 Gbit/s et un débit de 18 Mpps. Géré par interface web, il apporte les VLAN, la QoS et la sécurité de port nécessaires à un petit réseau d'entreprise, dans un boîtier compact montable en rack.",
+  "image": "images/s220-8t.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "8 × 10/100/1000BASE-T + 4 × GE SFP"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "24 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "18 Mpps"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Web, couche 2"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "CA intégrée, 100–240 V"
+   },
+   {
+    "label": "Consommation maximale",
+    "valeur": "21,52 W"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U, 43,6 mm de hauteur"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "S220-8T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "8 ports Gigabit + 4 ports SFP Gigabit en uplink",
+   "Commutateur managé de couche 2, gestion par interface web",
+   "Commutation à 24 Gbit/s et 18 Mpps",
+   "VLAN, QoS et sécurité de port pour les petits réseaux",
+   "Boîtier compact 1U, consommation maximale de 21,52 W"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "s220-48t",
+  "nom": "S220-48T",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2023",
+  "description": "Le Huawei eKitEngine S220-48T est un commutateur managé de couche 2 pour les réseaux d'accès de taille moyenne. Ses 48 ports Gigabit et ses 4 ports SFP Gigabit en uplink desservent postes de travail, imprimantes et bornes Wi-Fi, avec une commutation à 104 Gbit/s et 77 Mpps. Géré par interface web et compatible avec la gestion cloud Huawei eKit, il convient aux PME, aux écoles et aux hôtels.",
+  "image": "images/s220-48t.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "48 × 10/100/1000BASE-T + 4 × GE SFP"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "104 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "77 Mpps"
+   },
+   {
+    "label": "Table MAC",
+    "valeur": "16 000 entrées"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Web, cloud eKit, couche 2"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "CA intégrée, 100–240 V"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "43,6 × 442 × 220 mm (1U)"
+   },
+   {
+    "label": "Consommation maximale",
+    "valeur": "43,3 W"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "S220-48T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports Gigabit + 4 ports SFP Gigabit en uplink",
+   "Commutateur managé de couche 2, gestion web et cloud",
+   "Commutation à 104 Gbit/s et 77 Mpps",
+   "Table MAC de 16 000 entrées",
+   "Alimentation CA intégrée, 1U rackable"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "s310-16t",
+  "nom": "S310-16T",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2023",
+  "description": "Le Huawei CloudEngine S310-16T est un commutateur d'accès de la série S310, conçu pour les PME et les réseaux de campus. Il offre 16 ports Gigabit pour relier les postes et les équipements, avec les fonctions de couche 3, l'empilage intelligent iStack et la sécurité diversifiée de la série. Géré par interface web, en ligne de commande ou via le cloud, il s'intègre facilement aux réseaux Huawei existants.",
+  "image": "images/s310-16t.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "16 × 10/100/1000BASE-T"
+   },
+   {
+    "label": "Type",
+    "valeur": "Commutateur managé de couche 3"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "iStack (empilage intelligent)"
+   },
+   {
+    "label": "Routage",
+    "valeur": "Couche 3 (routage statique)"
+   },
+   {
+    "label": "Sécurité",
+    "valeur": "SEP, ERPS, contrôle d'accès"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "CA intégrée, 100–240 V"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "S310-16T",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "16 ports Gigabit pour l'accès des postes et équipements",
+   "Commutateur managé de couche 3 avec routage statique",
+   "Empilage intelligent iStack pour simplifier la gestion",
+   "Sécurité diversifiée et protection SEP/ERPS de la série S310",
+   "Gestion web, CLI et cloud, alimentation CA intégrée"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dgs-1210-24",
+  "nom": "DGS-1210-24",
+  "marque": "D-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "smart managés, PoE+",
+  "description": "Le D-Link DGS-1210-24P est un commutateur Gigabit intelligent avec PoE+ pour les PME. Ses 24 ports Gigabit alimentent téléphones IP, bornes Wi-Fi et caméras jusqu'à 30 W chacun, avec un budget PoE de 193 W, tandis que 4 ports combo cuivre/SFP assurent les uplinks fibre. Géré par interface web, avec VLAN, QoS et fonctions de sécurité, il fonctionne sans ventilateur et consomme peu grâce à la technologie D-Link Green 3.0.",
+  "image": "images/dgs-1210-24.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "24 × 10/100/1000BASE-T PoE+ + 4 × combo GE/SFP"
+   },
+   {
+    "label": "Budget PoE",
+    "valeur": "193 W (PoE+ 802.3at, jusqu'à 30 W par port)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "56 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "41,7 Mpps"
+   },
+   {
+    "label": "Table MAC",
+    "valeur": "16 000 entrées"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Web Smart, SNMP"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "CA 100–240 V, 50/60 Hz"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable, sans ventilateur"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "DGS-1210-24",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit PoE+ jusqu'à 30 W par port (budget 193 W)",
+   "4 ports combo 10/100/1000BASE-T/SFP pour les uplinks fibre",
+   "Commutation à 56 Gbit/s et 41,7 Mpps",
+   "Gestion web intelligente : VLAN, QoS, sécurité",
+   "Sans ventilateur et économe en énergie (D-Link Green 3.0)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dgs-1520-28",
+  "nom": "DGS-1520-28",
+  "marque": "D-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "10G",
+  "description": "Le D-Link DGS-1520-28 est un commutateur Gigabit empilable de couche 3 Lite pour les PME et les campus. Il combine 24 ports Gigabit et 4 ports 10 Gigabit (2 cuivre 10GBASE-T et 2 fibre SFP+) utilisables en uplink ou en empilage, avec une commutation à 128 Gbit/s. Il s'empile physiquement jusqu'à 8 unités pour 80 Gbit/s de bande passante d'empilage, et se gère comme un seul commutateur virtuel jusqu'à 32 unités.",
+  "image": "images/dgs-1520-28.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "24 × 10/100/1000BASE-T + 2 × 10GBASE-T + 2 × 10G SFP+"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "128 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "95,24 Mpps"
+   },
+   {
+    "label": "Empilage",
+    "valeur": "Jusqu'à 8 unités, 80 Gbit/s"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Smart Managed, couche 3 Lite"
+   },
+   {
+    "label": "PoE",
+    "valeur": "Non pris en charge (voir DGS-1520-28MP pour le PoE)"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "441 × 44 × 207,4 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "DGS-1520-28",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit + 4 ports 10 Gbit/s (2 × 10GBASE-T et 2 × SFP+)",
+   "Commutation à 128 Gbit/s et 95,24 Mpps",
+   "Empilage physique jusqu'à 8 unités (80 Gbit/s)",
+   "Couche 3 Lite : routage statique, OSPF, RIP",
+   "Gestion centralisée jusqu'à 32 commutateurs (Single IP Management)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dms-1250-10tp",
+  "nom": "DMS-1250-10TP",
+  "marque": "D-Link",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "multi-gig 2,5G, Wi-Fi 7",
+  "description": "Le D-Link DMS-1250-10TP est un commutateur multi-gigabit intelligent conçu pour les réseaux Wi-Fi 6 et Wi-Fi 7. Ses 8 ports 2,5 Gbit/s avec PoE+ alimentent les bornes Wi-Fi à plein débit sur le câblage existant, et ses 2 ports 10GBase-T en cuivre assurent l'uplink vers le cœur de réseau. Avec une commutation à 80 Gbit/s, une protection contre les surtensions de 6 kV sur tous les ports 2,5G et une gestion centralisée Nuclias, il modernise un réseau sans changer le câblage.",
+  "image": "images/dms-1250-10tp.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "8 × 10/100/1000/2,5GBase-T PoE+ + 2 × 10GBase-T"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "80 Gbit/s"
+   },
+   {
+    "label": "Table MAC",
+    "valeur": "16 000 entrées"
+   },
+   {
+    "label": "PoE",
+    "valeur": "IEEE 802.3af/at (PoE+)"
+   },
+   {
+    "label": "Protection",
+    "valeur": "Surtension 6 kV sur les ports 2,5G"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Smart Managed L2, Nuclias Connect, D-View 8"
+   },
+   {
+    "label": "Format",
+    "valeur": "Montage en rack"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "DMS-1250-10TP",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "8 ports multi-gigabit 2,5 Gbit/s avec PoE+ pour les bornes Wi-Fi 6/7",
+   "2 ports 10GBase-T en cuivre pour l'uplink",
+   "Commutation à 80 Gbit/s",
+   "Protection contre les surtensions de 6 kV sur les ports 2,5G",
+   "Gestion centralisée Nuclias Connect et D-View 8"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cx-6000-24g",
+  "nom": "CX 6000 24G",
+  "marque": "Aruba",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "L2/L3",
+  "description": "Le commutateur HPE Aruba Networking CX 6000 24G 4SFP est un commutateur d'accès managé de couche 3 pour les succursales et les PME. Il offre 24 ports Gigabit et 4 ports SFP Gigabit en uplink, avec une commutation à 56 Gbit/s et une latence de 1,5 µs. Basé sur le système AOS-CX, il apporte le routage statique, les ACL et la qualité de service, avec un empilage simple et une consommation maximale de seulement 33 W.",
+  "image": "images/cx-6000-24g.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "24 × 10/100/1000BASE-T + 4 × 1G SFP"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "56 Gbit/s"
+   },
+   {
+    "label": "Débit de transfert",
+    "valeur": "41,6 Mpps"
+   },
+   {
+    "label": "Latence",
+    "valeur": "1,5 µs à 1 Gbit/s"
+   },
+   {
+    "label": "Table MAC",
+    "valeur": "8 192 entrées"
+   },
+   {
+    "label": "Système",
+    "valeur": "Aruba AOS-CX"
+   },
+   {
+    "label": "Consommation maximale",
+    "valeur": "33 W"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U rackable"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "CX 6000 24G",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "24 ports Gigabit + 4 ports SFP Gigabit en uplink",
+   "Commutateur managé de couche 3 sous Aruba AOS-CX",
+   "Commutation à 56 Gbit/s et 41,6 Mpps, latence 1,5 µs",
+   "Empilable et gérable par interface web ou CLI",
+   "Consommation maximale de 33 W, format 1U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "iphone-16-pro",
+  "nom": "iPhone 16 Pro",
+  "marque": "Apple",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Tablettes",
+  "famille": "Tablettes",
+  "accroche": "2024",
+  "description": "L'iPhone 16 Pro d'Apple est le smartphone haut de gamme de la génération 2024, conçu pour la photo, la vidéo et l'intelligence artificielle. Il embarque la puce A18 Pro, un écran Super Retina XDR OLED de 6,3 pouces à 120 Hz et un système photo Pro avec trois capteurs dont un principal de 48 Mpx et un téléobjectif 5x. Son châssis en titane, sa résistance IP68 et son port USB-C en font un outil de travail et de création complet.",
+  "image": "images/iphone-16-pro.jpg",
+  "specs": [
+   {
+    "label": "Écran",
+    "valeur": "Super Retina XDR OLED 6,3 pouces, 2622 × 1206, ProMotion 120 Hz"
+   },
+   {
+    "label": "Puce",
+    "valeur": "Apple A18 Pro (CPU 6 cœurs, GPU 6 cœurs, Neural Engine 16 cœurs)"
+   },
+   {
+    "label": "Appareil photo arrière",
+    "valeur": "48 Mpx Fusion + 48 Mpx ultra grand-angle + 12 Mpx téléobjectif 5x"
+   },
+   {
+    "label": "Vidéo",
+    "valeur": "4K à 120 images/s, Dolby Vision"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "5G, Wi-Fi 7, USB-C"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "128 Go, 256 Go, 512 Go ou 1 To"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "149,6 × 71,5 × 8,25 mm, 199 g"
+   },
+   {
+    "label": "Système",
+    "valeur": "iOS 18"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "iPhone 16 Pro",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Puce A18 Pro : CPU 6 cœurs, GPU 6 cœurs et Neural Engine 16 cœurs",
+   "Écran Super Retina XDR OLED 6,3 pouces, ProMotion 120 Hz",
+   "Système photo Pro : 48 Mpx principal, 48 Mpx ultra grand-angle, téléobjectif 5x",
+   "Vidéo 4K à 120 images/s en Dolby Vision",
+   "Châssis en titane grade 5, résistance à l'eau et à la poussière IP68"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "8841",
+  "nom": "8841",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Téléphonie IP",
+  "famille": "Téléphonie IP",
+  "accroche": "2015",
+  "description": "Le téléphone IP Cisco 8841 est un poste de bureau professionnel pour les communications unifiées d'entreprise. Son écran couleur WVGA de 5 pouces, ses 5 touches de ligne et son haut-parleur mains libres full-duplex offrent une expérience d'appel claire et simple. Il intègre un commutateur Gigabit pour brancher le PC, la voix HD large bande et l'alimentation PoE, et fonctionne avec Cisco Unified Communications Manager ou en mode cloud.",
+  "image": "images/8841.jpg",
+  "specs": [
+   {
+    "label": "Écran",
+    "valeur": "5 pouces WVGA couleur, 800 × 480"
+   },
+   {
+    "label": "Touches de ligne",
+    "valeur": "5 (programmables)"
+   },
+   {
+    "label": "Haut-parleur",
+    "valeur": "Mains libres full-duplex"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "Commutateur Gigabit 10/100/1000 intégré"
+   },
+   {
+    "label": "Audio",
+    "valeur": "Voix HD large bande, codecs G.711, G.722, G.729, iLBC"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE 802.3af"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "229,1 × 257,3 × 40 mm (sans pied)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "8841",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Écran couleur WVGA 5 pouces haute résolution (800 × 480)",
+   "5 touches de ligne, 4 touches programmables et 12 touches fixes",
+   "Voix HD large bande et haut-parleur mains libres full-duplex",
+   "Commutateur Gigabit intégré pour le PC",
+   "Alimentation PoE 802.3af, codecs G.711, G.722, G.729 et iLBC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "8845",
+  "nom": "8845",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Téléphonie IP",
+  "famille": "Téléphonie IP",
+  "accroche": "2015",
+  "description": "Le téléphone IP Cisco 8845 ajoute la vidéo HD au poste de bureau professionnel de la série 8800. En plus de l'écran couleur WVGA de 5 pouces et de la voix HD large bande, il intègre une caméra pour des appels vidéo 720p en H.264, directement depuis le poste. Le Bluetooth et la fonction Intelligent Proximity permettent de jumeler le mobile et de passer les appels depuis le téléphone, pour un poste de travail vraiment unifié.",
+  "image": "images/8845.jpg",
+  "specs": [
+   {
+    "label": "Écran",
+    "valeur": "5 pouces WVGA couleur, 800 × 480"
+   },
+   {
+    "label": "Vidéo",
+    "valeur": "720p HD bidirectionnelle, H.264 AVC"
+   },
+   {
+    "label": "Touches de ligne",
+    "valeur": "5 (programmables)"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "Bluetooth, USB, commutateur Gigabit 10/100/1000"
+   },
+   {
+    "label": "Audio",
+    "valeur": "Voix HD large bande, codecs G.711, G.722, G.729, iLBC"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE 802.3af"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "229,1 × 257,3 × 40 mm (sans pied)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "8845",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Vidéo HD 720p bidirectionnelle (H.264 AVC) depuis le poste",
+   "Écran couleur WVGA 5 pouces haute résolution (800 × 480)",
+   "Bluetooth et Cisco Intelligent Proximity pour le mobile",
+   "Voix HD large bande et haut-parleur mains libres full-duplex",
+   "Commutateur Gigabit intégré et alimentation PoE"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "webex-desk-pro",
+  "nom": "Webex Desk Pro",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Téléphonie IP",
+  "famille": "Téléphonie IP",
+  "accroche": "2017",
+  "description": "Le Cisco Webex Desk Pro est un appareil de collaboration tout-en-un pour le bureau. Il réunit un écran tactile 4K de 27 pouces, une caméra 12 Mpx 4K, un système audio 3.1 et un réseau de 8 microphones antibruit dans un seul boîtier. Il sert à la fois d'écran d'ordinateur via USB-C, de tableau blanc interactif et de poste de visioconférence Webex, avec l'assistant vocal Webex et le cadrage automatique.",
+  "image": "images/webex-desk-pro.jpg",
+  "specs": [
+   {
+    "label": "Écran",
+    "valeur": "27 pouces LCD tactile 4K, 3840 × 2160, IPS, 300 cd/m²"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "12 Mpx 4K Ultra HD, capteur CMOS 1/2,8 pouce, f/2,0"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "71° horizontal, 59° vertical"
+   },
+   {
+    "label": "Audio",
+    "valeur": "Système 3.1, 8 microphones antibruit"
+   },
+   {
+    "label": "Connectivité",
+    "valeur": "USB-C (docking), Ethernet, Wi-Fi"
+   },
+   {
+    "label": "Logiciel",
+    "valeur": "Cisco RoomOS (ou CE 9.12 et versions ultérieures)"
+   },
+   {
+    "label": "Puissance maximale",
+    "valeur": "200 W"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Webex Desk Pro",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Écran tactile 4K de 27 pouces (3840 × 2160, IPS)",
+   "Caméra 12 Mpx 4K avec cadrage automatique (champ de 71°)",
+   "Système audio 3.1 et réseau de 8 microphones antibruit",
+   "Station d'accueil USB-C pour l'ordinateur portable",
+   "Tableau blanc interactif et assistant Webex intégrés"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-sdt3e410-8p",
+  "nom": "Dahua SDT3E410-8P",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "PTZ panoramique 8 MP, zoom x10",
+  "description": "La caméra Dahua SDT3E410-8P combine deux modules dans un seul boîtier : une vue panoramique fixe de 8 Mpx à 180° et un module PTZ de 4 Mpx avec zoom optique 10x. La vue panoramique surveille toute la scène en continu pendant que le PTZ zoome sur les détails, avec la technologie Starlight pour la nuit et la dissuasion active TiOC (lumières et sirène). Conçue pour l'extérieur (IP66) et alimentée en PoE+, elle couvre parkings, entrepôts et périmètres avec un seul appareil.",
+  "image": "images/dahua-sdt3e410-8p.jpg",
+  "specs": [
+   {
+    "label": "Capteurs",
+    "valeur": "Panoramique 8 Mpx (1/2,8 pouce) + PTZ 4 Mpx (1/2,8 pouce STARVIS)"
+   },
+   {
+    "label": "Résolution maximale",
+    "valeur": "Panoramique 5376 × 1520, PTZ 2560 × 1440"
+   },
+   {
+    "label": "Zoom",
+    "valeur": "Optique 10x (4–40 mm), numérique 16x"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "Panoramique 180°, PTZ 58° à 11,3°"
+   },
+   {
+    "label": "Éclairage",
+    "valeur": "IR jusqu'à 70 m, lumière chaude jusqu'à 30 m"
+   },
+   {
+    "label": "Rotation PTZ",
+    "valeur": "Panoramique 0° à 345°"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE+ 802.3at ou 12 V CC (12 W, max. 25 W)"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP66, compression H.265/H.264"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua SDT3E410-8P",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Double objectif : panoramique 8 Mpx à 180° et PTZ 4 Mpx dans un seul boîtier",
+   "Zoom optique 10x (4–40 mm) et zoom numérique 16x sur le module PTZ",
+   "Technologie Starlight et éclairage IR jusqu'à 70 m",
+   "Dissuasion active TiOC : lumières rouge et bleue et alarme sonore",
+   "Détection intelligente SMD 4.0 (personnes et véhicules), IP66, PoE+"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "hikvision-ds-k1102",
+  "nom": "Hikvision DS-K1102",
+  "marque": "Hikvision",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "lecteurs de carte",
+  "description": "Le lecteur de cartes Hikvision DS-K1102 est un lecteur de contrôle d'accès pour les portes d'entrée des bureaux et des bâtiments. Il lit les cartes Mifare sans contact à 13,56 MHz (norme ISO 14443-A) à une distance de 30 à 50 mm, et communique en RS-485 ou Wiegand (W26/W34) avec le contrôleur d'accès. Son boîtier étanche IP64, son alarme anti-sabotage et son buzzer intégré en font un lecteur fiable pour l'intérieur comme pour l'extérieur abrité.",
+  "image": "images/hikvision-ds-k1102.jpg",
+  "specs": [
+   {
+    "label": "Lecture",
+    "valeur": "Mifare 13,56 MHz (ISO 14443-A) ; variantes EM 125 kHz"
+   },
+   {
+    "label": "Distance de lecture",
+    "valeur": "30 à 50 mm"
+   },
+   {
+    "label": "Interfaces",
+    "valeur": "RS-485 et Wiegand (W26/W34)"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "32 bits"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "12 V CC"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP64"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "121 × 86,5 × 14 mm"
+   },
+   {
+    "label": "Clavier",
+    "valeur": "12 touches (variante MK) ou sans clavier (variante M)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Hikvision DS-K1102",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Lecture de cartes Mifare 13,56 MHz (ISO 14443-A)",
+   "Interfaces RS-485 et Wiegand (W26/W34)",
+   "Distance de lecture de 30 à 50 mm",
+   "Boîtier étanche IP64, alarme anti-sabotage",
+   "Buzzer et voyants LED intégrés, processeur 32 bits"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "dahua-asi1212f",
+  "nom": "Dahua ASI1212F",
+  "marque": "Dahua",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "empreintes digitales",
+  "description": "Le terminal de contrôle d'accès Dahua ASI1212F est un lecteur autonome pour les portes intérieures des bureaux. Il combine un lecteur d'empreintes digitales optique, un lecteur de cartes IC à 13,56 MHz et un code PIN sur un écran tactile de 2,8 pouces. Il gère jusqu'à 30 000 utilisateurs, 3 000 empreintes et 150 000 enregistrements, communique en TCP/IP, RS-485, Wiegand et OSDP, et intègre le Wi-Fi pour une installation simple.",
+  "image": "images/dahua-asi1212f.jpg",
+  "specs": [
+   {
+    "label": "Écran",
+    "valeur": "TFT tactile 2,8 pouces, 240 × 320"
+   },
+   {
+    "label": "Authentification",
+    "valeur": "Empreinte optique, carte IC 13,56 MHz, code PIN"
+   },
+   {
+    "label": "Temps de reconnaissance",
+    "valeur": "1,5 s (empreinte)"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "30 000 utilisateurs, 30 000 cartes, 3 000 empreintes, 150 000 enregistrements"
+   },
+   {
+    "label": "Communication",
+    "valeur": "TCP/IP, Wi-Fi 2,4 GHz, RS-485, Wiegand, OSDP"
+   },
+   {
+    "label": "Réseau",
+    "valeur": "Ethernet 10/100, USB 2.0"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "12 V CC / 1 A"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "114,5 × 114,5 × 32,5 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Dahua ASI1212F",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Triple authentification : empreinte digitale, carte IC et code PIN",
+   "Reconnaissance d'empreinte en 1,5 s (algorithme de deep learning)",
+   "30 000 utilisateurs, 30 000 cartes et 3 000 empreintes",
+   "Écran tactile TFT 2,8 pouces (240 × 320)",
+   "Wi-Fi, Ethernet, RS-485, Wiegand et OSDP"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "huawei-ap160",
+  "nom": "Huawei AP160",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le point d'accès Huawei eKitEngine AP160 est un point d'accès mural Wi-Fi 6 au format plaque 86 × 86 mm, conçu pour les chambres d'hôtel, les salles de classe et les petits bureaux. Il diffuse simultanément en 2,4 GHz et 5 GHz avec un débit total de 1,775 Gbit/s, grâce à ses antennes intelligentes intégrées. Alimenté en PoE, il s'installe dans une boîte d'encastrement standard et offre en plus un port Gigabit en aval pour brancher un téléphone ou un PC.",
+  "image": "images/huawei-ap160.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6 (802.11ax), 2,4 GHz 2×2 + 5 GHz 2×2 (MU-MIMO)"
+   },
+   {
+    "label": "Débit maximal",
+    "valeur": "1,775 Gbit/s (575 Mbit/s à 2,4 GHz + 1,2 Gbit/s à 5 GHz)"
+   },
+   {
+    "label": "Antennes",
+    "valeur": "Intelligentes intégrées (2,4 GHz : 3 dBi, 5 GHz : 2 dBi)"
+   },
+   {
+    "label": "Ports",
+    "valeur": "1 × GE uplink (PoE) + 1 × GE downlink"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE 802.3af, 9,1 W maximum"
+   },
+   {
+    "label": "Sécurité",
+    "valeur": "WPA3, WPA2, 802.1X"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "86 × 86 × 42,5 mm, 0,14 kg"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Modes Fit, Fat et cloud (application eKit)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Huawei AP160",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6 (802.11ax) double bande, 1,775 Gbit/s au total",
+   "Format plaque murale 86 × 86 mm, panneau ultra-fin de 8 mm",
+   "Antennes intelligentes intégrées pour une couverture précise",
+   "Alimentation PoE 802.3af, consommation maximale de 9,1 W",
+   "2 ports Gigabit : 1 uplink PoE et 1 downlink pour un équipement filaire"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "huawei-ap663",
+  "nom": "Huawei AP663",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le point d'accès Huawei AP663 fait partie de la série eKitEngine AP600, la gamme Wi-Fi 6 de Huawei pour les entreprises. Il diffuse sur les bandes 2,4 GHz et 5 GHz avec des antennes intelligentes intégrées, le MU-MIMO et l'OFDMA pour servir de nombreux clients simultanément. Alimenté en PoE et gérable en mode Fit, Fat ou cloud via iMaster NCE-Campus, il convient aux bureaux, aux campus et aux lieux à forte densité.",
+  "image": "images/huawei-ap663.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6 (802.11ax), bandes 2,4 GHz et 5 GHz"
+   },
+   {
+    "label": "Antennes",
+    "valeur": "Intelligentes intégrées"
+   },
+   {
+    "label": "Technologies",
+    "valeur": "MU-MIMO, OFDMA, 1024-QAM"
+   },
+   {
+    "label": "Sécurité",
+    "valeur": "WPA3, 802.1X"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Modes Fit, Fat et cloud (iMaster NCE-Campus)"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Intérieur, bureaux et campus à forte densité"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Huawei AP663",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6 (802.11ax) pour les environnements à forte densité",
+   "Antennes intelligentes intégrées, MU-MIMO et OFDMA",
+   "Modulation 1024-QAM et canaux jusqu'à 160 MHz",
+   "Alimentation PoE et ports Ethernet Gigabit",
+   "Gestion Fit, Fat ou cloud (iMaster NCE-Campus)"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "u6-enterprise",
+  "nom": "U6 Enterprise",
+  "marque": "Ubiquiti",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le point d'accès Ubiquiti UniFi U6 Enterprise est un point d'accès Wi-Fi 6E tri-bande pour les environnements professionnels à forte densité. Il diffuse simultanément en 2,4 GHz, 5 GHz et 6 GHz avec un débit agrégé de 10,2 Gbit/s, grâce à 10 flux spatiaux. Son port Ethernet 2,5 GbE alimenté en PoE+ et sa gestion centralisée UniFi Network en font un choix de référence pour les bureaux, les campus et les espaces publics exigeants.",
+  "image": "images/u6-enterprise.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6E (802.11ax), tri-bande 2,4/5/6 GHz"
+   },
+   {
+    "label": "Débit maximal",
+    "valeur": "10,2 Gbit/s (573,5 Mbit/s à 2,4 GHz, 4,8 Gbit/s à 5 GHz, 4,8 Gbit/s à 6 GHz)"
+   },
+   {
+    "label": "MIMO",
+    "valeur": "2×2 (2,4 GHz), 4×4 (5 GHz et 6 GHz)"
+   },
+   {
+    "label": "Port",
+    "valeur": "1 × 2,5 GbE RJ45 (PoE+)"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE+ (802.3at)"
+   },
+   {
+    "label": "Sécurité",
+    "valeur": "WPA2/WPA3 Enterprise"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "Ø 220 × 48 mm"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "UniFi Network (version 7.2.91 et ultérieures)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "U6 Enterprise",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6E tri-bande : 2,4 GHz, 5 GHz et 6 GHz",
+   "Débit agrégé jusqu'à 10,2 Gbit/s (4,8 Gbit/s à 5 et 6 GHz)",
+   "10 flux spatiaux : 2×2 à 2,4 GHz, 4×4 à 5 et 6 GHz",
+   "Port Ethernet 2,5 GbE avec alimentation PoE+",
+   "Gestion centralisée UniFi Network, WPA3"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "wap-ax",
+  "nom": "wAP ax",
+  "marque": "MikroTik",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "2019",
+  "description": "Le MikroTik wAP ax est un point d'accès Wi-Fi 6 compact pour l'intérieur comme pour l'extérieur. Il diffuse simultanément en 2,4 GHz et 5 GHz avec un débit combiné de près de 3 Gbit/s (AX3000), dans un boîtier étanche IP54 résistant aux intempéries. Propulsé par RouterOS v7 avec une licence de niveau 4, il offre deux ports Gigabit dont un avec PoE-in, pour les maisons de campagne, les stations-service, les terrasses et les petits sites isolés.",
+  "image": "images/wap-ax.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6 (802.11ax), 2,4 GHz + 5 GHz, 2×2 MIMO"
+   },
+   {
+    "label": "Débit maximal",
+    "valeur": "2 974 Mbit/s (574 Mbit/s à 2,4 GHz + 2 402 Mbit/s à 5 GHz)"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "IPQ-5010 double cœur, 800 MHz"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "256 Mo de RAM, 128 Mo de stockage NAND"
+   },
+   {
+    "label": "Ports",
+    "valeur": "2 × Gigabit Ethernet (dont 1 PoE-in)"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE-in 802.3af/at ou prise CC"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP54"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "220 × 125 × 22 mm"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "wAP ax",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6 (802.11ax) double bande, débit combiné de 2 974 Mbit/s (AX3000)",
+   "Boîtier étanche IP54 pour l'intérieur et l'extérieur",
+   "2 ports Gigabit Ethernet, dont un avec PoE-in 802.3af/at",
+   "RouterOS v7, licence de niveau 4",
+   "Antennes intégrées 7 dBi en 2,4 GHz et 5 GHz"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cisco-catalyst-9115ax",
+  "nom": "Cisco Catalyst 9115AX",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2019",
+  "description": "Le point d'accès Cisco Catalyst 9115AX est un point d'accès Wi-Fi 6 d'intérieur pour les campus d'entreprise, les écoles et les hôpitaux. Ses radios 4×4 en 2,4 GHz et 5 GHz atteignent 5,38 Gbit/s, avec OFDMA, MU-MIMO et la radio Bluetooth 5.0 intégrée pour la localisation. Son port multigigabit 2,5G et sa fonction de contrôleur intégré (Embedded Wireless Controller) simplifient les déploiements de petite et moyenne taille.",
+  "image": "images/cisco-catalyst-9115ax.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6 (802.11ax), 2,4 GHz + 5 GHz, 4×4:4 MU-MIMO"
+   },
+   {
+    "label": "Débit maximal",
+    "valeur": "5,38 Gbit/s"
+   },
+   {
+    "label": "Uplink",
+    "valeur": "1 × 100/1000/2500 Multigigabit Ethernet (RJ-45)"
+   },
+   {
+    "label": "Antennes",
+    "valeur": "Internes, 3 dBi (2,4 GHz) et 4 dBi (5 GHz)"
+   },
+   {
+    "label": "Bluetooth",
+    "valeur": "BLE 5.0"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE+ 802.3at (21,4 W maximum)"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "2 Go de RAM, 1 Go de flash"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "20,3 × 20,3 × 3,8 cm (modèle à antennes internes)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Cisco Catalyst 9115AX",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6 (802.11ax) 4×4:4 double bande, jusqu'à 5,38 Gbit/s",
+   "OFDMA montant et descendant, MU-MIMO et BSS Coloring",
+   "Port multigigabit 2,5G en uplink",
+   "Radio Bluetooth 5.0 intégrée pour la localisation et l'IoT",
+   "Contrôleur sans fil intégré (EWC) pour les petits déploiements"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cisco-catalyst-9166",
+  "nom": "Cisco Catalyst 9166",
+  "marque": "Cisco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cisco & réseau",
+  "famille": "Cisco & réseau",
+  "accroche": "2019",
+  "description": "Le point d'accès Cisco Catalyst 9166 est un point d'accès Wi-Fi 6E tri-bande pour les déploiements critiques. Ses trois radios 4×4 en 2,4 GHz, 5 GHz et 6 GHz atteignent 7,78 Gbit/s au total, avec une radio dédiée à la sécurité et à l'analyse du spectre (Air Marshal) et une radio Bluetooth pour l'IoT. Sa radio flexible peut basculer entre 5 GHz et 6 GHz, et il se gère sur site avec un contrôleur Catalyst ou dans le cloud Meraki.",
+  "image": "images/cisco-catalyst-9166.jpg",
+  "specs": [
+   {
+    "label": "Wi-Fi",
+    "valeur": "Wi-Fi 6E (802.11ax), tri-bande 2,4/5/6 GHz, 4×4:4"
+   },
+   {
+    "label": "Débit maximal",
+    "valeur": "7,78 Gbit/s (agrégé, trois radios)"
+   },
+   {
+    "label": "Uplink",
+    "valeur": "1 × port Ethernet multigigabit 5G"
+   },
+   {
+    "label": "Radios supplémentaires",
+    "valeur": "Radio de scan Air Marshal (WIDS/WIPS) et radio BLE 5.1"
+   },
+   {
+    "label": "USB",
+    "valeur": "USB 2.0 (budget 4,5 W)"
+   },
+   {
+    "label": "Antennes",
+    "valeur": "Internes, 3 dBi (2,4 GHz), 5 dBi (5 GHz), 4 dBi (6 GHz)"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Sur site (contrôleur Catalyst) ou cloud (Meraki)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Cisco Catalyst 9166",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Wi-Fi 6E tri-bande : 2,4 GHz, 5 GHz et 6 GHz, jusqu'à 7,78 Gbit/s",
+   "Trois radios 4×4:4 avec radio flexible 5/6 GHz",
+   "Radio dédiée à la sécurité (WIDS/WIPS) et à l'analyse du spectre",
+   "Port Ethernet multigigabit 5G et port USB 2.0",
+   "Gestion sur site ou cloud, capteurs environnementaux intégrés"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "easy-ups-3s-120-kva",
+  "nom": "Easy UPS 3S 120 kVA",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Énergie & protection",
+  "accroche": "datacenter",
+  "description": "L'onduleur APC Easy UPS 3S 120 kVA est un onduleur triphasé en ligne à double conversion pour les datacenters de petite et moyenne taille. Il délivre 120 kVA / 120 kW avec un facteur de puissance de sortie de 1, protège les charges critiques contre les coupures et les variations du réseau, et fonctionne avec des batteries externes au plomb-acide pour adapter l'autonomie au besoin. Il se met en parallèle jusqu'à 6 unités pour la capacité ou la redondance, et se surveille à distance via EcoStruxure.",
+  "image": "images/easy-ups-3s-120-kva.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "120 kVA / 120 kW"
+   },
+   {
+    "label": "Tension",
+    "valeur": "Entrée 400 V triphasé, sortie 400 V triphasé"
+   },
+   {
+    "label": "Topologie",
+    "valeur": "En ligne, double conversion"
+   },
+   {
+    "label": "Batteries",
+    "valeur": "Externes, plomb-acide (vendues séparément)"
+   },
+   {
+    "label": "Distorsion harmonique",
+    "valeur": "THDi < 3 % à pleine charge"
+   },
+   {
+    "label": "Surcharge",
+    "valeur": "110 % pendant 60 min, 130 % pendant 10 min, 150 % pendant 1 min"
+   },
+   {
+    "label": "Parallélisme",
+    "valeur": "Jusqu'à 6 unités"
+   },
+   {
+    "label": "Protection",
+    "valeur": "IP20, surveillance EcoStruxure"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "Easy UPS 3S 120 kVA",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "120 kVA / 120 kW, triphasé 400 V, double conversion en ligne",
+   "Facteur de puissance de sortie de 1 : toute la puissance est utilisable",
+   "Batteries externes pour une autonomie sur mesure",
+   "Parallélisme jusqu'à 6 unités (capacité ou redondance)",
+   "Distorsion harmonique d'entrée inférieure à 3 %, facteur de puissance d'entrée 0,99"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "firehunter-6000-20000",
+  "nom": "FireHunter 6000 → 20000",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "analyse avancée des menaces",
+  "description": "La gamme Huawei FireHunter6000 est une solution de bac à sable (sandbox) pour détecter les menaces inconnues dans les fichiers. Elle combine l'analyse antivirus, l'analyse statique et l'exécution virtuelle dans des environnements Windows, Linux et Android, avec une bibliothèque de comportements propre à Huawei. Elle détecte plus de 50 types de fichiers avec une précision de plus de 99,5 %, et produit des rapports quotidiens, hebdomadaires ou mensuels envoyés par e-mail aux équipes de sécurité.",
+  "image": "images/firehunter-6000-20000.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Bac à sable (sandbox) d'analyse des menaces"
+   },
+   {
+    "label": "Détection",
+    "valeur": "Analyse antivirus, analyse statique, exécution virtuelle (4 couches)"
+   },
+   {
+    "label": "Précision",
+    "valeur": "Supérieure à 99,5 %"
+   },
+   {
+    "label": "Types de fichiers",
+    "valeur": "Plus de 50 (dont gz, rar, cab, 7zip, tar, bz2, zip)"
+   },
+   {
+    "label": "Systèmes simulés",
+    "valeur": "Windows, Linux, Android"
+   },
+   {
+    "label": "Menaces détectées",
+    "valeur": "Rançongiciels, virus, vers, spyware, chevaux de Troie, botnets, phishing, exploits"
+   },
+   {
+    "label": "Rapports",
+    "valeur": "Quotidiens, hebdomadaires, mensuels (par e-mail)"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "FireHunter 6000 → 20000",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "Détection des menaces inconnues par bac à sable (exécution virtuelle)",
+   "Plus de 50 types de fichiers analysés, précision supérieure à 99,5 %",
+   "Simulation Windows, Linux et Android",
+   "Détecte rançongiciels, chevaux de Troie, botnets, exploits et phishing",
+   "Rapports quotidiens, hebdomadaires et mensuels par e-mail"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ },
+ {
+  "slug": "cx-10000",
+  "nom": "CX 10000",
+  "marque": "Aruba",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "agrégation / datacenter",
+  "description": "Le commutateur HPE Aruba Networking CX 10000 est un commutateur de datacenter à services distribués pour le haut de rack (top-of-rack). Il combine 48 ports 10/25 GbE et 6 ports 40/100 GbE avec deux DPU Pensando Elba qui exécutent un pare-feu dynamique distribué de 800 Gbit/s directement dans le commutateur. La segmentation zero-trust s'applique ainsi au plus près des serveurs, sans passer par un pare-feu central, avec une commutation à 3,2 Tbit/s sous Aruba AOS-CX.",
+  "image": "images/cx-10000.jpg",
+  "specs": [
+   {
+    "label": "Ports",
+    "valeur": "48 × 10/25 GbE (SFP28) + 6 × 40/100 GbE (QSFP28)"
+   },
+   {
+    "label": "Capacité de commutation",
+    "valeur": "3,2 Tbit/s"
+   },
+   {
+    "label": "Pare-feu distribué",
+    "valeur": "800 Gbit/s (2 DPU Pensando Elba)"
+   },
+   {
+    "label": "Services DPU",
+    "valeur": "Pare-feu dynamique L4, télémétrie, ERSPAN, anti-DDoS"
+   },
+   {
+    "label": "Système",
+    "valeur": "Aruba AOS-CX"
+   },
+   {
+    "label": "Routage",
+    "valeur": "BGP, OSPF, ECMP, VXLAN avec BGP-EVPN"
+   },
+   {
+    "label": "Format",
+    "valeur": "1U, haut de rack (ToR)"
+   },
+   {
+    "label": "Gestion",
+    "valeur": "Aruba Fabric Composer, VSX"
+   }
+  ],
+  "ref": "",
+  "reference_fabricant": "CX 10000",
+  "stock": null,
+  "store_url": "",
+  "points_forts": [
+   "48 ports 10/25 GbE + 6 ports 40/100 GbE en 1U",
+   "Pare-feu dynamique distribué de 800 Gbit/s via 2 DPU Pensando Elba",
+   "Segmentation zero-trust au plus près des serveurs (est-ouest)",
+   "Commutation à 3,2 Tbit/s sous Aruba AOS-CX",
+   "Routage L3 complet (BGP, OSPF, ECMP) et VXLAN EVPN"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null
+ }
+]
