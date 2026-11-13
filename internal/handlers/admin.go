@@ -392,9 +392,9 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 <select name="tri"><option value="nom"`+selTri("nom")+`>Tri : nom</option><option value="prix"`+selTri("prix")+`>Tri : prix</option><option value="stock"`+selTri("stock")+`>Tri : stock</option></select>
 <button class="mx-btn">OK</button>`+nbTxt+`
 <span class="mx-aff" role="group" aria-label="Affichage"><button type="button" data-aff="list" class="on" title="Liste">☰ Liste</button><button type="button" data-aff="grid" title="Grille">▦ Grille</button><button type="button" data-aff="minis" title="Miniatures">▦ Minis</button></span></form>
-<div data-mx-aff="list"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Dispo</th><th>Stock</th></tr>`+tr.String()+`</table>`+render.MxPager(base+"&vue="+vue, page, pages)+`</div>
+<div data-mx-aff="list"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Dispo</th><th>Stock</th></tr>`+tr.String()+`</table></div>
 <div class="mx-gridcards">`+cards.String()+`</div>
-<div class="mx-minis">`+minis.String()+`</div></div>`, r))
+<div class="mx-minis">`+minis.String()+`</div>`+render.MxPager(base+"&vue="+vue, page, pages)+`</div>`, r))
 }
 
 func nullStr(v sql.NullInt64) string {
