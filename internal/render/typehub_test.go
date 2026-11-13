@@ -508,3 +508,50 @@ func TestHomeRows(t *testing.T) {
 		}
 	}
 }
+
+// TestTypeThumbsRepresentative : les miniatures des tuiles montrent un produit
+// représentatif du type (pas un accessoire) : ex. un vrai serveur pour
+// « Serveurs rack », une barrette pour « Mémoire RAM ».
+func TestTypeThumbsRepresentative(t *testing.T) {
+	s := testStoreFull(t)
+	repOf := func(top, sub string) string {
+		t.Helper()
+		fs := render.CategoryBodyLive(s, top)
+		var sub_fs []*catalog.RawProduct
+		for _, p := range fs {
+			if p.Sub == sub {
+				sub_fs = append(sub_fs, p)
+			}
+		}
+		if len(sub_fs) == 0 {
+			t.Fatalf("aucun produit pour %s / %s", top, sub)
+		}
+		hub := render.TypeHubHTML(sub_fs, "", "", top)
+		re := regexp.MustCompile(`<img src="([^"]+)"`)
+		m := re.FindStringSubmatch(hub)
+		if m == nil {
+			t.Fatalf("aucune miniature pour %s / %s", top, sub)
+		}
+		return m[1]
+	}
+	if img := repOf("serveur", "Serveurs rack"); strings.Contains(img, "accessoires-serveurs") {
+		t.Errorf("tuile Serveurs rack : encore la barrette RAM (%s)", img)
+	} else {
+		t.Logf("tuile Serveurs rack : %s", img)
+	}
+	if img := repOf("accessoires-informatiques", "Mémoire RAM"); !strings.Contains(strings.ToLower(img), "ram") && !strings.Contains(strings.ToLower(img), "memoire") {
+		t.Errorf("tuile Mémoire RAM non représentative (%s)", img)
+	} else {
+		t.Logf("tuile Mémoire RAM : %s", img)
+	}
+	if rep := s.HubPhoto("imprimantes"); rep == nil {
+		t.Error("HubPhoto(imprimantes) : aucune photo")
+	} else {
+		n := strings.ToLower(rep.Nom)
+		if !strings.Contains(n, "ecotank") && !strings.Contains(n, "laserjet") && !strings.Contains(n, "deskjet") && !strings.Contains(n, "officejet") {
+			t.Errorf("tuile Imprimantes non représentative (%s)", rep.Nom)
+		} else {
+			t.Logf("tuile Imprimantes : %s", rep.Nom)
+		}
+	}
+}

@@ -276,15 +276,43 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 // type ouvre sa page dédiée (categories/<top>/<type>.html), bien structurée,
 // comme le hub des catégories de la boutique. Un seul type par tuile, aucun
 // type vide. active = slug du type courant : la tuile est surlignée.
-func TypeHubHTML(fs []*catalog.RawProduct, active, prefix, topSlug string) string {
-	counts := map[string]int{}
+// bestRepByName : pour chaque type (sous-catégorie), la miniature est le
+// produit avec photo dont le nom ressemble le plus au type (ex. un vrai
+// serveur pour « Serveurs rack », une barrette pour « Mémoire RAM »).
+// Score = nombre de mots du type retrouvés dans le nom ; à égalité, le
+// premier du catalogue gagne (comportement historique conservé).
+func bestRepByName(fs []*catalog.RawProduct) map[string]*catalog.RawProduct {
 	rep := map[string]*catalog.RawProduct{}
+	best := map[string]int{}
 	for _, p := range fs {
-		counts[p.Sub]++
-		if rep[p.Sub] == nil && p.Image != "" {
+		if p.Image == "" {
+			continue
+		}
+		if _, ok := rep[p.Sub]; !ok {
 			rep[p.Sub] = p
+			best[p.Sub] = -1
+		}
+		norm := catalog.NormName(p.Nom)
+		score := 0
+		for _, tok := range strings.Split(catalog.Slugify(p.Sub), "-") {
+			if len(tok) >= 2 && strings.Contains(norm, tok) {
+				score++
+			}
+		}
+		if score > best[p.Sub] {
+			rep[p.Sub] = p
+			best[p.Sub] = score
 		}
 	}
+	return rep
+}
+
+func TypeHubHTML(fs []*catalog.RawProduct, active, prefix, topSlug string) string {
+	counts := map[string]int{}
+	for _, p := range fs {
+		counts[p.Sub]++
+	}
+	rep := bestRepByName(fs)
 	var subs []string
 	for x := range counts {
 		subs = append(subs, x)
