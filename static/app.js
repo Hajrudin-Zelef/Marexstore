@@ -732,11 +732,16 @@
       var closeMega = function () { megaPanel.hidden = true; megaBtn.setAttribute('aria-expanded', 'false'); };
       var openMega = function () { megaPanel.hidden = false; megaBtn.setAttribute('aria-expanded', 'true'); };
       /* Survol réservé aux appareils à souris : sur tactile, le tap émule
-         mouseenter puis click, ce qui ouvrait puis refermait aussitôt le menu. */
+         mouseenter puis click, ce qui ouvrait puis refermait aussitôt le menu.
+         Le test (hover: hover) ne suffit pas sur les portables à écran tactile
+         (souris + tactile) : on ignore aussi tout survol juste après un toucher. */
       var canHover = window.matchMedia('(hover: hover)').matches;
-      megaBtn.addEventListener('mouseenter', function () { if (canHover) openMega(); });
+      var lastTouch = 0;
+      document.addEventListener('touchend', function () { lastTouch = Date.now(); }, { passive: true });
+      var touchedRecently = function () { return Date.now() - lastTouch < 700; };
+      megaBtn.addEventListener('mouseenter', function () { if (canHover && !touchedRecently()) openMega(); });
       var navEl = megaBtn.closest('nav');
-      if (navEl) navEl.addEventListener('mouseleave', function () { if (canHover) closeMega(); });
+      if (navEl) navEl.addEventListener('mouseleave', function () { if (canHover && !touchedRecently()) closeMega(); });
       megaBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         if (megaPanel.hidden) openMega(); else closeMega();
@@ -759,7 +764,7 @@
           }
           show();
         });
-        b.addEventListener('mouseenter', function () { if (canHover && !megaMq.matches) show(); });
+        b.addEventListener('mouseenter', function () { if (canHover && !megaMq.matches && !touchedRecently()) show(); });
       });
       /* Mobile : chaque bloc de sous-catégories déménage juste sous son bouton
          (accordéon) au lieu de s'afficher en bas après « Uncategorized ».
