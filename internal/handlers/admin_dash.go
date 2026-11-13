@@ -96,6 +96,38 @@ func kpiCard(icon, accent, label, big, sub string) string {
 	return `<div class="mx-card mx-kpi" style="--mx-kpi:` + accent + `"><div class="mx-kpi-ic">` + icon + `</div><div class="mx-kpi-tx"><h3>` + label + `</h3><div class="big">` + big + `</div><div class="sub">` + sub + `</div></div></div>`
 }
 
+// topLabels : libellés français des tops (live_top) — partagé entre le
+// dashboard et la liste des produits.
+var topLabels = map[string]string{
+	"materiels-reseaux": "Matériels réseaux", "accessoires-informatiques": "Accessoires informatiques",
+	"imprimantes": "Imprimantes", "laptots": "Laptops neuf",
+	"ordinateurs-de-bureau-neufs": "Ordinateurs de bureau", "serveur": "Serveur",
+	"telephones-tablettes": "Téléphones & tablettes", "casi-neuf": "Reconditionné",
+	"cameras-videosurveillances":       "Caméras & vidéosurveillance",
+	"accessoires-telephones-tablettes": "Accessoires téléphones", "uncategorized": "Non classé",
+}
+
+// fmtMoney formate un montant avec des espaces de milliers (620000 -> "620 000").
+func fmtMoney(n int64) string {
+	if n < 0 {
+		return "-" + fmtMoney(-n)
+	}
+	s := fmt.Sprint(n)
+	var b strings.Builder
+	for i, c := range s {
+		if i > 0 && (len(s)-i)%3 == 0 {
+			b.WriteByte(' ')
+		}
+		b.WriteRune(c)
+	}
+	return b.String()
+}
+
+// miniStat : petite carte statistique cliquable (bandeau de la liste produits).
+func miniStat(href, label, count, accent string) string {
+	return `<a class="mx-stat" href="` + href + `" style="--mx-kpi:` + accent + `"><span class="n">` + count + `</span><span class="l">` + label + `</span></a>`
+}
+
 // Icônes SVG (trait, 24x24) — style sobre, assorti à la sidebar.
 const (
 	icCash = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg>`

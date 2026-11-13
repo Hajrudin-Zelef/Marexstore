@@ -72,14 +72,6 @@ func (a *App) Admin(w http.ResponseWriter, r *http.Request) {
 		caStr = fmt.Sprint(ca.Int64)
 	}
 	// Produits par catégorie (donut) : libellés lisibles, tops à 0 exclus.
-	topLabel := map[string]string{
-		"materiels-reseaux": "Matériels réseaux", "accessoires-informatiques": "Accessoires informatiques",
-		"imprimantes": "Imprimantes", "laptots": "Laptops neuf",
-		"ordinateurs-de-bureau-neufs": "Ordinateurs de bureau", "serveur": "Serveur",
-		"telephones-tablettes": "Téléphones & tablettes", "casi-neuf": "Reconditionné",
-		"cameras-videosurveillances":       "Caméras & vidéosurveillance",
-		"accessoires-telephones-tablettes": "Accessoires téléphones", "uncategorized": "Non classé",
-	}
 	var catSegs []dashSeg
 	if crows, err := a.DB.Query(`SELECT live_top, COUNT(*) FROM products GROUP BY live_top ORDER BY COUNT(*) DESC`); err == nil && crows != nil {
 		defer crows.Close()
@@ -91,7 +83,7 @@ func (a *App) Admin(w http.ResponseWriter, r *http.Request) {
 			if n <= 0 {
 				continue
 			}
-			lb, ok := topLabel[top]
+			lb, ok := topLabels[top]
 			if !ok {
 				lb = top
 			}
@@ -182,7 +174,7 @@ func (a *App) Admin(w http.ResponseWriter, r *http.Request) {
 	for _, t := range []string{"cameras-videosurveillances", "accessoires-telephones-tablettes", "uncategorized"} {
 		found := false
 		for _, s := range catSegs {
-			if s.Label == topLabel[t] {
+			if s.Label == topLabels[t] {
 				found = true
 				break
 			}
@@ -241,12 +233,14 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 	if tri == "" {
 		tri = "nom"
 	}
+	cat := r.URL.Query().Get("cat")
 	page, _ := strconv.Atoi(r.URL.Query().Get("page"))
 	if page < 1 {
 		page = 1
 	}
 	const per = 50
 	cond := ""
+	args := []any{"%" + q + "%", "%" + q + "%"}
 	switch vue {
 	case "stock":
 		cond = ` AND dispo='en stock'`
@@ -254,6 +248,10 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		cond = ` AND (dispo='rupture de stock' OR (stock IS NOT NULL AND stock<=0))`
 	case "sansprix":
 		cond = ` AND prix IS NULL AND prix_boutique IS NULL`
+	}
+	if cat != "" && cat != "all" {
+		cond += ` AND live_top=?`
+		args = append(args, cat)
 	}
 	order := "nom"
 	switch tri {
@@ -263,7 +261,7 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 		order = "stock"
 	}
 	var total int
-	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond, "%"+q+"%", "%"+q+"%").Scan(&total)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond, args...).Scan(&total)
 	pages := (total + per - 1) / per
 	if pages < 1 {
 		pages = 1
@@ -277,14 +275,47 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE dispo='en stock'`).Scan(&cStock)
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE dispo='rupture de stock' OR (stock IS NOT NULL AND stock<=0)`).Scan(&cRupt)
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE prix IS NULL AND prix_boutique IS NULL`).Scan(&cSP)
-	base := "/admin/produits?q=" + q + "&tri=" + tri
+	// Options du filtre catégorie (live_top + compteur).
+	var catOpts strings.Builder
+	catOpts.WriteString(`<option value="all">Toutes catégories</option>`)
+	if crows, err := a.DB.Query(`SELECT live_top, COUNT(*) FROM products WHERE live_top IS NOT NULL AND live_top<>'' GROUP BY live_top ORDER BY COUNT(*) DESC`); err == nil && crows != nil {
+		defer crows.Close()
+		for crows.Next() {
+			var top string
+			var n int
+			_ = crows.Scan(&top, &n)
+			lb, ok := topLabels[top]
+			if !ok {
+				lb = top
+			}
+			sel := ""
+			if top == cat {
+				sel = " selected"
+			}
+			fmt.Fprintf(&catOpts, `<option value="%s"%s>%s (%d)</option>`, render.Esc(top), sel, render.Esc(lb), n)
+		}
+	}
+	// Bandeau mini-stats (compteurs globaux, liens vers les vues).
+	stats := `<div class="mx-stats">` +
+		miniStat("/admin/produits?vue=all", "Produits", fmt.Sprint(cAll), "#2e5136") +
+		miniStat("/admin/produits?vue=stock", "En stock", fmt.Sprint(cStock), "#2271b1") +
+		miniStat("/admin/produits?vue=rupture", "Rupture", fmt.Sprint(cRupt), "#d63638") +
+		miniStat("/admin/produits?vue=sansprix", "Sans prix", fmt.Sprint(cSP), "#dba617") +
+		`</div>`
+	base := "/admin/produits?q=" + q + "&tri=" + tri + "&cat=" + cat
 	views := render.MxViews([]render.MxView{
 		render.MxView{Key: "all", Href: base + "&vue=all", Label: "Tous", Count: cAll},
 		render.MxView{Key: "stock", Href: base + "&vue=stock", Label: "En stock", Count: cStock},
 		render.MxView{Key: "rupture", Href: base + "&vue=rupture", Label: "Rupture", Count: cRupt},
 		render.MxView{Key: "sansprix", Href: base + "&vue=sansprix", Label: "Sans prix", Count: cSP},
 	}, vue)
-	rows, err := a.DB.Query(`SELECT slug,nom,marque,prix,prix_boutique,dispo,stock,image FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond+` ORDER BY `+order+` LIMIT ? OFFSET ?`, "%"+q+"%", "%"+q+"%", per, (page-1)*per)
+	selTri := func(v string) string {
+		if tri == v {
+			return " selected"
+		}
+		return ""
+	}
+	rows, err := a.DB.Query(`SELECT slug,nom,marque,prix,prix_boutique,dispo,stock,image,live_top FROM products WHERE (nom LIKE ? OR slug LIKE ?)`+cond+` ORDER BY `+order+` LIMIT ? OFFSET ?`, append(args, per, (page-1)*per)...)
 	if err != nil {
 		http.Error(w, "indisponible", 500)
 		return
@@ -292,31 +323,36 @@ func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 	var tr strings.Builder
 	for rows.Next() {
-		var slug, nom, marque, dispo, img string
+		var slug, nom, marque, dispo, img, top string
 		var prix, pb, stock sql.NullInt64
-		_ = rows.Scan(&slug, &nom, &marque, &prix, &pb, &dispo, &stock, &img)
-		pp := "devis"
+		_ = rows.Scan(&slug, &nom, &marque, &prix, &pb, &dispo, &stock, &img, &top)
+		pp := `<span class="mx-muted">devis</span>`
 		if pb.Valid {
-			pp = fmt.Sprint(pb.Int64)
+			pp = `<span class="mx-price">` + fmtMoney(pb.Int64) + ` F CFA</span>`
 		} else if prix.Valid {
-			pp = fmt.Sprint(prix.Int64)
+			pp = `<span class="mx-price">` + fmtMoney(prix.Int64) + ` F CFA</span>`
 		}
-		st := "—"
+		st := `<span class="mx-muted">—</span>`
 		if stock.Valid {
 			st = fmt.Sprint(stock.Int64)
+		}
+		catLb, ok := topLabels[top]
+		if !ok || top == "" {
+			catLb = "Non classé"
 		}
 		im := ""
 		if img != "" {
 			im = `<img class="thumb" src="/` + render.Esc(img) + `" alt="" loading="lazy">`
 		}
-		fmt.Fprintf(&tr, `<tr><td>%s<a href="/admin/produits/%s">%s</a><div class="row-actions"><a href="/admin/produits/%s">Modifier</a> · <a href="/produits/%s.html">Voir</a> · <a href="/admin/produits/%s?dupliquer=1" data-mx-confirm="Dupliquer ce produit ?">Dupliquer</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
-			im, slug, render.Esc(nom), slug, slug, slug, render.Esc(marque), pp, statutBadge(dispo), st)
+		fmt.Fprintf(&tr, `<tr><td><div class="mx-prod">%s<div><a class="mx-prod-nm" href="/admin/produits/%s">%s</a><div class="mx-prod-cat">%s</div><div class="row-actions"><a href="/admin/produits/%s">Modifier</a> · <a href="/produits/%s.html">Voir</a> · <a href="/admin/produits/%s?dupliquer=1" data-mx-confirm="Dupliquer ce produit ?">Dupliquer</a></div></div></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
+			im, slug, render.Esc(nom), render.Esc(catLb), slug, slug, slug, render.Esc(marque), pp, statutBadge(dispo), st)
 	}
 	a.write(w, 200, a.adminPage("Produits", "produits",
-		`<p><a class="mx-btn" href="/admin/produits/nouveau">+ Ajouter un produit</a></p>`+views+`
+		`<p><a class="mx-btn" href="/admin/produits/nouveau">+ Ajouter un produit</a></p>`+stats+views+`
 <form class="mx-tools" method="get" action="/admin/produits"><input type="hidden" name="vue" value="`+render.Esc(vue)+`">
 <input type="search" name="q" value="`+render.Esc(q)+`" placeholder="Rechercher nom, slug…">
-<select name="tri"><option value="nom">Tri : nom</option><option value="prix">Tri : prix</option><option value="stock">Tri : stock</option></select>
+<select name="cat">`+catOpts.String()+`</select>
+<select name="tri"><option value="nom"`+selTri("nom")+`>Tri : nom</option><option value="prix"`+selTri("prix")+`>Tri : prix</option><option value="stock"`+selTri("stock")+`>Tri : stock</option></select>
 <button class="mx-btn">OK</button></form>
 <div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Marque</th><th>Prix</th><th>Dispo</th><th>Stock</th></tr>`+tr.String()+`</table>`+render.MxPager(base+"&vue="+vue, page, pages)+`</div>`, r))
 }
@@ -425,43 +461,86 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 		}
 		dispoOpts += `<option` + sel + `>` + d + `</option>`
 	}
-	imgPrev := ""
+	// Aperçu live (carte produit, comme le badge employé) : admin.js le
+	// met à jour en direct pendant la saisie.
+	pvNom := p.Nom
+	if pvNom == "" {
+		pvNom = "Nouveau produit"
+	}
+	pvPrix := `devis`
+	pvPrixCls := "pv-prix devis"
+	if pb.Valid {
+		pvPrix = fmtMoney(pb.Int64) + ` F CFA`
+		pvPrixCls = "pv-prix"
+	} else if prix.Valid {
+		pvPrix = fmtMoney(prix.Int64) + ` F CFA`
+		pvPrixCls = "pv-prix"
+	}
+	pvStock := "—"
+	if stock.Valid {
+		pvStock = fmt.Sprint(stock.Int64)
+	}
+	pvDispo := p.Dispo
+	if pvDispo == "" {
+		pvDispo = "en stock"
+	}
+	pvImg := `<div id="pv-img-ph" class="pv-img-ph">Aucune photo</div><img id="pv-img" src="" alt="" style="display:none">`
 	if p.Image != "" {
-		imgPrev = `<p><img src="/` + render.Esc(p.Image) + `" alt="" style="max-width:220px;border:1px solid var(--mx-border);border-radius:8px"></p>`
+		pvImg = `<div id="pv-img-ph" class="pv-img-ph" style="display:none">Aucune photo</div><img id="pv-img" src="/` + render.Esc(p.Image) + `" alt="">`
+	}
+	pvBadgeStyle := ""
+	if p.Marque == "" {
+		pvBadgeStyle = ` style="display:none"`
+	}
+	voirBtn := ""
+	if !isNew {
+		voirBtn = `<a class="mx-btn ghost" href="/produits/` + p.Slug + `.html">Voir</a>`
 	}
 	a.write(w, 200, a.adminPage(titre, "produits",
-		`<form class="mx-form" method="post" enctype="multipart/form-data"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
-<div class="mx-cols"><div>
-<div class="mx-postbox"><h2>Contenu <button type="button" data-mx-toggle aria-label="Replier">▾</button></h2><div class="in">
-<label>Nom * <input name="nom" required value="`+render.Esc(p.Nom)+`"></label>
-<label>Accroche <input name="accroche" value="`+render.Esc(p.Accroche)+`"></label>
-<label>Description <textarea name="description" rows="6">`+render.Esc(p.Description)+`</textarea></label>
+		`<form class="mx-form" id="mx-edit-form" method="post" enctype="multipart/form-data"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
+<div class="mx-edit">
+<div class="mx-preview">
+<div class="pv-top">
+<div class="pv-avatar">`+pvImg+`</div>
+<div class="pv-nom" id="pv-nom">`+render.Esc(pvNom)+`</div>
+<div class="pv-badge" id="pv-marque"`+pvBadgeStyle+`>`+render.Esc(p.Marque)+`</div>
+</div>
+<div class="pv-body">
+<div class="pv-info">
+<div class="pv-row"><span>Prix</span><strong class="`+pvPrixCls+`" id="pv-prix">`+pvPrix+`</strong></div>
+<div class="pv-row"><span>Catégorie</span><strong id="pv-cat">`+render.Esc(p.Main)+`</strong></div>
+<div class="pv-row"><span>Stock</span><strong id="pv-stock">`+pvStock+`</strong></div>
+<div class="pv-row"><span>Statut</span><span id="pv-dispo">`+statutBadge(pvDispo)+`</span></div>
+</div>
+</div>
+<div class="pv-photo">
+<label>Image <input name="image" id="f-image" value="`+render.Esc(p.Image)+`" placeholder="images/…"></label>
+<label>Fichier (JPG/PNG/WebP, max 5 Mo) <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp"></label>
+</div>
+</div>
+<div class="mx-fcol">
+<div class="mx-fsec"><h3>Contenu</h3><div class="mx-fgrid">
+<label class="span2">Nom * <input name="nom" id="f-nom" required value="`+render.Esc(p.Nom)+`"></label>
+<label class="span2">Accroche <input name="accroche" value="`+render.Esc(p.Accroche)+`"></label>
+<label class="span2">Description <textarea name="description" rows="5">`+render.Esc(p.Description)+`</textarea></label>
 </div></div>
-<div class="mx-postbox"><h2>Prix &amp; stock <button type="button" data-mx-toggle aria-label="Replier">▾</button></h2><div class="in">
-<label>Prix (vide = devis) <input name="prix" inputmode="numeric" value="`+str(prix)+`"></label>
-<label>Prix boutique <input name="prix_boutique" inputmode="numeric" value="`+str(pb)+`"></label>
+<div class="mx-fsec"><h3>Prix &amp; stock</h3><div class="mx-fgrid">
+<label>Prix (vide = devis) <input name="prix" id="f-prix" inputmode="numeric" value="`+str(prix)+`"></label>
+<label>Prix boutique <input name="prix_boutique" id="f-pb" inputmode="numeric" value="`+str(pb)+`"></label>
 <label>Prix avant <input name="prix_avant" inputmode="numeric" value="`+str(pa)+`"></label>
-<label>Dispo <select name="dispo">`+dispoOpts+`</select></label>
-<label>Stock <input name="stock" inputmode="numeric" value="`+str(stock)+`"></label>
+<label>Dispo <select name="dispo" id="f-dispo">`+dispoOpts+`</select></label>
+<label>Stock <input name="stock" id="f-stock" inputmode="numeric" value="`+str(stock)+`"></label>
 </div></div>
-<div class="mx-postbox"><h2>Classement <button type="button" data-mx-toggle aria-label="Replier">▾</button></h2><div class="in">
-<label>Marque <input name="marque" value="`+render.Esc(p.Marque)+`"></label>
-<label>Catégorie <input name="main" value="`+render.Esc(p.Main)+`"></label>
+<div class="mx-fsec"><h3>Classement</h3><div class="mx-fgrid">
+<label>Marque <input name="marque" id="f-marque" value="`+render.Esc(p.Marque)+`"></label>
+<label>Catégorie <input name="main" id="f-main" value="`+render.Esc(p.Main)+`"></label>
 <label>Sous-catégorie <input name="sub" value="`+render.Esc(p.Sub)+`"></label>
 <label>Store (live_top) <input name="live_top" value="`+render.Esc(p.LiveTop)+`"></label>
 <label>Sous-store (live_sub) <input name="live_sub" value="`+render.Esc(p.LiveSub)+`"></label>
 </div></div>
-</div><div><div class="mx-postbox mx-pub"><h2>Publication</h2><div class="in">
-<label>Image <input name="image" value="`+render.Esc(p.Image)+`" placeholder="images/…"></label>
-`+imgPrev+`
-<label>Fichier (JPG/PNG/WebP, max 5 Mo) <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp"></label>
-<div class="row"><button class="mx-btn">Enregistrer</button>`+func() string {
-			if isNew {
-				return ""
-			}
-			return `<a class="mx-btn ghost" href="/produits/` + p.Slug + `.html">Voir</a>`
-		}()+`</div>
-</div></div></div></div></form>`, r))
+<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button>`+voirBtn+`</div>
+</div>
+</div></form>`, r))
 }
 
 // adminDupliquer : copie un produit sous un slug -copie (prix/stock repris).

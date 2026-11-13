@@ -77,12 +77,12 @@ func MxDoc(title, active string, counts map[string]int, body string) string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=2">
+<link rel="stylesheet" href="/static/admin.css?v=3">
 <script src="/static/theme.js?v=1"></script>
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, counts) +
 		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
-		body + `</div></div></div><script src="/static/admin.js?v=1"></script></body></html>`
+		body + `</div></div></div><script src="/static/admin.js?v=2"></script></body></html>`
 }
 
 // MxView : un onglet de vue (Tous/En stock/...) avec compteur.
