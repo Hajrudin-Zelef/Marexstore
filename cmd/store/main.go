@@ -67,6 +67,7 @@ func main() {
 	r.Get("/", app.Index)
 	r.Get("/index.html", app.Index)
 	r.Get("/boutique.html", app.Boutique)
+	r.Get("/categories/{top}/{type}.html", app.CategorieType)
 	r.Get("/categories/{fichier}.html", app.Categorie)
 	r.Get("/produits/{slug}.html", app.Produit)
 

@@ -64,6 +64,17 @@ func (a *App) Categorie(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
+// CategorieType : page dédiée d'un type (/categories/<top>/<type>.html).
+func (a *App) CategorieType(w http.ResponseWriter, r *http.Request) {
+	top := chi.URLParam(r, "top")
+	typ := strings.TrimSuffix(chi.URLParam(r, "type"), ".html")
+	if title, body, ok := render.CategoryTypePage(a.Store, top, typ); ok {
+		a.renderDoc(w, r, title, body, "../")
+		return
+	}
+	http.NotFound(w, r)
+}
+
 func (a *App) Produit(w http.ResponseWriter, r *http.Request) {
 	slug := strings.TrimSuffix(chi.URLParam(r, "slug"), ".html")
 	p, ok := a.Store.BySlug[slug]

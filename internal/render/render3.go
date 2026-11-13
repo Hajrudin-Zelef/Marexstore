@@ -273,12 +273,10 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 
 // TypeHubHTML : la page d'une catégorie liste d'abord ses types d'équipements
 // (les sous-catégories du catalogue, avec photo et compteur) ; un clic sur un
-// type affiche ses produits (même page, ?type=<slug>), comme le hub des
-// catégories de la boutique. Un seul type par tuile, aucun type vide.
-// Le bloc est sur une seule ligne (la parité le retire d'un coup).
-// active = slug du type courant (?type=) : la tuile est surlignée, les autres
-// restent visibles — le hub ne disparaît jamais.
-func TypeHubHTML(fs []*catalog.RawProduct, active string) string {
+// type ouvre sa page dédiée (categories/<top>/<type>.html), bien structurée,
+// comme le hub des catégories de la boutique. Un seul type par tuile, aucun
+// type vide. active = slug du type courant : la tuile est surlignée.
+func TypeHubHTML(fs []*catalog.RawProduct, active, prefix, topSlug string) string {
 	counts := map[string]int{}
 	rep := map[string]*catalog.RawProduct{}
 	for _, p := range fs {
@@ -298,6 +296,13 @@ func TypeHubHTML(fs []*catalog.RawProduct, active string) string {
 		return subs[i] < subs[j]
 	})
 	var cards strings.Builder
+	liveOf := map[string]map[string]bool{}
+	for _, p := range fs {
+		if liveOf[p.Sub] == nil {
+			liveOf[p.Sub] = map[string]bool{}
+		}
+		liveOf[p.Sub][p.LiveSub] = true
+	}
 	for _, sub := range subs {
 		img := `<div class="noimg">Photo à venir</div>`
 		if r := rep[sub]; r != nil {
@@ -309,10 +314,13 @@ func TypeHubHTML(fs []*catalog.RawProduct, active string) string {
 		}
 		sl := catalog.Slugify(sub)
 		cls, cur := "hub-main", ""
-		if active != "" && sl == active {
+		// Surlignage : type exact (sous-catégorie) OU type live du menu dont
+		// relèvent les produits de la tuile (ex. câbles HDMI/RJ45 pour
+		// « Câbles & Adaptateurs »).
+		if active != "" && (sl == active || liveOf[sub][active]) {
 			cls, cur = "hub-main on", ` aria-current="true"`
 		}
-		fmt.Fprintf(&cards, `<div class="hub-card"><a class="%s" href="?type=%s"%s><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a></div>`, cls, esc(sl), cur, img, esc(sub), counts[sub], prod)
+		fmt.Fprintf(&cards, `<div class="hub-card"><a class="%s" href="%scategories/%s/%s.html"%s><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a></div>`, cls, prefix, esc(topSlug), esc(sl), cur, img, esc(sub), counts[sub], prod)
 	}
 	return `<div data-hub data-typehub><h2 style="font-size:20px">Types d'équipements</h2><p style="color:#666">Choisissez un type pour voir ses produits.</p><div class="hub-grid">` + cards.String() + `</div><p style="margin-top:18px"><a class="btn" href="?all=1">Voir tous les produits (` + fmt.Sprint(len(fs)) + `) →</a></p></div>`
 }
@@ -323,8 +331,8 @@ func TypeHubHTML(fs []*catalog.RawProduct, active string) string {
 // « Toutes les catégories » (pages /categories/<top-live>.html).
 // Le hub des types reste TOUJOURS visible (pas de flash) ; showList affiche
 // la liste dès le premier rendu quand un filtre est déjà posé (?type=, ?all=1)
-// et activeType surligne la tuile courante.
-func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, activeType string, showList bool) string {
+// et activeType surligne la tuile courante. topSlug sert aux liens des tuiles.
+func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, topSlug, activeType string, showList bool) string {
 	subs := map[string]bool{}
 	for _, p := range fs {
 		subs[p.Sub] = true
@@ -352,7 +360,7 @@ func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, activeTy
 <div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › ` + esc(title) + `</div>
 <h1 style="font-size:24px">` + esc(title) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(strings.Join(subList, ", ")) + `</p>
-` + TypeHubHTML(fs, activeType) + `
+ ` + TypeHubHTML(fs, activeType, "../", topSlug) + `
 <div data-catalog-home` + listHidden + `>
 ` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `</div>
 </div></div></div>
@@ -360,13 +368,13 @@ func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, activeTy
 }
 
 func CategoryPage(s *catalog.Store, main string) string {
-	return categoryPageFor(s, CategoryBody(s, main), main, "", false)
+	return categoryPageFor(s, CategoryBody(s, main), main, catalog.MainSlug[main], "", false)
 }
 
 // CategoryPageFiltered : variante avec état initial (anti-flash) — activeType
 // (?type=) surligne la tuile, showList affiche la liste dès le premier rendu.
 func CategoryPageFiltered(s *catalog.Store, main, activeType string, showList bool) string {
-	return categoryPageFor(s, CategoryBody(s, main), main, activeType, showList)
+	return categoryPageFor(s, CategoryBody(s, main), main, catalog.MainSlug[main], activeType, showList)
 }
 
 // CategoryBodyLive : produits d'un top live (catégorie du menu
@@ -384,10 +392,76 @@ func CategoryBodyLive(s *catalog.Store, liveTop string) []*catalog.RawProduct {
 // CategoryPageLive : page d'un top live (catégorie du menu) : mêmes types
 // d'équipements d'abord, puis les produits.
 func CategoryPageLive(s *catalog.Store, t catalog.LiveTop) string {
-	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, "", false)
+	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, t.Slug, "", false)
 }
 
 // CategoryPageLiveFiltered : variante avec état initial (anti-flash).
 func CategoryPageLiveFiltered(s *catalog.Store, t catalog.LiveTop, activeType string, showList bool) string {
-	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, activeType, showList)
+	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, t.Slug, activeType, showList)
+}
+
+// typeScope : produits d'un top (famille ou live) + libellé du top.
+func typeScope(s *catalog.Store, topSlug string) (fs []*catalog.RawProduct, topLabel string, ok bool) {
+	for _, m := range catalog.MainOrder {
+		if catalog.MainSlug[m] == topSlug {
+			return CategoryBody(s, m), m, true
+		}
+	}
+	for _, t := range catalog.LiveCats {
+		if t.Slug == topSlug {
+			return CategoryBodyLive(s, t.Slug), t.Label, true
+		}
+	}
+	return nil, "", false
+}
+
+// CategoryTypePage : page dédiée d'un type d'équipement
+// (/categories/<top>/<type>.html) — fil d'Ariane complet, titre, hub des types
+// (tuile active surlignée, toujours visible) puis la liste des produits.
+// Le type matche la sous-catégorie (data-sub) OU la sous-catégorie live du menu
+// (data-live-sub), comme le filtre ?type=. Retourne ok=false si le couple
+// top/type ne désigne aucun produit (pas de page vide).
+func CategoryTypePage(s *catalog.Store, topSlug, typeSlug string) (title, body string, ok bool) {
+	topFs, topLabel, found := typeScope(s, topSlug)
+	if !found {
+		return "", "", false
+	}
+	var fs []*catalog.RawProduct
+	label := ""
+	for _, p := range topFs {
+		subMatch := catalog.Slugify(p.Sub) == typeSlug
+		liveMatch := p.LiveSub == typeSlug
+		if !subMatch && !liveMatch {
+			continue
+		}
+		fs = append(fs, p)
+		if label == "" {
+			if subMatch {
+				label = p.Sub
+			} else if l := catalog.SubLabels[[2]string{topSlug, typeSlug}]; l != "" {
+				label = l
+			} else {
+				label = p.Sub
+			}
+		}
+	}
+	if len(fs) == 0 || label == "" {
+		return "", "", false
+	}
+	n := fmt.Sprintf("%d produit", len(fs))
+	if len(fs) > 1 {
+		n = fmt.Sprintf("%d produits", len(fs))
+	}
+	body = Header(s, "../", "") + `
+<div class="wrap"><div class="home">
+<div>` + FiltersPanel(s, "page") + `</div>
+<div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › <a href="` + esc(topSlug) + `.html">` + esc(topLabel) + `</a> › ` + esc(label) + `</div>
+<h1 style="font-size:24px">` + esc(label) + `</h1>
+<p style="color:#666">` + n + ` · ` + esc(topLabel) + `</p>
+` + TypeHubHTML(topFs, typeSlug, "../", topSlug) + `
+<div data-catalog-home>
+` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", nil, "") + `</div>
+</div></div></div>
+` + Footer(s, "../")
+	return label + " — " + topLabel, body, true
 }

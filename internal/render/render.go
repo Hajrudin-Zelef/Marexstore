@@ -76,8 +76,9 @@ func MegaPanel(s *catalog.Store, prefix string) string {
 			for _, sslug := range g.Subs {
 				// Pas de lien mort : on n'affiche que les sous-catégories
 				// qui ont au moins un produit (sinon page vide).
+				// Chaque lien ouvre la page dédiée du type (hub + liste).
 				if c := s.SubCounts[[2]string{t.Slug, sslug}]; c > 0 {
-					fmt.Fprintf(&links, `<a href="%sboutique.html?sub=%s">%s <span>(%d)</span></a>`, prefix, sslug, esc(catalog.SubLabels[[2]string{t.Slug, sslug}]), c)
+					fmt.Fprintf(&links, `<a href="%scategories/%s/%s.html">%s <span>(%d)</span></a>`, prefix, t.Slug, sslug, esc(catalog.SubLabels[[2]string{t.Slug, sslug}]), c)
 					visible = append(visible, sslug)
 				}
 			}

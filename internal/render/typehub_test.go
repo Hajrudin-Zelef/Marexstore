@@ -33,7 +33,8 @@ func TestTypeHubComplete(t *testing.T) {
 	s := testStoreFull(t)
 	for _, m := range catalog.MainOrder {
 		fs := render.CategoryBody(s, m)
-		hub := render.TypeHubHTML(fs, "")
+		top := catalog.MainSlug[m]
+		hub := render.TypeHubHTML(fs, "", "../", top)
 		counts := map[string]int{}
 		for _, p := range fs {
 			counts[p.Sub]++
@@ -43,8 +44,8 @@ func TestTypeHubComplete(t *testing.T) {
 		}
 		for sub, n := range counts {
 			sl := catalog.Slugify(sub)
-			if !strings.Contains(hub, `href="?type=`+sl+`"`) {
-				t.Errorf("%s : lien ?type= absent pour %q", m, sub)
+			if !strings.Contains(hub, `href="../categories/`+top+`/`+sl+`.html"`) {
+				t.Errorf("%s : lien page type absent pour %q", m, sub)
 			}
 			if !strings.Contains(hub, `>`+catalog.Esc(sub)+`<`) {
 				t.Errorf("%s : libellé %q absent du hub", m, sub)
@@ -57,7 +58,7 @@ func TestTypeHubComplete(t *testing.T) {
 				t.Errorf("%s : compteur %q absent pour %q", m, want, sub)
 			}
 			// La tuile du type : une photo ou le repli « Photo à venir ».
-			i := strings.Index(hub, `href="?type=`+sl+`"`)
+			i := strings.Index(hub, `href="../categories/`+top+`/`+sl+`.html"`)
 			if i < 0 {
 				continue
 			}
@@ -148,13 +149,13 @@ func TestLiveTopPages(t *testing.T) {
 		for _, p := range fs {
 			counts[p.Sub]++
 		}
-		hub := render.TypeHubHTML(fs, "")
+		hub := render.TypeHubHTML(fs, "", "../", lt.Slug)
 		if got := strings.Count(hub, `class="hub-card"`); got != len(counts) {
 			t.Errorf("%s : %d tuiles, %d types attendus", lt.Label, got, len(counts))
 		}
 		for sub, n := range counts {
-			if !strings.Contains(hub, `href="?type=`+catalog.Slugify(sub)+`"`) {
-				t.Errorf("%s : lien ?type= absent pour %q", lt.Label, sub)
+			if !strings.Contains(hub, `href="../categories/`+lt.Slug+`/`+catalog.Slugify(sub)+`.html"`) {
+				t.Errorf("%s : lien page type absent pour %q", lt.Label, sub)
 			}
 			want := fmt.Sprintf(`%d produit`, n)
 			if n > 1 {
@@ -167,7 +168,7 @@ func TestLiveTopPages(t *testing.T) {
 	}
 	// Le cas de Zelef : Matériels réseaux doit montrer ses 5 types.
 	fs := render.CategoryBodyLive(s, "materiels-reseaux")
-	hub := render.TypeHubHTML(fs, "")
+	hub := render.TypeHubHTML(fs, "", "../", "materiels-reseaux")
 	for _, sub := range []string{"Réseau & câbles", "Cisco & réseau", "Téléphonie IP", "Réseau Legrand", "Adaptateurs"} {
 		if !strings.Contains(hub, catalog.Esc(sub)) {
 			t.Errorf("Matériels réseaux : type %q absent du hub", sub)
@@ -202,13 +203,19 @@ func TestBoutiqueHubLinks(t *testing.T) {
 	if len(subs) == 0 {
 		t.Fatalf("hub boutique : aucun lien de sous-catégorie")
 	}
+	reType := regexp.MustCompile(`^categories/([a-z0-9-]+)/([a-z0-9-]+)\.html$`)
 	for _, m := range subs {
 		href := m[1]
-		if strings.Contains(href, "boutique.html?sub=") {
-			t.Errorf("sous-catégorie hub : href=%q pointe encore vers la boutique filtrée", href)
+		if strings.Contains(href, "boutique.html") || strings.Contains(href, "?type=") {
+			t.Errorf("sous-catégorie hub : href=%q doit mener à la page type dédiée", href)
 		}
-		if !strings.Contains(href, "?type=") {
-			t.Errorf("sous-catégorie hub : href=%q attendu categories/<top>.html?type=<sub>", href)
+		mm := reType.FindStringSubmatch(href)
+		if mm == nil {
+			t.Errorf("sous-catégorie hub : href=%q attendu categories/<top>/<type>.html", href)
+			continue
+		}
+		if _, _, ok := render.CategoryTypePage(s, mm[1], mm[2]); !ok {
+			t.Errorf("sous-catégorie hub : page type %q vide ou introuvable", href)
 		}
 	}
 }
@@ -297,30 +304,45 @@ func TestFilterLinksAlive(t *testing.T) {
 			t.Errorf("hub boutique : ?type=%q ne matche aucune carte", m[1])
 		}
 	}
-	// 2. Hub des types de chaque page catégorie (familles + tops live).
-	for _, m := range catalog.MainOrder {
-		for _, mt := range regexp.MustCompile(`href="\?type=([^"]+)"`).FindAllStringSubmatch(render.TypeHubHTML(render.CategoryBody(s, m), ""), -1) {
-			if !matchType(mt[1]) {
-				t.Errorf("types %s : ?type=%q mort", m, mt[1])
+	// 2. Hub des types de chaque page catégorie (familles + tops live) :
+	// chaque tuile ouvre une page type non vide.
+	reTypePage := regexp.MustCompile(`categories/([a-z0-9-]+)/([a-z0-9-]+)\.html`)
+	checkHub := func(hub, where, top string) {
+		found := false
+		for _, mt := range reTypePage.FindAllStringSubmatch(hub, -1) {
+			found = true
+			if _, _, ok := render.CategoryTypePage(s, mt[1], mt[2]); !ok {
+				t.Errorf("types %s : page %q vide ou introuvable", where, mt[0])
 			}
 		}
+		if !found {
+			t.Errorf("types %s (top %s) : aucune tuile vers une page type", where, top)
+		}
+	}
+	for _, m := range catalog.MainOrder {
+		if len(render.CategoryBody(s, m)) == 0 {
+			continue
+		}
+		checkHub(render.TypeHubHTML(render.CategoryBody(s, m), "", "../", catalog.MainSlug[m]), m, catalog.MainSlug[m])
 	}
 	for _, lt := range catalog.LiveCats {
 		fs := render.CategoryBodyLive(s, lt.Slug)
 		if len(fs) == 0 {
 			continue
 		}
-		for _, mt := range regexp.MustCompile(`href="\?type=([^"]+)"`).FindAllStringSubmatch(render.TypeHubHTML(fs, ""), -1) {
-			if !matchType(mt[1]) {
-				t.Errorf("types %s : ?type=%q mort", lt.Label, mt[1])
-			}
+		checkHub(render.TypeHubHTML(fs, "", "../", lt.Slug), lt.Label, lt.Slug)
+	}
+	// 3. Méga-menu : sous-liens simples -> pages types dédiées non vides ;
+	// « Voir + » multi -> boutique ?sub= (match data-live-sub).
+	for _, m := range reTypePage.FindAllStringSubmatch(render.MegaPanel(s, ""), -1) {
+		if _, _, ok := render.CategoryTypePage(s, m[1], m[2]); !ok {
+			t.Errorf("méga-menu : page type %q vide ou introuvable", m[0])
 		}
 	}
-	// 3. Méga-menu : ?sub= (simples et « Voir + » multi).
 	for _, m := range regexp.MustCompile(`boutique\.html\?sub=([a-z0-9-,]+)"`).FindAllStringSubmatch(render.MegaPanel(s, ""), -1) {
 		for _, v := range strings.Split(m[1], ",") {
 			if !matchLiveSub(v) {
-				t.Errorf("méga-menu : ?sub=%q ne matche aucune carte", v)
+				t.Errorf("méga-menu « Voir + » : ?sub=%q ne matche aucune carte", v)
 			}
 		}
 	}
@@ -356,7 +378,7 @@ func TestInitialStateFromQuery(t *testing.T) {
 	ct := render.CategoryPageFiltered(s, "Réseaux", "reseau-cables", true)
 	must(strings.Contains(ct, `<div data-hub data-typehub>`), "catégorie ?type= : hub visible (jamais hidden)")
 	must(!strings.Contains(ct, `<div data-hub data-typehub hidden>`), "catégorie ?type= : hub non masqué")
-	must(strings.Contains(ct, `class="hub-main on" href="?type=reseau-cables" aria-current="true"`), "catégorie ?type= : tuile active marquée")
+	must(strings.Contains(ct, `class="hub-main on" href="../categories/reseaux/reseau-cables.html" aria-current="true"`), "catégorie ?type= : tuile active marquée")
 	must(strings.Contains(ct, `<div data-catalog-home>`), "catégorie ?type= : liste affichée")
 	must(!strings.Contains(ct, `<div data-catalog-home hidden>`), "catégorie ?type= : liste non cachée")
 }
@@ -400,4 +422,68 @@ func TestNoInlineExecutableScript(t *testing.T) {
 	if !strings.Contains(pages["index"], `id="mediatec-types"`) {
 		t.Errorf("accueil : bloc #mediatec-types absent")
 	}
+}
+
+// TestTypePages : chaque tuile de type (hub boutique, hubs des pages catégories,
+// méga-menu) ouvre une page dédiée bien structurée : fil d'Ariane complet,
+// titre, hub des types TOUJOURS visible avec tuile(s) active(s), liste affichée.
+func TestTypePages(t *testing.T) {
+	s := testStoreFull(t)
+	seen := map[string]bool{}
+	check := func(top, typ, where string) {
+		t.Helper()
+		key := top + "/" + typ
+		if seen[key] {
+			return
+		}
+		seen[key] = true
+		title, body, ok := render.CategoryTypePage(s, top, typ)
+		if !ok {
+			t.Errorf("page type %s (%s) : introuvable ou vide", key, where)
+			return
+		}
+		if title == "" {
+			t.Errorf("page type %s : titre vide", key)
+		}
+		must := func(cond bool, msg string) {
+			t.Helper()
+			if !cond {
+				t.Errorf("page type %s : %s", key, msg)
+			}
+		}
+		must(strings.Contains(body, `<div data-hub data-typehub>`), "hub des types absent")
+		must(!strings.Contains(body, `<div data-hub data-typehub hidden`), "hub des types masqué")
+		must(strings.Contains(body, `aria-current="true"`), "aucune tuile active marquée")
+		must(strings.Contains(body, `<div data-catalog-home>`), "liste des produits absente")
+		must(!strings.Contains(body, `<div data-catalog-home hidden`), "liste des produits cachée")
+		must(strings.Contains(body, `class="card"`), "aucune carte produit")
+		must(strings.Contains(body, `<a href="../boutique.html">Store</a>`), "fil d'Ariane incomplet")
+		must(strings.Contains(body, `<a href="`+top+`.html">`), "fil d'Ariane sans lien catégorie")
+	}
+	reType := regexp.MustCompile(`categories/([a-z0-9-]+)/([a-z0-9-]+)\.html`)
+	for _, m := range reType.FindAllStringSubmatch(render.HubHTML(s, ""), -1) {
+		check(m[1], m[2], "hub boutique")
+	}
+	for _, m := range catalog.MainOrder {
+		fs := render.CategoryBody(s, m)
+		if len(fs) == 0 {
+			continue
+		}
+		for _, mt := range reType.FindAllStringSubmatch(render.TypeHubHTML(fs, "", "../", catalog.MainSlug[m]), -1) {
+			check(catalog.MainSlug[m], mt[2], "hub "+m)
+		}
+	}
+	for _, lt := range catalog.LiveCats {
+		fs := render.CategoryBodyLive(s, lt.Slug)
+		if len(fs) == 0 {
+			continue
+		}
+		for _, mt := range reType.FindAllStringSubmatch(render.TypeHubHTML(fs, "", "../", lt.Slug), -1) {
+			check(lt.Slug, mt[2], "hub "+lt.Label)
+		}
+	}
+	for _, m := range reType.FindAllStringSubmatch(render.MegaPanel(s, ""), -1) {
+		check(m[1], m[2], "méga-menu")
+	}
+	t.Logf("pages types vérifiées : %d", len(seen))
 }
