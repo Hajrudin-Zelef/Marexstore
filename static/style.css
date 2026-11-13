@@ -476,7 +476,7 @@ nav.main{position:relative}
 .mega-rail button:hover{background:var(--brand-pale)}
 .mega-rail button.on{background:var(--surface);color:var(--link);border-left:3px solid var(--brand)}
 .mega-rail button .mega-count{color:var(--muted);font-weight:400;font-size:12px}
-.mega-cols{padding:22px 28px}
+.mega-cols{padding:24px 32px;background:var(--surface2)}
 .mega-cols h4{margin:0 0 14px;font-size:18px;color:var(--link)}
 .mega-links{column-count:3;column-gap:28px}
 nav.main .mega-links a{display:block;padding:6px 0;color:var(--text2);font-size:14px;break-inside:avoid}
@@ -501,10 +501,10 @@ nav.main .mega-all{display:inline-block;margin-top:16px;color:var(--link);font-w
 
 /* ---- v3.17 : méga-menu structuré en groupes titrés (LDLC) + filtres bleu pâle ---- */
 .mega-rail button.on{background:#e8f4fc;color:var(--link);border-left:3px solid var(--brand)}
-.mega-groups{column-count:3;column-gap:32px}
-.mega-group{break-inside:avoid;margin-bottom:20px}
-.mega-group h5{margin:0 0 8px;font-size:15px;color:var(--navy)}
-nav.main .mega-group a{display:block;padding:4px 0;color:var(--text2);font-size:14px}
+.mega-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0 24px}
+.mega-group{margin-bottom:24px;padding-right:16px;border-right:1px solid var(--border)}
+.mega-group h5{margin:0 0 10px;font-size:13px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--brand);padding-bottom:5px}
+nav.main .mega-group a{display:block;padding:5px 0;color:var(--text2);font-size:13.5px;border-bottom:1px solid var(--border)}
 nav.main .mega-group a:hover{color:var(--link);text-decoration:none}
 .mega-group a span{color:var(--muted);font-size:12px}
 nav.main .mega-group a.mega-more{color:var(--link);font-weight:700;font-size:13px}
