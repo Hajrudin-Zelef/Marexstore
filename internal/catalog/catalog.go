@@ -21,8 +21,11 @@ const (
 	Tel   = "(+225) 07 05 08 75 07"
 	Tel2  = "(+225) 27 20 24 33 19"
 	Email = "sales@mediatec-ci.com"
-	WA    = "2250705087507"
 )
+
+// WA est une variable (pas une constante) pour que /admin › Réglages puisse
+// changer le numéro WhatsApp sans recompiler (appliqué au démarrage).
+var WA = "2250705087507"
 
 // esc reproduit html.escape(quote=True) de Python : & < > " '
 // (Go html.EscapeString donnerait &#34;/&#39; — différent, donc fonction dédiée).

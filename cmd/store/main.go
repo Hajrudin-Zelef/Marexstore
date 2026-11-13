@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
+	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/config"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/db"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/handlers"
@@ -27,6 +30,21 @@ func main() {
 	}
 	if err := db.EnsureFTS(database); err != nil {
 		log.Fatal("fts: ", err)
+	}
+	// Réglages persistés : WhatsApp sans recompiler, maintenance immédiate.
+	var waSetting string
+	_ = database.QueryRow(`SELECT valeur FROM settings WHERE nom='whatsapp'`).Scan(&waSetting)
+	if strings.TrimSpace(waSetting) != "" {
+		catalog.WA = strings.TrimSpace(waSetting)
+	}
+	maintenanceOn := func() (bool, string) {
+		var on, msg string
+		_ = database.QueryRow(`SELECT valeur FROM settings WHERE nom='maintenance'`).Scan(&on)
+		_ = database.QueryRow(`SELECT valeur FROM settings WHERE nom='maintenance_message'`).Scan(&msg)
+		if msg == "" {
+			msg = "Boutique en maintenance, retour très vite."
+		}
+		return on == "1", msg
 	}
 	st, err := site.LoadStore(database)
 	if err != nil {
@@ -53,6 +71,22 @@ func main() {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if strings.HasPrefix(r.URL.Path, "/admin") || strings.HasPrefix(r.URL.Path, "/api/") {
 				w.Header().Set("X-Robots-Tag", "noindex, nofollow")
+			}
+			next.ServeHTTP(w, r)
+		})
+	})
+	// Mode maintenance (réglages admin) : tout le public en 503, /admin et /health passent.
+	r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/admin") || r.URL.Path == "/health" || r.URL.Path == "/robots.txt" {
+				next.ServeHTTP(w, r)
+				return
+			}
+			if on, msg := maintenanceOn(); on {
+				w.Header().Set("Content-Type", "text/html; charset=utf-8")
+				w.WriteHeader(http.StatusServiceUnavailable)
+				fmt.Fprintf(w, `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Maintenance — Marexstore</title></head><body style="font-family:sans-serif;text-align:center;padding:80px 20px"><h1>Marexstore</h1><p>%s</p></body></html>`, template.HTMLEscapeString(msg))
+				return
 			}
 			next.ServeHTTP(w, r)
 		})
@@ -123,10 +157,22 @@ func main() {
 	// Admin maison.
 	r.Get("/admin", app.Admin)
 	r.Get("/admin/produits", app.AdminProduits)
+	r.Get("/admin/produits/nouveau", app.AdminProduitEdit)
 	r.Get("/admin/produits/{slug}", app.AdminProduitEdit)
 	r.Post("/admin/produits/{slug}", app.AdminProduitEdit)
+	r.Post("/admin/produits/nouveau", app.AdminProduitEdit)
 	r.Get("/admin/commandes", app.AdminCommandes)
 	r.Post("/admin/commandes", app.AdminCommandes)
+	r.Get("/admin/commandes/{id}", app.AdminCommande)
+	r.Post("/admin/commandes/{id}", app.AdminCommande)
+	r.Get("/admin/clients", app.AdminClients)
+	r.Get("/admin/clients/{id}", app.AdminClient)
+	r.Get("/admin/medias", app.AdminMedias)
+	r.Post("/admin/medias", app.AdminMedias)
+	r.Get("/admin/types", app.AdminTypes)
+	r.Post("/admin/types", app.AdminTypes)
+	r.Get("/admin/reglages", app.AdminReglages)
+	r.Post("/admin/reglages", app.AdminReglages)
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,

@@ -98,5 +98,14 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 			}
 		}
 	}
+	// Tables admin (traçabilité commandes + réglages boutique).
+	for _, q := range []string{
+		`CREATE TABLE IF NOT EXISTS order_events(id INTEGER PRIMARY KEY AUTOINCREMENT, order_id INTEGER NOT NULL, de_statut TEXT NOT NULL DEFAULT '', vers_statut TEXT NOT NULL, par TEXT NOT NULL DEFAULT 'admin', cree_le TEXT NOT NULL DEFAULT (datetime('now','localtime')))`,
+		`CREATE TABLE IF NOT EXISTS settings(nom TEXT PRIMARY KEY, valeur TEXT NOT NULL DEFAULT '')`,
+	} {
+		if _, err := d.Exec(q); err != nil {
+			return fmt.Errorf("table admin: %w", err)
+		}
+	}
 	return nil
 }
