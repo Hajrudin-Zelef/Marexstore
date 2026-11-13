@@ -414,9 +414,16 @@
       var hubIsTypes = !!(hub && hub.hasAttribute('data-typehub'));
       function markActiveType() {
         if (!hubIsTypes) return;
-        var activeSub = (state.sub !== 'all') ? state.sub : '';
+        // Type actif : état local (?type=, chip) OU slug dans l'URL
+        // (/categories/<top>/<type>.html). Les tuiles pointent vers les pages
+        // types dédiées (href ".../<slug>.html"), plus vers "?type=".
+        var pathm = window.location.pathname.match(/\/categories\/[^\/]+\/([^\/.]+)\.html$/);
+        var activeSub = (state.sub !== 'all') ? state.sub : (pathm ? pathm[1] : '');
         hub.querySelectorAll('.hub-main').forEach(function (a) {
-          var on = !!activeSub && a.getAttribute('href') === '?type=' + activeSub;
+          var h = a.getAttribute('href') || '';
+          var slugm = h.match(/\/([^\/?#\.]+)\.html(?:[?#]|$)/);
+          var slug = slugm ? slugm[1] : (h.indexOf('?type=') === 0 ? h.slice(6).split('&')[0] : '');
+          var on = !!activeSub && slug === activeSub;
           a.classList.toggle('on', on);
           if (on) a.setAttribute('aria-current', 'true');
           else a.removeAttribute('aria-current');
@@ -428,7 +435,9 @@
         if (hubIsTypes) {
           markActiveType();
           hub.hidden = false;
-          catHome.hidden = !filtered;
+          // Page type dédiée : la liste est LA page (sélection serveur) —
+          // elle reste affichée même sans filtre local (data-locked).
+          catHome.hidden = catHome.hasAttribute('data-locked') ? false : !filtered;
           return;
         }
         hub.hidden = !!filtered;
