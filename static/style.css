@@ -917,3 +917,14 @@ img{height:auto}
   .filters{display:none;margin-top:10px}
   .filters.open{display:block}
 }
+
+/* ---------- Méga-menu mobile en accordéon : sous-catégories sous leur catégorie ---------- */
+@media(max-width:860px){
+  .mega-rail{padding:0}
+  .mega-rail button{border-bottom:1px solid var(--border);align-items:center}
+  .mega-rail button::after{content:"▾";color:var(--muted);font-size:12px;transition:transform .2s}
+  .mega-rail button.on::after{transform:rotate(180deg);color:var(--link)}
+  .mega-rail [data-mega-cols]{border-bottom:1px solid var(--border);background:var(--surface);padding:14px 18px}
+  .mega-rail [data-mega-cols] .mega-groups{column-count:1}
+  .mega-rail [data-mega-cols] .mega-links{column-count:1}
+}

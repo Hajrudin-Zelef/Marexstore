@@ -298,7 +298,7 @@ func Footer(s *catalog.Store, prefix string) string {
 </div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=326"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=327"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
@@ -309,7 +309,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=327">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=328">
 ` + ThemeInit + `
 <script>document.documentElement.classList.add('js')</script>
 ` + extraHead
