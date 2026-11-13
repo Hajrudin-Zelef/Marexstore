@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/config"
@@ -47,8 +48,22 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.SecurityHeaders(os.Getenv("CSP_REPORT_ONLY") != "0"))
 	r.Use(middleware.RateLimit(40, 80))
+	// Anti-indexation des zones privées/API (complète robots.txt côté nginx).
+	r.Use(func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if strings.HasPrefix(r.URL.Path, "/admin") || strings.HasPrefix(r.URL.Path, "/api/") {
+				w.Header().Set("X-Robots-Tag", "noindex, nofollow")
+			}
+			next.ServeHTTP(w, r)
+		})
+	})
 
 	r.Get("/health", app.Health)
+	// robots.txt : pas d'admin ni d'API pour les crawlers ; crawl doux.
+	r.Get("/robots.txt", func(w http.ResponseWriter, req *http.Request) {
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Write([]byte("User-agent: *\nDisallow: /admin\nDisallow: /api/\nCrawl-delay: 10\n"))
+	})
 	r.Get("/", app.Index)
 	r.Get("/index.html", app.Index)
 	r.Get("/boutique.html", app.Boutique)

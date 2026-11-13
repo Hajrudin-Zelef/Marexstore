@@ -12,7 +12,13 @@ import (
 
 // Les handlers passent le token via closure : on le substitue ici.
 func (a *App) renderDoc(w http.ResponseWriter, r *http.Request, title, bodyHTML, prefix string) {
-	s := render.Doc(title, bodyHTML, prefix, "")
+	// Canonical absolu = la page de référence (sans query) : le copieur est déclassé.
+	path := r.URL.EscapedPath()
+	if path == "/index.html" {
+		path = "/"
+	}
+	extra := `<link rel="canonical" href="` + strings.TrimSuffix(a.Cfg.BaseURL, "/") + path + `">`
+	s := render.Doc(title, bodyHTML, prefix, extra)
 	s = strings.ReplaceAll(s, "{{CSRF}}", auth.CSRFToken(a.Cfg.SessionSecret, a.sessionID(r)))
 	a.write(w, 200, s)
 }
