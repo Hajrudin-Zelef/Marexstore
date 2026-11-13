@@ -1,6 +1,6 @@
 # Plan — Hub des types + filtre global + protection anti-copie
 
-Date : 2026-11-13. Statut : en cours d'exécution.
+Date : 2026-11-13. Statut : TERMINÉ (4 jalons livrés et vérifiés en prod).
 
 ## Chantier 1 — Hub des types + filtre global (archive vérifiée, SHA256 OK)
 
