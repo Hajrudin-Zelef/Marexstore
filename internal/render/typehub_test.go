@@ -451,9 +451,8 @@ func TestTypePages(t *testing.T) {
 				t.Errorf("page type %s : %s", key, msg)
 			}
 		}
-		must(strings.Contains(body, `<div data-hub data-typehub>`), "hub des types absent")
-		must(!strings.Contains(body, `<div data-hub data-typehub hidden`), "hub des types masqué")
-		must(strings.Contains(body, `aria-current="true"`), "aucune tuile active marquée")
+		must(!strings.Contains(body, `data-typehub`), "le hub des types ne doit plus s'afficher sur la page type")
+		must(strings.Contains(body, `Tous les types de`), "lien de retour vers les types absent")
 		must(strings.Contains(body, `<div data-catalog-home data-locked>`), "liste des produits absente ou non verrouillée")
 		must(!strings.Contains(body, `<div data-catalog-home hidden`), "liste des produits cachée")
 		must(strings.Contains(body, `class="card"`), "aucune carte produit")

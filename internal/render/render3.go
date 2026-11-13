@@ -458,7 +458,7 @@ func CategoryTypePage(s *catalog.Store, topSlug, typeSlug string) (title, body s
 <div><div class="crumb"><a href="../../index.html">Accueil</a> › <a href="../../boutique.html">Store</a> › <a href="../` + esc(topSlug) + `.html">` + esc(topLabel) + `</a> › ` + esc(label) + `</div>
 <h1 style="font-size:24px">` + esc(label) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(topLabel) + `</p>
- ` + TypeHubHTML(topFs, typeSlug, "../../", topSlug) + `
+ ` + "<p class=\"back\"><a href=\"../" + esc(topSlug) + ".html\">← Tous les types de " + esc(topLabel) + "</a></p>" + `
 <div data-catalog-home data-locked>
 ` + CatalogWrap(s, fs, "../../", "sub_slug", "sub", "list", nil, "") + `</div>
 </div></div></div>
