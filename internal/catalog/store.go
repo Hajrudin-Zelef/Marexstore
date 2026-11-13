@@ -153,6 +153,7 @@ func (s *Store) HubPhoto(top string) *RawProduct {
 		"accessoires-informatiques":   {"toner", "clavier"},
 		"materiels-reseaux":           {"switch", "routeur", "cisco"},
 		"ordinateurs-de-bureau-neufs": {"all-in-one", "tout-en-un"},
+		"serveur":                     {"rack", "poweredge", "proliant", "thinksystem", "ucs"},
 	}
 	var cands []*RawProduct
 	for _, p := range s.Products {
