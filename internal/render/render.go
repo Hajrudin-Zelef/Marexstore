@@ -70,12 +70,21 @@ func MegaPanel(s *catalog.Store, prefix string) string {
 		var groups strings.Builder
 		for _, g := range catalog.MegaGroups[t.Slug] {
 			var links strings.Builder
+			var visible []string
 			for _, sslug := range g.Subs {
-				fmt.Fprintf(&links, `<a href="%sboutique.html?sub=%s">%s <span>(%d)</span></a>`, prefix, sslug, esc(catalog.SubLabels[[2]string{t.Slug, sslug}]), s.SubCounts[[2]string{t.Slug, sslug}])
+				// Pas de lien mort : on n'affiche que les sous-catégories
+				// qui ont au moins un produit (sinon page vide).
+				if c := s.SubCounts[[2]string{t.Slug, sslug}]; c > 0 {
+					fmt.Fprintf(&links, `<a href="%sboutique.html?sub=%s">%s <span>(%d)</span></a>`, prefix, sslug, esc(catalog.SubLabels[[2]string{t.Slug, sslug}]), c)
+					visible = append(visible, sslug)
+				}
+			}
+			if len(visible) == 0 {
+				continue
 			}
 			more := ""
-			if len(g.Subs) > 1 {
-				more = fmt.Sprintf(`<a class="mega-more" href="%sboutique.html?sub=%s">Voir +</a>`, prefix, strings.Join(g.Subs, ","))
+			if len(visible) > 1 {
+				more = fmt.Sprintf(`<a class="mega-more" href="%sboutique.html?sub=%s">Voir +</a>`, prefix, strings.Join(visible, ","))
 			}
 			fmt.Fprintf(&groups, `<div class="mega-group"><h5>%s</h5>%s%s</div>`, esc(g.Title), links.String(), more)
 		}

@@ -3,6 +3,7 @@ package render
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"sort"
 	"strings"
 
@@ -213,11 +214,39 @@ func SortedStockFirst(fs []*catalog.RawProduct) []*catalog.RawProduct {
 }
 
 func BoutiqueBody(s *catalog.Store) string {
+	return boutiqueBodyQuery(s, url.Values{})
+}
+
+// HasFilterParam : true si l'URL porte déjà un filtre (?store=, ?sub=, ?cat=,
+// ?q=, ?marque=, ?prixmin=, ?prixmax=, ?dispo=, ?type=, ?all=). Sert l'état
+// initial anti-flash : hub masqué + liste affichée dès le premier rendu.
+func HasFilterParam(q url.Values) bool {
+	for _, k := range []string{"store", "sub", "cat", "q", "marque", "prixmin", "prixmax", "dispo", "type", "all"} {
+		if v := strings.TrimSpace(q.Get(k)); v != "" && v != "all" {
+			return true
+		}
+	}
+	return false
+}
+
+// BoutiqueBodyQuery : boutique avec état initial anti-flash. Sans filtre, rendu
+// identique à BoutiqueBody (hub visible, liste cachée) ; avec filtre, hub masqué
+// et liste affichée dès le premier rendu — le JS n'a plus rien à basculer.
+func BoutiqueBodyQuery(s *catalog.Store, q url.Values) string {
+	return boutiqueBodyQuery(s, q)
+}
+
+func boutiqueBodyQuery(s *catalog.Store, q url.Values) string {
+	prefiltered := HasFilterParam(q)
+	hubHidden, listHidden := "", " hidden"
+	if prefiltered {
+		hubHidden, listHidden = " hidden", ""
+	}
 	return Header(s, "", "") + `
 <div class="wrap">
 <div class="crumb"><a href="index.html">Accueil</a> › Store</div>
-` + HubHTML(s) + `
-<div class="home" data-catalog-home hidden>
+` + HubHTML(s, hubHidden) + `
+<div class="home" data-catalog-home` + listHidden + `>
 <div>` + FiltersPanel(s, "selection") + `</div>
 <div><div class="crumb"><a href="boutique.html">← Toutes les catégories</a></div>
 <h1 style="font-size:24px">Store</h1>
@@ -246,7 +275,9 @@ func CategoryBody(s *catalog.Store, main string) []*catalog.RawProduct {
 // type affiche ses produits (même page, ?type=<slug>), comme le hub des
 // catégories de la boutique. Un seul type par tuile, aucun type vide.
 // Le bloc est sur une seule ligne (la parité le retire d'un coup).
-func TypeHubHTML(fs []*catalog.RawProduct) string {
+// active = slug du type courant (?type=) : la tuile est surlignée, les autres
+// restent visibles — le hub ne disparaît jamais.
+func TypeHubHTML(fs []*catalog.RawProduct, active string) string {
 	counts := map[string]int{}
 	rep := map[string]*catalog.RawProduct{}
 	for _, p := range fs {
@@ -275,16 +306,24 @@ func TypeHubHTML(fs []*catalog.RawProduct) string {
 		if counts[sub] == 1 {
 			prod = "produit"
 		}
-		fmt.Fprintf(&cards, `<div class="hub-card"><a class="hub-main" href="?type=%s"><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a></div>`, esc(catalog.Slugify(sub)), img, esc(sub), counts[sub], prod)
+		sl := catalog.Slugify(sub)
+		cls, cur := "hub-main", ""
+		if active != "" && sl == active {
+			cls, cur = "hub-main on", ` aria-current="true"`
+		}
+		fmt.Fprintf(&cards, `<div class="hub-card"><a class="%s" href="?type=%s"%s><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a></div>`, cls, esc(sl), cur, img, esc(sub), counts[sub], prod)
 	}
-	return `<div data-hub><h2 style="font-size:20px">Types d'équipements</h2><p style="color:#666">Choisissez un type pour voir ses produits.</p><div class="hub-grid">` + cards.String() + `</div><p style="margin-top:18px"><a class="btn" href="?all=1">Voir tous les produits (` + fmt.Sprint(len(fs)) + `) →</a></p></div>`
+	return `<div data-hub data-typehub><h2 style="font-size:20px">Types d'équipements</h2><p style="color:#666">Choisissez un type pour voir ses produits.</p><div class="hub-grid">` + cards.String() + `</div><p style="margin-top:18px"><a class="btn" href="?all=1">Voir tous les produits (` + fmt.Sprint(len(fs)) + `) →</a></p></div>`
 }
 
 // categoryPageFor : page d'une catégorie (hub des types d'abord, puis les
 // produits) pour une liste de produits et son titre. Sert pour les familles
 // (pages /categories/<famille>.html) et pour les tops live du menu
 // « Toutes les catégories » (pages /categories/<top-live>.html).
-func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title string) string {
+// Le hub des types reste TOUJOURS visible (pas de flash) ; showList affiche
+// la liste dès le premier rendu quand un filtre est déjà posé (?type=, ?all=1)
+// et activeType surligne la tuile courante.
+func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, activeType string, showList bool) string {
 	subs := map[string]bool{}
 	for _, p := range fs {
 		subs[p.Sub] = true
@@ -302,21 +341,31 @@ func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title string) s
 	if len(fs) > 1 {
 		n = fmt.Sprintf("%d produits", len(fs))
 	}
+	listHidden := " hidden"
+	if showList {
+		listHidden = ""
+	}
 	return Header(s, "../", "") + `
 <div class="wrap"><div class="home">
 <div>` + FiltersPanel(s, "page") + `</div>
 <div><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › ` + esc(title) + `</div>
 <h1 style="font-size:24px">` + esc(title) + `</h1>
 <p style="color:#666">` + n + ` · ` + esc(strings.Join(subList, ", ")) + `</p>
-` + TypeHubHTML(fs) + `
-<div data-catalog-home hidden>
+` + TypeHubHTML(fs, activeType) + `
+<div data-catalog-home` + listHidden + `>
 ` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `</div>
 </div></div></div>
 ` + Footer(s, "../")
 }
 
 func CategoryPage(s *catalog.Store, main string) string {
-	return categoryPageFor(s, CategoryBody(s, main), main)
+	return categoryPageFor(s, CategoryBody(s, main), main, "", false)
+}
+
+// CategoryPageFiltered : variante avec état initial (anti-flash) — activeType
+// (?type=) surligne la tuile, showList affiche la liste dès le premier rendu.
+func CategoryPageFiltered(s *catalog.Store, main, activeType string, showList bool) string {
+	return categoryPageFor(s, CategoryBody(s, main), main, activeType, showList)
 }
 
 // CategoryBodyLive : produits d'un top live (catégorie du menu
@@ -334,5 +383,10 @@ func CategoryBodyLive(s *catalog.Store, liveTop string) []*catalog.RawProduct {
 // CategoryPageLive : page d'un top live (catégorie du menu) : mêmes types
 // d'équipements d'abord, puis les produits.
 func CategoryPageLive(s *catalog.Store, t catalog.LiveTop) string {
-	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label)
+	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, "", false)
+}
+
+// CategoryPageLiveFiltered : variante avec état initial (anti-flash).
+func CategoryPageLiveFiltered(s *catalog.Store, t catalog.LiveTop, activeType string, showList bool) string {
+	return categoryPageFor(s, CategoryBodyLive(s, t.Slug), t.Label, activeType, showList)
 }

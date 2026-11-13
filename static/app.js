@@ -332,7 +332,10 @@
 
       function visibleItems() {
         return items.filter(function (c) {
-          if (state.sub !== 'all' && c.getAttribute('data-sub') !== state.sub) return false;
+          // ?type= : type d'équipement — matche la sous-catégorie (data-sub)
+          // OU la sous-catégorie live du menu (data-live-sub) : un même type
+          // peut exister dans les deux taxonomies (ex. câbles).
+          if (state.sub !== 'all' && c.getAttribute('data-sub') !== state.sub && c.getAttribute('data-live-sub') !== state.sub) return false;
           if (state.store !== 'all' && (' ' + (c.getAttribute('data-store') || '') + ' ').indexOf(' ' + state.store + ' ') === -1) return false;
           if (state.liveSubs.length && state.liveSubs.indexOf(c.getAttribute('data-live-sub')) === -1) return false;
           if (state.main !== 'all' && c.getAttribute('data-main') !== state.main) return false;
@@ -401,12 +404,33 @@
 
       /* Hub des catégories (boutique.html) : la liste des produits ne s'affiche
          que quand une catégorie, une sous-catégorie, une recherche ou un filtre
-         est actif — sinon on montre les cartes des catégories. */
+         est actif — sinon on montre les cartes des catégories.
+         Hub des types (pages catégories) : TOUJOURS visible, jamais de flash.
+         Quand un type est actif (?type= ou clic), sa tuile est surlignée et la
+         liste filtrée s'affiche en dessous. Le serveur pré-rend déjà cet état
+         (anti-flash) ; ici on ne fait que le maintenir après interaction. */
       var hub = document.querySelector('[data-hub]');
       var catHome = document.querySelector('[data-catalog-home]');
+      var hubIsTypes = !!(hub && hub.hasAttribute('data-typehub'));
+      function markActiveType() {
+        if (!hubIsTypes) return;
+        var activeSub = (state.sub !== 'all') ? state.sub : '';
+        hub.querySelectorAll('.hub-main').forEach(function (a) {
+          var on = !!activeSub && a.getAttribute('href') === '?type=' + activeSub;
+          a.classList.toggle('on', on);
+          if (on) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      }
       function syncHub() {
         if (!hub || !catHome) return;
         var filtered = state.store !== 'all' || state.liveSubs.length || state.sub !== 'all' || state.main !== 'all' || !!state.q || !!state.marque || state.prixMin !== null || state.prixMax !== null || !!state.dispo || !!state.etat || Object.keys(state.specs).some(function (k) { return !!state.specs[k]; }) || new URLSearchParams(window.location.search).get('all');
+        if (hubIsTypes) {
+          markActiveType();
+          hub.hidden = false;
+          catHome.hidden = !filtered;
+          return;
+        }
         hub.hidden = !!filtered;
         catHome.hidden = !filtered;
       }

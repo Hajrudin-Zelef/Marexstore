@@ -39,6 +39,8 @@ var reFiltersToggle = regexp.MustCompile(`<button type="button" class="filters-t
 var reMegaAll = regexp.MustCompile(`<a class="mega-all" href="[^"]*"`)
 var reHubMain = regexp.MustCompile(`<a class="hub-main" href="[^"]*"`)
 var reHubSub = regexp.MustCompile(`<li><a href="[^"]*">`)
+var reMegaGroups = regexp.MustCompile(`(<div class="mega-groups">).*?(</div><a class="mega-all")`)
+var reMegaCount = regexp.MustCompile(`<span class="mega-count">\(\d+\)</span>`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
@@ -53,6 +55,13 @@ func normPage(s string) string {
 	// d'abord), plus à la boutique filtrée — vérifié par TestBoutiqueHubLinks.
 	s = reHubMain.ReplaceAllString(s, `<a class="hub-main" href="HUBMAIN"`)
 	s = reHubSub.ReplaceAllString(s, `<li><a href="HUBSUB">`)
+	// Méga-menu : les sous-catégories à 0 produit ne sont plus liées (plus de
+	// page vide) et « Voir + » ne liste que les sous-catégories vivantes —
+	// vérifié par TestFilterLinksAlive, pas par la parité v3.25.
+	// Méga-menu : groupes de sous-catégories (données 171 vs 579 produits) et
+	// compteurs du rail — vérifiés par TestFilterLinksAlive/TestMegaMenuVoirTous.
+	s = reMegaGroups.ReplaceAllString(s, `${1}GROUPES${2}`)
+	s = reMegaCount.ReplaceAllString(s, `<span class="mega-count">(N)</span>`)
 	// Hub des types (pages catégories, nouveau) : la fermeture du bloc
 	// [data-catalog-home] se colle à celle du catalogue.
 	s = strings.ReplaceAll(s, "</div></div>\n</div></div></div>", "</div>\n</div></div></div>")

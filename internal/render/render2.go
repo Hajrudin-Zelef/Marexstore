@@ -298,7 +298,7 @@ func Footer(s *catalog.Store, prefix string) string {
 </div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=332"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=333"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
@@ -309,7 +309,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=329">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=330">
 ` + ThemeInit + `
 <script>document.documentElement.classList.add('js')</script>
 ` + extraHead
@@ -321,7 +321,7 @@ func Doc(title, body, prefix, extraHead string) string {
 
 // ---------- Hub boutique ----------
 
-func HubHTML(s *catalog.Store) string {
+func HubHTML(s *catalog.Store, hubHidden string) string {
 	var cards strings.Builder
 	for _, t := range catalog.LiveCats {
 		n := s.TopCounts[t.Slug]
@@ -352,7 +352,7 @@ func HubHTML(s *catalog.Store) string {
 <a class="hub-main" href="categories/%s.html"><span class="hub-img">%s</span><span class="hub-txt"><span class="hub-name">%s</span><span class="hub-count">%d %s</span></span></a>
 %s%s</div>`, esc(t.Slug), img, esc(t.Label), n, prod, chev, subsHTML)
 	}
-	return `<div data-hub>
+	return `<div data-hub` + hubHidden + `>
 <h1 style="font-size:24px">Nos catégories</h1>
 <p style="color:#666">Choisissez une catégorie pour voir ses produits.</p>
 <div class="hub-grid">` + cards.String() + `</div>

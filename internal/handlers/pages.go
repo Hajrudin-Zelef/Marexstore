@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/auth"
@@ -9,6 +10,18 @@ import (
 	"github.com/Hajrudin-Zelef/Marexstore/internal/render"
 	"github.com/go-chi/chi/v5"
 )
+
+// queryState : état initial anti-flash d'une page catégorie depuis l'URL.
+// ?type=<slug> surligne la tuile et affiche la liste, ?all=1 affiche la liste.
+func queryState(q url.Values) (active string, showList bool) {
+	if t := strings.TrimSpace(q.Get("type")); t != "" {
+		return t, true
+	}
+	if a := strings.TrimSpace(q.Get("all")); a != "" && a != "all" {
+		return "", true
+	}
+	return "", false
+}
 
 // Les handlers passent le token via closure : on le substitue ici.
 func (a *App) renderDoc(w http.ResponseWriter, r *http.Request, title, bodyHTML, prefix string) {
@@ -28,21 +41,23 @@ func (a *App) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) Boutique(w http.ResponseWriter, r *http.Request) {
-	a.renderDoc(w, r, "Store", render.BoutiqueBody(a.Store), "")
+	a.renderDoc(w, r, "Store", render.BoutiqueBodyQuery(a.Store, r.URL.Query()), "")
 }
 
 func (a *App) Categorie(w http.ResponseWriter, r *http.Request) {
 	f := strings.TrimSuffix(chi.URLParam(r, "fichier"), ".html")
+	q := r.URL.Query()
+	active, showList := queryState(q)
 	for _, m := range catalog.MainOrder {
 		if catalog.MainSlug[m] == f {
-			a.renderDoc(w, r, m, render.CategoryPage(a.Store, m), "../")
+			a.renderDoc(w, r, m, render.CategoryPageFiltered(a.Store, m, active, showList), "../")
 			return
 		}
 	}
 	// Tops live du menu « Toutes les catégories » : même page, types d'abord.
 	for _, t := range catalog.LiveCats {
 		if t.Slug == f {
-			a.renderDoc(w, r, t.Label, render.CategoryPageLive(a.Store, t), "../")
+			a.renderDoc(w, r, t.Label, render.CategoryPageLiveFiltered(a.Store, t, active, showList), "../")
 			return
 		}
 	}

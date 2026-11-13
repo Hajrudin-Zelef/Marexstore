@@ -102,6 +102,9 @@ d0 = d0.replace('<form class="acct-form" data-create-form>',
     '<form class="acct-form" data-create-form action="{{.Prefix}}auth/inscription" method="post">\n<input type="hidden" name="csrf" value="{{.CSRF}}">')
 d0 = d0.replace("Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.",
     "Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.")
+# Menu « Voir tous » : pages catégories (hub des types d'abord), comme le
+# rendu Go — sinon les pages statiques gardent l'ancien menu boutique filtrée.
+t0 = re.sub(r'boutique\.html\?store=([a-z0-9-]+)', r'categories/\1.html', t0)
 (OUT / "_top.html").write_text(t0, encoding="utf-8")
 (OUT / "_drawer.html").write_text(d0, encoding="utf-8")
 rest = rest.replace("</body></html>",

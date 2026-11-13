@@ -684,6 +684,9 @@ body{background:var(--bg);color:var(--text)}
 .hub-count{color:var(--muted);font-size:13px}
 .hub-chev{display:block;margin:-4px auto 10px;width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--link);font-size:16px;line-height:1;cursor:pointer}
 .hub-card.open .hub-chev{transform:rotate(180deg)}
+/* Tuile de type active (page catégorie avec ?type=) : reste visible et marquée. */
+.hub-main.on{outline:2px solid var(--brand);outline-offset:-2px;border-radius:4px;background:var(--surface2)}
+.hub-main.on .hub-name{color:var(--brand-dark)}
 .hub-subs{list-style:none;margin:0;padding:0 18px 14px}
 .hub-subs li{border-top:1px solid var(--border);padding:6px 0;font-size:14px}
 .hub-subs a{color:var(--link);text-decoration:none}

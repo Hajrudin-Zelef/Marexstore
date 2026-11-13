@@ -2,6 +2,7 @@ package render_test
 
 import (
 	"fmt"
+	"net/url"
 	"regexp"
 	"strings"
 	"testing"
@@ -32,7 +33,7 @@ func TestTypeHubComplete(t *testing.T) {
 	s := testStoreFull(t)
 	for _, m := range catalog.MainOrder {
 		fs := render.CategoryBody(s, m)
-		hub := render.TypeHubHTML(fs)
+		hub := render.TypeHubHTML(fs, "")
 		counts := map[string]int{}
 		for _, p := range fs {
 			counts[p.Sub]++
@@ -147,7 +148,7 @@ func TestLiveTopPages(t *testing.T) {
 		for _, p := range fs {
 			counts[p.Sub]++
 		}
-		hub := render.TypeHubHTML(fs)
+		hub := render.TypeHubHTML(fs, "")
 		if got := strings.Count(hub, `class="hub-card"`); got != len(counts) {
 			t.Errorf("%s : %d tuiles, %d types attendus", lt.Label, got, len(counts))
 		}
@@ -166,7 +167,7 @@ func TestLiveTopPages(t *testing.T) {
 	}
 	// Le cas de Zelef : Matériels réseaux doit montrer ses 5 types.
 	fs := render.CategoryBodyLive(s, "materiels-reseaux")
-	hub := render.TypeHubHTML(fs)
+	hub := render.TypeHubHTML(fs, "")
 	for _, sub := range []string{"Réseau & câbles", "Cisco & réseau", "Téléphonie IP", "Réseau Legrand", "Adaptateurs"} {
 		if !strings.Contains(hub, catalog.Esc(sub)) {
 			t.Errorf("Matériels réseaux : type %q absent du hub", sub)
@@ -181,7 +182,7 @@ func TestLiveTopPages(t *testing.T) {
 // filtrée sur le type (?type=).
 func TestBoutiqueHubLinks(t *testing.T) {
 	s := testStoreFull(t)
-	hub := render.HubHTML(s)
+	hub := render.HubHTML(s, "")
 	reMain := regexp.MustCompile(`<a class="hub-main" href="([^"]*)">`)
 	mains := reMain.FindAllStringSubmatch(hub, -1)
 	if len(mains) == 0 {
@@ -265,4 +266,102 @@ func TestBoutiqueDataSub(t *testing.T) {
 			t.Errorf("data-sub = %q, pas un type connu", v[1])
 		}
 	}
+}
+
+// TestFilterLinksAlive : chaque lien ?type= (hub boutique, hub des types) matche
+// au moins une carte — via data-sub OU data-live-sub, comme le filtre JS — et
+// chaque lien ?sub= du méga-menu matche au moins une carte (data-live-sub).
+// Un lien qui ne matche rien = page vide = « la page disparaît ».
+func TestFilterLinksAlive(t *testing.T) {
+	s := testStoreFull(t)
+	matchType := func(v string) bool {
+		for _, p := range s.Products {
+			if catalog.Slugify(p.Sub) == v || p.LiveSub == v {
+				return true
+			}
+		}
+		return false
+	}
+	matchLiveSub := func(v string) bool {
+		for _, p := range s.Products {
+			if p.LiveSub == v {
+				return true
+			}
+		}
+		return false
+	}
+	// 1. Hub boutique : tuiles ?type= des sous-listes (+ tuiles catégories).
+	hub := render.HubHTML(s, "")
+	for _, m := range regexp.MustCompile(`href="categories/[^"]+\.html\?type=([^"]+)"`).FindAllStringSubmatch(hub, -1) {
+		if !matchType(m[1]) {
+			t.Errorf("hub boutique : ?type=%q ne matche aucune carte", m[1])
+		}
+	}
+	// 2. Hub des types de chaque page catégorie (familles + tops live).
+	for _, m := range catalog.MainOrder {
+		for _, mt := range regexp.MustCompile(`href="\?type=([^"]+)"`).FindAllStringSubmatch(render.TypeHubHTML(render.CategoryBody(s, m), ""), -1) {
+			if !matchType(mt[1]) {
+				t.Errorf("types %s : ?type=%q mort", m, mt[1])
+			}
+		}
+	}
+	for _, lt := range catalog.LiveCats {
+		fs := render.CategoryBodyLive(s, lt.Slug)
+		if len(fs) == 0 {
+			continue
+		}
+		for _, mt := range regexp.MustCompile(`href="\?type=([^"]+)"`).FindAllStringSubmatch(render.TypeHubHTML(fs, ""), -1) {
+			if !matchType(mt[1]) {
+				t.Errorf("types %s : ?type=%q mort", lt.Label, mt[1])
+			}
+		}
+	}
+	// 3. Méga-menu : ?sub= (simples et « Voir + » multi).
+	for _, m := range regexp.MustCompile(`boutique\.html\?sub=([a-z0-9-,]+)"`).FindAllStringSubmatch(render.MegaPanel(s, ""), -1) {
+		for _, v := range strings.Split(m[1], ",") {
+			if !matchLiveSub(v) {
+				t.Errorf("méga-menu : ?sub=%q ne matche aucune carte", v)
+			}
+		}
+	}
+}
+
+// TestInitialStateFromQuery : état initial anti-flash rendu par le serveur.
+// Boutique filtrée (?sub=) : hub masqué + liste affichée dès le premier rendu.
+// Page catégorie ?type= : hub des types TOUJOURS visible, tuile active marquée,
+// liste affichée. Sans query : hub visible, liste cachée (inchangé).
+func TestInitialStateFromQuery(t *testing.T) {
+	s := testStoreFull(t)
+	must := func(cond bool, msg string) {
+		t.Helper()
+		if !cond {
+			t.Error(msg)
+		}
+	}
+	// Boutique par défaut : comme avant.
+	def := render.BoutiqueBody(s)
+	must(strings.Contains(def, `<div data-hub>`), "boutique : hub visible par défaut")
+	must(strings.Contains(def, `<div class="home" data-catalog-home hidden>`), "boutique : liste cachée par défaut")
+	// Boutique filtrée : pas de bascule JS à attendre.
+	f := render.BoutiqueBodyQuery(s, testQuery("sub=souris"))
+	must(strings.Contains(f, `<div data-hub hidden>`), "boutique ?sub= : hub masqué au premier rendu")
+	must(!strings.Contains(f, `<div class="home" data-catalog-home hidden>`), "boutique ?sub= : liste affichée au premier rendu")
+	must(strings.Contains(f, `<div class="home" data-catalog-home>`), "boutique ?sub= : bloc liste présent")
+	// Catégorie par défaut : hub visible, liste cachée.
+	cat := render.CategoryPage(s, "Imprimantes")
+	must(strings.Contains(cat, `<div data-hub data-typehub>`), "catégorie : hub des types marqué data-typehub")
+	must(strings.Contains(cat, `<div data-catalog-home hidden>`), "catégorie : liste cachée par défaut")
+	must(!strings.Contains(cat, `hub-main on`), "catégorie : aucune tuile active par défaut")
+	// Catégorie ?type= : hub TOUJOURS visible, tuile active, liste affichée.
+	ct := render.CategoryPageFiltered(s, "Réseaux", "reseau-cables", true)
+	must(strings.Contains(ct, `<div data-hub data-typehub>`), "catégorie ?type= : hub visible (jamais hidden)")
+	must(!strings.Contains(ct, `<div data-hub data-typehub hidden>`), "catégorie ?type= : hub non masqué")
+	must(strings.Contains(ct, `class="hub-main on" href="?type=reseau-cables" aria-current="true"`), "catégorie ?type= : tuile active marquée")
+	must(strings.Contains(ct, `<div data-catalog-home>`), "catégorie ?type= : liste affichée")
+	must(!strings.Contains(ct, `<div data-catalog-home hidden>`), "catégorie ?type= : liste non cachée")
+}
+
+func testQuery(raw string) url.Values {
+	v, _ := url.ParseQuery(raw)
+	return v
 }
