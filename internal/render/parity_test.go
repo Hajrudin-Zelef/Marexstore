@@ -45,6 +45,7 @@ var reThemeJs = regexp.MustCompile(`<script src="[^"]*theme\.js[^"]*"></script>\
 var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button>`)
 var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
+var reViewBtn = regexp.MustCompile(`<button type="button" class="[^"]*" data-view="([a-z]+)">`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
@@ -57,6 +58,12 @@ func normPage(s string) string {
 	s = reHrowNext.ReplaceAllString(s, "")
 	s = strings.ReplaceAll(s, `catalog view-grid hrow"`, `catalog view-grid"`)
 	s = strings.ReplaceAll(s, `top8 hrow"`, `top8"`)
+	// Vue grille/liste : défaut volontairement passé à grille (choix produit),
+	// la parité v3.25 (liste) ne porte que sur le contenu.
+	s = strings.ReplaceAll(s, `catalog view-list"`, `catalog view-VIEW"`)
+	s = strings.ReplaceAll(s, `catalog view-grid"`, `catalog view-VIEW"`)
+	s = strings.ReplaceAll(s, `catalog view-thumbs"`, `catalog view-VIEW"`)
+	s = reViewBtn.ReplaceAllString(s, `<button data-view="$1">`)
 	// Newsletter : <form action="mailto:"> remplacé par JS (même UX, sans Mixed Content).
 	s = reNewsletter.ReplaceAllString(s, `<form>NEWSLETTER</form>`)
 	s = reVer.ReplaceAllString(s, "assets/X")

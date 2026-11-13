@@ -252,7 +252,7 @@ func boutiqueBodyQuery(s *catalog.Store, q url.Values) string {
 <div><div class="crumb"><a href="boutique.html">← Toutes les catégories</a></div>
 <h1 style="font-size:24px">Store</h1>
 <p style="color:#666">` + fmt.Sprint(len(s.Products)) + ` produits · inventaire du 21 septembre 2026 + produits du store — prix et disponibilités à confirmer avant commande.</p>
-` + CatalogWrap(s, SortedStockFirst(s.Products), "", "sub_slug", "", "list", nil, "") + `
+` + CatalogWrap(s, SortedStockFirst(s.Products), "", "sub_slug", "", "grid", nil, "") + `
 </div></div></div>
 ` + Footer(s, "")
 }
@@ -362,7 +362,7 @@ func categoryPageFor(s *catalog.Store, fs []*catalog.RawProduct, title, topSlug,
 <p style="color:#666">` + n + ` · ` + esc(strings.Join(subList, ", ")) + `</p>
  ` + TypeHubHTML(fs, activeType, "../", topSlug) + `
 <div data-catalog-home` + listHidden + `>
-` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "list", chips, "") + `</div>
+` + CatalogWrap(s, fs, "../", "sub_slug", "sub", "grid", chips, "") + `</div>
 </div></div></div>
 ` + Footer(s, "../")
 }
@@ -460,7 +460,7 @@ func CategoryTypePage(s *catalog.Store, topSlug, typeSlug string) (title, body s
 <p style="color:#666">` + n + ` · ` + esc(topLabel) + `</p>
  ` + "<p class=\"back\"><a href=\"../" + esc(topSlug) + ".html\">← Tous les types de " + esc(topLabel) + "</a></p>" + `
 <div data-catalog-home data-locked>
-` + CatalogWrap(s, fs, "../../", "sub_slug", "sub", "list", nil, "") + `</div>
+` + CatalogWrap(s, fs, "../../", "sub_slug", "sub", "grid", nil, "") + `</div>
 </div></div></div>
 ` + Footer(s, "../../")
 	return label + " — " + topLabel, body, true

@@ -1,0 +1,972 @@
+/* Mediatec Store — feuille de style (thème Electro, version épurée) */
+*{box-sizing:border-box}
+body{font-family:'Inter','Open Sans',Helvetica,Arial,sans-serif;margin:0;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%}
+
+/* ----- Barre supérieure + en-tête ----- */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+.topbar .in{max-width:1200px;margin:0 auto;padding:7px 16px;display:flex;gap:22px;flex-wrap:wrap}
+.topbar .sp{flex:1}
+header.main{background:var(--surface);position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+header.main .in{max-width:1200px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none}
+.logo img{height:56px;width:auto;display:block}
+.logo .store{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:7px;text-indent:7px;text-transform:uppercase;color:var(--brand-dark)}
+.logo .store::before,.logo .store::after{content:"";width:26px;height:1px;background:var(--brand)}
+.search{flex:1;display:flex;min-width:260px;border:2px solid var(--brand);border-radius:999px;overflow:hidden;background:var(--surface)}
+.search select{border:0;padding:10px 8px;color:var(--text2);max-width:190px;background:var(--bg)}
+.search input{flex:1;border:0;padding:10px 12px;font-size:15px;outline:none;min-width:80px}
+.search button{border:0;background:var(--brand);color:#fff;font-weight:700;padding:0 22px;cursor:pointer}
+.cart{font-weight:700;white-space:nowrap}
+nav.main{background:var(--brand)}
+nav.main .in{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;gap:4px;flex-wrap:wrap}
+nav.main a{color:#fff;font-weight:700;padding:12px 14px;font-size:14px}
+nav.main a:hover{background:rgba(0,0,0,.12);text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* ----- Mise en page accueil ----- */
+.home{display:grid;grid-template-columns:250px 1fr;gap:20px;padding-top:20px}
+@media(max-width:860px){.home{grid-template-columns:1fr}}
+
+/* ----- Catégories (barre latérale) ----- */
+.cats{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.cats h3{background:var(--brand);color:#fff;margin:0;padding:12px 14px;font-size:15px}
+.cats ul{list-style:none;margin:0;padding:6px 0}
+.cats>ul>li{border-bottom:1px solid var(--border)}
+.cats>ul>li:last-child{border-bottom:0}
+.cats a.cat-main{display:flex;justify-content:space-between;padding:9px 14px;color:var(--text);font-weight:700;font-size:14px}
+.cats a.cat-main:hover{color:var(--link);text-decoration:none}
+.cats a.cat-main span{color:var(--muted);font-weight:400}
+.cats ul.sub{padding:0 0 6px}
+.cats ul.sub a{display:block;padding:4px 14px 4px 26px;color:var(--text2);font-size:13px}
+.cats ul.sub a:hover{color:var(--link);text-decoration:none}
+.cats ul.sub a span{color:var(--muted)}
+
+/* ----- Diaporama ----- */
+.slide{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;min-height:340px}
+.slide .s{position:absolute;inset:0;display:none;grid-template-columns:1fr 1fr;align-items:center;padding:28px;gap:20px}
+.slide .s.on{display:grid}
+.slide img{max-width:100%;max-height:300px;object-fit:contain;margin:0 auto;display:block}
+.slide h2{font-size:28px;margin:0 0 8px;line-height:1.15}
+.slide .pr{color:#dc3545;font-size:26px;font-weight:800;margin:10px 0}
+.slide .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(0,0,0,.35);color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;z-index:2}
+.slide .nav.prev{left:10px}.slide .nav.next{right:10px}
+.slide .dots{position:absolute;bottom:12px;left:0;right:0;text-align:center;z-index:2}
+.slide .dots button{border:0;width:10px;height:10px;border-radius:50%;background:#ccc;margin:0 3px;cursor:pointer;padding:0}
+.slide .dots button.on{background:var(--brand)}
+
+/* ----- Boutons ----- */
+.btn{display:inline-block;background:var(--brand);color:#fff;font-weight:700;padding:11px 24px;border-radius:6px}
+.btn:hover{text-decoration:none;background:var(--brand-dark)}
+.btn.wa{background:#25d366}
+.btn.dark{background:#333}
+
+/* ----- Sections ----- */
+.sec{margin:34px 0}
+.sec h2{font-size:20px;margin:0 0 4px;text-transform:uppercase}
+.sec .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+
+/* ----- Offre spéciale + onglets ----- */
+.deal{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+@media(max-width:860px){.deal{grid-template-columns:1fr}}
+.dealcard{background:var(--surface);border:2px solid var(--brand);border-radius:10px;padding:20px;display:flex;gap:18px;align-items:center}
+.dealcard img{max-width:180px;max-height:180px;object-fit:contain}
+.dealcard .pr{color:#dc3545;font-size:24px;font-weight:800}
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--brand);margin-bottom:14px}
+.tabs button{border:0;background:none;padding:10px 18px;font-weight:700;cursor:pointer;color:var(--muted);font-size:14px}
+.tabs button.on{color:#fff;background:var(--brand);border-radius:6px 6px 0 0}
+
+/* ----- Cartes produits : 3 vues ----- */
+.catalog{display:grid;gap:16px}
+.catalog.view-grid{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.catalog.view-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.catalog.view-grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;display:flex;flex-direction:column}
+.card .im{height:180px;display:flex;align-items:center;justify-content:center}
+.card .im img{max-width:100%;max-height:180px;object-fit:contain}
+.card .cat{font-size:12px;color:var(--muted);margin-top:10px}
+.card h3{font-size:15px;margin:4px 0 8px;line-height:1.3;min-height:40px}
+.card h3 a{color:var(--link)}
+.card .pr{color:#dc3545;font-weight:800;font-size:17px;margin-top:auto}
+.card .round{position:absolute;right:12px;bottom:52px;width:38px;height:38px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text2)}
+.card .round:hover{background:var(--brand);color:#fff;text-decoration:none}
+.card .desc{display:none}
+.noimg{width:100%;height:150px;background:var(--surface2);border:1px dashed #b6bec9;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+
+/* Vue liste : lignes horizontales */
+.catalog.view-list{grid-template-columns:1fr}
+.catalog.view-list .card{flex-direction:row;gap:16px;align-items:center;padding:12px 16px}
+.catalog.view-list .im{height:96px;width:120px;flex:none}
+.catalog.view-list .im img{max-height:96px}
+.catalog.view-list .cat{margin-top:0}
+.catalog.view-list h3{min-height:0;margin:2px 0 4px}
+.catalog.view-list .pr{margin:0 0 0 auto;white-space:nowrap;font-size:18px}
+.catalog.view-list .desc{display:block;color:var(--muted);font-size:13px;margin:0}
+.catalog.view-list .round{position:static;width:38px;height:38px;flex:none;margin-left:8px}
+
+/* Vue miniatures : petites cartes compactes */
+.catalog.view-thumbs{grid-template-columns:repeat(6,1fr)}
+@media(max-width:960px){.catalog.view-thumbs{grid-template-columns:repeat(3,1fr)}}
+.catalog.view-thumbs .card{padding:10px}
+.catalog.view-thumbs .im{height:110px}
+.catalog.view-thumbs .im img{max-height:110px}
+.catalog.view-thumbs h3{font-size:13px;min-height:34px}
+.catalog.view-thumbs .cat{display:none}
+.catalog.view-thumbs .pr{font-size:14px}
+.catalog.view-thumbs .round{display:none}
+
+/* ----- Barre d'outils catalogue + pagination ----- */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}
+.toolbar .searchbar{flex:1;min-width:220px;padding:11px 14px;font-size:15px;border:1px solid var(--border);border-radius:8px}
+.toolbar select{padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:14px}
+.viewbtns{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.viewbtns button{border:0;background:var(--surface);padding:10px 14px;cursor:pointer;font-size:14px;border-right:1px solid var(--border)}
+.viewbtns button:last-child{border-right:0}
+.viewbtns button.on{background:var(--brand);color:#fff;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.chips button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:13px}
+.chips button.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.pager{display:flex;gap:6px;justify-content:center;align-items:center;margin:24px 0;flex-wrap:wrap}
+.pager button{border:1px solid var(--border);background:var(--surface);border-radius:6px;padding:8px 13px;cursor:pointer;font-size:14px;min-width:38px}
+.pager button:hover{border-color:var(--brand)}
+.pager button.pg-cur{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700}
+.pager button:disabled{opacity:.4;cursor:default}
+.page-info{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 0}
+
+/* ----- Divers ----- */
+.top8{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:960px){.top8{grid-template-columns:repeat(2,1fr)}}
+.hcard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;gap:12px;align-items:center}
+.hcard img{width:64px;height:64px;object-fit:contain}
+.hcard h4{font-size:13px;margin:0 0 4px;line-height:1.3}
+.hcard h4 a{color:var(--link)}
+.hcard .pr{color:#dc3545;font-weight:700;font-size:14px}
+.banner{background:#1d1d1d;color:#fff;border-radius:10px;padding:28px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.banner h3{margin:0 0 6px;font-size:22px}
+.banner p{margin:0;color:var(--muted)}
+.brands{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;align-items:center;padding:18px 0}
+.brands span{font-size:20px;font-weight:800;color:var(--muted);letter-spacing:.06em}
+.widgets{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:860px){.widgets{grid-template-columns:1fr}}
+.widgets h3{font-size:16px;border-bottom:2px solid var(--brand);padding-bottom:8px}
+.news{background:var(--brand);color:#fff;padding:26px 0;margin-top:34px}
+.news .in{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.news h3{margin:0 0 4px;font-size:20px}
+.news form{display:flex}
+.news input{padding:12px 14px;border:0;border-radius:6px 0 0 6px;min-width:260px;font-size:15px}
+.news button{border:0;background:#333;color:#fff;font-weight:700;padding:12px 22px;border-radius:0 6px 6px 0;cursor:pointer}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:30px 0 0}
+footer .cols{max-width:1200px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:860px){footer .cols{grid-template-columns:1fr}}
+footer h4{font-size:15px;margin:0 0 10px}
+footer ul{list-style:none;margin:0;padding:0}
+footer li{margin:6px 0}
+footer li a{color:var(--text2);font-size:14px}
+.copy{background:var(--surface2);text-align:center;padding:14px;font-size:13px;color:var(--muted);margin-top:26px}
+.wa-float{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;z-index:99;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.wa-float:hover{text-decoration:none}
+.crumb{font-size:13px;color:var(--muted);margin:16px 0}
+.crumb a{color:var(--muted)}
+.ppage{display:grid;grid-template-columns:250px 1fr;gap:20px;padding-top:20px}
+@media(max-width:860px){.ppage{grid-template-columns:1fr}}
+.pdetail{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media(max-width:760px){.pdetail{grid-template-columns:1fr}}
+.pdetail .gal img{max-width:100%;max-height:380px;object-fit:contain;display:block;margin:0 auto}
+.pdetail h1{font-size:24px;margin:4px 0 10px}
+.pdetail .pr{color:#dc3545;font-size:26px;font-weight:800;margin:12px 0}
+.pdetail .qty{display:flex;gap:10px;align-items:center;margin:14px 0}
+.pdetail .qty input{width:64px;padding:9px;border:1px solid var(--border);border-radius:999px;text-align:center}
+.ptabs{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px}
+.ptabs h2{font-size:17px;border-bottom:1px solid var(--border);padding-bottom:8px}
+table.specs{width:100%;border-collapse:collapse;font-size:14px}
+table.specs td{padding:9px 10px;border-bottom:1px solid var(--border)}
+table.specs td:first-child{color:var(--muted);width:38%;font-weight:600}
+ul.pf{line-height:1.7}
+.stock{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px}
+.stock.ok{background:var(--brand-pale);color:var(--brand)}
+.stock.out{background:#fde8e8;color:#b91c1c}
+.stock.ret{background:#fef3c7;color:#92400e}
+.cat-title{font-size:19px;border-bottom:2px solid var(--brand);padding-bottom:6px;margin:24px 0 6px}
+
+/* ---- v3.1 : promo, mini-cartes, formulaires, pages infos ---- */
+.promo{display:inline-block;background:#dc3545;color:#fff;font-size:13px;font-weight:800;border-radius:4px;padding:2px 7px;vertical-align:middle}
+.old{color:var(--muted);font-size:14px;font-weight:400;text-decoration:line-through;margin-left:6px}
+.card .im{position:relative}
+.card .im .promo{position:absolute;top:8px;left:8px;z-index:2}
+.minis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.minicard{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:600;font-size:13px}
+.minicard img{width:56px;height:56px;object-fit:contain}
+.minicard:hover{border-color:var(--brand)}
+@media(max-width:860px){.minis{grid-template-columns:repeat(2,1fr)}}
+.form{max-width:760px;display:grid;gap:14px}
+.form fieldset{border:1px solid var(--border);border-radius:8px;padding:16px;display:grid;gap:12px;background:var(--surface)}
+.form legend{font-weight:700;padding:0 6px}
+.form label{display:grid;gap:5px;font-size:14px;font-weight:600}
+.form input,.form select,.form textarea{padding:9px 10px;border:1px solid var(--border);border-radius:6px;font:inherit;font-weight:400;width:100%;box-sizing:border-box}
+.form label.check{display:flex;align-items:center;gap:8px;font-weight:400}
+.form label.check input{width:auto}
+.contact-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;margin:18px 0}
+.contact-strip b{color:var(--link)}
+@media(max-width:860px){.contact-strip{grid-template-columns:1fr 1fr}}
+.hero-apropos{display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin:16px 0}
+.hero-apropos img{max-width:100%;border-radius:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.stats div{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;text-align:center}
+.stats b{display:block;font-size:32px;color:var(--brand)}
+.stats span{font-size:13px;color:var(--muted)}
+.partners{display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;margin:12px 0}
+.partners img{max-height:44px;max-width:130px;object-fit:contain}
+.temoins{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.temoin{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px}
+.temoin img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+.temoin p{font-style:italic;line-height:1.6}
+.temoin b{display:block}
+.temoin span{color:var(--muted);font-size:13px}
+@media(max-width:860px){.hero-apropos,.temoins{grid-template-columns:1fr}}
+
+/* ---- v3.2 : bannière plein écran, badge Save, menu store ---- */
+.slide{min-height:300px;border:0}
+.slide .s{background-size:cover;background-position:center;display:none;padding:0}
+.slide .s.on{display:block}
+.banner-txt{padding:34px 40px;max-width:460px}
+.banner-txt h2{color:#fff;font-size:44px;font-weight:800;margin:0;line-height:1.05;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.banner-txt .b-sub{color:#fff;font-size:26px;font-weight:700;line-height:1.15;margin:6px 0;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+.banner-txt .b-acc{color:#fff;font-size:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin:8px 0;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.banner-txt .b-pr{color:#ff3b30;font-size:32px;font-weight:800;margin:8px 0;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.banner-txt .btn{background:var(--brand);color:#fff;border-radius:6px;padding:11px 34px;font-size:15px;display:inline-block;margin-top:6px}
+.slide .nav{top:auto;bottom:14px;transform:none;background:rgba(255,255,255,.85);color:#333}
+.slide .nav.prev{left:auto;right:56px}
+.slide .nav.next{right:12px}
+.slide .dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.slide .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.55);cursor:pointer;padding:0}
+.slide .dots button.on{background:#fff}
+.save{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:800;text-align:center;line-height:1.15;vertical-align:middle;float:right}
+.cats a{display:flex;justify-content:space-between;padding:9px 14px;color:var(--text);font-size:14px}
+.cats a:hover{color:var(--link);text-decoration:none}
+.cats a span{color:var(--muted)}
+
+/* ---- v3.3 : formulaire de devis premium ---- */
+.devis-layout{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+@media(max-width:900px){.devis-layout{grid-template-columns:1fr}}
+.form-card{background:var(--surface);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.09);padding:30px 32px}
+.form-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.form-head-badge{background:var(--link);color:#fff;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:700;text-align:center;line-height:1.25;white-space:nowrap}
+.steps{display:flex;list-style:none;margin:26px 0 8px;padding:0}
+.steps li{flex:1;text-align:center;position:relative;font-size:12.5px;color:var(--muted)}
+.steps li::before{content:"";position:absolute;top:18px;left:-50%;width:100%;height:2px;background:#e8e8e8}
+.steps li:first-child::before{display:none}
+.steps li .dot{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:var(--surface2);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;border:2px solid var(--border);margin-bottom:6px}
+.steps li .lbl{display:block}
+.steps li.on{color:var(--text);font-weight:700}
+.steps li.on .dot{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 0 0 5px rgba(var(--brand-rgb),.22)}
+.steps li.done .dot{background:var(--link);border-color:var(--link);color:#fff}
+.steps li.done::before{background:var(--link)}
+.form.premium{max-width:none}
+.form.premium .step h2{font-size:19px;margin:18px 0 14px}
+.form.premium .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.form.premium .grid2{grid-template-columns:1fr}}
+.form.premium label{font-size:13.5px;color:var(--text2)}
+.form.premium input,.form.premium select,.form.premium textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:border-color .15s,box-shadow .15s,background .15s}
+.form.premium input:focus,.form.premium select:focus,.form.premium textarea:focus{outline:0;border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 4px rgba(var(--brand-rgb),.22)}
+.form.premium input.invalid,.form.premium select.invalid{border-color:#dc3545;box-shadow:0 0 0 4px rgba(220,53,69,.15)}
+.form.premium select{appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill input{position:absolute;opacity:0;width:0;height:0}
+.pill span{display:inline-block;border:1.5px solid var(--border);border-radius:999px;padding:10px 16px;font-size:14px;cursor:pointer;background:var(--surface2);transition:all .15s}
+.pill input:checked+span{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(var(--brand-rgb),.35)}
+.pill input:focus-visible+span{box-shadow:0 0 0 3px rgba(var(--brand-rgb),.4)}
+.file-drop{display:block;border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;color:var(--muted);font-size:14px;cursor:pointer;background:var(--surface2)}
+.file-drop:hover{border-color:var(--brand);color:var(--text2)}
+.file-drop input{display:none}
+.form-nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.btn.ghost{background:var(--surface);border:1.5px solid var(--border);color:var(--text)}
+.btn.ghost:hover{border-color:var(--brand);color:var(--link)}
+.devis-side{display:grid;gap:18px}
+.side-card{background:var(--surface);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:20px}
+.side-card h3{margin:0 0 12px;font-size:16px}
+.side-card .hcard{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.side-card .hcard:last-child{border-bottom:0}
+.side-card .hcard img{width:64px;height:64px;object-fit:contain}
+.side-card .hcard h4{font-size:13px;margin:0 0 4px}
+.side-card.help{background:#1d1d1d;color:#fff}
+.side-card.help h3{color:#fff}
+.side-card.help p{color:var(--muted)}
+.side-card.help b{color:#fff}
+
+/* ---- v3.4 : contour fin au survol, fondus et animations, page produit premium ---- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.js [data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease),box-shadow .25s ease,border-color .25s ease}
+.js [data-reveal].in{opacity:1;transform:none}
+.catalog .card:not(.in):nth-child(3n+2){transition-delay:.06s}
+.catalog .card:not(.in):nth-child(3n+3){transition-delay:.12s}
+@media (prefers-reduced-motion: reduce){
+  .js [data-reveal]{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+/* Contour fin + léger soulèvement au survol d'un produit */
+.card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:var(--brand);box-shadow:0 0 0 1.5px var(--brand),0 14px 28px rgba(0,0,0,.12)}
+.card .im img{transition:transform .45s ease}
+.card:hover .im img{transform:scale(1.07)}
+.card h3 a{transition:color .2s}
+.card:hover h3 a{color:var(--brand-dark)}
+/* Diaporama : fondu entre les slides */
+.slide .s{display:block;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility .6s ease}
+.slide .s.on{opacity:1;visibility:visible}
+/* Onglets : fondu à l'ouverture + survol */
+[data-pane]:not([hidden]){animation:fadeUp .35s ease}
+.tabs button{transition:background .2s,color .2s}
+.tabs button:hover:not(.on){color:var(--link)}
+/* Page produit : galerie zoom doux */
+.pdetail .gal{overflow:hidden;border-radius:10px}
+.pdetail .gal img{transition:transform .5s ease}
+.pdetail .gal:hover img{transform:scale(1.05)}
+/* Page produit : titres de section avec accent vert */
+.ptabs [data-pane] h2{font-size:20px;border-bottom:1px solid var(--border);padding-bottom:10px;position:relative}
+.ptabs [data-pane] h2::after{content:"";position:absolute;left:0;bottom:-1px;width:52px;height:2px;background:var(--brand)}
+.desc-text{font-size:15.5px;line-height:1.75;color:var(--text)}
+/* Points forts : liste à coches vertes */
+.pf{list-style:none;margin:0 0 18px;padding:0}
+.pf li{position:relative;padding:7px 0 7px 36px;line-height:1.5}
+.pf li::before{content:"✓";position:absolute;left:0;top:7px;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+/* Caractéristiques : fond très clair, texture subtile comme l'image de référence */
+table.specs{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:14.5px;background:var(--surface2) url(../images/fond-clair.jpg) center/cover;color:var(--text)}
+table.specs td{padding:12px 16px;border-top:1px solid rgba(0,0,0,.06);border-bottom:0;line-height:1.55}
+table.specs tr:first-child td{border-top:0}
+table.specs td:first-child{width:32%;background:rgba(0,0,0,.05);font-weight:800;color:var(--text)}
+table.specs .spec-note{color:var(--muted);font-weight:400}
+table.specs tr{transition:background .15s}
+table.specs tr:hover td{background:rgba(var(--brand-rgb),.14)}
+/* Points forts : carte claire, disposition en 2 colonnes */
+.pf-wrap{background:var(--surface2);border:1px solid #e8eae6;border-radius:12px;padding:18px 20px 14px;margin-bottom:18px}
+.pf-wrap h2{margin:0 0 12px}
+.pf-wrap .pf{margin:0}
+.pf{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px}
+@media(max-width:640px){.pf{grid-template-columns:1fr}}
+
+/* ---- v3.5 : volet panier, liens, pages infos ---- */
+.topbar a{color:var(--link)}
+.topbar a:hover{color:var(--brand);text-decoration:none}
+.cart{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-size:14px;font-weight:700;cursor:pointer;position:relative;transition:background .2s}
+.cart:hover{background:var(--brand-dark)}
+.cart .count{background:#fff;color:var(--brand-dark);border-radius:999px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;padding:0 5px}
+.cart svg{flex:none}
+.round.cart{bottom:100px;background:var(--surface);border:1.5px solid var(--brand);color:var(--brand-dark);cursor:pointer}
+.round.cart:hover{background:var(--brand);color:#fff}
+.btn.cart-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--brand);color:var(--brand-dark);margin-right:8px}
+.btn.cart-btn:hover{background:var(--brand);color:#fff}
+.btn.cart-btn svg{flex:none}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;z-index:90}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:var(--surface);box-shadow:-8px 0 32px rgba(0,0,0,.2);transform:translateX(105%);transition:transform .3s ease;z-index:100;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer-head h3{margin:0;font-size:18px}
+.drawer-head button{border:0;background:none;font-size:26px;cursor:pointer;color:var(--muted);line-height:1}
+.drawer-items{flex:1;overflow-y:auto;padding:10px 20px}
+.cart-empty{text-align:center;color:var(--muted);padding:40px 10px;line-height:1.7}
+.cart-empty span{font-size:13px;color:var(--muted)}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cart-item img{width:64px;height:64px;object-fit:contain;flex:none}
+.cart-item .noimg{width:64px;height:64px;font-size:10px}
+.ci-info{flex:1;min-width:0}
+.ci-info h4{margin:0 0 4px;font-size:13.5px;line-height:1.3}
+.ci-pr{color:#dc3545;font-weight:700;font-size:14px}
+.ci-qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.ci-qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:15px;line-height:1}
+.ci-qty button:hover{border-color:var(--brand);color:var(--brand-dark)}
+.ci-qty .ci-del{margin-left:6px;color:#dc3545;border-color:#f3c2c7}
+.ci-line{font-weight:800;font-size:13.5px;white-space:nowrap}
+.drawer-foot{border-top:1px solid var(--border);padding:16px 20px;display:grid;gap:10px}
+.drawer-total{font-size:16px}
+.drawer-note{margin:0;font-size:12.5px;color:var(--muted)}
+.drawer-foot .btn{text-align:center;justify-content:center}
+.drawer-foot .btn.disabled{opacity:.45;pointer-events:none}
+.linklike{border:0;background:none;color:var(--link);cursor:pointer;font-size:14px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,80px);background:#1d1d1d;color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;z-index:120;opacity:0;transition:transform .3s,opacity .3s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.legal{max-width:800px}
+.legal h2{font-size:18px;margin:24px 0 8px}
+.legal p{line-height:1.7;color:var(--text2)}
+
+/* ---- v3.12 : pages groupe ---- */
+.kicker{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--brand-dark);margin:22px 0 4px}
+.hero-sol{border-radius:14px;overflow:hidden;margin:14px 0 20px;box-shadow:0 10px 28px rgba(0,0,0,.10)}
+.hero-sol img{width:100%;display:block;max-height:380px;object-fit:cover}
+.sol-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 4px}
+.sol-tabs a{padding:10px 18px;border-radius:999px;border:1.5px solid var(--border);color:var(--text2);font-weight:700;font-size:14px}
+.sol-tabs a:hover{border-color:var(--brand);color:var(--brand-dark);text-decoration:none}
+.sol-tabs a.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:20px 0}
+.pillar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.pillar h3{margin:0 0 8px;font-size:17px}
+.pillar p{color:var(--text2);line-height:1.65;font-size:14.5px}
+.pillar .pf{grid-template-columns:1fr}
+.pillar .pf li{font-size:14px}
+.svc-row{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.svc-row.flip{grid-template-columns:1fr 300px}
+.svc-row.flip .svc-img{order:2}
+.svc-img img{width:100%;border-radius:10px;display:block}
+.svc-row h3{margin:0 0 8px;font-size:19px}
+.svc-row p{color:var(--text2);line-height:1.7;font-size:14.5px}
+.svc-row .pf{grid-template-columns:1fr}
+@media(max-width:760px){.svc-row,.svc-row.flip{grid-template-columns:1fr}.svc-row.flip .svc-img{order:0}}
+.chips-static{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 6px}
+.chips-static span{border:1.5px solid var(--brand);color:var(--brand);border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:700;background:var(--brand-pale)}
+.sol-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0}
+.sol-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:block;box-shadow:0 6px 18px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s}
+.sol-card:hover{transform:translateY(-3px);box-shadow:0 0 0 1.5px var(--brand),0 12px 24px rgba(0,0,0,.10);text-decoration:none}
+.sol-card b{display:block;color:var(--link);font-size:15px;margin-bottom:4px}
+.sol-card span{color:var(--muted);font-size:13.5px;line-height:1.5}
+.ref-hero{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.ref-hero img{width:100%;border-radius:14px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+@media(max-width:640px){.ref-hero{grid-template-columns:1fr}}
+.client-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
+@media(max-width:760px){.client-grid{grid-template-columns:repeat(2,1fr)}}
+.client-logo{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;justify-content:center;min-height:96px}
+.client-logo img{max-width:100%;max-height:64px;object-fit:contain;filter:grayscale(1);opacity:.75;transition:filter .25s,opacity .25s}
+.client-logo:hover img{filter:none;opacity:1}
+.reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:16px 0}
+.reason{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:10px}
+.reason .tick{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+
+/* ---- v3.14 : design premium pages groupe (textes aérés, typographie lisible) ---- */
+.gtitle{font-size:34px;line-height:1.2;letter-spacing:-.5px;margin:8px 0 16px}
+.gtext{font-size:16.5px;line-height:1.85;color:var(--text2);max-width:720px}
+.gtext + .gtext{margin-top:14px}
+.svc-row{grid-template-columns:340px 1fr;gap:40px;padding:32px;margin:28px 0;border-radius:20px}
+.svc-row.flip{grid-template-columns:1fr 340px}
+.svc-img img{border-radius:14px}
+.svc-row h3{font-size:24px;line-height:1.3;margin:10px 0 14px}
+.svc-row p{font-size:16px;line-height:1.85;color:var(--text2)}
+.svc-row p + p{margin-top:12px}
+.svc-num{display:inline-block;font-size:14px;font-weight:800;letter-spacing:3px;color:var(--brand-dark);text-transform:uppercase}
+.svc-row .pf{margin-top:18px}
+.svc-row .pf li{font-size:15px;line-height:1.65}
+.pillars{gap:28px;margin:28px 0}
+.pillar{padding:28px;border-radius:20px}
+.pillar h3{font-size:20px;line-height:1.3}
+.pillar p{font-size:16px;line-height:1.8;color:var(--text2)}
+.pillar .pf li{font-size:15px}
+@media(max-width:760px){.gtitle{font-size:28px}.svc-row,.svc-row.flip{grid-template-columns:1fr}.svc-row.flip .svc-img{order:0}.svc-row{padding:22px;gap:22px;margin:20px 0}.pillar{padding:22px}}
+
+/* ---- v3.15 : menu catégories dépliable (sous-catégories) ---- */
+.cats .cat-row{display:flex;align-items:stretch}
+.cats .cat-row a.cat-main{flex:1}
+.cats .cat-toggle{border:0;background:none;color:var(--muted);font-size:20px;line-height:1;padding:0 14px;cursor:pointer;transition:transform .2s}
+.cats .cat-toggle:hover{color:var(--brand-dark)}
+.cats .cat-item.open .cat-toggle{transform:rotate(90deg);color:var(--brand-dark)}
+.cats ul.sub{display:none}
+.cats .cat-item.open ul.sub{display:block}
+.cats a.cat-main.on{color:var(--link)}
+.cats ul.sub a.on{color:var(--link);font-weight:700}
+
+/* ---- v3.16 : méga-menu catégories + filtres produits + tri ---- */
+nav.main{position:relative}
+.mega-btn{background:var(--brand);color:#fff;border:0;font-weight:700;font-size:14px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.mega-btn:hover{background:var(--brand-dark)}
+.mega-panel{position:absolute;top:100%;left:0;right:0;background:var(--surface);box-shadow:0 18px 40px rgba(0,0,0,.18);z-index:60;border-top:3px solid var(--brand)}
+.mega-panel[hidden]{display:none}
+.mega-panel .in{display:grid;grid-template-columns:250px 1fr;max-width:1200px;margin:0 auto;padding:0}
+.mega-rail{background:var(--surface2);border-right:1px solid var(--border);padding:10px 0}
+.mega-rail button{display:flex;justify-content:space-between;width:100%;border:0;background:none;padding:11px 16px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;text-align:left}
+.mega-rail button:hover{background:var(--brand-pale)}
+.mega-rail button.on{background:var(--surface);color:var(--link);border-left:3px solid var(--brand)}
+.mega-rail button .mega-count{color:var(--muted);font-weight:400;font-size:12px}
+.mega-cols{padding:22px 28px}
+.mega-cols h4{margin:0 0 14px;font-size:18px;color:var(--link)}
+.mega-links{column-count:3;column-gap:28px}
+nav.main .mega-links a{display:block;padding:6px 0;color:var(--text2);font-size:14px;break-inside:avoid}
+nav.main .mega-links a:hover{color:var(--link);text-decoration:none}
+.mega-links a span{color:var(--muted);font-size:12px}
+nav.main .mega-all{display:inline-block;margin-top:16px;color:var(--link);font-weight:700;font-size:14px}
+.filters{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-top:16px;padding:16px}
+.filters h3{margin:0 0 14px;font-size:14px;letter-spacing:1px;color:var(--link)}
+.filters label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:12px}
+.filters select,.filters input{width:100%;margin-top:5px;padding:9px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;background:var(--surface)}
+.filters .f-prix{display:flex;gap:8px;align-items:center}
+.filters .f-prix input{flex:1;min-width:0}
+.filters .btn{width:100%;margin-top:4px}
+/* Filtre global « Trouver un produit » (accueil) : marque, catégorie, type, prix, disponibilité. */
+@media(max-width:860px){
+.mega-panel .in{grid-template-columns:1fr}
+.mega-rail{border-right:0;border-bottom:1px solid var(--border)}
+.mega-links{column-count:2}
+.mega-panel{max-height:70vh;overflow:auto}
+.mega-cols{padding:16px 18px}
+}
+
+/* ---- v3.17 : méga-menu structuré en groupes titrés (LDLC) + filtres bleu pâle ---- */
+.mega-rail button.on{background:#e8f4fc;color:var(--link);border-left:3px solid var(--brand)}
+.mega-groups{column-count:3;column-gap:32px}
+.mega-group{break-inside:avoid;margin-bottom:20px}
+.mega-group h5{margin:0 0 8px;font-size:15px;color:var(--navy)}
+nav.main .mega-group a{display:block;padding:4px 0;color:var(--text2);font-size:14px}
+nav.main .mega-group a:hover{color:var(--link);text-decoration:none}
+.mega-group a span{color:var(--muted);font-size:12px}
+nav.main .mega-group a.mega-more{color:var(--link);font-weight:700;font-size:13px}
+.filters{background:#eaf4fb;border:1px solid #d3e6f2}
+.filters h3{color:var(--navy)}
+.filters [data-f-more]{background:var(--link);color:#fff;border:0}
+.filters [data-f-more]:hover{background:var(--link-dark)}
+.f-range{position:relative;display:block;height:26px;margin-top:8px}
+.f-range input[type=range]{position:absolute;left:0;top:0;width:100%;-webkit-appearance:none;appearance:none;background:none;pointer-events:none;height:26px;margin:0}
+.f-range input[type=range]::-webkit-slider-runnable-track{height:4px;background:#c9dff0;border-radius:2px}
+.f-range input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;pointer-events:auto;width:18px;height:18px;border-radius:50%;background:var(--link);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);margin-top:-7px;cursor:pointer}
+.f-range input[type=range]::-moz-range-track{height:4px;background:#c9dff0;border-radius:2px}
+.f-range input[type=range]::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--link);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer}
+@media(max-width:860px){
+.mega-groups{column-count:2}
+}
+
+/* ---- v3.17 (suite) : vue liste en vraie ligne (image + infos + prix) ---- */
+.catalog.view-list .cinfo{flex:1;min-width:0}
+.catalog.view-list .cinfo h3{font-size:16px}
+@media(max-width:860px){
+.catalog.view-list .card{flex-wrap:wrap}
+.catalog.view-list .im{height:80px;width:96px}
+.catalog.view-list .im img{max-height:80px}
+.catalog.view-list .cinfo{flex:1 1 calc(100% - 128px)}
+.catalog.view-list .desc{display:none}
+.catalog.view-list .pr{margin-left:auto}
+}
+
+/* ---- v3.18 : méga-menu en VRAIE grille + icônes des catégories ---- */
+/* Correctif : nav.main .in (0,2,1, flex + retour à la ligne) gagnait sur
+   .mega-panel .in (0,2,0) — le panneau n'était pas une grille, donc les
+   sous-catégories trop larges passaient SOUS le rail au lieu d'être à droite.
+   Le sélecteur préfixé (0,3,1) rétablit la grille rail 250px + colonnes. */
+nav.main .mega-panel .in{display:grid;grid-template-columns:250px 1fr;gap:0;max-width:1200px;margin:0 auto;padding:0}
+.mega-rail button .mega-lab{display:flex;align-items:center;gap:9px;color:var(--text);font-weight:600;font-size:14px}
+.mega-rail button .mega-ico{color:var(--muted);flex:none;display:flex}
+.mega-rail button.on .mega-ico{color:var(--link)}
+@media(max-width:860px){
+nav.main .mega-panel .in{grid-template-columns:1fr}
+}
+
+/* ---- v3.19 : facettes par catégorie + case « en stock uniquement » ---- */
+.f-check{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy);cursor:pointer}
+.f-check input{width:16px;height:16px;accent-color:var(--link);cursor:pointer}
+
+/* ---- v3.23 : thèmes — couleur du site + sombre / clair ---- */
+:root{
+  --brand:#2e5136; --brand-rgb:46,81,54; --brand-dark:#223d27; --brand-pale:#e9efe9;
+  --link:#1292d3; --link-dark:#0f7fc0; --navy:#0b3d66;
+  --bg:#f4f4f4; --surface:#ffffff; --surface2:#f8f9fa; --input-bg:#ffffff;
+  --text:#222222; --text2:#555555; --muted:#888888; --border:#e5e5e5;
+  --ease:cubic-bezier(.22,1,.36,1); --dur:.28s; --surface-glass:rgba(255,255,255,.86);
+}
+body{background:var(--bg);color:var(--text)}
+[data-color="liquid"]{--brand:#a3d133;--brand-rgb:163,209,51;--brand-dark:#8ab92a;--brand-pale:#f4f9e8}
+[data-theme="dark"]{
+  --bg:#141414; --surface:#1e1e1e; --surface2:#262626; --input-bg:#2a2a2a;
+  --text:#e8e8e8; --text2:#c9c9c9; --muted:#a8a8a8; --border:#383838;
+  --link:#5cb8e8; --link-dark:#7cc6ee; --navy:#9cc8e8; --brand-pale:#1d2f1f;
+  --surface-glass:rgba(30,30,30,.86);
+}
+[data-theme="dark"][data-color="liquid"]{--brand-pale:#2a3312}
+[data-theme="dark"] .filters{background:#16283a;border-color:#243b52}
+[data-theme="dark"] .mega-rail{background:var(--surface2)}
+[data-theme="dark"] .mega-rail button.on{background:#1d3a52}
+[data-theme="dark"] table.specs{background-image:none}
+[data-theme="dark"] .logo img{background:#fff;border-radius:8px;padding:4px 8px}
+[data-theme="dark"] .logo .store{color:#e8e8e8}
+[data-theme="dark"] .logo .store::before,[data-theme="dark"] .logo .store::after{background:#888}
+[data-theme="dark"] .f-range input[type=range]::-webkit-slider-runnable-track{background:#33475c}
+[data-theme="dark"] .f-range input[type=range]::-moz-range-track{background:#33475c}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background-color:var(--input-bg);color:var(--text);border-color:var(--border)}
+[data-theme="dark"] .search select{background:var(--surface2)}
+[data-theme="dark"] .topbar a{color:var(--link)}
+
+/* ---- v3.23 : icônes d'en-tête (Boutique / Compte / Panier / Préférences) ---- */
+.hicons{display:flex;gap:2px;align-items:stretch}
+.hicon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:66px;padding:6px 8px;border:0;background:none;color:var(--text2);cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;position:relative;border-radius:8px;font-family:inherit}
+.hicon:hover{color:var(--brand);text-decoration:none;background:var(--surface2)}
+.hicon svg{width:26px;height:26px}
+.hicon .hic-badge{position:absolute;top:0;right:10px;background:#dc3545;color:#fff;border-radius:999px;min-width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;padding:0 4px}
+@media(max-width:860px){.hicon{min-width:46px}.hicon .hic-lab{display:none}}
+
+/* ---- v3.23 : compte client + paramètres (mise en page type LDLC) ---- */
+.acct{display:grid;grid-template-columns:250px 1fr;gap:20px;padding-top:20px;align-items:start}
+@media(max-width:860px){.acct{grid-template-columns:1fr}}
+.acct-side{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.acct-id{padding:22px 16px 16px;text-align:center;border-bottom:1px solid var(--border)}
+.acct-avatar{width:72px;height:72px;border-radius:50%;background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin-bottom:10px}
+.acct-id .hello{font-size:15px;font-weight:700}
+.acct-id .who{font-size:13px;color:var(--muted);text-transform:uppercase}
+.acct-id .num{font-size:12.5px;color:var(--link);margin-top:4px}
+.acct-id .btn{margin-top:12px;padding:8px 18px;font-size:13px}
+.acct-menu{list-style:none;margin:0;padding:8px 0}
+.acct-menu li{border-bottom:1px solid var(--border)}
+.acct-menu li:last-child{border-bottom:0}
+.acct-menu a,.acct-menu button{display:block;width:100%;text-align:left;padding:12px 16px;color:var(--text);font-weight:700;font-size:14px;background:none;border:0;cursor:pointer;font-family:inherit}
+.acct-menu a:hover,.acct-menu button:hover{color:var(--link);text-decoration:none}
+.acct-menu a.on,.acct-menu button.on{color:var(--link);background:var(--surface2)}
+.acct-main{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px;min-height:420px}
+.acct-main h2{font-size:19px;text-transform:uppercase;letter-spacing:1px;text-align:center;margin:0 0 22px;color:var(--muted)}
+.acct-main h3{font-size:15px;margin:26px 0 12px}
+.acct-main h3:first-child{margin-top:0}
+.acct-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px}
+@media(max-width:640px){.acct-form{grid-template-columns:1fr}}
+.acct-form label{display:grid;gap:5px;font-size:13.5px;font-weight:600;color:var(--text2)}
+.acct-form input,.acct-form select{padding:10px 12px;border:1px solid var(--border);border-radius:8px;font:inherit;background:var(--input-bg);color:var(--text);width:100%;box-sizing:border-box}
+.acct-form .full{grid-column:1/-1}
+.acct-form .radios{display:flex;gap:18px;align-items:center;font-weight:400}
+.acct-form .radios input{width:auto}
+.acct-actions{display:flex;justify-content:center;margin-top:20px}
+.acct-note{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:18px;text-align:center}
+.acct-note a{color:var(--link)}
+.acct-empty{text-align:center;color:var(--muted);padding:36px 10px;line-height:1.7}
+.acct-list{list-style:none;margin:0;padding:0}
+.acct-list li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;flex-wrap:wrap}
+.acct-list li:last-child{border-bottom:0}
+.acct-list .pr{color:#dc3545;font-weight:700;white-space:nowrap}
+.acct-auth{max-width:680px;margin:0 auto}
+.acct-auth h2{font-size:17px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:26px 0 14px}
+.acct-auth h2:first-child{margin-top:0}
+/* Choix de thème : cartes avec pastille de couleur */
+.theme-pick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 6px}
+@media(max-width:640px){.theme-pick{grid-template-columns:1fr}}
+.theme-opt{position:relative}
+.theme-opt input{position:absolute;opacity:0}
+.theme-opt>span{display:flex;align-items:center;gap:12px;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;background:var(--surface2);font-size:14px;font-weight:700;color:var(--text)}
+.theme-opt input:checked+span{border-color:var(--brand);box-shadow:0 0 0 3px rgba(var(--brand-rgb),.25);background:var(--surface)}
+.theme-opt .sw{width:34px;height:34px;border-radius:50%;flex:none;border:2px solid var(--border)}
+.theme-opt .sw.clair{background:linear-gradient(135deg,#fff 55%,#e8e8e8 55%)}
+.theme-opt .sw.sombre{background:linear-gradient(135deg,#1e1e1e 55%,#141414 55%)}
+.theme-opt .sw.liquid{background:#a3d133}
+.theme-opt .sw.gazonnier{background:#2e5136}
+.theme-opt small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+
+/* ---- v3.24 : l'attribut hidden doit gagner sur les display CSS (.acct est en grid) ---- */
+[hidden]{display:none!important}
+
+/* ---- v3.24 : photos sur fond blanc en thème sombre — cadres photo délibérés ---- */
+[data-theme="dark"] .card .im{background:#fff;border-radius:8px;padding:6px}
+[data-theme="dark"] .card .im img{border-radius:4px}
+[data-theme="dark"] .pdetail .gal{background:#fff;border-radius:10px;padding:10px}
+[data-theme="dark"] .dealcard img{background:#fff;border-radius:8px;padding:6px}
+[data-theme="dark"] .hcard img,[data-theme="dark"] .minicard img,[data-theme="dark"] .cart-item img,[data-theme="dark"] .side-card .hcard img{background:#fff;border-radius:6px;padding:3px}
+[data-theme="dark"] .client-logo img,[data-theme="dark"] .partners img{background:#fff;border-radius:6px;padding:4px}
+
+/* ---- v3.24 : petite modale Connexion / Créer un compte ---- */
+.auth-modal{position:fixed;inset:0;z-index:110;display:none;align-items:flex-start;justify-content:center;padding:56px 16px;overflow-y:auto}
+.auth-modal.open{display:flex}
+.auth-box{background:var(--surface);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);width:min(480px,100%);padding:24px 26px;position:relative}
+.auth-close{position:absolute;top:8px;right:14px;border:0;background:none;font-size:28px;cursor:pointer;color:var(--muted);line-height:1}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
+.auth-tabs button{flex:1;border:1.5px solid var(--border);background:var(--surface2);padding:10px;border-radius:8px;font-weight:700;cursor:pointer;color:var(--text);font-size:14px;font-family:inherit}
+.auth-tabs button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.auth-modal h2{font-size:16px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 14px}
+.auth-modal .acct-form{grid-template-columns:1fr}
+.auth-modal .acct-note{margin-top:16px}
+
+/* Hub des catégories (Boutique, v3.25) : comme la page LDLC « Nos catégories ». */
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:16px}
+.hub-card{border:1px solid var(--border);border-radius:0;background:var(--surface)}
+.hub-main{display:flex;flex-direction:row;align-items:flex-start;gap:16px;padding:12px 16px;min-height:112px;text-decoration:none;color:inherit}
+.hub-img{width:104px;height:88px;flex:0 0 104px;display:flex;align-items:center;justify-content:center}
+.hub-img img{max-width:100%;max-height:100%;object-fit:contain}
+.hub-img .noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.hub-txt{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;padding-top:6px}
+.hub-name{color:var(--brand-dark);font-weight:700;font-size:15px}
+.hub-count{color:var(--muted);font-size:13px}
+.hub-chev{display:block;margin:-4px auto 10px;width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--link);font-size:16px;line-height:1;cursor:pointer}
+.hub-card.open .hub-chev{transform:rotate(180deg)}
+/* Tuile de type active (page catégorie avec ?type=) : reste visible et marquée. */
+.hub-main.on{outline:2px solid var(--brand);outline-offset:-2px;border-radius:4px;background:var(--surface2)}
+.hub-main.on .hub-name{color:var(--brand-dark)}
+.hub-subs{list-style:none;margin:0;padding:0 18px 14px}
+.hub-subs li{border-top:1px solid var(--border);padding:6px 0;font-size:14px}
+.hub-subs a{color:var(--link);text-decoration:none}
+.hub-subs a span{color:var(--muted)}
+[data-theme="dark"] .hub-img{background:#fff;border-radius:8px;padding:6px}
+@media (max-width:900px){.hub-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.hub-grid{grid-template-columns:1fr}}
+
+/* ============ v3.25 — Système de mouvement : animations, flous, transitions ============ */
+@keyframes popIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes badgePop{0%{transform:scale(1)}40%{transform:scale(1.5)}100%{transform:scale(1)}}
+@keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.45),0 3px 10px rgba(0,0,0,.3)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0),0 3px 10px rgba(0,0,0,.3)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0),0 3px 10px rgba(0,0,0,.3)}}
+@keyframes imgIn{from{opacity:0}to{opacity:1}}
+
+/* Liens : changement de couleur adouci partout. */
+a{transition:color .18s ease}
+
+/* Entrée de page : le contenu monte doucement. */
+.wrap{animation:fadeUp .35s var(--ease)}
+
+/* En-tête : verre dépoli + ombre renforcée au défilement. */
+header.main{background:var(--surface-glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:box-shadow var(--dur) var(--ease)}
+header.main.scrolled{box-shadow:0 8px 28px rgba(0,0,0,.14)}
+
+/* Icônes d'en-tête : soulèvement + zoom de l'icône. */
+.hicon{transition:transform var(--dur) var(--ease),color var(--dur) var(--ease)}
+.hicon:hover{transform:translateY(-2px);color:var(--brand);text-decoration:none}
+.hicon svg{transition:transform var(--dur) var(--ease)}
+.hicon:hover svg{transform:scale(1.14)}
+.hic-badge.pop{animation:badgePop .35s var(--ease)}
+
+/* Navigation : soulignement qui glisse sous le lien survolé. */
+nav.main>.in>a{position:relative;transition:background var(--dur) var(--ease)}
+nav.main>.in>a::after{content:"";position:absolute;left:14px;right:14px;bottom:7px;height:2px;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform var(--dur) var(--ease)}
+nav.main>.in>a:hover::after{transform:scaleX(1)}
+
+/* Méga-menu : descente en fondu + verre dépoli. */
+.mega-panel{background:var(--surface-glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.mega-panel:not([hidden]){animation:slideDown .25s var(--ease)}
+.mega-rail button{transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.mega-btn{transition:background var(--dur) var(--ease)}
+
+/* Boutons : soulèvement, ombre, reflet qui balaye, pression. */
+.btn{transition:background var(--dur) var(--ease),transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(46,81,54,.28)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn::after{content:"";position:absolute;top:0;left:-90%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .55s var(--ease)}
+.btn:hover::after{left:140%}
+
+/* Bannières : le texte entre en fondu décalé à chaque changement de slide. */
+.slide .s.on .banner-txt>*{animation:fadeUp .5s var(--ease) both}
+.slide .s.on .banner-txt>*:nth-child(2){animation-delay:.07s}
+.slide .s.on .banner-txt>*:nth-child(3){animation-delay:.14s}
+.slide .s.on .banner-txt>*:nth-child(4){animation-delay:.21s}
+.slide .s.on .banner-txt>*:nth-child(5){animation-delay:.28s}
+
+/* Cartes du hub : soulèvement + zoom photo. */
+.hub-card{transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.hub-card:hover{transform:translateY(-4px);border-color:var(--brand);box-shadow:0 14px 28px rgba(0,0,0,.12)}
+.hub-img img{transition:transform .45s var(--ease)}
+.hub-card:hover .hub-img img{transform:scale(1.08)}
+.hub-card:hover .hub-name{color:var(--brand-dark)}
+.hub-chev{transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+
+/* Modale + tiroir : fonds floutés, fenêtre en pop, tiroir glissé. */
+.overlay{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.auth-modal.open .auth-box{animation:popIn .28s var(--ease)}
+.drawer{transition:transform .35s var(--ease)}
+.drawer.open{box-shadow:-16px 0 48px rgba(0,0,0,.28)}
+.drawer.open .drawer-items{animation:fadeIn .3s ease}
+
+/* Toast : apparition avec un léger pop. */
+.toast{transform:translate(-50%,80px) scale(.96);transition:transform .35s var(--ease),opacity .3s ease}
+.toast.show{transform:translate(-50%,0) scale(1)}
+
+/* Champs : halo vert au focus, partout. */
+input,select,textarea{transition:border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(var(--brand-rgb),.18);outline:none}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+
+/* Puces et vues : léger soulèvement. */
+.chips button,.viewbtns button{transition:all var(--dur) var(--ease)}
+.chips button:hover,.viewbtns button:hover{transform:translateY(-1px)}
+
+/* Étapes du devis : fondu à chaque étape. */
+[data-step]:not([hidden]){animation:fadeUp .3s var(--ease)}
+
+/* Menu du compte : glissement au survol. */
+.acct-menu a{transition:background .2s ease,padding-left var(--dur) var(--ease)}
+.acct-menu a:hover{padding-left:20px}
+
+/* Offre et bannière d'accueil : soulèvement au survol. */
+.dealcard,.banner{transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.dealcard:hover,.banner:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.12)}
+
+/* Bouton WhatsApp flottant : halo pulsé + zoom au survol. */
+.wa-float{animation:waPulse 2.6s infinite;transition:transform var(--dur) var(--ease)}
+.wa-float:hover{transform:scale(1.12);animation:none}
+
+/* Photos : fondu à l'apparition. */
+.card .im img,.hub-img img,.pdetail .gal img,.hcard img,.minicard img,.cart-item img{animation:imgIn .5s ease}
+
+/* ============ ULTRA RESPONSIVE (ajouts mobiles/tablettes — identité intacte) ============ */
+/* Garde-fous globaux : jamais de défilement horizontal, images fluides. */
+html,body{overflow-x:clip}
+img{height:auto}
+
+/* ---------- Tablettes et petits écrans (≤1100px) ---------- */
+@media(max-width:1100px){
+  .slide{min-height:300px}
+  .banner-txt h2{font-size:36px}
+  .banner-txt .b-sub{font-size:22px}
+}
+
+/* ---------- Header compact + nav scrollable (≤860px) ---------- */
+@media(max-width:860px){
+  header.main .in{padding:10px 12px;gap:10px}
+  nav.main .in{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav.main .in::-webkit-scrollbar{display:none}
+  nav.main a,nav.main .mega-btn{white-space:nowrap;flex:none}
+  .mega-panel{max-height:75dvh;overflow:auto}
+  .auth-modal{padding:24px 12px}
+}
+
+/* ---------- Téléphones (≤640px) ---------- */
+@media(max-width:640px){
+  /* En-tête : logo compact, recherche pleine largeur en 2e ligne. */
+  .logo img{height:42px}
+  .logo .store{font-size:9px;letter-spacing:5px;text-indent:5px}
+  .logo .store::before,.logo .store::after{width:16px}
+  .hicons{margin-left:auto}
+  .search{order:3;flex-basis:100%;min-width:0}
+  .topbar .in{gap:10px 14px;font-size:12px}
+  /* Diaporama : contenu empilé et lisible. */
+  .slide{min-height:290px}
+  .slide .s{grid-template-columns:1fr;padding:18px;gap:8px;align-content:center;text-align:center}
+  .banner-txt{padding:0;max-width:100%}
+  .banner-txt h2{font-size:26px}
+  .banner-txt .b-sub{font-size:18px}
+  .banner-txt .b-acc{font-size:13px}
+  .banner-txt .b-pr{font-size:24px}
+  .slide img{max-height:130px}
+  /* Catalogue : barre d'outils en colonne, recherche d'abord. */
+  .toolbar .searchbar{flex-basis:100%;min-width:0;order:-1}
+  .toolbar select{flex:1;min-width:0}
+  .viewbtns button{padding:12px}
+  .chips button{padding:10px 16px}
+  .pager button{min-width:44px;min-height:44px}
+  /* Fiche produit : boutons pleine largeur, tableau scrollable. */
+  .pdetail{padding:16px;gap:16px}
+  .pdetail h1{font-size:20px}
+  .pdetail .pr{font-size:22px}
+  .pdetail .btn,.pdetail .btn.wa{width:100%;text-align:center;justify-content:center}
+  .ptabs{padding:14px}
+  .ptabs{overflow-x:auto}
+  table.specs{min-width:480px}
+  .tabs{overflow-x:auto}
+  .tabs button{white-space:nowrap}
+  .qty{flex-wrap:wrap}
+  /* Fil d'Ariane elliptique, widgets et bannières aérés. */
+  .crumb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .banner{padding:20px}
+  .banner h3{font-size:19px}
+  .form-card{padding:20px 16px}
+  .hub-main{padding:14px;gap:12px}
+  .hub-img{width:80px;height:72px;flex-basis:80px}
+  .hub-chev{width:34px;height:34px}
+  .news form{width:100%}
+  .news input{flex:1;min-width:0}
+  .acct-main{padding:18px 16px}
+  /* Tiroir et modales plein écran utile, zones sûres iPhone. */
+  .drawer{width:100vw}
+  .drawer-foot{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .ci-qty button{width:32px;height:32px}
+  .toast{left:16px;right:16px;transform:translateY(80px);max-width:calc(100vw - 32px)}
+  .toast.show{transform:none}
+  .wa-float{right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
+  .auth-box{padding:20px 16px}
+  /* Anti-zoom iOS : 16px mini sur les champs tactiles. */
+  .search input,.toolbar .searchbar,.acct-form input,.acct-form select,
+  .filters input,.filters select{font-size:16px}
+}
+
+/* ---------- Petits téléphones : 2 colonnes compactes (≤520px) ---------- */
+@media(max-width:520px){
+  .catalog.view-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .catalog.view-grid .card{padding:10px}
+  .catalog.view-grid .card .im{height:140px}
+  .catalog.view-grid .card .im img{max-height:140px}
+  .catalog.view-grid .card h3{font-size:13.5px;min-height:36px}
+  .catalog.view-grid .card .cat{font-size:11px}
+  .catalog.view-grid .card .pr{font-size:15px}
+  .catalog.view-grid .card .round{width:34px;height:34px;right:8px;bottom:46px}
+  .catalog.view-thumbs{grid-template-columns:repeat(2,1fr)}
+  .top8{grid-template-columns:1fr}
+  .minis{grid-template-columns:1fr}
+  /* Vue liste resserrée mais complète. */
+  .catalog.view-list .im{height:72px;width:88px}
+  .catalog.view-list .im img{max-height:72px}
+  .catalog.view-list .cinfo h3{font-size:14px}
+  .catalog.view-list .pr{font-size:15px}
+  .catalog.view-list .round{width:34px;height:34px;margin-left:4px}
+}
+
+/* ---------- Très petits écrans (≤380px) ---------- */
+@media(max-width:380px){
+  .search select{max-width:96px;font-size:13px}
+  .search button{padding:0 14px}
+  .hicon{min-width:42px;padding:6px 4px}
+  .topbar .in{gap:8px 10px}
+  .dealcard{padding:14px}
+}
+
+/* ---------- Paysage court : modales et diaporama tassés ---------- */
+@media(max-height:500px){
+  .auth-modal{padding:12px}
+  .slide{min-height:240px}
+}
+
+/* ---------- Tactile : cibles généreuses sans changer le look desktop ---------- */
+@media(pointer:coarse){
+  .tabs button{padding:12px 18px}
+  .pager button{min-width:44px;min-height:44px}
+  .f-range input[type=range]::-webkit-slider-thumb{width:22px;height:22px;margin-top:-9px}
+  .f-range input[type=range]::-moz-range-thumb{width:20px;height:20px}
+  .ci-qty button{width:32px;height:32px}
+}
+
+/* ---------- Filtres discrets sur mobile : bouton replié par défaut ---------- */
+/* Desktop : bouton masqué, panneau toujours visible (identité intacte). */
+.filters-toggle{display:none}
+/* Mobile : petit bouton discret ; le panneau est caché tant que l'utilisateur ne l'ouvre pas. */
+@media(max-width:860px){
+  .filters-toggle{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;margin:12px 0 0;border:1.5px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+  .filters-toggle:hover{border-color:var(--link);color:var(--link)}
+  .filters-toggle .filters-chev{font-size:12px;transition:transform .2s}
+  .filters-toggle[aria-expanded="true"]{border-color:var(--link);color:var(--link)}
+  .filters-toggle[aria-expanded="true"] .filters-chev{transform:rotate(180deg)}
+  .filters{display:none;margin-top:10px}
+  .filters.open{display:block}
+}
+
+/* ---------- Méga-menu mobile en accordéon : sous-catégories sous leur catégorie ---------- */
+@media(max-width:860px){
+  .mega-rail{padding:0}
+  .mega-rail button{border-bottom:1px solid var(--border);align-items:center}
+  .mega-rail button::after{content:"▾";color:var(--muted);font-size:12px;transition:transform .2s}
+  .mega-rail button.on::after{transform:rotate(180deg);color:var(--link)}
+  .mega-rail [data-mega-cols]{border-bottom:1px solid var(--border);background:var(--surface);padding:14px 18px}
+  .mega-rail [data-mega-cols] .mega-groups{column-count:1}
+  .mega-rail [data-mega-cols] .mega-links{column-count:1}
+}
+
+/* Rangées défilantes de l'accueil (une ligne + flèches) */
+.hrow-wrap{position:relative}
+.hrow.catalog.view-grid,.top8.hrow{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:8px 0;margin:-8px 0}
+.hrow::-webkit-scrollbar{display:none}
+.hrow>*{flex:0 0 calc((100% - 42px)/4);min-width:0;scroll-snap-align:start}
+.hrow-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;padding:0;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:24px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center}
+.hrow-btn.prev{left:-18px}
+.hrow-btn.next{right:-18px}
+.hrow-btn:hover{border-color:var(--brand);color:var(--brand-dark)}
+.hrow-btn[hidden]{display:none}
+@media(max-width:960px){.hrow>*{flex-basis:calc((100% - 14px)/2)}.hrow-btn.prev{left:4px}.hrow-btn.next{right:4px}}
+@media(max-width:560px){.hrow>*{flex-basis:85%}}
+
+/* ===== Trouver un produit — premium ===== */
+.home-filter{--hf-a:#9fd21f;--hf-ad:#86b814;--hf-ink:#14171a;--hf-mute:#6b7280;--hf-line:#e5e8ec;position:relative;overflow:hidden;background:#fff;border:1px solid var(--hf-line);border-radius:20px;padding:32px 36px 34px;margin:16px 0 28px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 12px 32px -12px rgba(16,24,40,.12)}
+.home-filter::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--hf-a),#d6f26b 60%,var(--hf-ad))}
+.home-filter h2{margin:0 0 6px;font-size:1.55rem;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:var(--hf-ink)}
+.home-filter .sub{margin:0 0 26px;font-size:.95rem;color:var(--hf-mute);max-width:62ch}
+.home-filter form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 20px;align-items:end}
+.home-filter label{display:flex;flex-direction:column;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hf-mute)}
+.home-filter select,.home-filter input{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:100%;height:50px;margin:0;padding:0 16px;font:inherit;font-size:.98rem;font-weight:500;letter-spacing:0;text-transform:none;color:var(--hf-ink);background-color:#f8f9fb;border:1.5px solid var(--hf-line);border-radius:12px;outline:none;transition:border-color .18s,box-shadow .18s,background-color .18s}
+.home-filter select{padding-right:44px;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,#6b7280 50%),linear-gradient(135deg,#6b7280 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.home-filter input::placeholder{color:#a3aab5;font-weight:400}
+.home-filter select:hover,.home-filter input:hover{border-color:#cfd5dc;background-color:#fff}
+.home-filter select:focus,.home-filter input:focus{border-color:var(--hf-ad);background-color:#fff;box-shadow:0 0 0 4px rgba(159,210,31,.22)}
+.home-filter select:disabled{opacity:.55;cursor:not-allowed}
+.home-filter .btn{grid-column:1/-1;justify-self:end;width:auto;min-width:240px;height:52px;padding:0 34px;font:inherit;font-size:1rem;font-weight:700;letter-spacing:.02em;color:#111;background:linear-gradient(180deg,#b4e43a,var(--hf-a));border:0;border-radius:12px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(134,184,20,.8),inset 0 1px 0 rgba(255,255,255,.45);transition:transform .15s,box-shadow .15s,filter .15s}
+.home-filter .btn:hover{transform:translateY(-2px);filter:saturate(1.1);box-shadow:0 14px 26px -10px rgba(134,184,20,.9),inset 0 1px 0 rgba(255,255,255,.5)}
+.home-filter .btn:active{transform:translateY(0)}
+@media(max-width:900px){.home-filter{padding:26px 22px 28px}.home-filter form{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.home-filter{border-radius:16px;padding:22px 16px 24px}.home-filter h2{font-size:1.3rem}.home-filter form{grid-template-columns:1fr;gap:14px}.home-filter .btn{width:100%;min-width:0;justify-self:stretch}}
+.home-filter .sub{max-width:none}
+.home-filter select,.home-filter input{box-shadow:inset 0 1px 2px rgba(16,24,40,.04)}
+.home-filter input[type=number]{-moz-appearance:textfield}
+.home-filter input[type=number]::-webkit-outer-spin-button,.home-filter input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.home-filter .btn{min-width:280px;letter-spacing:.03em}
+.home-filter form{padding-top:4px}

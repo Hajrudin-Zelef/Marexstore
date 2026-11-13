@@ -5,7 +5,7 @@
     var t = JSON.parse(localStorage.getItem('mediatec-theme') || '{}');
     var r = document.documentElement;
     if (t.mode === 'sombre') r.setAttribute('data-theme', 'dark');
-    if (t.color === 'liquid') r.setAttribute('data-color', 'liquid');
+    if (t.color) { r.setAttribute('data-color', t.color); } else { r.setAttribute('data-color', 'liquid'); }
   } catch (e) {}
   document.documentElement.classList.add('js');
 })();

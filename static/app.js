@@ -519,12 +519,13 @@
           wrap.querySelectorAll('[data-sub]').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-sub') === state.sub); });
         }
       })();
-      wrap.querySelectorAll('[data-view]').forEach(function (b) {
+      var savedView = (function(){try{var tv=JSON.parse(localStorage.getItem('mediatec-theme')||'{}');return tv.view||'grid';}catch(e){return 'grid';}})(); grid.classList.remove('view-grid','view-list','view-thumbs'); grid.classList.add('view-'+savedView); wrap.querySelectorAll('[data-view]').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-view')===savedView);}); wrap.querySelectorAll('[data-view]').forEach(function (b) {
         b.addEventListener('click', function () {
           wrap.querySelectorAll('[data-view]').forEach(function (x) { x.classList.remove('on'); });
           b.classList.add('on');
           grid.classList.remove('view-grid', 'view-list', 'view-thumbs');
           grid.classList.add('view-' + b.getAttribute('data-view'));
+          try{var t=JSON.parse(localStorage.getItem('mediatec-theme')||'{}');t.view=b.getAttribute('data-view');localStorage.setItem('mediatec-theme',JSON.stringify(t));}catch(e){}
         });
       });
       /* Tri : réordonne les cartes (prix, nom) puis ré-applique la pagination. */
@@ -956,9 +957,9 @@
       var t = loadTheme();
       var r = document.documentElement;
       if (t.mode === 'sombre') r.setAttribute('data-theme', 'dark'); else r.removeAttribute('data-theme');
-      if (t.color === 'liquid') r.setAttribute('data-color', 'liquid'); else r.removeAttribute('data-color');
+      if ((t.color || 'liquid') === 'liquid') r.setAttribute('data-color', 'liquid'); else r.removeAttribute('data-color');
       document.querySelectorAll('[data-theme-choice]').forEach(function (el) { el.checked = (el.getAttribute('data-theme-choice') === (t.mode || 'clair')); });
-      document.querySelectorAll('[data-color-choice]').forEach(function (el) { el.checked = (el.getAttribute('data-color-choice') === (t.color || 'gazonnier')); });
+      document.querySelectorAll('[data-color-choice]').forEach(function (el) { el.checked = (el.getAttribute('data-color-choice') === (t.color || 'liquid')); });
     }
     document.addEventListener('change', function (e) {
       var th = e.target.closest('[data-theme-choice]');
