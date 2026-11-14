@@ -155,6 +155,11 @@
       <div id="rows"></div>
       <div id="blockEditor" class="block-editor hidden">
         <h3 data-ic="pencil">Modifier le bloc sélectionné</h3>
+        <div class="field" id="beProduitField"><label>Produit du catalogue (remplit titre, prix et texte)</label>
+          <select id="beProduit" onchange="pickBlockProduit(this.value)">
+            <option value="">— Choisir un produit —</option>
+          </select>
+        </div>
         <div class="grid2">
           <div class="field"><label>Type du bloc</label>
             <select id="beType" onchange="updateBlock('type',this.value)">
@@ -543,8 +548,8 @@
 
 <!--STUDIO_INIT-->
 <script src="/admin/studio/js/model.js?v=1"></script>
-<script src="/admin/studio/js/view.js?v=2"></script>
-<script src="/admin/studio/js/preview.js?v=1"></script>
-<script src="/admin/studio/js/controller.js?v=2"></script>
+<script src="/admin/studio/js/view.js?v=3"></script>
+<script src="/admin/studio/js/preview.js?v=4"></script>
+<script src="/admin/studio/js/controller.js?v=4"></script>
 </body>
 </html>

@@ -241,7 +241,7 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "studio indisponible", http.StatusInternalServerError)
 		return
 	}
-	init := `<script>window.__STUDIO_THEME__=` + studioThemeJSON() + `;window.__STUDIO_CSRF__=` + strconv.Quote(a.adminCSRF()) + `;` + studioDesignInit(a.DB) + `</script>`
+	init := `<script>window.__STUDIO_THEME__=` + studioThemeJSON() + `;window.__STUDIO_CSRF__=` + strconv.Quote(a.adminCSRF()) + `;` + studioDesignInit(a.DB) + studioSnapshotInit(a) + `</script>`
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte(strings.Replace(string(html), "<!--STUDIO_INIT-->", init, 1)))
@@ -449,7 +449,11 @@ func (a *App) AdminStudioFile(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
-// AdminDesignPreview : rendu de l'accueil (brouillon POST ou thème live en GET).
+// AdminDesignPreview : rendu de la vraie page (brouillon POST / query string
+// ou thème live en GET). Phase A1 : la page complète (en-tête + corps + pied
+// de page) avec le thème brouillon, pour l'aperçu réel du Studio.
+// ?page=accueil (défaut) | boutique | fiche ; ?slug= pour la fiche (défaut :
+// le premier produit du catalogue).
 func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
 		return
@@ -460,10 +464,30 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost || hasThemeQuery(r) {
 		th = themeFromForm(r)
 	}
-	body := render.IndexBodyTheme(a.Store, a.Recents, th)
+	q := r.URL.Query()
+	var body, title string
+	switch q.Get("page") {
+	case "boutique":
+		title = "Store — aperçu"
+		body = render.BoutiqueBodyQueryTheme(a.Store, q, th)
+	case "fiche":
+		p := a.Store.BySlug[q.Get("slug")]
+		if p == nil && len(a.Store.Products) > 0 {
+			p = a.Store.Products[0]
+		}
+		if p == nil {
+			http.Error(w, "aucun produit", http.StatusNotFound)
+			return
+		}
+		title = p.Nom + " — aperçu"
+		body = render.HeaderTheme(a.Store, "", "", th) + render.FicheBody(a.Store, p) + "\n" + render.Footer(a.Store, "")
+	default: // accueil (IndexBodyTheme inclut déjà en-tête + pied de page)
+		title = "Accueil — aperçu"
+		body = render.IndexBodyTheme(a.Store, a.Recents, th)
+	}
 	// <base href="/"> : la page est servie sous /admin/design/apercu mais ses
 	// URLs relatives (assets/, images/, produits/) visent la racine du site.
 	extra := render.ThemeHead(th) + `<script src="/static/theme.js?v=2" defer></script><script src="/static/app.js?v=339" defer></script><script src="/static/htmx.min.js?v=1912" defer></script><script src="/static/mirror.js?v=1" defer></script>`
-	s := render.DocTheme("Accueil — aperçu", body, "", extra, th.HtmlAttrs())
+	s := render.DocTheme(title, body, "", extra, th.HtmlAttrs())
 	a.write(w, 200, absolutizePreview(s))
 }

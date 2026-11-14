@@ -103,9 +103,9 @@ func TestAdminDesignServeStudio(t *testing.T) {
 		`window.__STUDIO_CSRF__`, // jeton CSRF injecté
 		`/admin/studio/studio.css?v=1`,
 		`/admin/studio/js/model.js?v=1`,
-		`/admin/studio/js/view.js?v=2`,
-		`/admin/studio/js/preview.js?v=1`,
-		`/admin/studio/js/controller.js?v=2`,
+		`/admin/studio/js/view.js?v=3`,
+		`/admin/studio/js/preview.js?v=4`,
+		`/admin/studio/js/controller.js?v=4`,
 		`id="tab-front"`,
 		`id="tab-boutique"`,
 	} {
@@ -481,5 +481,87 @@ func TestAdminDesignServeStudioInjecteDesign(t *testing.T) {
 	}
 	if !strings.Contains(body, `window.__STUDIO_DESIGN_VERSION__=1`) {
 		t.Fatal("version du design non injectée (attendue 1)")
+	}
+}
+
+// A1 — l'aperçu rend le VRAI site (en-tête + corps + pied de page), avec le
+// thème brouillon (query string) ou le thème live. Aucun texte de la maquette
+// (« Titre de la diapositive », « Avantage 1 ») ne doit y apparaître.
+func TestAdminDesignPreviewPages(t *testing.T) {
+	app, _ := testAppDesign(t)
+	list, err := catalog.LoadRaw("../../catalogdata/produits-v3.json")
+	if err != nil {
+		t.Skip("catalogdata absent (hors dépôt local)")
+	}
+	catalog.ApplyTaxonomy(list)
+	app.Store = catalog.NewStore(list)
+	if len(app.Store.Products) == 0 {
+		t.Fatal("catalogue vide")
+	}
+	prod := app.Store.Products[0]
+
+	get := func(url string, auth bool) (int, string) {
+		req := httptest.NewRequest(http.MethodGet, url, nil)
+		if auth {
+			req.SetBasicAuth("admin", "test1234")
+		}
+		rec := httptest.NewRecorder()
+		app.AdminDesignPreview(rec, req)
+		return rec.Code, rec.Body.String()
+	}
+
+	// Sans auth → 401.
+	if code, _ := get("/admin/design/apercu", false); code != http.StatusUnauthorized {
+		t.Fatalf("sans auth : status %d, attendu 401", code)
+	}
+
+	// Accueil : en-tête réel + un vrai produit + pied de page réel.
+	code, body := get("/admin/design/apercu", true)
+	if code != http.StatusOK {
+		t.Fatalf("accueil : status %d", code)
+	}
+	// L'en-tête n'apparaît qu'UNE fois (IndexBodyTheme l'inclut déjà).
+	if n := strings.Count(body, "Bienvenue dans notre boutique"); n != 1 {
+		t.Fatalf("accueil : en-tête présent %d fois, attendu 1", n)
+	}
+	for _, want := range []string{"Bienvenue dans notre boutique", "S'abonner à la newsletter", prod.Nom} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("accueil : %q absent (pas le vrai site ?)", want)
+		}
+	}
+	for _, no := range []string{"Titre de la diapositive", "Avantage 1", "Avantage 2"} {
+		if strings.Contains(body, no) {
+			t.Fatalf("accueil : texte maquette %q présent", no)
+		}
+	}
+
+	// Boutique : le vrai catalogue.
+	code, body = get("/admin/design/apercu?page=boutique", true)
+	if code != http.StatusOK {
+		t.Fatalf("boutique : status %d", code)
+	}
+	for _, want := range []string{"Store", prod.Nom, "Bienvenue dans notre boutique"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("boutique : %q absent", want)
+		}
+	}
+
+	// Fiche : le premier produit par défaut, puis par slug.
+	code, body = get("/admin/design/apercu?page=fiche", true)
+	if code != http.StatusOK {
+		t.Fatalf("fiche : status %d", code)
+	}
+	if !strings.Contains(body, prod.Nom) {
+		t.Fatalf("fiche : nom du produit %q absent", prod.Nom)
+	}
+	code, body = get("/admin/design/apercu?page=fiche&slug="+url.QueryEscape(prod.Slug), true)
+	if code != http.StatusOK || !strings.Contains(body, prod.Nom) {
+		t.Fatalf("fiche par slug : status %d, produit absent", code)
+	}
+
+	// Thème brouillon via query string : l'accent est appliqué.
+	_, body = get("/admin/design/apercu?couleur=perso&accent=2563eb", true)
+	if !strings.Contains(body, "#2563eb") && !strings.Contains(body, "#2563EB") {
+		t.Fatal("thème brouillon : accent #2563eb non appliqué à l'aperçu")
 	}
 }

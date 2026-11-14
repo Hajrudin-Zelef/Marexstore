@@ -32,7 +32,46 @@ function pvFooterHTML(){
     <div class="pv-foot" style="background:${f.footerBg};color:#fff">${esc(T('copyright'))}</div>`;
 }
 
+/* Aperçu réel (phase A1) : l'iframe charge le vrai site
+   (/admin/design/apercu) au lieu de la maquette. Le thème brouillon passe
+   en query string (couleur, accent, annonce… — même mécanisme que l'aperçu
+   brouillon existant). La maquette (renderPreviewMockup, ci-dessous) ne
+   sert plus que de repli si l'iframe ne charge pas. */
+let pvTimer=null, pvCurrentURL='';
+function previewURL(){
+  const t=themeFromFront();
+  const q=new URLSearchParams();
+  q.set('couleur',t.couleur); q.set('accent',t.accent); q.set('mode',t.mode);
+  q.set('police',t.police); q.set('annonce_on',t.annonce_on);
+  q.set('annonce_texte',t.annonce_texte);
+  if(t.sections&&t.sections.length)q.set('sections',t.sections.join(','));
+  if(t.css)q.set('css',t.css);
+  let page='accueil';
+  if(currentTab==='boutique'||currentTab==='panier')page='boutique';
+  else if(currentTab==='fiche')page='fiche';
+  q.set('page',page);
+  return '/admin/design/apercu?'+q.toString();
+}
 function renderPreview(){
+  updateStatus(); setPath();
+  const url=previewURL();
+  if(url===pvCurrentURL)return; // déjà affiché
+  clearTimeout(pvTimer);
+  /* Différé : ne pas relancer un rendu serveur à chaque frappe, attendre
+     que l'utilisateur marque une pause (~400 ms). */
+  pvTimer=setTimeout(()=>{
+    pvCurrentURL=url;
+    /* Le srcdoc (coquille maquette) a PRIORITÉ sur src : il faut retirer
+       l'attribut pour que l'iframe charge la vraie URL. Ne surtout pas
+       faire pvI.srcdoc='' après : ça recrée un srcdoc vide, qui gagne
+       encore sur src. */
+    pvI.removeAttribute('srcdoc');
+    pvI.src=url;
+  },400);
+}
+/* Repli maquette (ancien renderPreview) : utilisé uniquement si l'iframe
+   réelle ne charge pas (voir l'écouteur d'erreur dans controller.js). */
+function renderPreviewMockup(){
   updateStatus(); setPath();
   /* L'aperçu suit l'onglet actif : chaque module montre sa vraie page. */
   if(currentTab==='boutique') return pvShop();

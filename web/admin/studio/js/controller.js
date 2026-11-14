@@ -116,7 +116,10 @@ Object.assign(ICONS,{
 
 let pvReady=false, pvPending=null;
 
-pvI.addEventListener('load',()=>{pvReady=true;if(pvPending!==null)PV.html=pvPending});
+pvI.addEventListener('load',()=>{pvReady=true;if(pvPending!==null)PV.html=pvPending;
+  /* Onglet Pied de page : défiler en bas de la vraie page (comme l'ancien pvFooter). */
+  if(typeof currentTab!=='undefined'&&currentTab==='footer'){try{const d=pvI.contentDocument;(d.scrollingElement||d.documentElement).scrollTop=1e7}catch(_){}}
+});
 pvI.srcdoc=`<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="${FONTS}"><style>${PV_BASE}${pvCss()}</style><style id="theme"></style></head><body><div id="root"></div></body></html>`;
 
 function openModal(){$('#modal').classList.remove('hidden');$('#mCancel').focus()}
@@ -154,6 +157,32 @@ function themeFromFront(){
    la capture de pubSnap. Même mécanisme que restore(), sans `files` (le
    contenu des fichiers de code n'est pas du design — c'est T3). Sans design
    publié : rien à appliquer, le Studio démarre sur son défaut local. */
+/* Snapshot réel injecté par le serveur (window.__STUDIO_SNAPSHOT__, phase
+   A2) : les données réelles du site (hero, marques, mini-casiers, nav,
+   pied de page) deviennent les DÉFAUTS du Studio, à la place des
+   placeholders (« Titre de la diapositive », marques codées en dur…).
+   Appliqué AVANT applyServerDesign : un design publié (choix de
+   l'utilisateur) gagne sur le snapshot. Sans snapshot : rien, les défauts
+   locaux restent. */
+function applyServerSnapshot(){
+  const s=window.__STUDIO_SNAPSHOT__; if(!s||typeof s!=='object')return;
+  if(Array.isArray(s.hero)&&s.hero.length){
+    acc.hero.slides=s.hero.map(b=>({t:b.titre||'',x:b.sous||'',b:b.btn||'Découvrir',img:b.img||''}));
+  }
+  if(Array.isArray(s.marques)&&s.marques.length){
+    acc.brands.list=s.marques.slice();
+  }
+  if(Array.isArray(s.minis)&&s.minis.length){
+    const row=rows.find(r=>r.id==='minis');
+    if(row)row.cols=s.minis.map(m=>({w:Math.round(100/s.minis.length),block:{type:'Produit',title:m.texte||'',text:'',price:'',img:'🛍️'}}));
+  }
+  if(Array.isArray(s.navLinks)&&s.navLinks.length){
+    header.navLinks=s.navLinks.map(l=>({key:(l.label||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),label:l.label||'',visible:true}));
+  }
+  if(Array.isArray(s.footer)&&s.footer.length){
+    footer.cols=s.footer.map(c=>({key:(c.titre||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),title:c.titre||'',visible:true,links:(c.liens||[]).map(l=>l.label||'')}));
+  }
+}
 function applyServerDesign(){
   const d=window.__STUDIO_DESIGN__; if(!d||typeof d!=='object')return;
   /* Fusion avec l'état courant (qui porte les défauts) : un design partiel
@@ -238,7 +267,9 @@ function initPremium(){
 }
 
 /* Design actif du serveur appliqué avant le premier rendu, puis le thème
-   (settings) par-dessus — c'est lui que la boutique affiche. */
+   (settings) par-dessus — c'est lui que la boutique affiche. Le snapshot
+   (données réelles) passe d'abord, comme défauts ; le design publié gagne. */
+applyServerSnapshot();
 applyServerDesign();
 applyServerTheme();
 renderSwatches();
@@ -648,7 +679,7 @@ function exportV16(){exportDesignV16()}
 
 localNoteV16.className='v16-local-note';localNoteV16.textContent='Studio connecté au site : « Publier » met le design en ligne (versionné, retour en arrière possible depuis l\u2019historique). « Exporter » (onglet Réglages) crée un fichier JSON de design.';$('#editorPanel').prepend(localNoteV16);
 
-if(previewNote16)previewNote16.textContent='Aperçu local du brouillon — la publication met le design en ligne.';
+if(previewNote16)previewNote16.textContent='Aperçu du vrai site avec votre brouillon — « Publier » le met en ligne.';
 document.querySelectorAll('.devices button').forEach(b=>{if(b.title==='Mobile')b.title='Aperçu mobile'});
 
 tabletBtnV16.type='button';tabletBtnV16.title='Tablette';tabletBtnV16.setAttribute('aria-label','Aperçu tablette');tabletBtnV16.innerHTML=ic('monitor');tabletBtnV16.onclick=()=>setDevice('tablet',tabletBtnV16);$('.devices').appendChild(tabletBtnV16);
@@ -657,7 +688,7 @@ addEventListener('load',()=>{
   pvI.addEventListener('load',()=>applyV16Preview());
   bindV16Controls();
   const switcher=document.querySelector('#studioNav button[data-tab="pagesInfo"]');if(switcher){switcher.addEventListener('click',()=>{document.querySelectorAll('#editorPanel > div').forEach(d=>d.classList.add('hidden'));$('#tab-pagesInfo').classList.remove('hidden');currentTab='pagesInfo';renderPageEditorV16();renderPreview()})}
-  const oldHint=document.querySelector('#tab-front > .hint');if(oldHint)oldHint.textContent='Le Studio règle l’apparence et les textes du site. L’aperçu est une maquette locale ; « Publier » envoie le design sur le site.';
+  const oldHint=document.querySelector('#tab-front > .hint');if(oldHint)oldHint.textContent='Le Studio règle l’apparence et les textes du site. L’aperçu montre le vrai site ; « Publier » met le design en ligne.';
   $('#tab-pagesInfo').querySelector('h2').insertAdjacentHTML('afterend','<div class="v16-local-note">Les pages d’information sont éditées ici ; leur contenu sera publié avec le design en phase 2.</div>');
   const historyBox=$('#v13History');if(historyBox){const label=historyBox.querySelector(':scope > label'),hint=historyBox.querySelector(':scope > .hint');if(label)label.textContent='Historique des publications';if(hint)hint.textContent='Chaque publication enregistre les modules modifiés (thème envoyé au serveur).'}
   renderAllModuleTexts();renderTxtList();renderMenuList();

@@ -12,17 +12,47 @@ import (
 
 // ---------- Accueil ----------
 
-type banner struct {
-	bg, titre, sous, acc, prix, btn, lien string
+// Banner : une diapositive du hero (accueil). Exporté pour le snapshot du
+// Studio (phase A2) — source unique des bannières.
+type Banner struct {
+	Img   string `json:"img"`
+	Titre string `json:"titre"`
+	Sous  string `json:"sous"`
+	Acc   string `json:"acc"`
+	Prix  string `json:"prix"`
+	Btn   string `json:"btn"`
+	Lien  string `json:"lien"`
 }
 
-var banners = []banner{
+// Banners : les diapositives du hero (accueil).
+var Banners = []Banner{
 	{"images/banners/oukitel-rt3.jpg", "OUKITEL", "RT3 PLUS<br>16GO / 128GO", "TABLETTE PROFESSIONELLE", "200.000 CFA", "Acheter", "produits/oukitel-rt3-plus-16-go-ram-128-go.html"},
 	{"images/banners/kyocera-copieurs.jpg", "DÉCOUVREZ", "NOS COPIEURS<br>KYOCERA <b>EN STOCK</b>", "A ne pas rater", "", "En savoir +", "categories/imprimantes-consommables.html"},
 	{"images/banners/elitebook-850-g3.jpg", "HP ELITEBOOK 850 G3", "15\", 8Go - 256ssd", "", "185.000F", "ACHETER", "produits/hp-elitebook-elitebook-850.html"},
 }
 
-// ---------- Filtre global (accueil) ----------
+// MiniCard : un mini-casier promo (accueil). Exporté pour le snapshot du
+// Studio (phase A2) — source unique des mini-casiers.
+type MiniCard struct {
+	Slug  string `json:"slug"`
+	Texte string `json:"texte"`
+}
+
+// Minis : les mini-casiers promo (accueil).
+var Minis = []MiniCard{
+	{"laptop-lenovo-t440", "Profitez de super offres sur le Lenovo T440"},
+	{"hp-all-in-one-24-pouce-i5", "Bureau, All-in-One et plus encore -10%"},
+	{"ecran-hp-serie-527sf-s527sf", "Écran HP Série 5 527SF -12%"},
+	{"casque-logitech-h111", "Casque Logitech H111"},
+}
+
+// Marques : les marques affichées sur l'accueil (section marques).
+var Marques = []string{"ACER", "APPLE", "ASUS", "CISCO", "DELL", "EPSON", "HP", "KYOCERA", "LENOVO"}
+
+// Top8Slugs : les 8 produits « Les plus vendus » (accueil).
+var Top8Slugs = []string{"toner-650a-yellow", "toner-205a-yellow", "toner-711a-black",
+	"toner-xerox-006r01463-magenta", "laptop-iles-de-france",
+	"toner-304a-cyan", "ecran-hp-elite-m243", "toner-650a-cyan"}
 
 // homeFilterHTML : « Trouver un produit » — un filtre complet sur l'accueil
 // (marque, catégorie, type, prix, disponibilité) qui envoie vers la boutique
@@ -75,27 +105,27 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 // Avec le thème par défaut, la sortie est identique à l'ancienne version.
 func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.Theme) string {
 	var slides strings.Builder
-	for i, b := range banners {
+	for i, b := range Banners {
 		on := ""
 		if i == 0 {
 			on = " on"
 		}
 		acc := ""
-		if b.acc != "" {
-			acc = `<p class="b-acc">` + b.acc + `</p>`
+		if b.Acc != "" {
+			acc = `<p class="b-acc">` + b.Acc + `</p>`
 		}
 		pr := ""
-		if b.prix != "" {
-			pr = `<div class="b-pr">` + b.prix + `</div>`
+		if b.Prix != "" {
+			pr = `<div class="b-pr">` + b.Prix + `</div>`
 		}
 		fmt.Fprintf(&slides, `<div class="s%s" style="background-image:url(%s)"><div class="banner-txt">
 <h2>%s</h2><p class="b-sub">%s</p>
 %s
 %s
-<a class="btn" href="%s">%s</a></div></div>`, on, esc(b.bg), b.titre, b.sous, acc, pr, esc(b.lien), b.btn)
+<a class="btn" href="%s">%s</a></div></div>`, on, esc(b.Img), b.Titre, b.Sous, acc, pr, esc(b.Lien), b.Btn)
 	}
 	var dots strings.Builder
-	for i := range banners {
+	for i := range Banners {
 		on := ""
 		if i == 0 {
 			on = "on"
@@ -115,11 +145,8 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 	vedette := []string{"hp-all-in-one-24-pouce-i5", "ecran-hp-serie-527sf-s527sf", "casque-logitech-h111"}
 	promo := []string{"kyocera-taskalfa-3011i", "lenovo-thinkpad-e14g5-21jk00dagq", "oukitel-rt3-plus-16-go-ram-128-go"}
 	notes := []string{"lenovo-thinkpad-e14g5-21jk00dagq", "hp-elitebook-elitebook-850", "hp-elitebook-840-g8"}
-	top8slugs := []string{"toner-650a-yellow", "toner-205a-yellow", "toner-711a-black",
-		"toner-xerox-006r01463-magenta", "laptop-iles-de-france",
-		"toner-304a-cyan", "ecran-hp-elite-m243", "toner-650a-cyan"}
 	var top8 strings.Builder
-	for _, slug := range top8slugs {
+	for _, slug := range Top8Slugs {
 		if f, ok := s.BySlug[slug]; ok {
 			im := ""
 			if f.Image != "" {
@@ -155,11 +182,13 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 		}
 		return `<a class="minicard" href="` + lien + `">` + im + `<span>` + esc(titre) + `</span></a>`
 	}
-	minis := `<div class="minis">` +
-		minicard("laptop-lenovo-t440", "Profitez de super offres sur le Lenovo T440", "") +
-		minicard("hp-all-in-one-24-pouce-i5", "Bureau, All-in-One et plus encore -10%", "") +
-		minicard("ecran-hp-serie-527sf-s527sf", "Écran HP Série 5 527SF -12%", "") +
-		minicard("casque-logitech-h111", "Casque Logitech H111", "") + `</div>`
+	var minisB strings.Builder
+	minisB.WriteString(`<div class="minis">`)
+	for _, m := range Minis {
+		minisB.WriteString(minicard(m.Slug, m.Texte, ""))
+	}
+	minisB.WriteString(`</div>`)
+	minis := minisB.String()
 	hero := `<div class="slide" id="slideshow">` + slides.String() + `
 <button type="button" class="nav prev" data-prev aria-label="Précédent">‹</button>
 <button type="button" class="nav next" data-next aria-label="Suivant">›</button>
@@ -187,7 +216,13 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 <a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>`
 	recentsSec := `<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
 <div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
-	marques := `<div class="sec"><div class="brands"><span>ACER</span><span>APPLE</span><span>ASUS</span><span>CISCO</span><span>DELL</span><span>EPSON</span><span>HP</span><span>KYOCERA</span><span>LENOVO</span></div></div>`
+	var marquesB strings.Builder
+	marquesB.WriteString(`<div class="sec"><div class="brands">`)
+	for _, m := range Marques {
+		marquesB.WriteString(`<span>` + m + `</span>`)
+	}
+	marquesB.WriteString(`</div></div>`)
+	marques := marquesB.String()
 	blocs := map[string]string{
 		"hero": hero, "minis": minis, "filtre": homeFilterHTML(s),
 		"onglets": onglets, "produits": produits, "vendus": vendus,
@@ -234,7 +269,7 @@ func SortedStockFirst(fs []*catalog.RawProduct) []*catalog.RawProduct {
 }
 
 func BoutiqueBody(s *catalog.Store) string {
-	return boutiqueBodyQuery(s, url.Values{})
+	return boutiqueBodyQuery(s, url.Values{}, catalog.SiteTheme)
 }
 
 // HasFilterParam : true si l'URL porte déjà un filtre (?store=, ?sub=, ?cat=,
@@ -253,16 +288,22 @@ func HasFilterParam(q url.Values) bool {
 // identique à BoutiqueBody (hub visible, liste cachée) ; avec filtre, hub masqué
 // et liste affichée dès le premier rendu — le JS n'a plus rien à basculer.
 func BoutiqueBodyQuery(s *catalog.Store, q url.Values) string {
-	return boutiqueBodyQuery(s, q)
+	return boutiqueBodyQuery(s, q, catalog.SiteTheme)
 }
 
-func boutiqueBodyQuery(s *catalog.Store, q url.Values) string {
+// BoutiqueBodyQueryTheme : comme BoutiqueBodyQuery mais avec le thème fourni
+// (aperçu brouillon du Studio, phase A1).
+func BoutiqueBodyQueryTheme(s *catalog.Store, q url.Values, t catalog.Theme) string {
+	return boutiqueBodyQuery(s, q, t)
+}
+
+func boutiqueBodyQuery(s *catalog.Store, q url.Values, t catalog.Theme) string {
 	prefiltered := HasFilterParam(q)
 	hubHidden, listHidden := "", " hidden"
 	if prefiltered {
 		hubHidden, listHidden = " hidden", ""
 	}
-	return Header(s, "", "") + `
+	return HeaderTheme(s, "", "", t) + `
 <div class="wrap">
 <div class="crumb"><a href="index.html">Accueil</a> › Store</div>
 ` + HubHTML(s, hubHidden) + `

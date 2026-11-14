@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/design"
 )
 
 // ---------- Liens ----------
@@ -50,11 +51,68 @@ func PrixHTML(p *catalog.RawProduct) string {
 
 // ---------- Chrome ----------
 
+// NavLink : un lien de la barre de navigation (en-tête).
+type NavLink struct {
+	Label string `json:"label"`
+	Href  string `json:"href"`
+}
+
+// NavLinks : les liens de la barre de navigation (en-tête). Source unique —
+// aussi exposés par le snapshot du Studio (phase A2).
+var NavLinks = []NavLink{
+	{"Accueil", "index.html"},
+	{"Nos logiciels de Gestion", "services.html"},
+	{"Demander un devis", "devis.html"},
+	{"Contact", "contact.html"},
+	{"Qui sommes-nous ?", "qui-sommes-nous.html"},
+}
+
+func navLinksHTML(prefix string) string {
+	var b strings.Builder
+	for _, l := range NavLinks {
+		fmt.Fprintf(&b, "<a href=\"%s%s\">%s</a>\n", prefix, l.Href, l.Label)
+	}
+	return b.String()
+}
+
+// FooterCol : une colonne du pied de page.
+type FooterCol struct {
+	Titre string    `json:"titre"`
+	Liens []NavLink `json:"liens"`
+}
+
+// FooterCols : les 4 colonnes de liens du pied de page (la 5e, Contact, est
+// dynamique — tél/e-mail — et ajoutée par footerColsHTML). Source unique —
+// aussi exposées par le snapshot du Studio (phase A2).
+var FooterCols = []FooterCol{
+	{"Accès Rapide", []NavLink{{"Demande de devis", "devis.html"}, {"Store", "boutique.html"}, {"Suivi de commande", "suivi-commande.html"}, {"Mon compte", "compte.html"}, {"Contact", "contact.html"}}},
+	{"Informations", []NavLink{{"Conditions générales de vente", "cgv.html"}, {"Livraison & retours", "livraison.html"}, {"Politique de confidentialité", "confidentialite.html"}, {"Mentions légales", "mentions-legales.html"}}},
+	{"Le Groupe", []NavLink{{"Nos services", "nos-services.html"}, {"Infrastructure IT", "solutions-infrastructure-it.html"}, {"Collaboration", "solutions-collaboration.html"}, {"Cloud & Sécurité", "solutions-cloud-securite.html"}, {"Nos références", "nos-references.html"}, {"À propos de nous", "apropos.html"}, {"Contactez-nous", "contactez-nous.html"}}},
+	{"Liens utiles", []NavLink{{"Accueil", "index.html"}, {"Nos Logiciels de Gestion", "services.html"}, {"À propos de Mediatec", "apropos.html"}, {"Demande de devis", "devis.html"}}},
+}
+
+func footerColsHTML(prefix string) string {
+	var b strings.Builder
+	for _, c := range FooterCols {
+		b.WriteString(`<div><h4>` + esc(c.Titre) + `</h4><ul>`)
+		for _, l := range c.Liens {
+			fmt.Fprintf(&b, `<li><a href="%s%s">%s</a></li>`, prefix, l.Href, esc(l.Label))
+		}
+		b.WriteString("</ul></div>\n")
+	}
+	b.WriteString(`<div><h4>Contact</h4><ul><li>Tél : ` + esc(catalog.Tel) + `</li><li>Tél : ` + esc(catalog.Tel2) + `</li><li>E-mail : ` + esc(catalog.Email) + `</li><li>Abidjan, Côte d'Ivoire</li></ul></div>` + "\n")
+	return b.String()
+}
+
 func Header(s *catalog.Store, prefix, searchQ string) string {
 	return HeaderTheme(s, prefix, searchQ, catalog.SiteTheme)
 }
 
 // HeaderTheme : comme Header mais avec le thème fourni (aperçu brouillon).
+// HeaderTheme : comme Header mais avec le thème fourni (aperçu brouillon).
+// Phase 3.1 : les textes du chrome viennent du design (Tx) et les bascules
+// header.show* masquent les blocs — défauts = les chaînes actuelles, donc
+// parité sans design publié.
 func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) string {
 	var opts strings.Builder
 	for _, m := range catalog.MainOrder {
@@ -64,27 +122,48 @@ func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) stri
 	if t.AnnonceOn && strings.TrimSpace(t.AnnonceTexte) != "" {
 		annonce = `<div class="mx-annonce">` + esc(t.AnnonceTexte) + `</div>`
 	}
-	return annonce + `<div class="topbar"><div class="in"><span>Bienvenue dans notre boutique</span><span class="sp"></span>
-<a href="` + prefix + `suivi-commande.html">Suivi de commande</a><span>` + esc(catalog.Tel) + `</span><span>` + esc(catalog.Email) + `</span><a href="` + prefix + `compte.html" data-auth-open>Inscription / Connexion</a></div></div>
-<header class="main"><div class="in">
+	d := design.Current()
+	topbar := ""
+	if d.Bool("header", "showTopbar", true) {
+		phone := ""
+		if d.Bool("header", "showPhone", true) {
+			phone = `<span>` + esc(catalog.Tel) + `</span>`
+		}
+		email := ""
+		if d.Bool("header", "showEmail", true) {
+			email = `<span>` + esc(catalog.Email) + `</span>`
+		}
+		topbar = `<div class="topbar"><div class="in"><span>` + escTx(d.Text("bienvenue", "Bienvenue dans notre boutique")) + `</span><span class="sp"></span>
+<a href="` + prefix + `suivi-commande.html">` + escTx(d.Text("suivi_commande", "Suivi de commande")) + `</a>` + phone + email + `<a href="` + prefix + `compte.html" data-auth-open>` + escTx(d.Text("inscription", "Inscription / Connexion")) + `</a></div></div>
+`
+	}
+	// Icônes de l'en-tête (phase 3.1) : libellés Tx + bascules show*.
+	icBoutique := ""
+	if d.Bool("header", "showBoutique", true) {
+		icBoutique = `<a class="hicon" href="` + prefix + `boutique.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="hic-lab">` + escTx(d.Text("boutique_ico", "Boutique")) + `</span></a>`
+	}
+	icCompte := ""
+	if d.Bool("header", "showCompte", true) {
+		icCompte = `<a class="hicon" href="` + prefix + `compte.html" data-auth-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="hic-lab" data-compte-lab>` + escTx(d.Text("compte_ico", "Compte")) + `</span></a>`
+	}
+	icPanier := ""
+	if d.Bool("header", "showPanier", true) {
+		icPanier = `<button class="hicon" type="button" data-cart-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="hic-badge" data-cart-count>0</span><span class="hic-lab">` + escTx(d.Text("panier_ico", "Panier")) + `</span></button>`
+	}
+	icPrefs := ""
+	if d.Bool("header", "showPrefs", true) {
+		icPrefs = `<a class="hicon" href="` + prefix + `parametres.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="hic-lab">` + escTx(d.Text("prefs_ico", "Préférences")) + `</span></a>`
+	}
+	return annonce + topbar + `<header class="main"><div class="in">
 <a class="logo" href="` + prefix + `index.html"><img src="` + prefix + `images/logo-mediatec.png" alt="Mediatec"><span class="store">Store</span></a>
-<form class="search" action="` + prefix + `boutique.html" method="get"><select name="cat"><option value="">Toutes les catégories</option>
+<form class="search" action="` + prefix + `boutique.html" method="get"><select name="cat"><option value="">` + escTx(d.Text("toutes_cat", "Toutes les catégories")) + `</option>
 ` + opts.String() + `</select>
-<input name="q" type="search" placeholder="Rechercher un produit, une référence…" value="` + esc(searchQ) + `"><button type="submit">Rechercher</button></form>
+<input name="q" type="search" placeholder="` + escTx(d.Text("recherche_ph", "Rechercher un produit, une référence…")) + `" value="` + esc(searchQ) + `"><button type="submit">` + escTx(d.Text("rechercher", "Rechercher")) + `</button></form>
 <div class="hicons">
-<a class="hicon" href="` + prefix + `boutique.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="hic-lab">Boutique</span></a>
-<a class="hicon" href="` + prefix + `compte.html" data-auth-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="hic-lab" data-compte-lab>Compte</span></a>
-<button class="hicon" type="button" data-cart-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="hic-badge" data-cart-count>0</span><span class="hic-lab">Panier</span></button>
-<a class="hicon" href="` + prefix + `parametres.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="hic-lab">Préférences</span></a>
-</div></div></header>
+` + icBoutique + "\n" + icCompte + "\n" + icPanier + "\n" + icPrefs + "\n" + `</div></div></header>
 <nav class="main"><div class="in">
 ` + MegaBtn() + `
-<a href="` + prefix + `index.html">Accueil</a>
-<a href="` + prefix + `services.html">Nos logiciels de Gestion</a>
-<a href="` + prefix + `devis.html">Demander un devis</a>
-<a href="` + prefix + `contact.html">Contact</a>
-<a href="` + prefix + `qui-sommes-nous.html">Qui sommes-nous ?</a>
-</div>
+` + navLinksHTML(prefix) + `</div>
 ` + MegaPanel(s, prefix) + `
 </nav>
 <div class="overlay" data-cart-overlay></div>
@@ -134,8 +213,21 @@ func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) stri
 </div>`
 }
 
+// escTx : échappement des textes du design (Tx). Échappe &, <, > et "
+// (injection de balise / sortie d'attribut) mais PAS l'apostrophe : les
+// libellés codés en dur en contiennent (S'abonner, S'inscrire) et étaient
+// des littéraux bruts — esc() les transformerait en &#x27; et romprait la
+// parité sans design. La validation serveur (phase 2) bloque déjà les
+// motifs dangereux (<script>, <iframe>, <form>, {{...}}, javascript:,
+// on*=) dans les valeurs de design.
+var escTxReplacer = strings.NewReplacer("&", "&amp;", "<", "&lt;", ">", "&gt;", `"`, "&quot;")
+
+func escTx(s string) string { return escTxReplacer.Replace(s) }
+
+// MegaBtn : le bouton du méga-menu. Le libellé vient du design (Tx
+// toutes_cat) — défaut = la chaîne actuelle, donc parité sans design.
 func MegaBtn() string {
-	return `<button type="button" class="mega-btn" data-mega-btn aria-expanded="false">☰ Toutes les Catégories</button>`
+	return `<button type="button" class="mega-btn" data-mega-btn aria-expanded="false">☰ ` + esc(design.Current().Text("toutes_cat", "Toutes les Catégories")) + `</button>`
 }
 
 // ---------- Cartes ----------
@@ -294,17 +386,24 @@ func WidgetsHTML(s *catalog.Store, prefix string) string {
 </div></div>`
 }
 
+// Footer : le pied de page. Phase 3.1 : textes newsletter + copyright
+// depuis Tx, bascules footer.showNewsletter / showCols — défauts = les
+// chaînes actuelles, donc parité sans design publié.
 func Footer(s *catalog.Store, prefix string) string {
-	return WidgetsHTML(s, prefix) + `
-<div class="news"><div class="in"><div><h3>S'abonner à la newsletter</h3><div>Recevez nos offres et nouveautés. ` + esc(catalog.Tel) + ` / ` + esc(catalog.Tel2) + ` — ` + esc(catalog.Email) + `</div></div>
-<form data-newsletter="` + catalog.Email + `" action="#" method="get"><input type="email" data-newsletter-email placeholder="Votre adresse e-mail" required><button type="button" data-newsletter-send>S'inscrire</button></form></div></div>
-<footer><div class="cols">
-<div><h4>Accès Rapide</h4><ul><li><a href="` + prefix + `devis.html">Demande de devis</a></li><li><a href="` + prefix + `boutique.html">Store</a></li><li><a href="` + prefix + `suivi-commande.html">Suivi de commande</a></li><li><a href="` + prefix + `compte.html">Mon compte</a></li><li><a href="` + prefix + `contact.html">Contact</a></li></ul></div>
-<div><h4>Informations</h4><ul><li><a href="` + prefix + `cgv.html">Conditions générales de vente</a></li><li><a href="` + prefix + `livraison.html">Livraison &amp; retours</a></li><li><a href="` + prefix + `confidentialite.html">Politique de confidentialité</a></li><li><a href="` + prefix + `mentions-legales.html">Mentions légales</a></li></ul></div>
-<div><h4>Le Groupe</h4><ul><li><a href="` + prefix + `nos-services.html">Nos services</a></li><li><a href="` + prefix + `solutions-infrastructure-it.html">Infrastructure IT</a></li><li><a href="` + prefix + `solutions-collaboration.html">Collaboration</a></li><li><a href="` + prefix + `solutions-cloud-securite.html">Cloud &amp; Sécurité</a></li><li><a href="` + prefix + `nos-references.html">Nos références</a></li><li><a href="` + prefix + `apropos.html">À propos de nous</a></li><li><a href="` + prefix + `contactez-nous.html">Contactez-nous</a></li></ul></div>
-<div><h4>Liens utiles</h4><ul><li><a href="` + prefix + `index.html">Accueil</a></li><li><a href="` + prefix + `services.html">Nos Logiciels de Gestion</a></li><li><a href="` + prefix + `apropos.html">À propos de Mediatec</a></li><li><a href="` + prefix + `devis.html">Demande de devis</a></li></ul></div>
-<div><h4>Contact</h4><ul><li>Tél : ` + esc(catalog.Tel) + `</li><li>Tél : ` + esc(catalog.Tel2) + `</li><li>E-mail : ` + esc(catalog.Email) + `</li><li>Abidjan, Côte d'Ivoire</li></ul></div>
-</div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
+	d := design.Current()
+	news := ""
+	if d.Bool("footer", "showNewsletter", true) {
+		news = `
+<div class="news"><div class="in"><div><h3>` + escTx(d.Text("newsletter_titre", "S'abonner à la newsletter")) + `</h3><div>` + escTx(d.Text("newsletter_texte", "Recevez nos offres et nouveautés.")) + ` ` + esc(catalog.Tel) + ` / ` + esc(catalog.Tel2) + ` — ` + esc(catalog.Email) + `</div></div>
+<form data-newsletter="` + catalog.Email + `" action="#" method="get"><input type="email" data-newsletter-email placeholder="` + escTx(d.Text("newsletter_ph", "Votre adresse e-mail")) + `" required><button type="button" data-newsletter-send>` + escTx(d.Text("newsletter_btn", "S'inscrire")) + `</button></form></div></div>`
+	}
+	cols := ""
+	if d.Bool("footer", "showCols", true) {
+		cols = `<footer><div class="cols">
+` + footerColsHTML(prefix) + `</div><div class="copy">` + escTx(d.Text("copyright", "© Mediatec - Innovating For All - Tout droit reservé")) + `</div></footer>`
+	}
+	return WidgetsHTML(s, prefix) + news + `
+` + cols + `
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
 <script src="` + prefix + `assets/app.js?v=339"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`

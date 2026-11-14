@@ -199,6 +199,7 @@ func main() {
 	r.Post("/admin/api/design", app.AdminDesignAPI)
 	r.Get("/admin/api/design/versions", app.AdminDesignVersions)
 	r.Post("/admin/api/design/versions/{n}/activer", app.AdminDesignActivate)
+	r.Get("/admin/api/snapshot", app.AdminSnapshot)
 	r.Get("/admin/systeme", app.AdminSysteme)
 	r.Post("/admin/systeme", app.AdminSysteme)
 

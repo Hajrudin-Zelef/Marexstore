@@ -195,14 +195,44 @@ function selectBlock(ri, ci){
   $('#beText').value = b.text || '';
   $('#bePrice').value = b.price || '';
   $('#beCta').value = b.cta || '';
+  renderProduitPicker(b);
   $('#blockEditor').classList.remove('hidden');
   renderRows();
   $('#blockEditor').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+/* Sélecteur produit (phase A3) : les produits réels du snapshot
+   (top ventes + mini-casiers + bannières) au lieu d'un champ libre.
+   Choisir un produit remplit titre, prix et texte du bloc. */
+function snapshotProduits(){
+  const s=window.__STUDIO_SNAPSHOT__;
+  if(s&&Array.isArray(s.produits)&&s.produits.length)return s.produits;
+  if(s&&Array.isArray(s.topVentes)&&s.topVentes.length)return s.topVentes;
+  return [];
+}
+function renderProduitPicker(b){
+  const sel=$('#beProduit'), field=$('#beProduitField');
+  if(!sel||!field)return;
+  /* Le sélecteur ne concerne que les blocs produit/bannière. */
+  field.style.display=(b.type==='Produit'||b.type==='Bannière')?'':'none';
+  const prods=snapshotProduits();
+  sel.innerHTML='<option value="">— Choisir un produit —</option>'+prods.map(p=>'<option value="'+esc(p.slug)+'">'+esc(p.nom)+' — '+esc(p.prixAffiche)+'</option>').join('');
+  sel.value='';
+}
+function pickBlockProduit(slug){
+  if(sel.ri===null||!slug)return;
+  const p=snapshotProduits().find(x=>x.slug===slug);
+  if(!p)return;
+  const b=rows[sel.ri].cols[sel.ci].block;
+  b.title=p.nom; b.price=p.prixAffiche; b.text=p.marque||'';
+  $('#beTitle').value=b.title; $('#bePrice').value=b.price; $('#beText').value=b.text;
+  renderRows(); renderPreview();
+}
+
 function updateBlock(field, value){
   if(sel.ri===null) return;
   rows[sel.ri].cols[sel.ci].block[field] = value;
+  if(field==='type')renderProduitPicker(rows[sel.ri].cols[sel.ci].block);
   renderRows();
 }
 
