@@ -1,9 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"path"
+	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
@@ -183,7 +188,11 @@ func designSelected(v, cur string) string {
 	return ""
 }
 
-// AdminDesign : écran du studio (formulaire + iframe d'aperçu live).
+// AdminDesign : écran du Studio (prototype v16-2 découpé en MVC, web/admin/studio).
+// GET : sert studio.html avec le thème courant + le jeton CSRF injectés
+// (marqueur <!--STUDIO_INIT-->). POST : publie le thème (comme avant) ;
+// si la requête demande du JSON (fetch du Studio), répond en JSON au lieu
+// de rediriger. Le reste du design sera persisté en phase 2 (API JSON).
 func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
 		return
@@ -199,6 +208,11 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		catalog.SiteTheme = catalog.DefaultTheme()
 		a.reload()
 		a.auditAdmin(r, "design.reinitialiser", "theme")
+		if strings.Contains(r.Header.Get("Accept"), "application/json") {
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(map[string]any{"ok": true, "version": 0, "msg": "Design réinitialisé"})
+			return
+		}
 		http.Redirect(w, r, "/admin/design?msg=Design+r%C3%A9initialis%C3%A9", http.StatusSeeOther)
 		return
 	}
@@ -210,69 +224,90 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		a.themeToSettings(themeFromForm(r))
 		a.reload()
 		a.auditAdmin(r, "design.publier", fmt.Sprintf("theme v%d", catalog.SiteTheme.Version))
+		if strings.Contains(r.Header.Get("Accept"), "application/json") {
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(map[string]any{"ok": true, "version": catalog.SiteTheme.Version, "msg": "Design publié"})
+			return
+		}
 		http.Redirect(w, r, "/admin/design?msg=Design+publi%C3%A9", http.StatusSeeOther)
 		return
 	}
+	// GET : la page Studio (fichier découpé, pas un formulaire Go).
+	html, err := os.ReadFile("web/admin/studio/studio.html")
+	if err != nil {
+		http.Error(w, "studio indisponible", http.StatusInternalServerError)
+		return
+	}
+	init := `<script>window.__STUDIO_THEME__=` + studioThemeJSON() + `;window.__STUDIO_CSRF__=` + strconv.Quote(a.adminCSRF()) + `;</script>`
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(strings.Replace(string(html), "<!--STUDIO_INIT-->", init, 1)))
+}
+
+// studioThemeJSON : thème courant du site, au format attendu par le Studio
+// (front.accent, front.font, showAnnonce, bandeau, customCSS, couleur).
+func studioThemeJSON() string {
 	t := catalog.SiteTheme
-	var secs strings.Builder
-	on := map[string]bool{}
-	for _, s := range t.Sections {
-		on[s] = true
-	}
-	for _, d := range designSections {
-		chk := ""
-		if on[d.Key] {
-			chk = " checked"
+	accent := "#2E5136"
+	switch t.Couleur {
+	case "liquid":
+		accent = "#84cc16"
+	case "perso":
+		if strings.HasPrefix(t.Accent, "#") {
+			accent = t.Accent
+		} else if t.Accent != "" {
+			accent = "#" + t.Accent
 		}
-		fmt.Fprintf(&secs, `<label class="mx-check"><input type="checkbox" name="sections" value="%s"%s> %s</label>`, d.Key, chk, d.Label)
 	}
-	a.write(w, 200, a.adminPage("Design du site", "design",
-		`<form class="mx-form" id="mx-design-form" method="post" action="/admin/design"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
-<div class="mx-cols"><div>
-<div class="mx-postbox"><h2>Couleurs &amp; ambiance</h2><div class="in">
-<label>Palette
-<select name="couleur">
-<option value="auto"`+designSelected("auto", t.Couleur)+`>Auto (défaut boutique)</option>
-<option value="gazonnier"`+designSelected("gazonnier", t.Couleur)+`>Gazonnier (vert Mediatec)</option>
-<option value="liquid"`+designSelected("liquid", t.Couleur)+`>Liquid (lime)</option>
-<option value="perso"`+designSelected("perso", t.Couleur)+`>Personnalisée (code ci-dessous)</option>
-</select></label>
-<label>Couleur personnalisée (hexa, ex. 8a2be2) <input name="accent" value="`+render.Esc(strings.TrimPrefix(t.Accent, "#"))+`" placeholder="8a2be2"></label>
-<label>Mode <select name="mode">
-<option value="auto"`+designSelected("auto", t.Mode)+`>Auto (défaut)</option>
-<option value="clair"`+designSelected("clair", t.Mode)+`>Clair</option>
-<option value="sombre"`+designSelected("sombre", t.Mode)+`>Sombre</option>
-</select></label>
-<label>Police <select name="police">
-<option value="inter"`+designSelected("inter", t.Police)+`>Inter (défaut)</option>
-<option value="systeme"`+designSelected("systeme", t.Police)+`>Système</option>
-</select></label>
-</div></div>
-<div class="mx-postbox"><h2>Page d'accueil</h2><div class="in">
-<label class="mx-check"><input type="checkbox" name="annonce_on" value="1"`+func() string {
-			if t.AnnonceOn {
-				return " checked"
-			}
-			return ""
-		}()+`> Bande annonce en haut du site</label>
-<label>Texte du bandeau <input name="annonce_texte" value="`+render.Esc(t.AnnonceTexte)+`" placeholder="Livraison offerte dès 100 000 F CFA"></label>
-<div class="mx-hint">Sections affichées (décocher pour masquer) :</div>
-`+secs.String()+`
-<label>Ordre des sections (séparées par des virgules) <input name="ordre" value="`+render.Esc(strings.Join(t.Sections, ","))+`"></label>
-<div class="mx-hint">Ordre possible : hero, minis, filtre, onglets, produits, vendus, banniere, recents, marques.</div>
-</div></div>
-<div class="mx-postbox"><h2>CSS personnalisé</h2><div class="in">
-<label>CSS (sans balise &lt;script&gt;, appliqué après le thème) <textarea name="css" rows="4" placeholder=".mx-annonce{font-size:15px}">`+render.Esc(t.CSS)+`</textarea></label>
-<div class="mx-form-actions">
-<button class="mx-btn" formaction="/admin/design/apercu" formtarget="mx-preview">Actualiser l'aperçu</button>
-<button class="mx-btn primary">Publier</button>
-<button class="mx-btn danger" formaction="/admin/design/reset" formmethod="post" data-mx-confirm="Réinitialiser tout le design ?">Réinitialiser</button>
-</div></div></div>
-</form></div>
-<div><div class="mx-postbox mx-pub"><h2>Aperçu live</h2><div class="in">
-<iframe name="mx-preview" src="/admin/design/apercu" title="Aperçu du site" style="width:100%;height:640px;border:1px solid var(--mx-border);border-radius:8px;background:#fff"></iframe>
-<p class="mx-hint">Le brouillon ne s'affiche que ici. « Publier » le met en ligne.</p>
-</div></div></div></div>`, r))
+	b, _ := json.Marshal(map[string]any{
+		"couleur":      t.Couleur,
+		"accent":       accent,
+		"font":         t.Police,
+		"showAnnonce":  t.AnnonceOn,
+		"annonceTexte": t.AnnonceTexte,
+		"css":          t.CSS,
+		"version":      t.Version,
+		// Sections d'accueil actuelles : le Studio ne les gère pas en phase 1,
+		// il les renvoie telles quelles à la publication (ne jamais les
+		// déduire des lignes de l'éditeur visuel, qui n'en a que 3).
+		"sections": t.Sections,
+	})
+	return string(b)
+}
+
+// AdminStudioFile : fichiers du Studio (CSS/JS découpés, web/admin/studio).
+// Protégé par adminAuth comme la page ; le chemin est nettoyé et borné au
+// dossier du Studio (pas de remontée ../). Type MIME selon l'extension.
+func (a *App) AdminStudioFile(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	rel := strings.TrimPrefix(r.URL.Path, "/admin/studio/")
+	rel = path.Clean("/" + rel)[1:]
+	if rel == "" || rel == "." || strings.Contains(rel, "..") {
+		http.NotFound(w, r)
+		return
+	}
+	full := filepath.Join("web", "admin", "studio", rel)
+	data, err := os.ReadFile(full)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	switch filepath.Ext(rel) {
+	case ".css":
+		w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	case ".js":
+		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+	case ".html":
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	default:
+		http.NotFound(w, r)
+		return
+	}
+	w.Header().Set("Cache-Control", "public, max-age=3600")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(data)
 }
 
 // AdminDesignPreview : rendu de l'accueil (brouillon POST ou thème live en GET).

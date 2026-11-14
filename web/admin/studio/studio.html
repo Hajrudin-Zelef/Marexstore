@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Design — Marexstore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;700&family=DM+Sans:wght@500;700&family=Poppins:wght@500;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap">
+<link rel="stylesheet" href="/admin/studio/studio.css?v=1">
+</head>
+<body>
+
+<!-- ============ BARRE DU STUDIO (page dédiée) ============ -->
+<header class="studio-top">
+  <button class="back-btn" data-ic="back" onclick="location.href='/admin'"><span class="t">Retour à l'admin</span></button>
+  <div class="logo"><span class="logo-mark"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg></span>Marexstore <span>Studio</span></div>
+  <nav class="studio-nav" id="studioNav">
+    <button data-tab="front" class="active"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6.5 7 6.5 11.3a6.5 6.5 0 1 1-13 0C5.5 9.7 12 2.7 12 2.7z"/></svg></span>Front</button>
+    <button data-tab="accueil"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>Page d'accueil</button>
+    <button data-tab="boutique"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1.2 14H4.8L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg></span>Boutique</button>
+    <button data-tab="fiche"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></span>Fiche</button>
+    <button data-tab="panier"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.6 12.6a1.5 1.5 0 0 0 1.5 1.1h8.7a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/><circle cx="9.5" cy="20.5" r="1.4"/><circle cx="17.5" cy="20.5" r="1.4"/></svg></span>Panier</button>
+    <button data-tab="compte"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>Compte</button>
+    <button data-tab="textes"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span>Textes</button>
+    <button data-tab="menu"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></span>Menu</button>
+    <button data-tab="seo"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4.2-4.2"/></svg></span>SEO</button>
+    <button data-tab="reglages"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.7M12 18.5v2.7M2.8 12h2.7M18.5 12h2.7M5.2 5.2l1.9 1.9M16.9 16.9l1.9 1.9M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9"/></svg></span>Réglages</button>
+    <button data-tab="header"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M6 6.5h.01M9 6.5h.01"/></svg></span>En-tête</button>
+    <button data-tab="footer"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15h18M6 18h6"/></svg></span>Pied de page</button>
+  </nav>
+  <div class="top-actions">
+    <button class="btn btn-reset" data-ic="reset" onclick="resetStudio()"><span class="t">Réinitialiser</span></button>
+    <button class="btn btn-publish" id="btnPublish" data-ic="upload" onclick="publishStudio()"><span class="t">Publier</span></button>
+  </div>
+</header>
+
+<!-- ============ ÉTAPES GUIDÉES ============ -->
+<div class="subbar">
+  <div class="crumb"><span id="crumbIco"></span><span class="t">Studio</span><span class="sep">/</span><b id="crumbTitle">Front</b></div>
+  <span class="status" id="status"><i></i><span id="statusTxt">Publié</span></span>
+  <div class="hist">
+    <button class="ibtn" id="btnUndo" data-ic="undo" title="Annuler (Ctrl+Z)" aria-label="Annuler" onclick="undo()" disabled></button>
+    <button class="ibtn" id="btnRedo" data-ic="redo" title="Rétablir (Ctrl+Maj+Z)" aria-label="Rétablir" onclick="redo()" disabled></button>
+  </div>
+</div>
+
+<main>
+  <!-- ============ ÉDITEUR ============ -->
+  <section class="panel" id="editorPanel">
+
+    <!-- ============ ONGLET : FRONT ============ -->
+    <div id="tab-front">
+      <h2>Front — personnaliser le site</h2>
+      <p class="hint">Le cœur du Studio : le design de tout le site (boutique, fiches, panier…), <b>en interface</b> pour les juniors ou <b>en code</b> pour les seniors. L'aperçu à droite est le vrai site — il se met à jour en direct.</p>
+
+      <div class="mode-toggle" id="frontMode">
+        <button data-mode="ui" class="active" onclick="setFrontMode('ui')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>Interface (UI)<small>cliquer, choisir, voir</small></button>
+        <button data-mode="code" onclick="setFrontMode('code')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Code<small>fichiers + éditeur, pour les seniors</small></button>
+      </div>
+
+      <!-- ---- MODE UI ---- -->
+      <div id="front-ui">
+        <div class="grid2">
+          <div class="field"><label>Couleur principale</label>
+            <div class="swatches" id="swAccent"></div>
+            <input type="text" id="hexAccent" value="#2E5136" maxlength="7" oninput="setFront('accent',this.value)" style="margin-top:8px;max-width:140px">
+          </div>
+          <div class="field"><label>Couleur des prix</label>
+            <div class="swatches" id="swPrice"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Fond du site</label>
+            <div class="swatches" id="swBg"></div>
+          </div>
+          <div class="field"><label>Fond du pied de page</label>
+            <div class="swatches" id="swFoot"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Police</label>
+            <select id="selFont" onchange="setFront('font',this.value)">
+              <option value="Inter">Inter (défaut)</option><option>Roboto</option><option>Open Sans</option><option>Poppins</option><option>Manrope</option><option>DM Sans</option>
+            </select>
+          </div>
+          <div class="field"><label>Taille des titres</label>
+            <div class="seg" id="segTitle">
+              <button data-v="S" onclick="setFrontSeg(this,'titleSize')">Petite</button>
+              <button data-v="M" class="active" onclick="setFrontSeg(this,'titleSize')">Moyenne</button>
+              <button data-v="L" onclick="setFrontSeg(this,'titleSize')">Grande</button>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Forme des boutons</label>
+            <div class="seg" id="segBtn">
+              <button data-v="carre" onclick="setFrontSeg(this,'btnShape')">Carré</button>
+              <button data-v="arrondi" class="active" onclick="setFrontSeg(this,'btnShape')">Arrondi</button>
+              <button data-v="pilule" onclick="setFrontSeg(this,'btnShape')">Pilule</button>
+            </div>
+          </div>
+          <div class="field"><label>Cartes produits</label>
+            <div class="seg" id="segCard">
+              <button data-v="grille" class="active" onclick="setFrontSeg(this,'cardLayout')">Grille</button>
+              <button data-v="liste" onclick="setFrontSeg(this,'cardLayout')">Liste</button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="checkrow"><input type="checkbox" id="chkBadge" checked onchange="setFront('showBadge',this.checked)"> Afficher le badge « Promo » sur les cartes</label>
+          <label class="checkrow"><input type="checkbox" id="chkAnnonce" onchange="setFront('showAnnonce',this.checked)"> Bandeau annonce en haut du site</label>
+        </div>
+        <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+          <label>Textes de cette page</label>
+          <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+          <div id="mt-front"></div>
+        </div>
+      </div>
+
+      <!-- ---- MODE CODE : fichiers + éditeur Monaco-like ---- -->
+      <div id="front-code" class="hidden">
+        <p class="hint">Un senior ne code jamais dans le vide : voici les fichiers du site. <b>Cliquez un fichier</b> pour l'ouvrir, modifiez-le, puis <b>Publiez</b>. Le CSS s'applique à l'aperçu en direct.</p>
+        <div class="code-layout">
+          <aside class="filetree">
+            <div class="ft-title">Fichiers du site</div>
+            <div class="ft-section">templates/static/</div>
+            <button class="ft-file" data-file="_top.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>_top.html</button>
+            <button class="ft-file" data-file="_foot.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>_foot.html</button>
+            <button class="ft-file" data-file="apropos.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>apropos.html</button>
+            <button class="ft-file" data-file="cgv.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>cgv.html</button>
+            <button class="ft-file" data-file="contact.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>contact.html</button>
+            <div class="ft-section">static/</div>
+            <button class="ft-file" data-file="theme.css"><span class="ft-ico" style="background:#dbeafe;color:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>theme.css</button>
+            <button class="ft-file" data-file="app.js"><span class="ft-ico" style="background:#fef3c7;color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>app.js</button>
+          </aside>
+          <div class="code-main">
+            <div class="code-tabs" id="codeTabs"></div>
+            <div class="code-editor">
+              <div class="code-gutter" id="codeGutter"></div>
+              <div class="code-area">
+                <pre class="code-pre" id="codePre" aria-hidden="true"></pre>
+                <textarea class="code-input" id="codeInput" spellcheck="false"></textarea>
+              </div>
+            </div>
+            <div class="code-foot"><span id="codeMeta"></span><span>Monaco-like (prototype) — Publier pour appliquer</span></div>
+          </div>
+        </div>
+        <p class="hint" style="margin:12px 0 0">En production, le code est validé côté serveur (pas de &lt;script&gt;, pas de {{…}}) et chaque publication crée une version — on peut revenir en arrière.</p>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : PAGE D'ACCUEIL ============ -->
+    <div id="tab-accueil" class="hidden">
+      <h2>Page d'accueil — éditeur visuel</h2>
+      <p class="hint">Glissez une ligne par sa poignée, à gauche de son titre, pour la déplacer. Tirez la séparation entre deux colonnes pour ajuster leur largeur. <b>Cliquez sur un bloc</b> pour modifier son texte, son prix ou son bouton. Le brouillon ne s'affiche que dans l'aperçu — <b>Publier</b> le met en ligne.</p>
+      <div id="rows"></div>
+      <div id="blockEditor" class="block-editor hidden">
+        <h3 data-ic="pencil">Modifier le bloc sélectionné</h3>
+        <div class="grid2">
+          <div class="field"><label>Type du bloc</label>
+            <select id="beType" onchange="updateBlock('type',this.value)">
+              <option>Bannière</option><option>Produit</option><option>Texte</option>
+            </select>
+          </div>
+          <div class="field"><label>Bouton (texte du bouton)</label>
+            <input type="text" id="beCta" oninput="updateBlock('cta',this.value)" placeholder="Ex : ACHETER">
+          </div>
+          <div class="field"><label>Titre</label>
+            <input type="text" id="beTitle" oninput="updateBlock('title',this.value)">
+          </div>
+          <div class="field"><label>Prix</label>
+            <input type="text" id="bePrice" oninput="updateBlock('price',this.value)">
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0"><label>Texte</label>
+          <input type="text" id="beText" oninput="updateBlock('text',this.value)">
+        </div>
+      </div>
+      <button class="add-row" data-ic="plus" onclick="addRow()">Ajouter une ligne</button>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Tous les titres et textes des blocs, en un seul endroit — pour corriger une faute sans cliquer chaque bloc. C'est le même texte que dans l'éditeur de bloc.</p>
+        <div id="mt-accueil"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : BOUTIQUE ============ -->
+    <div id="tab-boutique" class="hidden">
+      <h2>Boutique — affichage &amp; filtres</h2>
+      <p class="hint">L'aperçu à droite est la vraie boutique — il suit vos réglages en direct. Glissez les facettes pour changer leur ordre.</p>
+      <div class="field"><label>Page à prévisualiser</label>
+        <div class="seg" id="segShopPage">
+          <button data-v="liste" class="active" onclick="setShopPage(this,'liste')">Liste des produits</button>
+          <button data-v="categories" onclick="setShopPage(this,'categories')">Page « Nos catégories »</button>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Affichage des produits</label>
+          <div class="seg" id="segShopLayout">
+            <button data-v="grille" data-ic="grid" class="active" onclick="setShopSeg(this,'layout')">Grille</button>
+            <button data-v="liste" data-ic="list" onclick="setShopSeg(this,'layout')">Liste</button>
+            <button data-v="miniatures" data-ic="grid" onclick="setShopSeg(this,'layout')">Miniatures</button>
+          </div>
+        </div>
+        <div class="field"><label>Produits par page</label>
+          <div class="seg" id="segShopPer">
+            <button data-v="12" onclick="setShopSeg(this,'perPage')">12</button>
+            <button data-v="24" class="active" onclick="setShopSeg(this,'perPage')">24</button>
+            <button data-v="48" onclick="setShopSeg(this,'perPage')">48</button>
+            <button data-v="96" onclick="setShopSeg(this,'perPage')">96</button>
+            <button data-v="all" onclick="setShopSeg(this,'perPage')">Tout afficher</button>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>Tri par défaut</label>
+        <select id="selShopSort" onchange="shop.sort=this.value;renderPreview()">
+          <option value="stock">Stock d'abord (défaut)</option>
+          <option value="prix-asc">Prix croissant</option>
+          <option value="prix-desc">Prix décroissant</option>
+          <option value="nouveau">Nouveautés</option>
+          <option value="nom-az">Nom A-Z</option>
+          <option value="nom-za">Nom Z-A</option>
+        </select>
+      </div>
+      <div class="field"><label>Facettes — glissez pour réordonner, basculez pour afficher/masquer</label>
+        <div class="sort-list" id="facetList"></div>
+        <p class="hint" style="margin:6px 0 0">Les valeurs des facettes restent calculées sur le catalogue — ici on ne fait que montrer, masquer et ordonner.</p>
+      </div>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Badge « Promo » sur les cartes<span class="sub">Le badge rouge sur les produits en promotion</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showBadge=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Bouton « Ajouter » direct sur la carte<span class="sub">Ajouter au panier sans ouvrir la fiche</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.quickAdd=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Afficher le stock sur la carte<span class="sub">« En stock » / « Rupture » sous le prix</span></span>
+          <label class="switch"><input type="checkbox" onchange="shop.showStock=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field">
+        <label>Filtres latéraux</label>
+        <div class="toggle-row"><span class="lbl">Curseur de prix (Min / Max + Appliquer)<span class="sub">Le filtre par tranche de prix</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showPriceSlider=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« Chercher une référence »<span class="sub">Le champ de recherche par nom / référence</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showRefSearch=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« Voir uniquement en stock »<span class="sub">La case à cocher sous les filtres</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showStockOnly=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« + DE FILTRES » (Disponibilité, État)<span class="sub">Le bloc dépliable : En stock / Rupture, Neuf / Occasion / Reconditionné</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showMoreFilters=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field">
+        <label>Page « Nos catégories » et colonne latérale</label>
+        <div class="toggle-row"><span class="lbl">Page d'atterrissage « Nos catégories »<span class="sub">Les cartes catégories avec compteurs (aperçu : bouton « Page Nos catégories »)</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showLanding=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Colonne latérale droite<span class="sub">Mis en Avant, Meilleures ventes, Offres exclusives</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.showSidebar=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« Mis en Avant »<span class="sub">Dans la colonne latérale</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.sidebarAvant=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« Les Meilleures ventes »<span class="sub">Dans la colonne latérale</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.sidebarVentes=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">« Offres exclusives »<span class="sub">Dans la colonne latérale</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="shop.sidebarOffres=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-boutique"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : FICHE ============ -->
+    <div id="tab-fiche" class="hidden">
+      <h2>Fiche produit — sections &amp; boutons</h2>
+      <p class="hint">Basculez une section : elle apparaît ou disparaît dans l'aperçu à droite. La logique métier (prix, stock, commande) n'est jamais modifiable.</p>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Tableau des spécifications<span class="sub">Le tableau technique sous la description</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="fiche.showSpecs=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Produits similaires<span class="sub">« Vous aimerez aussi » en bas de fiche</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="fiche.showSimilar=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Avis clients<span class="sub">Les avis et la note moyenne</span></span>
+          <label class="switch"><input type="checkbox" onchange="fiche.showAvis=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Consommables compatibles<span class="sub">Toners, câbles… liés au produit</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="fiche.showConso=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Bouton WhatsApp<span class="sub">Contacter le vendeur en 1 clic</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="fiche.showWa=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Bouton « Demander un devis »<span class="sub">Pour les achats en volume / entreprises</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="fiche.showDevis=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Nombre de similaires</label>
+          <div class="seg" id="segSimNb">
+            <button data-v="4" class="active" onclick="setFicheSeg(this,'similarNb')">4</button>
+            <button data-v="8" onclick="setFicheSeg(this,'similarNb')">8</button>
+          </div>
+        </div>
+        <div class="field"><label>Galerie photo</label>
+          <div class="seg" id="segGallery">
+            <button data-v="grande" class="active" onclick="setFicheSeg(this,'gallery')">Grande image</button>
+            <button data-v="vignettes" onclick="setFicheSeg(this,'gallery')">Vignettes</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Texte du bouton devis</label>
+          <input type="text" id="inBtnDevis" value="Demander un devis" oninput="setT('devis',this.value)">
+        </div>
+        <div class="field"><label>Texte du bouton WhatsApp</label>
+          <input type="text" id="inBtnWa" value="WhatsApp" oninput="setT('wa',this.value)">
+        </div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-fiche"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : PANIER ============ -->
+    <div id="tab-panier" class="hidden">
+      <h2>Panier &amp; devis — textes &amp; étapes</h2>
+      <p class="hint">Textes et étapes seulement — les totaux, le stock et la logique de commande ne sont jamais modifiables. L'aperçu à droite est le vrai panier.</p>
+      <div class="field"><label>Étapes du devis — cliquez un titre pour le renommer</label>
+        <div id="stepEditor" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"></div>
+        <div class="stepper" id="stepPreview" style="margin-top:12px"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Titre du panier</label>
+          <input type="text" id="inCartTitle" value="Votre panier" oninput="panier.title=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Texte panier vide</label>
+          <input type="text" id="inCartEmpty" value="Votre panier est vide." oninput="panier.emptyText=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Bouton « Commander »</label>
+          <input type="text" id="inBtnOrder" value="Commander" oninput="panier.btnOrder=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Bouton WhatsApp</label>
+          <input type="text" id="inBtnWaCart" value="Commander via WhatsApp" oninput="panier.btnWa=this.value;renderPreview()">
+        </div>
+      </div>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Afficher le récapitulatif des frais<span class="sub">Livraison + total avant le paiement</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="panier.showFees=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Proposer le devis en 4 étapes<span class="sub">Sinon, commande directe en 1 étape</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="panier.useSteps=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-panier"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : TEXTES ============ -->
+    <div id="tab-textes" class="hidden">
+      <h2>Textes du site — libellés &amp; pages</h2>
+      <p class="hint">Cherchez un texte, modifiez-le : l'aperçu à droite montre la page concernée. Texte brut seulement — jamais de code.</p>
+      <input class="search-box" id="txtSearch" placeholder="Rechercher un texte… (ex : panier, devis, livraison)" oninput="renderTxtList()">
+      <div id="txtList"></div>
+      <div class="field" style="margin-top:14px"><label>Contenu d'une page statique</label>
+        <select id="selTxtPage" onchange="loadTxtPage()">
+          <option value="apropos">À propos</option>
+          <option value="cgv">CGV</option>
+          <option value="contact">Contact</option>
+          <option value="livraison">Livraison</option>
+        </select>
+        <textarea id="taTxtPage" class="light" style="min-height:110px;margin-top:8px" oninput="saveTxtPage();renderPreview()"></textarea>
+        <p class="hint" style="margin:6px 0 0">Le HTML de la page est validé côté serveur (pas de &lt;script&gt;, pas de {{…}}) — sinon, la page reste sur son contenu d'origine.</p>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : MENU ============ -->
+    <div id="tab-menu" class="hidden">
+      <h2>Méga-menu — ordre, libellés et visibilité</h2>
+      <p class="hint">Glissez les familles pour changer leur ordre, modifiez leurs libellés et basculez leur visibilité. Les nombres de produits viennent du catalogue et restent en lecture seule.</p>
+      <div class="field"><label>Familles — glissez pour réordonner</label>
+        <div class="sort-list" id="menuList"></div>
+      </div>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Afficher « Voir tous » en bas de chaque groupe<span class="sub">Le lien vers la page de la famille</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="menu.showVoirTous=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Afficher le nombre de produits<span class="sub">Le compteur à côté de chaque famille</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="menu.showCount=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-menu"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : SEO ============ -->
+    <div id="tab-seo" class="hidden">
+      <h2>SEO — comment Google vous voit</h2>
+      <p class="hint">Tapez un titre et une description : l'aperçu Google à droite se met à jour en direct. Restez dans le vert pour être bien affiché.</p>
+      <div class="field"><label>Titre de l'accueil</label>
+        <input type="text" id="inSeoTitle" value="Mediatec Store — Informatique &amp; réseaux à Abidjan" maxlength="70" oninput="seo.title=this.value;renderSeoCounters();renderPreview()">
+        <div class="counter" id="cntTitle"></div>
+      </div>
+      <div class="field"><label>Description de l'accueil</label>
+        <textarea id="inSeoDesc" class="light" style="min-height:64px" maxlength="170" oninput="seo.desc=this.value;renderSeoCounters();renderPreview()">Ordinateurs, imprimantes, réseaux et consommables — Mediatec, Abidjan.</textarea>
+        <div class="counter" id="cntDesc"></div>
+      </div>
+      <div class="field"><label>Image de partage (réseaux sociaux)</label>
+        <input type="text" id="inSeoOg" value="" placeholder="https://…/og-image.jpg (optionnel)" oninput="seo.og=this.value;renderPreview()">
+      </div>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Autoriser l'indexation par Google<span class="sub">Sinon, le site est masqué des moteurs de recherche</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="seo.index=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : RÉGLAGES ============ -->
+    <div id="tab-reglages" class="hidden">
+      <h2>Réglages — la boutique</h2>
+      <p class="hint">Les coordonnées et les réglages généraux du site. L'aperçu à droite montre l'en-tête et le pied de page avec vos coordonnées.</p>
+      <div class="grid2">
+        <div class="field"><label>Nom de la boutique</label>
+          <input type="text" id="inRegNom" value="Mediatec Store" oninput="reglages.nom=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Téléphone</label>
+          <input type="text" id="inRegTel" value="(+225) 07 05 08 75 07" oninput="reglages.tel=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Email</label>
+          <input type="text" id="inRegMail" value="sales@mediatec-ci.com" oninput="reglages.email=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>WhatsApp (numéro)</label>
+          <input type="text" id="inRegWa" value="2250705087507" oninput="reglages.wa=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Adresse</label>
+          <input type="text" id="inRegAdr" value="Plateau, Abidjan" oninput="reglages.adresse=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Horaires</label>
+          <input type="text" id="inRegHor" value="Lun–Ven 8h00–17h30 · Sam 8h30–13h00" oninput="reglages.horaires=this.value;renderPreview()">
+        </div>
+      </div>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Mode maintenance<span class="sub">Le site affiche un message et bloque les commandes</span></span>
+          <label class="switch"><input type="checkbox" id="chkMaint" onchange="reglages.maintenance=this.checked;$('#maintField').style.display=this.checked?'':'none';renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field" id="maintField" style="display:none"><label>Message de maintenance</label>
+        <input type="text" id="inRegMaint" value="Site en maintenance, revenez bientôt." oninput="reglages.maintMsg=this.value;renderPreview()">
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : EN-TÊTE (v9) ============ -->
+    <div id="tab-compte" class="hidden">
+      <h2>Compte — connexion, inscription, préférences</h2>
+      <p class="hint">Seuls les textes et la visibilité se règlent ici : jamais les champs de connexion eux-mêmes ni leur logique.</p>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Modifiez le texte ici, l'aperçu suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-compte"></div>
+      </div>
+    </div>
+
+    <div id="tab-header" class="hidden">
+      <h2>En-tête — barre du haut, logo, recherche, navigation</h2>
+      <p class="hint">L'en-tête apparaît sur toutes les pages. L'aperçu à droite montre la page complète avec votre en-tête.</p>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Barre du haut<span class="sub">« Bienvenue dans notre boutique » + liens à droite</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showTopbar=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Téléphone dans la barre du haut<span class="sub">Le numéro des Réglages</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showPhone=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">E-mail dans la barre du haut<span class="sub">L'e-mail des Réglages</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showEmail=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">En-tête fixe au défilement<span class="sub">L'en-tête reste visible quand on descend la page</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="header.sticky=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Couleur de la barre de navigation</label>
+          <input type="color" value="#84cc16" oninput="header.navBg=this.value;renderPreview()">
+        </div>
+        <div class="field"><label>Couleur de la pastille du panier</label>
+          <input type="color" value="#dc2626" oninput="header.badgeColor=this.value;renderPreview()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Icônes de l'en-tête</label>
+        <div class="toggle-row"><span class="lbl">BOUTIQUE</span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showBoutique=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">COMPTE</span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showCompte=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">PANIER</span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showPanier=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">PRÉFÉRENCES</span>
+          <label class="switch"><input type="checkbox" checked onchange="header.showPrefs=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field">
+        <label>Liens de la barre de navigation — glissez pour réordonner</label>
+        <div class="sort-list" id="navList"></div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-header"></div>
+      </div>
+    </div>
+
+    <!-- ============ ONGLET : PIED DE PAGE (v9) ============ -->
+    <div id="tab-footer" class="hidden">
+      <h2>Pied de page — newsletter, colonnes, copyright</h2>
+      <p class="hint">Le pied de page apparaît sur toutes les pages. L'aperçu à droite montre la page complète avec votre pied de page.</p>
+      <div class="field">
+        <div class="toggle-row"><span class="lbl">Bandeau newsletter<span class="sub">« S'abonner à la newsletter » + champ e-mail</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="footer.showNewsletter=this.checked;renderPreview()"><span class="tr"></span></label></div>
+        <div class="toggle-row"><span class="lbl">Colonnes de liens<span class="sub">Les 5 colonnes (Accès Rapide, Informations, Le Groupe, Liens utiles, Contact)</span></span>
+          <label class="switch"><input type="checkbox" checked onchange="footer.showCols=this.checked;renderPreview()"><span class="tr"></span></label></div>
+      </div>
+      <div class="field">
+        <label>Colonnes — titre, liens (un par ligne), visibilité</label>
+        <div id="footerCols"></div>
+      </div>
+      <div class="field" style="margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+        <label>Textes de cette page</label>
+        <p class="hint" style="margin:0 0 8px">Pour corriger une faute ou changer un libellé : modifiez le texte ici, l'aperçu à droite suit en direct. C'est le même texte que dans l'onglet Textes.</p>
+        <div id="mt-footer"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APERÇU LIVE (vrai front) ============ -->
+  <aside class="panel preview">
+    <div class="pvbar"><h3>Aperçu live</h3>
+      <div class="devices">
+        <button class="active" data-ic="monitor" title="Ordinateur" aria-label="Aperçu ordinateur" onclick="setDevice('desktop',this)"></button>
+        <button data-ic="phone" title="Mobile" aria-label="Aperçu mobile" onclick="setDevice('mobile',this)"></button>
+      </div>
+    </div>
+    <div class="browser" id="pvFrame">
+      <div class="b-bar"><span class="b-dots"><i></i><i></i><i></i></span>
+        <div class="b-url" data-ic="lock"><span>store.neva-ci.pro<b id="pvPath">/</b></span></div>
+        <span class="b-live" id="bLive"><i></i>En direct</span></div>
+      <div class="b-stage" id="bStage"><div class="b-view"><iframe id="pvIframe" title="Aperçu du site" sandbox="allow-same-origin"></iframe></div></div>
+    </div>
+    <p class="pv-note" style="margin:10px 0 0">Le brouillon ne s'affiche qu'ici. « Publier » le met en ligne.</p>
+  </aside>
+</main>
+
+<div class="modal-back hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div class="modal-ico" data-ic="reset"></div>
+    <h3 id="mTitle">Réinitialiser le Studio ?</h3>
+    <p>Réglages, textes et fichiers retrouvent leur état d’origine. Vous pourrez annuler avec Ctrl+Z.</p>
+    <div class="modal-act"><button class="btn btn-ghost" id="mCancel" onclick="closeModal()">Garder mes changements</button><button class="btn btn-danger" onclick="doReset()">Réinitialiser</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!--STUDIO_INIT-->
+<script src="/admin/studio/js/model.js?v=1"></script>
+<script src="/admin/studio/js/view.js?v=1"></script>
+<script src="/admin/studio/js/preview.js?v=1"></script>
+<script src="/admin/studio/js/controller.js?v=1"></script>
+</body>
+</html>

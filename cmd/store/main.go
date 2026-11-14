@@ -186,6 +186,8 @@ func main() {
 	r.Post("/admin/design/reset", app.AdminDesign)
 	r.Get("/admin/design/apercu", app.AdminDesignPreview)
 	r.Post("/admin/design/apercu", app.AdminDesignPreview)
+	// Fichiers découpés du Studio Design (web/admin/studio/) : CSS + JS.
+	r.Get("/admin/studio/*", app.AdminStudioFile)
 	r.Get("/admin/systeme", app.AdminSysteme)
 	r.Post("/admin/systeme", app.AdminSysteme)
 

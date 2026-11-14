@@ -13,6 +13,7 @@ COPY --from=build /out/import /app/import
 COPY templates ./templates
 COPY static ./static
 COPY db ./db
+COPY web ./web
 EXPOSE 8080
 USER nonroot:nonroot
 ENTRYPOINT ["/app/store"]
