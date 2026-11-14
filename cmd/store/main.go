@@ -188,6 +188,11 @@ func main() {
 	r.Post("/admin/design/apercu", app.AdminDesignPreview)
 	// Fichiers découpés du Studio Design (web/admin/studio/) : CSS + JS.
 	r.Get("/admin/studio/*", app.AdminStudioFile)
+	// API design JSON (phase 2) : le Studio lit/écrit le design complet.
+	r.Get("/admin/api/design", app.AdminDesignAPI)
+	r.Post("/admin/api/design", app.AdminDesignAPI)
+	r.Get("/admin/api/design/versions", app.AdminDesignVersions)
+	r.Post("/admin/api/design/versions/{n}/activer", app.AdminDesignActivate)
 	r.Get("/admin/systeme", app.AdminSysteme)
 	r.Post("/admin/systeme", app.AdminSysteme)
 

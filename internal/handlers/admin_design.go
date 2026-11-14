@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"path"
@@ -12,7 +14,9 @@ import (
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/design"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/render"
+	"github.com/go-chi/chi/v5"
 )
 
 // Studio Design (/admin/design) : personnalise le visuel du site comme le
@@ -209,8 +213,7 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		a.reload()
 		a.auditAdmin(r, "design.reinitialiser", "theme")
 		if strings.Contains(r.Header.Get("Accept"), "application/json") {
-			w.Header().Set("Content-Type", "application/json")
-			_ = json.NewEncoder(w).Encode(map[string]any{"ok": true, "version": 0, "msg": "Design réinitialisé"})
+			a.writeJSON(w, 200, map[string]any{"ok": true, "version": 0, "msg": "Design réinitialisé"})
 			return
 		}
 		http.Redirect(w, r, "/admin/design?msg=Design+r%C3%A9initialis%C3%A9", http.StatusSeeOther)
@@ -225,8 +228,7 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		a.reload()
 		a.auditAdmin(r, "design.publier", fmt.Sprintf("theme v%d", catalog.SiteTheme.Version))
 		if strings.Contains(r.Header.Get("Accept"), "application/json") {
-			w.Header().Set("Content-Type", "application/json")
-			_ = json.NewEncoder(w).Encode(map[string]any{"ok": true, "version": catalog.SiteTheme.Version, "msg": "Design publié"})
+			a.writeJSON(w, 200, map[string]any{"ok": true, "version": catalog.SiteTheme.Version, "msg": "Design publié"})
 			return
 		}
 		http.Redirect(w, r, "/admin/design?msg=Design+publi%C3%A9", http.StatusSeeOther)
@@ -238,7 +240,7 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "studio indisponible", http.StatusInternalServerError)
 		return
 	}
-	init := `<script>window.__STUDIO_THEME__=` + studioThemeJSON() + `;window.__STUDIO_CSRF__=` + strconv.Quote(a.adminCSRF()) + `;</script>`
+	init := `<script>window.__STUDIO_THEME__=` + studioThemeJSON() + `;window.__STUDIO_CSRF__=` + strconv.Quote(a.adminCSRF()) + `;` + studioDesignInit(a.DB) + `</script>`
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte(strings.Replace(string(html), "<!--STUDIO_INIT-->", init, 1)))
@@ -273,6 +275,133 @@ func studioThemeJSON() string {
 		"sections": t.Sections,
 	})
 	return string(b)
+}
+
+// studioDesignInit : design actif injecté dans la page Studio
+// (window.__STUDIO_DESIGN__ + __STUDIO_DESIGN_VERSION__). Le JSON est
+// re-marshalé par Go (qui échappe < > & en \u003c…) : aucune valeur ne peut
+// fermer le bloc <script>. Sans design publié : null + version 0 (le Studio
+// démarre alors sur son défaut local + le thème injecté).
+func studioDesignInit(db *sql.DB) string {
+	raw, version, err := design.Load(db)
+	if err != nil || raw == nil {
+		return `window.__STUDIO_DESIGN__=null;window.__STUDIO_DESIGN_VERSION__=0;`
+	}
+	var v any
+	if err := json.Unmarshal(raw, &v); err != nil {
+		return `window.__STUDIO_DESIGN__=null;window.__STUDIO_DESIGN_VERSION__=0;`
+	}
+	b, err := json.Marshal(v)
+	if err != nil {
+		return `window.__STUDIO_DESIGN__=null;window.__STUDIO_DESIGN_VERSION__=0;`
+	}
+	return `window.__STUDIO_DESIGN__=` + string(b) + `;window.__STUDIO_DESIGN_VERSION__=` + strconv.Itoa(version) + `;`
+}
+
+// AdminDesignAPI : le design complet du Studio en JSON (phase 2).
+// GET : renvoie le design actif (ou design:null si rien n'est publié).
+// POST : publie un nouveau design (CSRF en en-tête X-CSRF, corps JSON brut) :
+// validation serveur, nouvelle version dans design_files, puis extraction de
+// la partie thème (front) vers settings — la boutique continue d'utiliser le
+// thème publié, sans changer son rendu.
+func (a *App) AdminDesignAPI(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	if r.Method == http.MethodGet {
+		raw, version, err := design.Load(a.DB)
+		if err != nil {
+			http.Error(w, "lecture impossible", http.StatusInternalServerError)
+			return
+		}
+		if raw == nil {
+			a.writeJSON(w, 200, map[string]any{"ok": true, "version": 0, "design": nil})
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"ok":true,"version":` + strconv.Itoa(version) + `,"design":` + string(raw) + `}`))
+		return
+	}
+	if r.Method == http.MethodPost {
+		if !a.checkAdminCSRF(r) {
+			http.Error(w, "refusé", http.StatusForbidden)
+			return
+		}
+		raw, err := io.ReadAll(io.LimitReader(r.Body, design.MaxDesignBytes+1))
+		if err != nil {
+			http.Error(w, "lecture impossible", http.StatusBadRequest)
+			return
+		}
+		version, err := design.Save(a.DB, raw, a.Cfg.AdminUser)
+		if err != nil {
+			http.Error(w, "design refusé : "+err.Error(), http.StatusBadRequest)
+			return
+		}
+		// Extraire le thème et le publier (theme_version +1, sections préservées).
+		if th, err := design.ThemeFromDesign(raw, catalog.SiteTheme); err == nil {
+			a.themeToSettings(th)
+			a.reload()
+		}
+		a.auditAdmin(r, "design.publier", fmt.Sprintf("design v%d (theme v%d)", version, catalog.SiteTheme.Version))
+		a.writeJSON(w, 200, map[string]any{"ok": true, "version": version, "theme_version": catalog.SiteTheme.Version, "msg": "Design publié"})
+		return
+	}
+	http.Error(w, "méthode non autorisée", http.StatusMethodNotAllowed)
+}
+
+// AdminDesignVersions : liste les versions publiées (la plus récente d'abord).
+func (a *App) AdminDesignVersions(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	if r.Method != http.MethodGet {
+		http.Error(w, "méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
+	versions, err := design.ListVersions(a.DB)
+	if err != nil {
+		http.Error(w, "lecture impossible", http.StatusInternalServerError)
+		return
+	}
+	if versions == nil {
+		versions = []design.Version{}
+	}
+	a.writeJSON(w, 200, map[string]any{"ok": true, "versions": versions})
+}
+
+// AdminDesignActivate : réactive une ancienne version (retour en arrière en
+// 1 clic). Le thème extrait de cette version est republié (theme_version +1).
+func (a *App) AdminDesignActivate(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	if r.Method != http.MethodPost {
+		http.Error(w, "méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
+	if !a.checkAdminCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	n, err := strconv.Atoi(chi.URLParam(r, "n"))
+	if err != nil || n < 1 {
+		http.Error(w, "version invalide", http.StatusBadRequest)
+		return
+	}
+	if err := design.Activate(a.DB, n); err != nil {
+		http.Error(w, "activation impossible : "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	// Republier le thème de la version réactivée (la boutique suit).
+	if raw, _, err := design.Load(a.DB); err == nil && raw != nil {
+		if th, err := design.ThemeFromDesign(raw, catalog.SiteTheme); err == nil {
+			a.themeToSettings(th)
+			a.reload()
+		}
+	}
+	a.auditAdmin(r, "design.activer", fmt.Sprintf("design v%d (theme v%d)", n, catalog.SiteTheme.Version))
+	a.writeJSON(w, 200, map[string]any{"ok": true, "version": n, "theme_version": catalog.SiteTheme.Version, "msg": "Version réactivée"})
 }
 
 // AdminStudioFile : fichiers du Studio (CSS/JS découpés, web/admin/studio).

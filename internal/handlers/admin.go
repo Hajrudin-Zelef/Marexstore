@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -35,7 +36,19 @@ func (a *App) adminCSRF() string {
 }
 
 func (a *App) checkAdminCSRF(r *http.Request) bool {
+	// Le jeton arrive en champ de formulaire (POST classiques) ou en en-tête
+	// X-CSRF (API JSON : le corps n'est pas un formulaire).
+	if tok := r.Header.Get("X-CSRF"); tok != "" {
+		return auth.CheckCSRF(a.Cfg.SessionSecret, "admin:"+a.Cfg.AdminUser, tok)
+	}
 	return auth.CheckCSRF(a.Cfg.SessionSecret, "admin:"+a.Cfg.AdminUser, r.FormValue("csrf"))
+}
+
+// writeJSON : réponse JSON (utilisée par les API admin).
+func (a *App) writeJSON(w http.ResponseWriter, code int, v any) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	_ = json.NewEncoder(w).Encode(v)
 }
 
 func (a *App) counts() map[string]int {

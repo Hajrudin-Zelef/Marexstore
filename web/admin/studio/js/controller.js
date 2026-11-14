@@ -149,6 +149,39 @@ function themeFromFront(){
     css:front.customCSS||''
   };
 }
+/* Design actif injecté par le serveur (window.__STUDIO_DESIGN__, phase 2) :
+   appliqué à l'état du Studio au démarrage, avant le premier rendu et avant
+   la capture de pubSnap. Même mécanisme que restore(), sans `files` (le
+   contenu des fichiers de code n'est pas du design — c'est T3). Sans design
+   publié : rien à appliquer, le Studio démarre sur son défaut local. */
+function applyServerDesign(){
+  const d=window.__STUDIO_DESIGN__; if(!d||typeof d!=='object')return;
+  /* Fusion avec l'état courant (qui porte les défauts) : un design partiel
+     (header sans navLinks, footer sans cols…) ne doit jamais faire planter
+     l'aperçu — les valeurs du design gagnent, les défauts comblent les trous. */
+  const merge=(cur,val)=>Object.assign({},cur,val);
+  if(d.front)front=merge(front,d.front);
+  if(d.rows)rows=d.rows;
+  if(d.shop)shop=merge(shop,d.shop);
+  if(d.fiche)fiche=merge(fiche,d.fiche);
+  if(d.panier)panier=merge(panier,d.panier);
+  if(d.txtPages)txtPages=merge(txtPages,d.txtPages);
+  if(d.menu)menu=merge(menu,d.menu);
+  if(d.seo)seo=merge(seo,d.seo);
+  if(d.reglages)reglages=merge(reglages,d.reglages);
+  if(d.header)header=merge(header,d.header);
+  if(d.footer)footer=merge(footer,d.footer);
+  if(d.acc)acc=merge(acc,d.acc);
+  if(d.Tx){Object.keys(Tx).forEach(k=>delete Tx[k]);Object.assign(Tx,d.Tx);}
+  /* studioV16 vit dans front._studioV16 : le réaligner après la fusion. */
+  if(front._studioV16)studioV16=front._studioV16;
+}
+/* Document design envoyé à l'API (les 13 clés de snap(), sans `files` ;
+   front sans _serverSections, métadonnée serveur, pas du design). */
+function designJSON(){
+  const f=Object.assign({},front); delete f._serverSections;
+  return {front:f,rows,shop,fiche,panier,Tx,txtPages,menu,seo,reglages,header,footer,acc};
+}
 /* Thème courant du serveur (injecté par AdminDesign dans window.__STUDIO_THEME__)
    appliqué à l'état du Studio au démarrage, avant le premier rendu. */
 function applyServerTheme(){
@@ -163,29 +196,19 @@ function applyServerTheme(){
      il les renvoie telles quelles à la publication (themeFromFront). */
   if(Array.isArray(t.sections)&&t.sections.length)front._serverSections=t.sections.slice();
 }
-/* Publication serveur : envoie le thème à /admin/design (POST + CSRF).
-   Le serveur incrémente theme_version et le site utilise le thème publié. */
+/* Publication serveur (phase 2) : envoie le DESIGN COMPLET à /admin/api/design
+   (POST JSON + CSRF en en-tête X-CSRF). Le serveur valide, versionne le design
+   et en extrait le thème (theme_version +1) — la boutique suit le thème publié. */
 function publishStudio(){
   const b=$('#btnPublish'); if(b.classList.contains('busy'))return;
   b.classList.add('busy'); b.innerHTML=ic('spinner','i spin')+'<span class="t">Publication…</span>';
-  const th=themeFromFront();
-  const body=new URLSearchParams();
-  body.set('csrf', window.__STUDIO_CSRF__||'');
-  body.set('couleur', th.couleur);
-  body.set('accent', th.accent);
-  body.set('mode', th.mode);
-  body.set('police', th.police);
-  body.set('annonce_on', th.annonce_on);
-  body.set('annonce_texte', th.annonce_texte);
-  th.sections.forEach(s=>body.append('sections', s));
-  if(th.sections.length)body.set('ordre', th.sections.join(','));
-  body.set('css', th.css);
-  fetch(window.location.origin + '/admin/design',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/x-www-form-urlencoded'},body:body.toString()})
-    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+  fetch(window.location.origin + '/admin/api/design',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json','X-CSRF':window.__STUDIO_CSRF__||''},body:JSON.stringify(designJSON())})
+    .then(r=>{if(!r.ok)return r.text().then(t=>{throw new Error('HTTP '+r.status+' — '+t.slice(0,120))});return r.json()})
     .then(d=>{
       pubSnap=snap(); b.classList.remove('busy'); b.innerHTML=ic('check-circle')+'<span class="t">Publié</span>';
-      renderPreview(); toast('✅ Studio publié ! Le site est à jour (thème v'+(d.version||'?')+').');
+      renderPreview(); toast('✅ Studio publié ! Le site est à jour (design v'+(d.version||'?')+', thème v'+(d.theme_version||'?')+').');
       setTimeout(()=>{b.innerHTML=ic('upload')+'<span class="t">Publier</span>'},1800);
+      loadServerVersionsV13();
     })
     .catch(e=>{
       b.classList.remove('busy'); b.innerHTML=ic('upload')+'<span class="t">Publier</span>';
@@ -214,7 +237,9 @@ function initPremium(){
   BASE=ORIGIN=pubSnap=snap(); hist=[BASE]; hi=0; updateStatus();
 }
 
-/* Thème courant du serveur appliqué avant le premier rendu. */
+/* Design actif du serveur appliqué avant le premier rendu, puis le thème
+   (settings) par-dessus — c'est lui que la boutique affiche. */
+applyServerDesign();
 applyServerTheme();
 renderSwatches();
 renderRows();
@@ -382,6 +407,22 @@ const _pvHeaderV13=pvHeaderHTML;
 
 pvHeaderHTML=function(){return annHtmlV13()+_pvHeaderV13()};
 
+/* Versions publiées côté serveur (phase 2). */
+let serverVersionsV13=[];
+function loadServerVersionsV13(){
+  fetch(window.location.origin + '/admin/api/design/versions',{headers:{'Accept':'application/json'}})
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+    .then(d=>{serverVersionsV13=Array.isArray(d.versions)?d.versions:[];renderHistoryV13()})
+    .catch(()=>{/* historique serveur indisponible : on garde l'historique local */});
+}
+function activateServerVersionV13(n){
+  if(!confirm('Réactiver la version '+n+' du design ? Le design actuel (brouillon non publié) sera remplacé.'))return;
+  fetch(window.location.origin + '/admin/api/design/versions/'+n+'/activer',{method:'POST',headers:{'Accept':'application/json','X-CSRF':window.__STUDIO_CSRF__||''}})
+    .then(r=>{if(!r.ok)return r.text().then(t=>{throw new Error('HTTP '+r.status+' — '+t.slice(0,120))});return r.json()})
+    .then(()=>{toast('✅ Version '+n+' réactivée. Rechargement…');setTimeout(()=>location.reload(),900)})
+    .catch(e=>{toast('❌ Réactivation impossible : '+e.message)});
+}
+
 const _publishV13=publishStudio;
 
 publishStudio=function(){
@@ -405,7 +446,7 @@ function addCommandsV13(){
 
 addEventListener('load',()=>{
  const css=document.createElement('style');css.textContent='.v13-themes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.v13-theme{border:1px solid var(--line);border-radius:10px;background:#fff;padding:7px;text-align:left;cursor:pointer;color:var(--ink)}.v13-theme:hover{border-color:#0ea5e9;transform:translateY(-1px)}.v13-thumb{height:42px;border-radius:6px;display:block;position:relative;margin-bottom:5px}.v13-thumb i,.v13-thumb em{position:absolute;width:20px;height:5px;border-radius:4px;left:7px;top:8px}.v13-thumb em{top:18px;left:11px}.v13-theme small{display:block;color:var(--muted)}.v13-ann{border-top:1px solid var(--line)}.v13-history-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border:1px solid var(--line);border-radius:9px;margin:6px 0;background:#fff}.v13-history-row small{display:block;color:var(--muted);margin-top:3px}.v13-command{border-color:#bfdbfe}.pv-announcement a{text-decoration:none}.pv-announcement a:hover{text-decoration:underline}@media(max-width:720px){.v13-themes{grid-template-columns:repeat(2,minmax(0,1fr))}.v13-history-row{align-items:flex-start;flex-direction:column}}';document.head.appendChild(css);
- themeGalleryV13();announceEditorV13();historyPanelV13();syncV13Fields();renderHistoryV13();addCommandsV13();
+ themeGalleryV13();announceEditorV13();historyPanelV13();syncV13Fields();renderHistoryV13();loadServerVersionsV13();addCommandsV13();
  const mobile=document.querySelector('.devices button[title="Mobile"]');if(mobile){mobile.title='Aperçu mobile — réglages dédiés en attente d’observation du site réel';mobile.setAttribute('aria-label','Aperçu mobile uniquement; réglages dédiés en attente d’observation du site réel')}
  const origSync=syncUI;syncUI=function(){origSync();syncV13Fields()};
  const origThemeRender=renderPreview;renderPreview=function(){origThemeRender();syncV13Fields()};
@@ -605,9 +646,9 @@ function exportV16(){exportDesignV16()}
 /* Intégré à l'admin : « Publier » envoie le thème au serveur (voir publishStudio
    ci-dessus). « Exporter » reste disponible dans l'onglet Réglages (#v16Export). */
 
-localNoteV16.className='v16-local-note';localNoteV16.textContent='Studio connecté au site : « Publier » met le thème en ligne. « Exporter » (onglet Réglages) crée un fichier JSON de design.';$('#editorPanel').prepend(localNoteV16);
+localNoteV16.className='v16-local-note';localNoteV16.textContent='Studio connecté au site : « Publier » met le design en ligne (versionné, retour en arrière possible depuis l\u2019historique). « Exporter » (onglet Réglages) crée un fichier JSON de design.';$('#editorPanel').prepend(localNoteV16);
 
-if(previewNote16)previewNote16.textContent='Aperçu local du brouillon — la publication met le thème en ligne.';
+if(previewNote16)previewNote16.textContent='Aperçu local du brouillon — la publication met le design en ligne.';
 document.querySelectorAll('.devices button').forEach(b=>{if(b.title==='Mobile')b.title='Aperçu mobile'});
 
 tabletBtnV16.type='button';tabletBtnV16.title='Tablette';tabletBtnV16.setAttribute('aria-label','Aperçu tablette');tabletBtnV16.innerHTML=ic('monitor');tabletBtnV16.onclick=()=>setDevice('tablet',tabletBtnV16);$('.devices').appendChild(tabletBtnV16);
@@ -616,7 +657,7 @@ addEventListener('load',()=>{
   pvI.addEventListener('load',()=>applyV16Preview());
   bindV16Controls();
   const switcher=document.querySelector('#studioNav button[data-tab="pagesInfo"]');if(switcher){switcher.addEventListener('click',()=>{document.querySelectorAll('#editorPanel > div').forEach(d=>d.classList.add('hidden'));$('#tab-pagesInfo').classList.remove('hidden');currentTab='pagesInfo';renderPageEditorV16();renderPreview()})}
-  const oldHint=document.querySelector('#tab-front > .hint');if(oldHint)oldHint.textContent='Le Studio règle l’apparence et les textes du site. L’aperçu est une maquette locale ; « Publier » envoie le thème sur le site.';
+  const oldHint=document.querySelector('#tab-front > .hint');if(oldHint)oldHint.textContent='Le Studio règle l’apparence et les textes du site. L’aperçu est une maquette locale ; « Publier » envoie le design sur le site.';
   $('#tab-pagesInfo').querySelector('h2').insertAdjacentHTML('afterend','<div class="v16-local-note">Les pages d’information sont éditées ici ; leur contenu sera publié avec le design en phase 2.</div>');
   const historyBox=$('#v13History');if(historyBox){const label=historyBox.querySelector(':scope > label'),hint=historyBox.querySelector(':scope > .hint');if(label)label.textContent='Historique des publications';if(hint)hint.textContent='Chaque publication enregistre les modules modifiés (thème envoyé au serveur).'}
   renderAllModuleTexts();renderTxtList();renderMenuList();

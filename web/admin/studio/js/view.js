@@ -596,14 +596,27 @@ function contrastDialogV13(issues,proceed){
 
 function historyPanelV13(){
  let reg=$('#tab-reglages');if(!reg)return;const h=reg.querySelector(':scope > h2');if(!h)return;
- const box=document.createElement('section');box.className='field';box.id='v13History';box.innerHTML='<label>Historique des publications</label><p class="hint">Versions en mémoire pour cette session. Restaurer une version la remet en brouillon; vous pourrez la republier.</p><div class="v13-history-list"><p class="hint">Aucune publication enregistrée dans cette session.</p></div>';
+ const box=document.createElement('section');box.className='field';box.id='v13History';box.innerHTML='<label>Historique des publications</label><p class="hint">Versions publiées sur le serveur (Réactiver recharge la page avec cette version) et publications de cette session (Restaurer remet en brouillon).</p><div class="v13-history-list"><p class="hint">Aucune publication enregistrée.</p></div>';
  h.after(box);
 }
 
 function renderHistoryV13(){
  const el=$('#v13History .v13-history-list');if(!el)return;
- if(!publishedHistoryV13.length){el.innerHTML='<p class="hint">Aucune publication enregistrée dans cette session.</p>';return}
- el.innerHTML=publishedHistoryV13.slice().reverse().map((v,i)=>'<div class="v13-history-row"><span><b>Publié le '+esc(v.date)+'</b><small>Modules modifiés : '+esc(v.modules.join(', ')||'aucun changement détecté')+'</small></span><button class="btn btn-ghost" data-v13-restore="'+(publishedHistoryV13.length-1-i)+'">Restaurer cette version</button></div>').join('');
+ let html='';
+ /* Versions publiées côté serveur (phase 2) : la source de vérité.
+    Réactiver recharge la page avec cette version (design + thème). */
+ if(typeof serverVersionsV13!=='undefined'&&serverVersionsV13.length){
+  html+='<p class="hint" style="margin:8px 0 4px">Versions publiées (serveur) :</p>';
+  html+=serverVersionsV13.map(v=>'<div class="v13-history-row"><span><b>Version '+esc(String(v.version))+'</b>'+(v.actif?' <span class="pill" style="color:#15803d">● active</span>':'')+'<small>'+esc(v.cree_le||'')+(v.auteur?' · par '+esc(v.auteur):'')+'</small></span>'+(v.actif?'':'<button class="btn btn-ghost" data-v13-activate="'+v.version+'">Réactiver</button>')+'</div>').join('');
+ }
+ /* Historique de session (local) : restaurer remet en brouillon. */
+ if(publishedHistoryV13.length){
+  html+='<p class="hint" style="margin:12px 0 4px">Cette session (brouillons restaurables) :</p>';
+  html+=publishedHistoryV13.slice().reverse().map((v,i)=>'<div class="v13-history-row"><span><b>Publié le '+esc(v.date)+'</b><small>Modules modifiés : '+esc(v.modules.join(', ')||'aucun changement détecté')+'</small></span><button class="btn btn-ghost" data-v13-restore="'+(publishedHistoryV13.length-1-i)+'">Restaurer cette version</button></div>').join('');
+ }
+ if(!html){el.innerHTML='<p class="hint">Aucune publication enregistrée.</p>';return}
+ el.innerHTML=html;
+ el.querySelectorAll('[data-v13-activate]').forEach(b=>b.onclick=()=>activateServerVersionV13(+b.dataset.v13Activate));
  el.querySelectorAll('[data-v13-restore]').forEach(b=>b.onclick=()=>{const v=publishedHistoryV13[+b.dataset.v13Restore];if(!v)return;restore(v.snapshot);toast('Version restaurée en brouillon.')});
 }
 
