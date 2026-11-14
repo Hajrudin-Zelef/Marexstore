@@ -18,6 +18,9 @@ type Theme struct {
 	AnnonceTexte string   // texte du bandeau
 	Sections     []string // blocs d'accueil activés, dans l'ordre (défaut = DefaultSections)
 	CSS          string   // CSS personnalisé (filtré : pas de <script>)
+	// Version : compteur incrémenté à chaque Publier (P1 — le serveur gagne).
+	// Métadonnée, pas un critère visuel : IsDefault() l'ignore.
+	Version int
 }
 
 func DefaultTheme() Theme {
@@ -44,6 +47,9 @@ func (t Theme) IsDefault() bool {
 }
 
 // HtmlAttrs : attributs <html> du thème global (vide = défaut, parité intacte).
+// P1 — le serveur gagne : quand un thème est publié (non défaut), on émet
+// aussi data-theme-version="N" pour que le JS invalide le choix localStorage
+// mémorisé. Jamais émis pour le thème par défaut (parité v3.25 intacte).
 func (t Theme) HtmlAttrs() string {
 	out := ""
 	if t.Couleur == "gazonnier" || t.Couleur == "liquid" || t.Couleur == "perso" {
@@ -53,6 +59,9 @@ func (t Theme) HtmlAttrs() string {
 		out += ` data-theme="dark"`
 	} else if t.Mode == "clair" {
 		out += ` data-theme="light"`
+	}
+	if !t.IsDefault() && t.Version > 0 {
+		out += fmt.Sprintf(` data-theme-version="%d"`, t.Version)
 	}
 	return out
 }

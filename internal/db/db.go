@@ -59,6 +59,14 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 	if err := Migrate(d, migDir+"/001_init.sql"); err != nil {
 		return fmt.Errorf("001: %w", err)
 	}
+	// T0 — socle Studio : fichiers éditables (003) + backend ops (004).
+	// Jamais destructif (IF NOT EXISTS), rejouable sans risque.
+	if err := Migrate(d, migDir+"/003_design_files.sql"); err != nil {
+		return fmt.Errorf("003: %w", err)
+	}
+	if err := Migrate(d, migDir+"/004_backend_ops.sql"); err != nil {
+		return fmt.Errorf("004: %w", err)
+	}
 	cols := map[string]bool{}
 	rows, err := d.Query(`PRAGMA table_info(products)`)
 	if err != nil {

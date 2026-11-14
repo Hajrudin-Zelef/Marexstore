@@ -139,10 +139,25 @@ func containsStr(ss []string, v string) bool {
 }
 
 // themeToSettings : publie un thème (live).
+// P1 — le serveur gagne : theme_version est incrémenté à chaque Publier
+// (une seule requête atomique, RETURNING). Toute la publication est en
+// transaction : soit le thème + sa version sont écrits, soit rien.
 func (a *App) themeToSettings(t catalog.Theme) {
-	set := func(k, v string) {
-		_, _ = a.DB.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
+	tx, err := a.DB.Begin()
+	if err != nil {
+		return
 	}
+	defer tx.Rollback()
+	set := func(k, v string) {
+		_, _ = tx.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
+	}
+	var nv int
+	if err := tx.QueryRow(`INSERT INTO settings(nom,valeur) VALUES('theme_version','1')
+		ON CONFLICT(nom) DO UPDATE SET valeur=CAST(settings.valeur AS INTEGER)+1
+		RETURNING CAST(valeur AS INTEGER)`).Scan(&nv); err != nil {
+		return
+	}
+	t.Version = nv
 	set("theme_couleur", t.Couleur)
 	set("theme_accent", t.Accent)
 	set("theme_mode", t.Mode)
@@ -155,6 +170,9 @@ func (a *App) themeToSettings(t catalog.Theme) {
 	set("theme_annonce_texte", t.AnnonceTexte)
 	set("theme_sections", strings.Join(t.Sections, ","))
 	set("theme_css", t.CSS)
+	if err := tx.Commit(); err != nil {
+		return
+	}
 	catalog.SiteTheme = t
 }
 
@@ -175,11 +193,12 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "refusé", http.StatusForbidden)
 			return
 		}
-		for _, k := range []string{"theme_couleur", "theme_accent", "theme_mode", "theme_police", "theme_annonce_on", "theme_annonce_texte", "theme_sections", "theme_css"} {
+		for _, k := range []string{"theme_couleur", "theme_accent", "theme_mode", "theme_police", "theme_annonce_on", "theme_annonce_texte", "theme_sections", "theme_css", "theme_version"} {
 			_, _ = a.DB.Exec(`DELETE FROM settings WHERE nom=?`, k)
 		}
 		catalog.SiteTheme = catalog.DefaultTheme()
 		a.reload()
+		a.auditAdmin(r, "design.reinitialiser", "theme")
 		http.Redirect(w, r, "/admin/design?msg=Design+r%C3%A9initialis%C3%A9", http.StatusSeeOther)
 		return
 	}
@@ -190,6 +209,7 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 		}
 		a.themeToSettings(themeFromForm(r))
 		a.reload()
+		a.auditAdmin(r, "design.publier", fmt.Sprintf("theme v%d", catalog.SiteTheme.Version))
 		http.Redirect(w, r, "/admin/design?msg=Design+publi%C3%A9", http.StatusSeeOther)
 		return
 	}
@@ -269,7 +289,7 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 	body := render.IndexBodyTheme(a.Store, a.Recents, th)
 	// <base href="/"> : la page est servie sous /admin/design/apercu mais ses
 	// URLs relatives (assets/, images/, produits/) visent la racine du site.
-	extra := render.ThemeHead(th) + `<script src="/static/theme.js?v=1" defer></script><script src="/static/app.js?v=338" defer></script><script src="/static/htmx.min.js?v=1912" defer></script><script src="/static/mirror.js?v=1" defer></script>`
+	extra := render.ThemeHead(th) + `<script src="/static/theme.js?v=2" defer></script><script src="/static/app.js?v=339" defer></script><script src="/static/htmx.min.js?v=1912" defer></script><script src="/static/mirror.js?v=1" defer></script>`
 	s := render.DocTheme("Accueil — aperçu", body, "", extra, th.HtmlAttrs())
 	a.write(w, 200, absolutizePreview(s))
 }

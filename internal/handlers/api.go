@@ -51,10 +51,28 @@ func (a *App) ApiPanier(w http.ResponseWriter, r *http.Request) {
 
 // POST /api/commande {items: "slugxqty,...", moyen, nom?, tel?}
 // Enregistre la commande WhatsApp (le message wa.me reste construit côté client).
+// T1 — backend dur : commande + lignes + événement de création + clé
+// d'idempotence en UNE SEULE transaction (jamais de commande partielle).
+// Idempotency-Key : rejouer la même requête renvoie la commande existante
+// (jamais de doublon sur retry réseau). Total calculé côté serveur depuis
+// la base (prix AFFICHÉ = COALESCE(prix_boutique, prix) : le client paie
+// ce qu'il a vu).
 func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost || !a.checkCSRF(r) {
 		http.Error(w, "refusé", http.StatusForbidden)
 		return
+	}
+	// Idempotence : clé fournie par le client (max 128 car.), rejouée = même commande.
+	key := strings.TrimSpace(r.Header.Get("Idempotency-Key"))
+	if len(key) > 128 {
+		key = key[:128]
+	}
+	if key != "" {
+		var oid int64
+		if err := a.DB.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid); err == nil {
+			a.ok(w)
+			return
+		}
 	}
 	type item struct {
 		id  int64
@@ -77,7 +95,7 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		}
 		var id int64
 		var prix sql.NullInt64
-		if err := a.DB.QueryRow(`SELECT id,prix FROM products WHERE slug=?`, kv[0]).Scan(&id, &prix); err != nil {
+		if err := a.DB.QueryRow(`SELECT id,COALESCE(prix_boutique,prix) FROM products WHERE slug=?`, kv[0]).Scan(&id, &prix); err != nil {
 			continue
 		}
 		var p *int64
@@ -103,7 +121,21 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	if id := auth.CurrentUserID(a.DB, r); id != nil {
 		uid = *id
 	}
-	res, err := a.DB.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json) VALUES(?,?,?,?,?)`,
+	tx, err := a.DB.Begin()
+	if err != nil {
+		http.Error(w, "indisponible", 500)
+		return
+	}
+	defer tx.Rollback()
+	// Re-vérifie la clé dans la transaction (course entre deux requêtes).
+	if key != "" {
+		var oid int64
+		if err := tx.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid); err == nil {
+			a.ok(w)
+			return
+		}
+	}
+	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json) VALUES(?,?,?,?,?)`,
 		uid, "whatsapp_recu", moyen, total, string(client))
 	if err != nil {
 		http.Error(w, "indisponible", 500)
@@ -115,7 +147,33 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		if it.pr != nil {
 			p = *it.pr
 		}
-		_, _ = a.DB.Exec(`INSERT INTO order_items(order_id,product_id,qty,prix_unitaire) VALUES(?,?,?,?)`, oid, it.id, it.qty, p)
+		if _, err := tx.Exec(`INSERT INTO order_items(order_id,product_id,qty,prix_unitaire) VALUES(?,?,?,?)`, oid, it.id, it.qty, p); err != nil {
+			http.Error(w, "indisponible", 500)
+			return
+		}
+	}
+	// Événement de création (la timeline part de la création, pas du 1er changement).
+	if _, err := tx.Exec(`INSERT INTO order_events(order_id,de_statut,vers_statut,par) VALUES(?,?,?,?)`, oid, "", "whatsapp_recu", "site"); err != nil {
+		http.Error(w, "indisponible", 500)
+		return
+	}
+	if key != "" {
+		if _, err := tx.Exec(`INSERT INTO idempotency_keys(cle,order_id) VALUES(?,?)`, key, oid); err != nil {
+			http.Error(w, "indisponible", 500)
+			return
+		}
+	}
+	if err := tx.Commit(); err != nil {
+		// Course : une requête concurrente a gagné — rejoue sa commande.
+		if key != "" {
+			var oid2 int64
+			if err := a.DB.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid2); err == nil {
+				a.ok(w)
+				return
+			}
+		}
+		http.Error(w, "indisponible", 500)
+		return
 	}
 	a.ok(w)
 }

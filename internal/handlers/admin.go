@@ -408,6 +408,11 @@ func (a *App) reload() {
 	if st, err := site.LoadStore(a.DB); err == nil {
 		a.Store = st
 	}
+	// Recharge aussi les gabarits (design_files actif en priorité, T3) :
+	// une publication de fichier prend effet sans redémarrage.
+	if top, drawer, foot, bodies, _, err := site.LoadStaticDB(a.DB, "templates/static"); err == nil {
+		a.Top, a.Drawer, a.Foot, a.Bodies = top, drawer, foot, bodies
+	}
 }
 
 func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
@@ -480,6 +485,7 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 		}
 		a.reload()
 		db.SyncFTS(a.DB, slug)
+		a.auditAdmin(r, "produit.enregistrer", slug)
 		http.Redirect(w, r, "/admin/produits/"+slug+"?msg=Produit+enregistr%C3%A9", http.StatusSeeOther)
 		return
 	}

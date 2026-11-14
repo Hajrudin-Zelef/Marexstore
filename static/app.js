@@ -959,6 +959,16 @@
       // Thème global (/admin/design) : sans choix explicite du visiteur,
       // on garde le rendu serveur (meta mx-theme-global) au lieu d'imposer liquid.
       var globalTheme = !!document.querySelector('meta[name="mx-theme-global"]');
+      // P1 — le serveur gagne : si le thème publié a changé de version,
+      // on purge le choix couleur mémorisé (et le mode si le serveur en
+      // impose un). Même logique que theme.js (synchrone, anti-flash).
+      var sv = r.getAttribute('data-theme-version');
+      if (sv && String(t.v) !== sv) {
+        delete t.color;
+        if (r.getAttribute('data-theme')) delete t.mode;
+        t.v = sv;
+        saveTheme(t);
+      }
       if (t.mode === 'sombre') r.setAttribute('data-theme', 'dark');
       else if (t.mode === 'clair' || !globalTheme) r.removeAttribute('data-theme');
       if (t.color) r.setAttribute('data-color', t.color);

@@ -52,9 +52,14 @@ func main() {
 	if err != nil {
 		log.Fatal("load store: ", err)
 	}
-	top, drawer, foot, bodies, err := site.LoadStatic("templates/static")
+	// Gabarits statiques : design_files(actif=1) → disque → défaut Go (T0).
+	// Un fichier manquant ne bloque plus le démarrage (dégradé + avertissement).
+	top, drawer, foot, bodies, fallbacks, err := site.LoadStaticDB(database, "templates/static")
 	if err != nil {
 		log.Fatal("load templates: ", err)
+	}
+	for _, f := range fallbacks {
+		log.Printf("templates: %s absent (base + disque) — défaut Go", f)
 	}
 	app := &handlers.App{
 		Cfg: cfg, DB: database, Store: st, Recents: nil,
@@ -80,7 +85,7 @@ func main() {
 	// Mode maintenance (réglages admin) : tout le public en 503, /admin et /health passent.
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/admin") || r.URL.Path == "/health" || r.URL.Path == "/robots.txt" {
+			if strings.HasPrefix(r.URL.Path, "/admin") || r.URL.Path == "/health" || r.URL.Path == "/health/detailed" || r.URL.Path == "/robots.txt" {
 				next.ServeHTTP(w, r)
 				return
 			}
@@ -95,6 +100,7 @@ func main() {
 	})
 
 	r.Get("/health", app.Health)
+	r.Get("/health/detailed", app.HealthDetailed)
 	// robots.txt : pas d'admin ni d'API pour les crawlers ; crawl doux.
 	r.Get("/robots.txt", func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
@@ -180,6 +186,8 @@ func main() {
 	r.Post("/admin/design/reset", app.AdminDesign)
 	r.Get("/admin/design/apercu", app.AdminDesignPreview)
 	r.Post("/admin/design/apercu", app.AdminDesignPreview)
+	r.Get("/admin/systeme", app.AdminSysteme)
+	r.Post("/admin/systeme", app.AdminSysteme)
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,

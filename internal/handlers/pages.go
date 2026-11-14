@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
+	"runtime"
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/auth"
@@ -90,6 +92,30 @@ func (a *App) Produit(w http.ResponseWriter, r *http.Request) {
 func (a *App) Health(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"ok":true}`))
+}
+
+// GET /health/detailed (admin) : ping + comptes + version (T1).
+// Protégé par Basic Auth (expose des compteurs internes) ; exempté de la
+// maintenance comme /health.
+func (a *App) HealthDetailed(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	var ping string
+	dbOK := a.DB.QueryRow(`SELECT 'ok'`).Scan(&ping) == nil && ping == "ok"
+	var nProd, nUsers, nOrders int
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products`).Scan(&nProd)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM users`).Scan(&nUsers)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders`).Scan(&nOrders)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]any{
+		"ok":            dbOK,
+		"produits":      nProd,
+		"clients":       nUsers,
+		"commandes":     nOrders,
+		"go":            runtime.Version(),
+		"theme_version": catalog.SiteTheme.Version,
+	})
 }
 
 func (a *App) FacetsJS(w http.ResponseWriter, r *http.Request) {

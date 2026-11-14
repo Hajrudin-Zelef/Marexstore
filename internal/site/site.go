@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
@@ -29,34 +30,68 @@ func fill(s, prefix, csrf, widgets string) string {
 }
 
 func LoadStatic(dir string) (top, drawer, foot string, bodies map[string]string, err error) {
+	t, d, f, b, _, e := LoadStaticDB(nil, dir)
+	return t, d, f, b, e
+}
+
+// FileEditAllowed : l'éditeur de fichiers (/admin/fichiers, T3) est-il actif ?
+// Kill-switch : DISALLOW_FILE_EDIT=1 l'interdit (lecture seule).
+func FileEditAllowed() bool {
+	return os.Getenv("DISALLOW_FILE_EDIT") != "1"
+}
+
+// LoadStaticDB : charge les gabarits statiques avec la chaîne de repli
+// design_files(actif=1) → disque → défaut Go (chaîne vide).
+// Retourne aussi les fichiers tombés sur le défaut Go (à journaliser).
+// Une base nil = disque seul (compatibilité LoadStatic).
+// Les pages présentes uniquement en base (T3) sont aussi énumérées.
+func LoadStaticDB(dbase *sql.DB, dir string) (top, drawer, foot string, bodies map[string]string, fallbacks []string, err error) {
 	read := func(n string) string {
-		b, e := os.ReadFile(filepath.Join(dir, n))
-		if e != nil {
-			err = e
-			return ""
+		// 1. design_files actif (T3) — seulement si la base est disponible.
+		if dbase != nil {
+			var c string
+			if e := dbase.QueryRow(`SELECT contenu FROM design_files WHERE nom=? AND actif=1 ORDER BY version DESC LIMIT 1`, n).Scan(&c); e == nil {
+				return c
+			}
 		}
-		return string(b)
+		// 2. disque.
+		if b, e := os.ReadFile(filepath.Join(dir, n)); e == nil {
+			return string(b)
+		}
+		// 3. défaut Go (chaîne vide) — le site démarre quand même, dégradé.
+		fallbacks = append(fallbacks, n)
+		return ""
 	}
 	top, drawer, foot = read("_top.html"), read("_drawer.html"), read("_foot.html")
-	if err != nil {
-		return "", "", "", nil, err
-	}
 	bodies = map[string]string{}
 	entries, e := os.ReadDir(dir)
 	if e != nil {
-		return "", "", "", nil, e
+		// Disque illisible : le chrome est déjà chargé (ou en défaut Go).
+		return top, drawer, foot, bodies, fallbacks, nil
 	}
+	seen := map[string]bool{}
 	for _, en := range entries {
 		n := en.Name()
 		if strings.HasPrefix(n, "_") || !strings.HasSuffix(n, ".html") {
 			continue
 		}
+		seen[n] = true
 		bodies[strings.TrimSuffix(n, ".html")] = read(n)
-		if err != nil {
-			return "", "", "", nil, err
+	}
+	// Pages présentes uniquement en base (créées via /admin/fichiers, T3).
+	if dbase != nil {
+		rows, e := dbase.Query(`SELECT DISTINCT nom FROM design_files WHERE nom NOT LIKE '\_%' AND nom LIKE '%.html' AND actif=1`)
+		if e == nil {
+			defer rows.Close()
+			for rows.Next() {
+				var n string
+				if err := rows.Scan(&n); err == nil && !seen[n] {
+					bodies[strings.TrimSuffix(n, ".html")] = read(n)
+				}
+			}
 		}
 	}
-	return top, drawer, foot, bodies, nil
+	return top, drawer, foot, bodies, fallbacks, nil
 }
 
 // Produit DB -> RawProduct (toutes colonnes).
@@ -190,6 +225,12 @@ func ThemeFromDB(db *sql.DB) catalog.Theme {
 	}
 	if v := get("theme_css"); v != "" {
 		t.CSS = v
+	}
+	// P1 — version du thème publié (le serveur gagne). Absente = jamais publié.
+	if v := get("theme_version"); v != "" {
+		if n, err := strconv.Atoi(strings.TrimSpace(v)); err == nil && n > 0 {
+			t.Version = n
+		}
 	}
 	return t
 }

@@ -78,30 +78,56 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, fmt.Sprintf("/admin/commandes/%d?err=Transition+interdite", id), http.StatusSeeOther)
 			return
 		}
-		tx, _ := a.DB.Begin()
+		// T1 — backend dur : transition + événement + stock en UNE SEULE
+		// transaction. Toute erreur annule tout (jamais de statut sans
+		// événement, jamais de stock décrémenté à moitié).
+		tx, err := a.DB.Begin()
+		if err != nil {
+			http.Error(w, "impossible", 500)
+			return
+		}
+		defer tx.Rollback()
 		if _, err := tx.Exec(`UPDATE orders SET statut=? WHERE id=?`, vers, id); err != nil {
-			_ = tx.Rollback()
 			http.Error(w, "impossible", 500)
 			return
 		}
 		if _, err := tx.Exec(`INSERT INTO order_events(order_id,de_statut,vers_statut,par) VALUES(?,?,?,?)`, id, st, vers, "admin"); err != nil {
-			_ = tx.Rollback()
 			http.Error(w, "impossible", 500)
 			return
 		}
 		if vers == "paye" {
 			// Décrémente le stock des lignes (plancher 0, jamais négatif).
-			rows, _ := tx.Query(`SELECT product_id,qty FROM order_items WHERE order_id=?`, id)
-			if rows != nil {
-				for rows.Next() {
-					var pid, q int64
-					_ = rows.Scan(&pid, &q)
-					_, _ = tx.Exec(`UPDATE products SET stock=CASE WHEN stock>=? THEN stock-? ELSE 0 END WHERE id=? AND stock IS NOT NULL`, q, q, pid)
+			// On collecte d'abord les lignes, puis on met à jour : une
+			// erreur sur une ligne annule toute la transition.
+			type ligne struct{ pid, q int64 }
+			var lignes []ligne
+			rows, err := tx.Query(`SELECT product_id,qty FROM order_items WHERE order_id=?`, id)
+			if err != nil {
+				http.Error(w, "impossible", 500)
+				return
+			}
+			for rows.Next() {
+				var l ligne
+				if err := rows.Scan(&l.pid, &l.q); err != nil {
+					rows.Close()
+					http.Error(w, "impossible", 500)
+					return
 				}
-				rows.Close()
+				lignes = append(lignes, l)
+			}
+			rows.Close()
+			for _, l := range lignes {
+				if _, err := tx.Exec(`UPDATE products SET stock=CASE WHEN stock>=? THEN stock-? ELSE 0 END WHERE id=? AND stock IS NOT NULL`, l.q, l.q, l.pid); err != nil {
+					http.Error(w, "impossible", 500)
+					return
+				}
 			}
 		}
-		_ = tx.Commit()
+		if err := tx.Commit(); err != nil {
+			http.Error(w, "impossible", 500)
+			return
+		}
+		a.auditAdmin(r, "commande.statut", fmt.Sprintf("#%d %s -> %s", id, st, vers))
 		a.reload()
 		http.Redirect(w, r, "/admin/commandes/"+strconv.FormatInt(id, 10)+"?msg=Commande+enregistr%C3%A9e", http.StatusSeeOther)
 		return
@@ -511,6 +537,7 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 		set("maintenance", maint)
 		set("maintenance_message", strings.TrimSpace(r.FormValue("maintenance_message")))
 		set("whatsapp", strings.TrimSpace(r.FormValue("whatsapp")))
+		a.auditAdmin(r, "reglages.enregistrer", "maintenance="+maint)
 		http.Redirect(w, r, "/admin/reglages?msg=R%C3%A9glages+enregistr%C3%A9s", http.StatusSeeOther)
 		return
 	}
