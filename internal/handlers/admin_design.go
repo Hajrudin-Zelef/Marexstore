@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path"
@@ -343,6 +344,11 @@ func (a *App) AdminDesignAPI(w http.ResponseWriter, r *http.Request) {
 			a.themeToSettings(th)
 			a.reload()
 		}
+		// Recharger le design actif pour le rendu (phase 3) ; un échec ici
+		// ne bloque pas la publication (le thème est déjà en ligne).
+		if err := design.Refresh(a.DB); err != nil {
+			log.Printf("design.publier : rechargement actif impossible (%v)", err)
+		}
 		a.auditAdmin(r, "design.publier", fmt.Sprintf("design v%d (theme v%d)", version, catalog.SiteTheme.Version))
 		a.writeJSON(w, 200, map[string]any{"ok": true, "version": version, "theme_version": catalog.SiteTheme.Version, "msg": "Design publié"})
 		return
@@ -399,6 +405,10 @@ func (a *App) AdminDesignActivate(w http.ResponseWriter, r *http.Request) {
 			a.themeToSettings(th)
 			a.reload()
 		}
+	}
+	// Recharger le design actif pour le rendu (phase 3).
+	if err := design.Refresh(a.DB); err != nil {
+		log.Printf("design.activer : rechargement actif impossible (%v)", err)
 	}
 	a.auditAdmin(r, "design.activer", fmt.Sprintf("design v%d (theme v%d)", n, catalog.SiteTheme.Version))
 	a.writeJSON(w, 200, map[string]any{"ok": true, "version": n, "theme_version": catalog.SiteTheme.Version, "msg": "Version réactivée"})

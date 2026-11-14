@@ -12,6 +12,7 @@ import (
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/config"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/db"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/design"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/handlers"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/middleware"
 	"github.com/Hajrudin-Zelef/Marexstore/internal/site"
@@ -39,6 +40,11 @@ func main() {
 	}
 	// Thème global du Studio Design (/admin/design) ; défaut = site d'origine.
 	catalog.SiteTheme = site.ThemeFromDB(database)
+	// Design actif du Studio (phase 3) ; sans design publié, le rendu
+	// utilise ses défauts (site identique). Best-effort : jamais fatal.
+	if err := design.LoadActive(database); err != nil {
+		log.Printf("design actif : chargement impossible (%v) — défauts utilisés", err)
+	}
 	maintenanceOn := func() (bool, string) {
 		var on, msg string
 		_ = database.QueryRow(`SELECT valeur FROM settings WHERE nom='maintenance'`).Scan(&on)
