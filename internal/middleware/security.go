@@ -31,16 +31,27 @@ func SecurityHeaders(reportOnly bool) func(http.Handler) http.Handler {
 	csp := "default-src 'self'; img-src 'self' data:; script-src 'self'; " +
 		"style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; " +
 		"connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+	cspOpen := "default-src 'self'; img-src 'self' data:; script-src 'self'; " +
+		"style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; " +
+		"connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			h := w.Header()
+			useCSP := csp
+			xfo := "DENY"
+			if r.URL.Path == "/admin/design/apercu" {
+				// Aperçu du Studio Design : iframé par /admin/design (même
+				// origine, page protégée par auth admin). SAMEORIGIN uniquement.
+				useCSP = cspOpen
+				xfo = "SAMEORIGIN"
+			}
 			if reportOnly {
-				h.Set("Content-Security-Policy-Report-Only", csp)
+				h.Set("Content-Security-Policy-Report-Only", useCSP)
 			} else {
-				h.Set("Content-Security-Policy", csp)
+				h.Set("Content-Security-Policy", useCSP)
 			}
 			h.Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-			h.Set("X-Frame-Options", "DENY")
+			h.Set("X-Frame-Options", xfo)
 			h.Set("X-Content-Type-Options", "nosniff")
 			h.Set("Referrer-Policy", "strict-origin-when-cross-origin")
 			h.Set("Permissions-Policy", "camera=(), microphone=(), geolocation=()")

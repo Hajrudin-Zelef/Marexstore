@@ -956,8 +956,13 @@
     function applyTheme() {
       var t = loadTheme();
       var r = document.documentElement;
-      if (t.mode === 'sombre') r.setAttribute('data-theme', 'dark'); else r.removeAttribute('data-theme');
-      if ((t.color || 'liquid') === 'liquid') r.setAttribute('data-color', 'liquid'); else r.removeAttribute('data-color');
+      // Thème global (/admin/design) : sans choix explicite du visiteur,
+      // on garde le rendu serveur (meta mx-theme-global) au lieu d'imposer liquid.
+      var globalTheme = !!document.querySelector('meta[name="mx-theme-global"]');
+      if (t.mode === 'sombre') r.setAttribute('data-theme', 'dark');
+      else if (t.mode === 'clair' || !globalTheme) r.removeAttribute('data-theme');
+      if (t.color) r.setAttribute('data-color', t.color);
+      else if (!globalTheme) r.setAttribute('data-color', 'liquid');
       document.querySelectorAll('[data-theme-choice]').forEach(function (el) { el.checked = (el.getAttribute('data-theme-choice') === (t.mode || 'clair')); });
       document.querySelectorAll('[data-color-choice]').forEach(function (el) { el.checked = (el.getAttribute('data-color-choice') === (t.color || 'liquid')); });
     }

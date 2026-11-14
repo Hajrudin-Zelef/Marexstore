@@ -68,6 +68,12 @@ func homeFilterHTML(s *catalog.Store) string {
 }
 
 func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
+	return IndexBodyTheme(s, recents, catalog.SiteTheme)
+}
+
+// IndexBodyTheme : page d'accueil avec blocs ordonnés/filtrables par le thème.
+// Avec le thème par défaut, la sortie est identique à l'ancienne version.
+func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.Theme) string {
 	var slides strings.Builder
 	for i, b := range banners {
 		on := ""
@@ -154,15 +160,11 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 		minicard("hp-all-in-one-24-pouce-i5", "Bureau, All-in-One et plus encore -10%", "") +
 		minicard("ecran-hp-serie-527sf-s527sf", "Écran HP Série 5 527SF -12%", "") +
 		minicard("casque-logitech-h111", "Casque Logitech H111", "") + `</div>`
-	body := Header(s, "", "") + `
-<div class="wrap">
-<div class="slide" id="slideshow">` + slides.String() + `
+	hero := `<div class="slide" id="slideshow">` + slides.String() + `
 <button type="button" class="nav prev" data-prev aria-label="Précédent">‹</button>
 <button type="button" class="nav next" data-next aria-label="Suivant">›</button>
-<div class="dots">` + dots.String() + `</div></div>
-` + minis + `
-` + homeFilterHTML(s) + `
-<div class="sec"><div class="deal">
+<div class="dots">` + dots.String() + `</div></div>`
+	onglets := `<div class="sec"><div class="deal">
 <div class="dealcard"><div>` + ImgTag(deal, "") + `</div><div>
 <div class="cat">Offre spéciale <span class="save">Save 10%</span></div><h2 style="margin:4px 0">` + esc(deal.Nom) + `</h2>
 <p>` + esc(deal.Accroche) + `</p><div class="pr">` + PrixHTML(deal) + `</div>
@@ -174,19 +176,36 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 <div data-pane="1"><div class="catalog view-grid" style="grid-template-columns:repeat(3,1fr)">` + tabCards(vedette) + `</div></div>
 <div data-pane="2" hidden><div class="catalog view-grid" style="grid-template-columns:repeat(3,1fr)">` + tabCards(promo) + `</div></div>
 <div data-pane="3" hidden><div class="catalog view-grid" style="grid-template-columns:repeat(3,1fr)">` + tabCards(notes) + `</div></div>
-</div></div></div>
-<div class="sec"><h2>Nos produits</h2><div class="sub">Une sélection du stock — voir tout le catalogue dans le <a href="boutique.html">Store</a></div>
-<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + grille.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
-<div class="sec"><h2>Les plus vendus</h2><div class="sub">Top 8</div><div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="top8 hrow">` + top8.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
-<div class="sec"><div class="banner"><div><h3>Clés USB Imation &amp; disques durs WD Elements</h3>
+</div></div></div>`
+	produits := `<div class="sec"><h2>Nos produits</h2><div class="sub">Une sélection du stock — voir tout le catalogue dans le <a href="boutique.html">Store</a></div>
+<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + grille.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
+	vendus := `<div class="sec"><h2>Les plus vendus</h2><div class="sub">Top 8</div><div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="top8 hrow">` + top8.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
+	banniere := `<div class="sec"><div class="banner"><div><h3>Clés USB Imation &amp; disques durs WD Elements</h3>
 <p>Stockage fiable pour tous vos besoins — demandez votre devis.</p></div>
 <div><a class="btn" href="boutique.html">VOIR LE PRODUIT</a>
 <a class="btn dark" href="mailto:` + catalog.Email + `">CONTACT</a>
-<a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>
-<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
-<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>
-<div class="sec"><div class="brands"><span>ACER</span><span>APPLE</span><span>ASUS</span><span>CISCO</span><span>DELL</span><span>EPSON</span><span>HP</span><span>KYOCERA</span><span>LENOVO</span></div></div>
-</div>
+<a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>`
+	recentsSec := `<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
+<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
+	marques := `<div class="sec"><div class="brands"><span>ACER</span><span>APPLE</span><span>ASUS</span><span>CISCO</span><span>DELL</span><span>EPSON</span><span>HP</span><span>KYOCERA</span><span>LENOVO</span></div></div>`
+	blocs := map[string]string{
+		"hero": hero, "minis": minis, "filtre": homeFilterHTML(s),
+		"onglets": onglets, "produits": produits, "vendus": vendus,
+		"banniere": banniere, "recents": recentsSec, "marques": marques,
+	}
+	ordre := t.Sections
+	if len(ordre) == 0 {
+		ordre = catalog.DefaultSections
+	}
+	var mid strings.Builder
+	for _, k := range ordre {
+		if b, ok := blocs[k]; ok {
+			mid.WriteString(b + "\n")
+		}
+	}
+	body := HeaderTheme(s, "", "", t) + `
+<div class="wrap">
+` + mid.String() + `</div>
 ` + Footer(s, "")
 	return body
 }

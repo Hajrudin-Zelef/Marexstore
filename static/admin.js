@@ -82,6 +82,41 @@
   } catch (e) {}
 })();
 
+// Aperçu live du Studio Design : recharge l'iframe en GET avec les réglages
+// du formulaire (?couleur=...&sections=...). Navigation normale : pas de
+// doc.write, pas d'URL blob, scripts et styles chargés normalement.
+// Repli sans JS : submit natif vers l'iframe (POST).
+(function () {
+  var form = document.getElementById('mx-design-form');
+  if (!form) return;
+  var frame = document.querySelector('iframe[name="mx-preview"]');
+  if (!frame) return;
+  var timer = null, seq = 0;
+  function refresh() {
+    var my = ++seq;
+    var fd = new FormData(form);
+    fd.delete('csrf');
+    var qs = new URLSearchParams(fd).toString();
+    // Anti-course : seule la dernière demande s'applique.
+    setTimeout(function () {
+      if (my !== seq) return;
+      frame.src = '/admin/design/apercu?' + qs;
+    }, 50);
+  }
+  var btn = form.querySelector('[formaction="/admin/design/apercu"]');
+  if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); refresh(); });
+  form.addEventListener('change', function () {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(refresh, 700);
+  });
+  form.addEventListener('input', function (e) {
+    if (e.target && ['accent', 'annonce_texte', 'css', 'ordre'].indexOf(e.target.name) >= 0) {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(refresh, 900);
+    }
+  });
+})();
+
 // Postboxes repliables + confirmations destructives (dupliquer, supprimer).
 (function () {
   document.addEventListener('click', function (e) {

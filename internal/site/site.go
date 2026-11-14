@@ -147,3 +147,49 @@ func LoadStore(db *sql.DB) (*catalog.Store, error) {
 	}
 	return catalog.NewStore(list), rows.Err()
 }
+
+// ThemeFromDB : lit les réglages theme_* (table settings) vers catalog.Theme.
+// Absents = thème par défaut (sortie identique au site d'origine).
+func ThemeFromDB(db *sql.DB) catalog.Theme {
+	t := catalog.DefaultTheme()
+	get := func(k string) string {
+		var v string
+		if err := db.QueryRow(`SELECT valeur FROM settings WHERE nom=?`, k).Scan(&v); err != nil {
+			return ""
+		}
+		return v
+	}
+	if v := get("theme_couleur"); v != "" {
+		t.Couleur = v
+	}
+	if v := get("theme_accent"); v != "" {
+		t.Accent = v
+	}
+	if v := get("theme_mode"); v != "" {
+		t.Mode = v
+	}
+	if v := get("theme_police"); v != "" {
+		t.Police = v
+	}
+	if get("theme_annonce_on") == "1" {
+		t.AnnonceOn = true
+	}
+	if v := get("theme_annonce_texte"); v != "" {
+		t.AnnonceTexte = v
+	}
+	if v := get("theme_sections"); v != "" {
+		var ss []string
+		for _, s := range strings.Split(v, ",") {
+			if s = strings.TrimSpace(s); s != "" {
+				ss = append(ss, s)
+			}
+		}
+		if len(ss) > 0 {
+			t.Sections = ss
+		}
+	}
+	if v := get("theme_css"); v != "" {
+		t.CSS = v
+	}
+	return t
+}

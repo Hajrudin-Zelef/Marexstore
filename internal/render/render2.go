@@ -51,11 +51,20 @@ func PrixHTML(p *catalog.RawProduct) string {
 // ---------- Chrome ----------
 
 func Header(s *catalog.Store, prefix, searchQ string) string {
+	return HeaderTheme(s, prefix, searchQ, catalog.SiteTheme)
+}
+
+// HeaderTheme : comme Header mais avec le thème fourni (aperçu brouillon).
+func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) string {
 	var opts strings.Builder
 	for _, m := range catalog.MainOrder {
 		fmt.Fprintf(&opts, `<option value="%s">%s</option>`, catalog.MainSlug[m], esc(m))
 	}
-	return `<div class="topbar"><div class="in"><span>Bienvenue dans notre boutique</span><span class="sp"></span>
+	annonce := ""
+	if t.AnnonceOn && strings.TrimSpace(t.AnnonceTexte) != "" {
+		annonce = `<div class="mx-annonce">` + esc(t.AnnonceTexte) + `</div>`
+	}
+	return annonce + `<div class="topbar"><div class="in"><span>Bienvenue dans notre boutique</span><span class="sp"></span>
 <a href="` + prefix + `suivi-commande.html">Suivi de commande</a><span>` + esc(catalog.Tel) + `</span><span>` + esc(catalog.Email) + `</span><a href="` + prefix + `compte.html" data-auth-open>Inscription / Connexion</a></div></div>
 <header class="main"><div class="in">
 <a class="logo" href="` + prefix + `index.html"><img src="` + prefix + `images/logo-mediatec.png" alt="Mediatec"><span class="store">Store</span></a>
@@ -298,7 +307,7 @@ func Footer(s *catalog.Store, prefix string) string {
 </div><div class="copy">© Mediatec - Innovating For All - Tout droit reservé</div></footer>
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=337"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=338"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
@@ -315,7 +324,69 @@ func Head(title, prefix, extraHead string) string {
 }
 
 func Doc(title, body, prefix, extraHead string) string {
-	return `<!DOCTYPE html><html lang="fr"><head>` + Head(title, prefix, extraHead) + `</head><body>` + body + `</body></html>`
+	return DocTheme(title, body, prefix, extraHead, "")
+}
+
+// DocTheme : document avec attributs <html> du thème global (vide = défaut).
+func DocTheme(title, body, prefix, extraHead, htmlAttrs string) string {
+	return `<!DOCTYPE html><html lang="fr"` + htmlAttrs + `><head>` + Head(title, prefix, extraHead) + `</head><body>` + body + `</body></html>`
+}
+
+// ThemeHead : balise meta de marquage + CSS du thème global.
+// Vide si thème par défaut (parité v3.25 intacte).
+func ThemeHead(t catalog.Theme) string {
+	if t.IsDefault() {
+		return ""
+	}
+	return `<meta name="mx-theme-global" content="1">` + ThemeCSS(t)
+}
+func ThemeCSS(t catalog.Theme) string {
+	if t.IsDefault() {
+		return ""
+	}
+	var b strings.Builder
+	b.WriteString(`<style id="mx-theme">`)
+	switch t.Couleur {
+	case "gazonnier":
+		b.WriteString(`html[data-color="gazonnier"]{--brand:#2e5136;--brand-rgb:46,81,54;--brand-dark:#223d27;--brand-pale:#e9efe9}`)
+	case "liquid":
+		b.WriteString(`html[data-color="liquid"]{--brand:#a3d133;--brand-rgb:163,209,51;--brand-dark:#8ab92a;--brand-pale:#f4f9e8}`)
+	case "perso":
+		acc := t.Accent
+		if acc == "" {
+			acc = "#2e5136"
+		}
+		fmt.Fprintf(&b, `html[data-color="perso"]{--brand:%s;--brand-rgb:%s;--brand-dark:%s;--brand-pale:#eef0f2}`, acc, hexRGB(acc), catalog.Shade(acc, 0.75))
+	}
+	if t.Police == "systeme" {
+		b.WriteString(`body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}`)
+	}
+	if t.AnnonceOn {
+		b.WriteString(`.mx-annonce{background:var(--brand);color:#fff;text-align:center;font-size:13px;font-weight:600;padding:8px 16px}.mx-annonce a{color:#fff;text-decoration:underline}`)
+	}
+	if css := sanitizeCSS(t.CSS); css != "" {
+		b.WriteString(css)
+	}
+	b.WriteString(`</style>`)
+	return b.String()
+}
+
+func hexRGB(hex string) string {
+	var r, g, b int
+	if len(hex) == 7 && hex[0] == '#' {
+		fmt.Sscanf(hex[1:3], "%x", &r)
+		fmt.Sscanf(hex[3:5], "%x", &g)
+		fmt.Sscanf(hex[5:], "%x", &b)
+		return fmt.Sprintf("%d,%d,%d", r, g, b)
+	}
+	return "46,81,54"
+}
+
+// sanitizeCSS : CSS perso sans balise (anti-injection, CSP conservée).
+func sanitizeCSS(s string) string {
+	s = strings.ReplaceAll(s, "<", "")
+	s = strings.ReplaceAll(s, ">", "")
+	return strings.TrimSpace(s)
 }
 
 // ---------- Hub boutique ----------

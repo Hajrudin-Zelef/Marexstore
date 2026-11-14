@@ -55,8 +55,8 @@ func (a *App) StaticPage(w http.ResponseWriter, r *http.Request, title, name, pr
 	}
 	// NB : le pied statique se termine déjà par </body></html> (verbatim d'origine).
 	path := r.URL.EscapedPath()
-	extra := `<link rel="canonical" href="` + strings.TrimSuffix(a.Cfg.BaseURL, "/") + path + `">`
-	out := `<!DOCTYPE html><html lang="fr"><head>` + render.Head(title, prefix, extra) + `</head><body>` +
+	extra := `<link rel="canonical" href="` + strings.TrimSuffix(a.Cfg.BaseURL, "/") + path + `">` + render.ThemeHead(catalog.SiteTheme)
+	out := `<!DOCTYPE html><html lang="fr"` + catalog.SiteTheme.HtmlAttrs() + `><head>` + render.Head(title, prefix, extra) + `</head><body>` +
 		fill(a.Top) + "\n" + fill(a.Drawer) + fill(body) +
 		render.WidgetsHTML(a.Store, prefix) +
 		strings.ReplaceAll(strings.ReplaceAll(a.Foot, "{{.Widgets}}", ""), "{{.Prefix}}", prefix)

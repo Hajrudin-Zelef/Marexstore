@@ -20,6 +20,7 @@ func MxSidebar(active string, counts map[string]int) string {
 		{"", "Tableau de bord", "dashboard", 0, false},
 		{"produits", "Produits", "archive", counts["produits"], true},
 		{"types", "Types", "tag", 0, false},
+		{"design", "Design", "palette", 0, false},
 		{"commandes", "Commandes", "cart", counts["commandes"], true},
 		{"clients", "Clients", "users", counts["clients"], true},
 		{"medias", "Médias", "image", 0, false},
@@ -56,6 +57,7 @@ func MxSVG(name string) string {
 		"users":     `<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>`,
 		"image":     `<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>`,
 		"cog":       `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
+		"palette":   `<circle cx="12" cy="12" r="10"/><circle cx="8.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="7.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.4" fill="currentColor" stroke="none"/><path d="M12 22c5 0 8-3 8-8h-3a4 4 0 0 1-4-4H9a5 5 0 0 0-5 5c0 4 3 7 8 7z"/>`,
 	}
 	return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">` + p[name] + `</svg>`
 }
@@ -77,12 +79,12 @@ func MxDoc(title, active string, counts map[string]int, body string) string {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=5">
+<link rel="stylesheet" href="/static/admin.css?v=6">
 <script src="/static/theme.js?v=1"></script>
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, counts) +
 		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
-		body + `</div></div></div><script src="/static/admin.js?v=3"></script></body></html>`
+		body + `</div></div></div><script src="/static/admin.js?v=5"></script></body></html>`
 }
 
 // MxView : un onglet de vue (Tous/En stock/...) avec compteur.

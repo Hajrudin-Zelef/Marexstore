@@ -37,6 +37,8 @@ func main() {
 	if strings.TrimSpace(waSetting) != "" {
 		catalog.WA = strings.TrimSpace(waSetting)
 	}
+	// Thème global du Studio Design (/admin/design) ; défaut = site d'origine.
+	catalog.SiteTheme = site.ThemeFromDB(database)
 	maintenanceOn := func() (bool, string) {
 		var on, msg string
 		_ = database.QueryRow(`SELECT valeur FROM settings WHERE nom='maintenance'`).Scan(&on)
@@ -173,6 +175,11 @@ func main() {
 	r.Post("/admin/types", app.AdminTypes)
 	r.Get("/admin/reglages", app.AdminReglages)
 	r.Post("/admin/reglages", app.AdminReglages)
+	r.Get("/admin/design", app.AdminDesign)
+	r.Post("/admin/design", app.AdminDesign)
+	r.Post("/admin/design/reset", app.AdminDesign)
+	r.Get("/admin/design/apercu", app.AdminDesignPreview)
+	r.Post("/admin/design/apercu", app.AdminDesignPreview)
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,

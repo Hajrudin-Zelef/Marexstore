@@ -30,8 +30,8 @@ func (a *App) renderDoc(w http.ResponseWriter, r *http.Request, title, bodyHTML,
 	if path == "/index.html" {
 		path = "/"
 	}
-	extra := `<link rel="canonical" href="` + strings.TrimSuffix(a.Cfg.BaseURL, "/") + path + `">`
-	s := render.Doc(title, bodyHTML, prefix, extra)
+	extra := `<link rel="canonical" href="` + strings.TrimSuffix(a.Cfg.BaseURL, "/") + path + `">` + render.ThemeHead(catalog.SiteTheme)
+	s := render.DocTheme(title, bodyHTML, prefix, extra, catalog.SiteTheme.HtmlAttrs())
 	s = strings.ReplaceAll(s, "{{CSRF}}", auth.CSRFToken(a.Cfg.SessionSecret, a.sessionID(r)))
 	a.write(w, 200, s)
 }
