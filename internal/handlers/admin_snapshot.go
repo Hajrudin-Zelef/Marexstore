@@ -29,6 +29,7 @@ type snapshotProduit struct {
 	PrixAffiche string `json:"prixAffiche"` // « 45.000 F » ou « Prix sur demande »
 	Image       string `json:"image"`
 	Marque      string `json:"marque"`
+	Accroche    string `json:"accroche,omitempty"` // rempli pour l'offre spéciale
 }
 
 type snapshotMegaTop struct {
@@ -143,16 +144,70 @@ func (a *App) buildSnapshot() map[string]any {
 		}
 	}
 
+	// Bandeau sombre (C1) : le vrai bandeau de l'accueil.
+	bandeauSombre := render.DarkBannerData
+
+	// Offre spéciale (C1) : le vrai produit deal de l'accueil.
+	var offreSpeciale any
+	if a.Store != nil {
+		if p, ok := a.Store.BySlug[render.DealSlug]; ok {
+			offreSpeciale = snapshotProduit{
+				Nom:         p.Nom,
+				Slug:        p.Slug,
+				Prix:        p.PrixAffiche(),
+				PrixAffiche: catalog.FmtPrix(p.PrixAffiche()),
+				Image:       p.Image,
+				Marque:      p.Marque,
+				Accroche:    p.Accroche,
+			}
+		}
+	}
+
+	// Familles du menu (C1) : les 11 tops live avec leurs compteurs réels
+	// (le Studio n'en montrait que 7). Visible = au moins 1 produit.
+	menuFams := make([]map[string]any, 0, len(catalog.LiveCats))
+	counts := map[string]int{}
+	if a.Store != nil {
+		for _, p := range a.Store.Products {
+			if top, _ := catalog.LiveMap(p); top != "" {
+				counts[top]++
+			}
+		}
+	}
+	for _, t := range catalog.LiveCats {
+		menuFams = append(menuFams, map[string]any{
+			"label":   t.Label,
+			"slug":    t.Slug,
+			"count":   counts[t.Slug],
+			"visible": counts[t.Slug] > 0,
+		})
+	}
+
+	// Pages d'info (C1) : le vrai contenu des pages statiques, déjà chargé
+	// dans a.Bodies par reload() (design_files actif d'abord, puis disque —
+	// même source que le site). Best-effort : un App sans Bodies donne une
+	// carte vide, pas une erreur.
+	pagesInfo := map[string]string{}
+	for _, nom := range []string{"apropos", "cgv", "contact", "livraison"} {
+		if c, ok := a.Bodies[nom]; ok && c != "" {
+			pagesInfo[nom] = c
+		}
+	}
+
 	return map[string]any{
-		"navLinks":  render.NavLinks,
-		"megaMenu":  mega,
-		"hero":      render.Banners,
-		"minis":     render.Minis,
-		"marques":   render.Marques,
-		"topVentes": topVentes,
-		"produits":  produits,
-		"footer":    footer,
-		"tx":        tx,
+		"navLinks":      render.NavLinks,
+		"megaMenu":      mega,
+		"hero":          render.Banners,
+		"minis":         render.Minis,
+		"marques":       render.Marques,
+		"topVentes":     topVentes,
+		"produits":      produits,
+		"bandeauSombre": bandeauSombre,
+		"offreSpeciale": offreSpeciale,
+		"menuFams":      menuFams,
+		"pagesInfo":     pagesInfo,
+		"footer":        footer,
+		"tx":            tx,
 	}
 }
 

@@ -103,6 +103,26 @@ func IndexBody(s *catalog.Store, recents []*catalog.RawProduct) string {
 
 // IndexBodyTheme : page d'accueil avec blocs ordonnés/filtrables par le thème.
 // Avec le thème par défaut, la sortie est identique à l'ancienne version.
+// DarkBanner : le bandeau sombre de l'accueil (titre, texte, boutons).
+// Source unique — aussi exposé par le snapshot du Studio (phase C1).
+type DarkBanner struct {
+	Titre string `json:"titre"`
+	Texte string `json:"texte"`
+	Btn1  string `json:"btn1"`
+	Btn2  string `json:"btn2"`
+}
+
+var DarkBannerData = DarkBanner{
+	Titre: "Clés USB Imation & disques durs WD Elements",
+	Texte: "Stockage fiable pour tous vos besoins — demandez votre devis.",
+	Btn1:  "VOIR LE PRODUIT",
+	Btn2:  "CONTACT",
+}
+
+// DealSlug : le produit de la carte « Offre spéciale » de l'accueil.
+// Source unique — aussi exposé par le snapshot du Studio (phase C1).
+const DealSlug = "kyocera-taskalfa-3011i"
+
 func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.Theme) string {
 	var slides strings.Builder
 	for i, b := range Banners {
@@ -132,7 +152,7 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 		}
 		fmt.Fprintf(&dots, `<button type="button" data-dot class="%s" aria-label="Slide %d"></button>`, on, i+1)
 	}
-	deal := s.BySlug["kyocera-taskalfa-3011i"]
+	deal := s.BySlug[DealSlug]
 	tabCards := func(slugs []string) string {
 		var out strings.Builder
 		for _, slug := range slugs {
@@ -209,10 +229,10 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 	produits := `<div class="sec"><h2>Nos produits</h2><div class="sub">Une sélection du stock — voir tout le catalogue dans le <a href="boutique.html">Store</a></div>
 <div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + grille.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
 	vendus := `<div class="sec"><h2>Les plus vendus</h2><div class="sub">Top 8</div><div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="top8 hrow">` + top8.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
-	banniere := `<div class="sec"><div class="banner"><div><h3>Clés USB Imation &amp; disques durs WD Elements</h3>
-<p>Stockage fiable pour tous vos besoins — demandez votre devis.</p></div>
-<div><a class="btn" href="boutique.html">VOIR LE PRODUIT</a>
-<a class="btn dark" href="mailto:` + catalog.Email + `">CONTACT</a>
+	banniere := `<div class="sec"><div class="banner"><div><h3>` + esc(DarkBannerData.Titre) + `</h3>
+<p>` + esc(DarkBannerData.Texte) + `</p></div>
+<div><a class="btn" href="boutique.html">` + esc(DarkBannerData.Btn1) + `</a>
+<a class="btn dark" href="mailto:` + catalog.Email + `">` + esc(DarkBannerData.Btn2) + `</a>
 <a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>`
 	recentsSec := `<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
 <div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`

@@ -35,8 +35,9 @@ function pvFooterHTML(){
 /* Aperçu réel (phase A1) : l'iframe charge le vrai site
    (/admin/design/apercu) au lieu de la maquette. Le thème brouillon passe
    en query string (couleur, accent, annonce… — même mécanisme que l'aperçu
-   brouillon existant). La maquette (renderPreviewMockup, ci-dessous) ne
-   sert plus que de repli si l'iframe ne charge pas. */
+   brouillon existant). Les fonctions pv* ci-dessous ne servent plus que
+   pour l'onglet « Pages d'information » (C3) ; le reste est du code mort
+   en attente de retrait. */
 let pvTimer=null, pvCurrentURL='';
 function previewURL(){
   const t=themeFromFront();
@@ -69,24 +70,6 @@ function renderPreview(){
     pvI.src=url;
   },400);
 }
-/* Repli maquette (ancien renderPreview) : utilisé uniquement si l'iframe
-   réelle ne charge pas (voir l'écouteur d'erreur dans controller.js). */
-function renderPreviewMockup(){
-  updateStatus(); setPath();
-  /* L'aperçu suit l'onglet actif : chaque module montre sa vraie page. */
-  if(currentTab==='boutique') return pvShop();
-  if(currentTab==='fiche') return pvFiche();
-  if(currentTab==='panier') return pvPanier();
-  if(currentTab==='textes') return pvTextes();
-  if(currentTab==='menu') return pvMenu();
-  if(currentTab==='seo') return pvSeo();
-  if(currentTab==='reglages') return pvReglages();
-  if(currentTab==='header') return pvHeader();
-  if(currentTab==='footer') return pvFooter();
-  if(currentTab==='compte') return pvCompte();
-  return pvHome();
-}
-
 function pvHome(){
   const f = front;
   const annonce = f.showAnnonce
@@ -431,11 +414,22 @@ const PV_BASE=`:root{--line:#e5e7eb;--muted:#6b7280;--ink:#111827}*{box-sizing:b
 svg.e{width:1em;height:1em;vertical-align:-.14em;stroke-width:1.6}.pv-menu svg.e{margin-right:.5em}.thumb svg.e{color:var(--accent)}
 @media(max-width:520px){.pv-row{flex-direction:column}.pv-col{flex:0 0 auto!important;width:100%}[style*="150px 1fr"],[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}}`;
 
+/* Coquille srcdoc pour les aperçus maquette (Pages d'info, C3) : le
+   vrai site (A1) n'a ni #root ni #theme, donc l'onglet Pages d'info doit
+   recréer cette coquille avant d'écrire via PV.html. */
+function mockupShellHTML(){
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="${FONTS}"><style>${PV_BASE}${pvCss()}</style><style id="theme"></style></head><body><div id="root"></div></body></html>`;
+}
+
 const PV={set html(h){
   const d=pvI.contentDocument; if(!pvReady||!d){pvPending=h;return}
   pvPending=null;
-  d.getElementById('theme').textContent=':root{--accent:'+front.accent+'}\n'+((typeof acc!=='undefined'&&acc.misc&&acc.misc.badge)?'.pv-badge{background:'+acc.misc.badge+'!important}\n':'')+(front.customCSS||'');
-  d.getElementById('root').innerHTML=emojiToSvg(h+(typeof waBtn==='function'?waBtn():''));
+  /* C3 : l'iframe montre le vrai site (A1) quand on n'est pas sur les
+     pages d'info — pas de #theme/#root, on ne fait rien (pas de crash). */
+  const themeEl=d.getElementById('theme'), rootEl=d.getElementById('root');
+  if(!themeEl||!rootEl) return;
+  themeEl.textContent=':root{--accent:'+front.accent+'}\n'+((typeof acc!=='undefined'&&acc.misc&&acc.misc.badge)?'.pv-badge{background:'+acc.misc.badge+'!important}\n':'')+(front.customCSS||'');
+  rootEl.innerHTML=emojiToSvg(h+(typeof waBtn==='function'?waBtn():''));
   d.querySelectorAll('img').forEach(i=>i.onerror=()=>{i.style.display='none'});
   const l=$('#bLive'); l.classList.remove('flash'); void l.offsetWidth; l.classList.add('flash');
 }};

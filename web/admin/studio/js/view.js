@@ -72,7 +72,8 @@ const codeInput = $('#codeInput'), codePre = $('#codePre'), codeGutter = $('#cod
 
 function syncEditor(){
   const v = codeInput.value;
-  codePre.innerHTML = highlight(v, FILES[currentFile].lang) + '\n';
+  const f = FILES[currentFile];
+  codePre.innerHTML = highlight(v, f ? f.lang : 'txt') + '\n';
   const n = v.split('\n').length;
   codeGutter.textContent = Array.from({length:n},(_,i)=>i+1).join('\n');
   updateCodeMeta();
@@ -86,7 +87,8 @@ function renderTabs(){
 }
 
 function updateCodeMeta(){
-  const f = FILES[currentFile]; if(!f) return;
+  const f = FILES[currentFile];
+  if(!f){ const m=$('#codeMeta'); if(m)m.textContent=''; return; }
   const n = (codeInput.value || '').split('\n').length;
   $('#codeMeta').textContent = f.path + ' — ' + f.lang.toUpperCase() + ' — ' + n + ' lignes';
 }
@@ -98,13 +100,14 @@ function openFile(name){
 
 function closeTab(name){
   openTabs = openTabs.filter(n=>n!==name);
-  if(!openTabs.length) openTabs = ['theme.css'];
+  if(!openTabs.length){ const names=Object.keys(FILES).sort(); openTabs = names.length ? [names[0]] : []; }
   if(currentFile===name) currentFile = openTabs[openTabs.length-1];
   renderTabs(); loadFile(currentFile);
 }
 
 function loadFile(name){
   const f = FILES[name];
+  if(!f){ codeInput.value=''; syncEditor(); updateCodeMeta(); return; }
   codeInput.value = f.content;
   syncEditor();
   updateCodeMeta();

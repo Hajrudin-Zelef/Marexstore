@@ -36,7 +36,52 @@ function setFrontMode(mode){
   document.querySelectorAll('#frontMode button').forEach(x=>x.classList.toggle('active', x.dataset.mode===mode));
   $('#front-ui').classList.toggle('hidden', mode!=='ui');
   $('#front-code').classList.toggle('hidden', mode!=='code');
-  if(mode==='code'){ renderTabs(); loadFile(currentFile); toast('Mode Code : ouvrez un fichier, modifiez-le, Publiez.'); }
+  if(mode==='code'){ loadCodeFiles().then(()=>{ renderTabs(); if(currentFile) loadFile(currentFile); }); toast('Mode Code : les vrais fichiers du site (lecture seule).'); }
+}
+
+/* C2 — mode Code : les vrais fichiers du site (GET /admin/api/fichiers).
+   Chargés une seule fois, à l'ouverture du mode Code. Lecture seule :
+   l'éditeur est en readonly, l'écriture arrive avec le T3. */
+function renderFileTree(){
+  const tree=$('#fileTree'); if(!tree) return;
+  const names=Object.keys(FILES).sort();
+  const groups={'templates/static/':[],'static/':[]};
+  for(const n of names){
+    const g = n.startsWith('templates/static/') ? 'templates/static/' : 'static/';
+    groups[g].push(n);
+  }
+  let html='';
+  for(const [g, list] of Object.entries(groups)){
+    if(!list.length) continue;
+    html+='<div class="ft-section">'+g+'</div>';
+    for(const n of list){
+      const f=FILES[n];
+      const short=n.slice(g.length);
+      const col = f.lang==='css' ? '#dbeafe;color:#2563eb' : f.lang==='js' ? '#fef3c7;color:#b45309' : '#ffedd5;color:#ea580c';
+      html+='<button class="ft-file" data-file="'+n+'"><span class="ft-ico" style="background:'+col+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>'+short+'</button>';
+    }
+  }
+  tree.innerHTML=html;
+  tree.querySelectorAll('.ft-file').forEach(b=>b.addEventListener('click', ()=>openFile(b.dataset.file)));
+}
+async function loadCodeFiles(){
+  if(codeFilesLoaded) return;
+  try{
+    const r=await fetch(window.location.origin + '/admin/api/fichiers');
+    const j=await r.json();
+    if(j&&j.ok&&Array.isArray(j.fichiers)){
+      for(const f of j.fichiers){
+        FILES[f.nom]={lang:f.lang, path:f.nom, content:f.contenu||''};
+      }
+      codeFilesLoaded=true;
+      renderFileTree();
+      codeInput.readOnly=true;
+      const names=Object.keys(FILES).sort();
+      if(names.length && !currentFile){
+        openTabs=[names[0]]; currentFile=names[0];
+      }
+    }
+  }catch(e){ toast('Fichiers du site inaccessibles : '+(e&&e.message?e.message:e)); }
 }
 
 codeInput.addEventListener('input', ()=>{
@@ -120,7 +165,7 @@ pvI.addEventListener('load',()=>{pvReady=true;if(pvPending!==null)PV.html=pvPend
   /* Onglet Pied de page : défiler en bas de la vraie page (comme l'ancien pvFooter). */
   if(typeof currentTab!=='undefined'&&currentTab==='footer'){try{const d=pvI.contentDocument;(d.scrollingElement||d.documentElement).scrollTop=1e7}catch(_){}}
 });
-pvI.srcdoc=`<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="${FONTS}"><style>${PV_BASE}${pvCss()}</style><style id="theme"></style></head><body><div id="root"></div></body></html>`;
+pvI.srcdoc=mockupShellHTML();
 
 function openModal(){$('#modal').classList.remove('hidden');$('#mCancel').focus()}
 
@@ -181,6 +226,33 @@ function applyServerSnapshot(){
   }
   if(Array.isArray(s.footer)&&s.footer.length){
     footer.cols=s.footer.map(c=>({key:(c.titre||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''),title:c.titre||'',visible:true,links:(c.liens||[]).map(l=>l.label||'')}));
+  }
+  /* C1 — les nouveaux champs du snapshot (bandeau sombre, offre spéciale,
+     familles du menu, pages d'info, ligne hero/produits du Front). */
+  if(s.bandeauSombre&&typeof s.bandeauSombre==='object'){
+    acc.dark.t=s.bandeauSombre.titre||acc.dark.t;
+    acc.dark.x=s.bandeauSombre.texte||acc.dark.x;
+    acc.dark.b=s.bandeauSombre.btn1||acc.dark.b;
+  }
+  if(s.offreSpeciale&&typeof s.offreSpeciale==='object'){
+    acc.find.offT=s.offreSpeciale.nom||acc.find.offT;
+    acc.find.offX=s.offreSpeciale.accroche||acc.find.offX;
+  }
+  if(Array.isArray(s.menuFams)&&s.menuFams.length){
+    menu.fams=s.menuFams.map(f=>({key:f.slug||'',label:f.label||'',count:f.count||0,visible:!!f.visible}));
+  }
+  if(s.pagesInfo&&typeof s.pagesInfo==='object'){
+    for(const k of ['apropos','cgv','contact','livraison']){
+      if(typeof s.pagesInfo[k]==='string'&&s.pagesInfo[k])txtPages[k]=s.pagesInfo[k];
+    }
+  }
+  if(Array.isArray(s.hero)&&s.hero.length){
+    const row=rows.find(r=>r.id==='hero');
+    if(row){const b=s.hero[0];const sous=(b.sous||'').split('<br>')[0];row.cols=[{w:100,block:{type:'Bannière',title:((b.titre||'')+(sous?' '+sous:'')).replace(/<[^>]*>/g,''),text:b.acc||'',price:b.prix||'',cta:b.btn||'Acheter',img:'💻'}}];}
+  }
+  if(Array.isArray(s.produits)&&s.produits.length>=2){
+    const row=rows.find(r=>r.id==='produits');
+    if(row)row.cols=s.produits.slice(0,2).map(p=>({w:50,block:{type:'Produit',title:p.nom||'',text:'',price:p.prixAffiche||'',img:'💻'}}));
   }
 }
 function applyServerDesign(){
@@ -422,7 +494,7 @@ addEventListener('load',()=>{
   if(acc.cartView==='devis')return pvDevis();
   Object.defineProperty(PV,'html',{configurable:true,set(h){Object.defineProperty(PV,'html',{configurable:true,set:_setPV3});PV.html=h+drawerHTML()}});_ppPan();
  };
- TG.panier=[['Totaux',['sous_total','livraison','livraison_offerte','total','articles']],['Tiroir panier',['tiroir_fermer','tiroir_retirer','tiroir_vider','tiroir_continuer','tiroir_livraison','toast_ajoute']],['Devis — formulaire',['devis_nom','devis_email','devis_tel','devis_ent','devis_client','devis_oui','devis_non','devis_continuer']],['Devis — cartes latérales',['aide_titre','aide_texte','suite_titre','suite_texte']],['Divers',['ph_texte']]];
+ TG.panier=[['Totaux',['sous_total','livraison','livraison_offerte','total','articles']],['Tiroir panier',['tiroir_fermer','tiroir_retirer','tiroir_vider','tiroir_continuer','tiroir_livraison','toast_ajoute']],['Devis — formulaire',['devis_nom','devis_email','devis_tel','devis_ent','devis_client','devis_oui','devis_non','devis_continuer']],['Devis — carte latérale',['aide_titre','aide_texte']],['Divers',['ph_texte']]];
  TG.compte=[['Connexion',['cpt_onglet_conn','cpt_titre','cpt_email','cpt_mdp','cpt_oubli','cpt_btn_conn']],['Création de compte',['cpt_onglet_crea','cpt_civ','cpt_prenom','cpt_nom','cpt_mdp2','cpt_btn_crea','cpt_sync']],['Préférences',['pref_infos','pref_cmd','pref_adr','pref_paniers','pref_params','pref_requis','pref_theme']]];
  renderAllModuleTexts(); renderAccEditor(); renderPreview();
 });
@@ -658,7 +730,7 @@ function resetModuleFieldV16(mod,path,baseline){
 
 const originalRenderPreviewV16=renderPreview;
 
-renderPreview=function(){if(currentTab==='pagesInfo'){updateStatus();setPath();renderInfoPageV16()}else originalRenderPreviewV16();applyV16Preview();const s=$('#statusTxt');if(s)s.textContent=(snap()===pubSnap?'Publié':'Brouillon local · non publié');};
+renderPreview=function(){if(currentTab==='pagesInfo'){updateStatus();setPath();pvReady=false;pvI.srcdoc=mockupShellHTML();renderInfoPageV16()}else originalRenderPreviewV16();applyV16Preview();const s=$('#statusTxt');if(s)s.textContent=(snap()===pubSnap?'Publié':'Brouillon local · non publié');};
 
 const oldSetPathV16=setPath;
 

@@ -59,6 +59,14 @@ var forbiddenValue = []string{
 	"javascript:", "vbscript:", "data:text/html",
 }
 
+// forbiddenValueTxtPages : comme forbiddenValue, sans "<form" — les pages
+// d'info sont du vrai HTML et le formulaire de contact y est légitime.
+// <script>/<iframe>/{{...}/javascript:/on*= restent interdits (C1).
+var forbiddenValueTxtPages = []string{
+	"<script", "<iframe", "<object", "<embed", "{{", "}}",
+	"javascript:", "vbscript:", "data:text/html",
+}
+
 // forbiddenAttr : attributs gestionnaires d'événements (onclick=, onerror=…).
 var forbiddenAttr = regexp.MustCompile(`(?i)\son[a-z]+\s*=`)
 
@@ -95,14 +103,26 @@ func Validate(raw []byte) error {
 	if err := json.Unmarshal(raw, &v); err != nil {
 		return fmt.Errorf("JSON invalide : %w", err)
 	}
-	return validateValue(v)
+	// La validation suit la clé de premier niveau : sous "txtPages" (pages
+	// d'info = vrai HTML), <form> est autorisé (C1).
+	if top, ok := v.(map[string]any); ok {
+		for k, val := range top {
+			if err := validateValue(val, k == "txtPages"); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	return validateValue(v, false)
 }
 
-func validateValue(v any) error {
+// validateValue parcourt le document ; inTxtPages = on est sous la clé
+// "txtPages" (pages d'info), où <form> est légitime.
+func validateValue(v any, inTxtPages bool) error {
 	switch t := v.(type) {
 	case map[string]any:
 		for k, val := range t {
-			if err := validateValue(val); err != nil {
+			if err := validateValue(val, inTxtPages); err != nil {
 				return err
 			}
 			// Valeur numérique sous un nom de donnée métier → refus.
@@ -112,13 +132,17 @@ func validateValue(v any) error {
 		}
 	case []any:
 		for _, val := range t {
-			if err := validateValue(val); err != nil {
+			if err := validateValue(val, inTxtPages); err != nil {
 				return err
 			}
 		}
 	case string:
 		low := strings.ToLower(t)
-		for _, f := range forbiddenValue {
+		list := forbiddenValue
+		if inTxtPages {
+			list = forbiddenValueTxtPages
+		}
+		for _, f := range list {
 			if strings.Contains(low, f) {
 				return fmt.Errorf("contenu interdit dans une valeur : %q", f)
 			}

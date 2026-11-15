@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/site"
 )
 
 // A2 — le snapshot expose les données RÉELLES du site (pas les placeholders
@@ -16,6 +17,11 @@ import (
 // pied de page. Lecture seule.
 func TestAdminSnapshot(t *testing.T) {
 	app, _ := testAppDesign(t)
+	// Pages d'info : charger les vraies pages statiques du dépôt dans
+	// app.Bodies (comme reload() le fait au démarrage du serveur).
+	if _, _, _, bodies, _, err := site.LoadStaticDB(app.DB, "../../templates/static"); err == nil {
+		app.Bodies = bodies
+	}
 	list, err := catalog.LoadRaw("../../catalogdata/produits-v3.json")
 	if err != nil {
 		t.Skip("catalogdata absent (hors dépôt local)")
@@ -126,6 +132,77 @@ func TestAdminSnapshot(t *testing.T) {
 	}
 	if !seen["oukitel-rt3-plus-16-go-ram-128-go"] {
 		t.Fatal("produits : le produit de la bannière OUKITEL absent")
+	}
+
+	// Bandeau sombre (C1) : le vrai bandeau de l'accueil.
+	dark, _ := snap["bandeauSombre"].(map[string]any)
+	if dark == nil || dark["titre"] != "Clés USB Imation & disques durs WD Elements" {
+		t.Fatalf("bandeauSombre : %v, attendu le vrai bandeau", dark)
+	}
+	if dark["texte"] != "Stockage fiable pour tous vos besoins — demandez votre devis." {
+		t.Fatalf("bandeauSombre.texte : %v", dark["texte"])
+	}
+	if dark["btn1"] != "VOIR LE PRODUIT" || dark["btn2"] != "CONTACT" {
+		t.Fatalf("bandeauSombre boutons : %v / %v", dark["btn1"], dark["btn2"])
+	}
+
+	// Offre spéciale (C1) : le vrai produit deal (Kyocera TASKalfa 3011i).
+	offre, _ := snap["offreSpeciale"].(map[string]any)
+	if offre == nil || offre["slug"] != "kyocera-taskalfa-3011i" {
+		t.Fatalf("offreSpeciale : %v, attendu le deal Kyocera", offre)
+	}
+	if offre["nom"] == nil || offre["nom"] == "" {
+		t.Fatal("offreSpeciale : nom absent")
+	}
+	if offre["accroche"] == nil || offre["accroche"] == "" {
+		t.Fatal("offreSpeciale : accroche absente (texte de la carte)")
+	}
+
+	// Familles du menu (C1) : les 11 tops avec compteurs réels.
+	fams, _ := snap["menuFams"].([]any)
+	if len(fams) != 11 {
+		t.Fatalf("menuFams : %d, attendu 11", len(fams))
+	}
+	bySlug := map[string]map[string]any{}
+	for _, f := range fams {
+		m := f.(map[string]any)
+		bySlug[m["slug"].(string)] = m
+	}
+	// Les compteurs doivent correspondre au comptage direct sur le Store
+	// du test (pas aux chiffres de la prod — le catalogue de test est un
+	// sous-ensemble). La somme = les produits avec un top live.
+	want := map[string]int{}
+	for _, p := range app.Store.Products {
+		if top, _ := catalog.LiveMap(p); top != "" {
+			want[top]++
+		}
+	}
+	total := 0
+	for slug, m := range bySlug {
+		if got := int(m["count"].(float64)); got != want[slug] {
+			t.Fatalf("menuFams %s : %d, attendu %d", slug, got, want[slug])
+		}
+		if visible := m["visible"].(bool); visible != (want[slug] > 0) {
+			t.Fatalf("menuFams %s : visible=%v, attendu %v", slug, visible, want[slug] > 0)
+		}
+		total += want[slug]
+	}
+	if total == 0 {
+		t.Fatal("menuFams : aucun produit compté")
+	}
+	// Le top caméras est à 0 dans le catalogue de test comme en prod
+	// (LiveMap n'a pas de cas caméra) — il doit être présent et invisible.
+	if bySlug["cameras-videosurveillances"]["visible"] != false {
+		t.Fatal("menuFams caméras : devrait être invisible (0 produit)")
+	}
+
+	// Pages d'info (C1) : le vrai contenu des pages statiques.
+	pages, _ := snap["pagesInfo"].(map[string]any)
+	if len(pages) == 0 {
+		t.Fatal("pagesInfo : vide (le répertoire templates/static est-il lisible ?)")
+	}
+	if apropos, _ := pages["apropos"].(string); apropos == "" || len(apropos) < 100 {
+		t.Fatalf("pagesInfo.apropos : %d caractères, attendu le vrai contenu", len(apropos))
 	}
 
 	// Pied de page : 5 colonnes (Accès Rapide en premier).

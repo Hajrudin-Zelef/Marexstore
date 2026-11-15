@@ -118,19 +118,11 @@
 
       <!-- ---- MODE CODE : fichiers + éditeur Monaco-like ---- -->
       <div id="front-code" class="hidden">
-        <p class="hint">Un senior ne code jamais dans le vide : voici les fichiers du site. <b>Cliquez un fichier</b> pour l'ouvrir, modifiez-le, puis <b>Publiez</b>. Le CSS s'applique à l'aperçu en direct.</p>
+        <p class="hint">Voici les <b>vrais fichiers du site</b>, lus depuis le serveur. <b>Cliquez un fichier</b> pour le consulter. Lecture seule pour l’instant — l’écriture arrive avec le T3.</p>
         <div class="code-layout">
           <aside class="filetree">
             <div class="ft-title">Fichiers du site</div>
-            <div class="ft-section">templates/static/</div>
-            <button class="ft-file" data-file="_top.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>_top.html</button>
-            <button class="ft-file" data-file="_foot.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>_foot.html</button>
-            <button class="ft-file" data-file="apropos.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>apropos.html</button>
-            <button class="ft-file" data-file="cgv.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>cgv.html</button>
-            <button class="ft-file" data-file="contact.html"><span class="ft-ico" style="background:#ffedd5;color:#ea580c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>contact.html</button>
-            <div class="ft-section">static/</div>
-            <button class="ft-file" data-file="theme.css"><span class="ft-ico" style="background:#dbeafe;color:#2563eb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>theme.css</button>
-            <button class="ft-file" data-file="app.js"><span class="ft-ico" style="background:#fef3c7;color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path d="M14 2v6h6"/></svg></span>app.js</button>
+            <div id="fileTree"><div class="ft-section">Chargement des fichiers…</div></div>
           </aside>
           <div class="code-main">
             <div class="code-tabs" id="codeTabs"></div>
@@ -138,10 +130,10 @@
               <div class="code-gutter" id="codeGutter"></div>
               <div class="code-area">
                 <pre class="code-pre" id="codePre" aria-hidden="true"></pre>
-                <textarea class="code-input" id="codeInput" spellcheck="false"></textarea>
+                <textarea class="code-input" id="codeInput" spellcheck="false" readonly></textarea>
               </div>
             </div>
-            <div class="code-foot"><span id="codeMeta"></span><span>Monaco-like (prototype) — Publier pour appliquer</span></div>
+            <div class="code-foot"><span id="codeMeta"></span><span>Lecture seule — l’écriture arrive avec le T3</span></div>
           </div>
         </div>
         <p class="hint" style="margin:12px 0 0">En production, le code est validé côté serveur (pas de &lt;script&gt;, pas de {{…}}) et chaque publication crée une version — on peut revenir en arrière.</p>
@@ -547,9 +539,9 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!--STUDIO_INIT-->
-<script src="/admin/studio/js/model.js?v=1"></script>
-<script src="/admin/studio/js/view.js?v=3"></script>
-<script src="/admin/studio/js/preview.js?v=4"></script>
-<script src="/admin/studio/js/controller.js?v=4"></script>
+<script src="/admin/studio/js/model.js?v=2"></script>
+<script src="/admin/studio/js/view.js?v=5"></script>
+<script src="/admin/studio/js/preview.js?v=5"></script>
+<script src="/admin/studio/js/controller.js?v=7"></script>
 </body>
 </html>

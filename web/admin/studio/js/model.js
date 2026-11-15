@@ -22,22 +22,23 @@ const DEFAULT_FRONT = {
   accent:'#2E5136', priceColor:'#dc2626', bg:'#ffffff', text:'#111827',
   font:'Inter', titleSize:'M', btnShape:'arrondi', cardLayout:'grille',
   showBadge:true, showAnnonce:false, footerBg:'#111827',
-  customCSS:'.pv-hero{border-radius:16px}\n.pv-card{box-shadow:0 2px 10px rgba(0,0,0,.08)}',
+  customCSS:'',
   customHTML:''
 };
 
 const DEFAULT_ROWS = [
   {id:'hero', label:'Bandeau défilant (hero)', cols:[
-    {w:100, block:{type:'Bannière', title:'HP EliteBook 850 G3', text:'15" — 8 Go — 256 Go SSD', price:'185.000 F', cta:'ACHETER', img:'💻'}}
+    {w:100, block:{type:'Bannière', title:'OUKITEL RT3 PLUS', text:'TABLETTE PROFESSIONELLE', price:'200.000 CFA', cta:'Acheter', img:'💻'}}
   ]},
   {id:'minis', label:'Mini-casiers promo', cols:[
-    {w:34, block:{type:'Produit', title:'Toners HP 650A', text:'Noir • Cyan • Magenta • Jaune', price:'45.000 F', img:'🖨️'}},
-    {w:33, block:{type:'Produit', title:'Câble RJ45 Cat6', text:'Boîte 305 m — cuivre', price:'85.000 F', img:'🔌'}},
-    {w:33, block:{type:'Produit', title:'Switch 24 ports PoE', text:'Gigabit — 250 W', price:'Sur demande', img:'🗄️'}}
+    {w:25, block:{type:'Produit', title:'Profitez de super offres sur le Lenovo T440', text:'', price:'', img:'🛍️'}},
+    {w:25, block:{type:'Produit', title:'Bureau, All-in-One et plus encore -10%', text:'', price:'', img:'🛍️'}},
+    {w:25, block:{type:'Produit', title:'Écran HP Série 5 527SF -12%', text:'', price:'', img:'🛍️'}},
+    {w:25, block:{type:'Produit', title:'Casque Logitech H111', text:'', price:'', img:'🛍️'}}
   ]},
   {id:'produits', label:'Grille « Nos produits »', cols:[
-    {w:50, block:{type:'Produit', title:'Lenovo ThinkPad E14', text:'i7 — 16 Go — 512 Go', price:'650.000 F', img:'💻'}},
-    {w:50, block:{type:'Produit', title:'Onduleur APC 1500 VA', text:'Line-interactive — USB', price:'210.000 F', img:'🔋'}}
+    {w:50, block:{type:'Produit', title:'Laptop Iles de France', text:'', price:'85.000 F', img:'💻'}},
+    {w:50, block:{type:'Produit', title:'HP EliteDisplay E243', text:'', price:'190.000 F', img:'🖥️'}}
   ]},
 ];
 
@@ -88,14 +89,13 @@ let fiche = {showSpecs:true, showSimilar:true, showAvis:false, showConso:true, s
   showDiscount:true, showOld:true, showStars:true, showExpress:true, showGarantie:true, showTva:true, showShare:true, showLike:true, showQty:true, similarNb:4, gallery:'grande', btnDevis:'Demander un devis', btnWa:'WhatsApp'};
 
 let acc = {
-  hero:{show:true, arrows:true, dots:true, panel:true, panelT:'Imprimante Professionnelle', panelX:'HP PageWide Pro 750dw',
-    slides:[{t:'Titre de la diapositive 1',x:'Texte de la diapositive 1',b:'Découvrir',img:''},{t:'Titre de la diapositive 2',x:'Texte de la diapositive 2',b:'Découvrir',img:''},{t:'Titre de la diapositive 3',x:'Texte de la diapositive 3',b:'Découvrir',img:''}]},
-  av:{show:true, cards:[{i:'🚚',t:'Avantage 1',x:'Texte de la carte'},{i:'🛡',t:'Avantage 2',x:'Texte de la carte'},{i:'💬',t:'Avantage 3',x:'Texte de la carte'},{i:'💳',t:'Avantage 4',x:'Texte de la carte'}]},
+  hero:{show:true, arrows:true, dots:true,
+    slides:[{t:'OUKITEL',x:'RT3 PLUS — 16GO / 128GO',b:'Acheter',img:'images/banners/oukitel-rt3.jpg'},{t:'DÉCOUVREZ',x:'NOS COPIEURS KYOCERA EN STOCK',b:'En savoir +',img:'images/banners/kyocera-copieurs.jpg'},{t:'HP ELITEBOOK 850 G3',x:'15", 8Go - 256ssd',b:'ACHETER',img:'images/banners/elitebook-850-g3.jpg'}]},
   find:{show:true, title:'Trouver un produit', l1:'Marque', l2:'Catégorie', l3:'Type', reset:'Réinitialiser', search:'Rechercher', offer:true, offT:'OFFRE SPÉCIALE', offX:'Texte de l\u2019offre'},
   tabs:{labels:['En vedette','En Promotion','Les Mieux notés'], show:[true,true,true]},
   secs:[{t:'NOS PRODUITS',s:'',show:true},{t:'LES PLUS VENDUS',s:'',show:true},{t:'AJOUTÉ RÉCEMMENT',s:'',show:true},{t:'MIS EN AVANT',s:'',show:true}],
-  dark:{show:true, t:'Titre du bandeau', x:'Texte du bandeau', b:'Bouton'},
-  brands:{show:true, list:['HP','Dell','Lenovo','Canon','Epson','Cisco']},
+  dark:{show:true, t:'Clés USB Imation & disques durs WD Elements', x:'Stockage fiable pour tous vos besoins — demandez votre devis.', b:'VOIR LE PRODUIT'},
+  brands:{show:true, list:['ACER','APPLE','ASUS','CISCO','DELL','EPSON','HP','KYOCERA','LENOVO']},
   drawer:{vider:true,continuer:true,livraison:true}, cartView:'drawer', compteView:'modal', cpt:{oubli:true,sync:true}, help:{show:true}, misc:{wa:true,badge:'#dc2626'}
 };
 
@@ -106,7 +106,7 @@ let panier = {title:'Votre panier', emptyText:'Votre panier est vide.', btnOrder
 const Tx = {
   // Front — chrome du site (visible partout)
   bienvenue:'Bienvenue dans notre boutique',
-  recherche_ph:'Rechercher un produit…',
+  recherche_ph:'Rechercher un produit, une référence…',
   rechercher:'Rechercher',
   toutes_cat:'Toutes les Catégories',
   bandeau:'Livraison offerte dès 100 000 F',
@@ -184,9 +184,7 @@ const Tx = {
   devis_non:'Non',
   devis_continuer:'Continuer',
   aide_titre:'Besoin d’aide ?',
-  aide_texte:'Notre équipe vous répond rapidement.',
-  suite_titre:'Étapes suivantes',
-  suite_texte:'Texte de la carte « Étapes suivantes ».',
+  aide_texte:'Une question avant d\u2019envoyer votre demande ? Notre équipe vous répond.',
   ph_texte:'Photo à venir',
   cpt_onglet_conn:'Connexion',
   cpt_onglet_crea:'Créer un compte',
@@ -200,7 +198,7 @@ const Tx = {
   cpt_nom:'Nom',
   cpt_mdp2:'Confirmer le mot de passe',
   cpt_btn_crea:'Créez un compte',
-  cpt_sync:'Note de synchronisation.',
+  cpt_sync:'Votre compte est synchronisé sur tous vos appareils : connectez-vous pour retrouver votre panier et vos commandes.',
   pref_infos:'Mes informations',
   pref_cmd:'Mes commandes',
   pref_adr:'Mes adresses',
@@ -304,8 +302,6 @@ const MODULE_TEXTS = {
     {key:'devis_continuer', label:'Devis — bouton « Continuer »'},
     {key:'aide_titre', label:'Carte « Besoin d’aide ? » — titre'},
     {key:'aide_texte', label:'Carte « Besoin d’aide ? » — texte'},
-    {key:'suite_titre', label:'Carte « Étapes suivantes » — titre'},
-    {key:'suite_texte', label:'Carte « Étapes suivantes » — texte'},
     {key:'ph_texte', label:'Cadre « Photo à venir »'},
   ],
   compte:[
@@ -363,43 +359,39 @@ let txtPageSel = 'apropos';
 
 let menu = {showVoirTous:true, showCount:true,
   fams:[
-    {key:'reseaux', label:'Matériels réseaux', count:281, visible:true},
-    {key:'accessoires', label:'Accessoires informatiques', count:211, visible:true},
+    {key:'accessoires-informatiques', label:'Accessoires Informatiques', count:211, visible:true},
+    {key:'accessoires-telephones-tablettes', label:'Accessoires Téléphones & Tablettes', count:0, visible:false},
+    {key:'cameras-videosurveillances', label:'Caméras & Vidéosurveillances', count:0, visible:false},
     {key:'imprimantes', label:'Imprimantes', count:60, visible:true},
-    {key:'laptops', label:'Ordinateurs portables', count:37, visible:true},
-    {key:'bureau', label:'Ordinateurs de bureau', count:36, visible:true},
-    {key:'serveurs', label:'Serveurs', count:19, visible:true},
-    {key:'cameras', label:'Caméras & Vidéosurveillance', count:0, visible:false},
+    {key:'laptots', label:'Laptops neuf', count:37, visible:true},
+    {key:'materiels-reseaux', label:'Matériels réseaux', count:281, visible:true},
+    {key:'ordinateurs-de-bureau-neufs', label:'Ordinateurs de Bureau Neufs', count:36, visible:true},
+    {key:'casi-neuf', label:'Reconditionné & Casi neuf', count:6, visible:true},
+    {key:'serveur', label:'Serveur', count:19, visible:true},
+    {key:'telephones-tablettes', label:'Téléphones & Tablettes', count:14, visible:true},
+    {key:'uncategorized', label:'Uncategorized', count:0, visible:false},
   ]};
 
-let seo = {title:'Mediatec Store — Informatique & réseaux à Abidjan',
-  desc:'Ordinateurs, imprimantes, réseaux et consommables — Mediatec, Abidjan.',
+let seo = {title:'Accueil — Mediatec Store',
+  desc:'',
   og:'', index:true};
 
 let reglages = {nom:'Mediatec Store', tel:'(+225) 07 05 08 75 07', email:'sales@mediatec-ci.com',
   wa:'2250705087507', adresse:'Plateau, Abidjan', horaires:'Lun–Ven 8h00–17h30 · Sam 8h30–13h00',
   maintenance:false, maintMsg:'Site en maintenance, revenez bientôt.'};
 
-const FILES = {
-  'theme.css': {lang:'css', path:'static/theme.css', content:
-'/* Thème Mediatec Store — couleurs du site */\n:root{\n  --accent:#2E5136;\n  --price:#dc2626;\n  --bg:#ffffff;\n  --text:#111827;\n}\nbody{\n  font-family:Inter,system-ui,sans-serif;\n  background:var(--bg);\n  color:var(--text);\n}\n.pv-hero{border-radius:16px}\n.pv-card{box-shadow:0 2px 10px rgba(0,0,0,.08)}\n.btn{\n  background:var(--accent);\n  color:#fff;\n  border-radius:8px;\n}'},
-  '_top.html': {lang:'html', path:'templates/static/_top.html', content:
-'<header class="site-top">\n  <a class="logo" href="/">MEDIATEC STORE</a>\n  <form class="search" action="/recherche">\n    <input name="q" placeholder="Rechercher un produit…">\n    <button>Rechercher</button>\n  </form>\n</header>'},
-  '_foot.html': {lang:'html', path:'templates/static/_foot.html', content:
-'<footer class="site-foot">\n  <p>© Mediatec Store — Abidjan</p>\n  <p>Contact : sales@mediatec-ci.com · (+225) 07 05 08 75 07</p>\n  <nav>\n    <a href="/apropos.html">À propos</a> ·\n    <a href="/cgv.html">CGV</a>\n  </nav>\n</footer>\n<script src="/static/app.js?v=339"><\/script>'},
-  'apropos.html': {lang:'html', path:'templates/static/apropos.html', content:
-'<h1>À propos de Mediatec</h1>\n<p>Mediatec est votre partenaire informatique à Abidjan.</p>\n<p>Ordinateurs, imprimantes, réseaux et consommables.</p>'},
-  'cgv.html': {lang:'html', path:'templates/static/cgv.html', content:
-'<h1>Conditions Générales de Vente</h1>\n<p>Les prix sont affichés en francs CFA, toutes taxes comprises.</p>\n<p>La livraison est offerte dès 100 000 F d\u2019achat à Abidjan.</p>'},
-  'contact.html': {lang:'html', path:'templates/static/contact.html', content:
-'<h1>Contact</h1>\n<p>Plateau, Abidjan — Lun–Ven 8h00–17h30, Sam 8h30–13h00.</p>\n<p>Email : infos@mediatec-ci.com</p>\n<p>Tél : (+225) 07 05 08 75 07</p>'},
-  'app.js': {lang:'js', path:'static/app.js', content:
-'// Marexstore — app.js (v339)\nfunction applyTheme(){\n  const t = loadTheme();\n  document.documentElement.dataset.color = t.color || "default";\n}\ndocument.addEventListener("DOMContentLoaded", applyTheme);'},
-};
+/* Fichiers du mode Code (C2) : les VRAIS fichiers du site, chargés depuis
+   GET /admin/api/fichiers quand l'onglet Code est ouvert. Lecture seule :
+   le contenu n'est pas dans snap() (220 Ko, hors historique) et n'est pas
+   publié (l'écriture, c'est le T3). */
+let FILES = {};
 
-let openTabs = ['theme.css'];
+/* Chargé une fois que les fichiers sont arrivés (voir loadCodeFiles). */
+let codeFilesLoaded = false;
 
-let currentFile = 'theme.css';
+let openTabs = [];
+
+let currentFile = '';
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
@@ -415,7 +407,7 @@ const SEGS={segTitle:'front.titleSize',segBtn:'front.btnShape',segCard:'front.ca
 
 const TABICO={front:'sparkle',accueil:'home',boutique:'bag',fiche:'file',panier:'cart',textes:'pencil',menu:'list',seo:'search',reglages:'gear',header:'monitor',footer:'list',compte:'lock'};
 
-const snap=()=>JSON.stringify({front,rows,shop,fiche,panier,Tx,txtPages,menu,seo,reglages,header,footer,acc,files:Object.fromEntries(Object.entries(FILES).map(([k,v])=>[k,v.content]))});
+const snap=()=>JSON.stringify({front,rows,shop,fiche,panier,Tx,txtPages,menu,seo,reglages,header,footer,acc});
 
 function updateStatus(){
   if(!BASE||restoring)return;
@@ -434,7 +426,6 @@ function restore(str){
   /* Tx est un const : on le vide puis on recopie les textes restaurés */
   Object.keys(Tx).forEach(k=>delete Tx[k]);
   Object.assign(Tx, o.Tx);
-  for(const k in o.files)FILES[k].content=o.files[k];
   sel={ri:null,ci:null};$('#blockEditor').classList.add('hidden');
   syncUI(); restoring=false; renderPreview(); histBtns();
 }
@@ -468,16 +459,14 @@ const setP=(o,p,v)=>{const k=p.split('.'),l=k.pop();getP(o,k.join('.')||'')===un
 
 const root={acc:()=>acc,fiche:()=>fiche};
 
-const ACC_D=[['g','Hero (carrousel)'],['b','Afficher le carrousel','acc','hero.show'],['b','Flèches','acc','hero.arrows'],['b','Points de pagination','acc','hero.dots'],['b','Panneau blanc sous le hero','acc','hero.panel'],
- ['g','Cartes avantages'],['b','Afficher la rangée','acc','av.show'],
+const ACC_D=[['g','Hero (carrousel)'],['b','Afficher le carrousel','acc','hero.show'],['b','Flèches','acc','hero.arrows'],['b','Points de pagination','acc','hero.dots'],
  ['g','Trouver un produit'],['b','Afficher le bloc','acc','find.show'],['b','Carte « Offre spéciale »','acc','find.offer'],
  ['g','Onglets produits'],['b','Onglet 1','acc','tabs.show.0'],['b','Onglet 2','acc','tabs.show.1'],['b','Onglet 3','acc','tabs.show.2'],
  ['g','Sections'],['b','NOS PRODUITS','acc','secs.0.show'],['b','LES PLUS VENDUS','acc','secs.1.show'],['b','AJOUTÉ RÉCEMMENT','acc','secs.2.show'],['b','MIS EN AVANT','acc','secs.3.show'],
  ['g','Bandeau sombre et marques'],['b','Bandeau sombre','acc','dark.show'],['b','Ligne des marques','acc','brands.show']];
 
-const ACC_T=[['g','Hero — panneau blanc'],['t','Titre du panneau','acc','hero.panelT'],['t','Texte du panneau','acc','hero.panelX']]
- .concat([0,1,2].flatMap(i=>[['g','Hero — diapositive '+(i+1)],['t','Titre','acc','hero.slides.'+i+'.t'],['t','Texte','acc','hero.slides.'+i+'.x'],['t','Bouton','acc','hero.slides.'+i+'.b'],['t','Image (URL)','acc','hero.slides.'+i+'.img']]))
- .concat([0,1,2,3].flatMap(i=>[['g','Carte avantage '+(i+1)],['t','Icône','acc','av.cards.'+i+'.i'],['t','Titre','acc','av.cards.'+i+'.t'],['t','Texte','acc','av.cards.'+i+'.x']]))
+const ACC_T=[0,1,2].flatMap(i=>[['g','Hero — diapositive '+(i+1)],['t','Titre','acc','hero.slides.'+i+'.t'],['t','Texte','acc','hero.slides.'+i+'.x'],['t','Bouton','acc','hero.slides.'+i+'.b'],['t','Image (URL)','acc','hero.slides.'+i+'.img']])
+
  .concat([['g','Trouver un produit'],['t','Titre','acc','find.title'],['t','Liste 1','acc','find.l1'],['t','Liste 2','acc','find.l2'],['t','Liste 3','acc','find.l3'],['t','Bouton « Réinitialiser »','acc','find.reset'],['t','Bouton « Rechercher »','acc','find.search'],['t','Offre spéciale — titre','acc','find.offT'],['t','Offre spéciale — texte','acc','find.offX'],
   ['g','Onglets produits'],['t','Onglet 1','acc','tabs.labels.0'],['t','Onglet 2','acc','tabs.labels.1'],['t','Onglet 3','acc','tabs.labels.2'],
   ['g','Titres de sections']]).concat([0,1,2,3].flatMap(i=>[['t','Titre '+(i+1),'acc','secs.'+i+'.t'],['t','Sous-titre '+(i+1),'acc','secs.'+i+'.s']]))

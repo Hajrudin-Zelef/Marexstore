@@ -2,6 +2,7 @@ package design
 
 import (
 	"database/sql"
+	"encoding/json"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -38,6 +39,21 @@ func TestValidateRefuseCleInconnue(t *testing.T) {
 	bad := `{"front":{},"products":[{"id":1,"prix":100}]}`
 	if err := Validate([]byte(bad)); err == nil {
 		t.Fatal("clé 'products' acceptée, attendu un refus")
+	}
+}
+
+// C1 — les pages d'info sont du vrai HTML : <form> y est légitime
+// (contact.html), mais <script> reste interdit.
+func TestValidateTxtPagesFormOK(t *testing.T) {
+	doc := map[string]any{"front": map[string]any{"accent": "#2E5136"}, "txtPages": map[string]any{"contact": `<div>Contact</div><form action="/contact"><input name="nom"></form>`, "apropos": `<h1>À propos</h1>`}}
+	raw, _ := json.Marshal(doc)
+	if err := Validate(raw); err != nil {
+		t.Fatalf("txtPages avec <form> : refusé à tort : %v", err)
+	}
+	doc["txtPages"].(map[string]any)["contact"] = `<div>Contact</div><script>alert(1)</script>`
+	raw, _ = json.Marshal(doc)
+	if err := Validate(raw); err == nil {
+		t.Fatal("txtPages avec <script> : accepté à tort")
 	}
 }
 
