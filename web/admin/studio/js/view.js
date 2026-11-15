@@ -90,7 +90,9 @@ function updateCodeMeta(){
   const f = FILES[currentFile];
   if(!f){ const m=$('#codeMeta'); if(m)m.textContent=''; return; }
   const n = (codeInput.value || '').split('\n').length;
-  $('#codeMeta').textContent = f.path + ' — ' + f.lang.toUpperCase() + ' — ' + n + ' lignes';
+  // C4 : "Modifié" quand le contenu diffère de la dernière version enregistrée.
+  const dirty = (f.saved !== undefined && f.content !== f.saved) ? ' — ● Modifié' : '';
+  $('#codeMeta').textContent = f.path + ' — ' + f.lang.toUpperCase() + ' — ' + n + ' lignes' + dirty;
 }
 
 function openFile(name){
@@ -109,9 +111,11 @@ function loadFile(name){
   const f = FILES[name];
   if(!f){ codeInput.value=''; syncEditor(); updateCodeMeta(); return; }
   codeInput.value = f.content;
+  f.saved = f.content; // C4 : référence de la dernière version enregistrée.
   syncEditor();
   updateCodeMeta();
   codeInput.scrollTop = 0; codePre.scrollTop = 0; codeGutter.scrollTop = 0;
+  if(typeof loadFichierVersions === 'function') loadFichierVersions();
 }
 
 let sel = {ri:null, ci:null};

@@ -103,9 +103,9 @@ func TestAdminDesignServeStudio(t *testing.T) {
 		`window.__STUDIO_CSRF__`, // jeton CSRF injecté
 		`/admin/studio/studio.css?v=1`,
 		`/admin/studio/js/model.js?v=2`,
-		`/admin/studio/js/view.js?v=5`,
+		`/admin/studio/js/view.js?v=6`,
 		`/admin/studio/js/preview.js?v=5`,
-		`/admin/studio/js/controller.js?v=7`,
+		`/admin/studio/js/controller.js?v=8`,
 		`id="tab-front"`,
 		`id="tab-boutique"`,
 	} {

@@ -118,7 +118,7 @@
 
       <!-- ---- MODE CODE : fichiers + éditeur Monaco-like ---- -->
       <div id="front-code" class="hidden">
-        <p class="hint">Voici les <b>vrais fichiers du site</b>, lus depuis le serveur. <b>Cliquez un fichier</b> pour le consulter. Lecture seule pour l’instant — l’écriture arrive avec le T3.</p>
+        <p class="hint">Voici les <b>vrais fichiers du site</b>, lus depuis le serveur. <b>Cliquez un fichier</b> pour le modifier, puis <b>Enregistrer</b>. Chaque enregistrement crée une version — on peut revenir en arrière via l'Historique.</p>
         <div class="code-layout">
           <aside class="filetree">
             <div class="ft-title">Fichiers du site</div>
@@ -130,13 +130,14 @@
               <div class="code-gutter" id="codeGutter"></div>
               <div class="code-area">
                 <pre class="code-pre" id="codePre" aria-hidden="true"></pre>
-                <textarea class="code-input" id="codeInput" spellcheck="false" readonly></textarea>
+                <textarea class="code-input" id="codeInput" spellcheck="false"></textarea>
               </div>
             </div>
-            <div class="code-foot"><span id="codeMeta"></span><span>Lecture seule — l’écriture arrive avec le T3</span></div>
+            <div class="code-foot"><span id="codeMeta"></span><span style="display:flex;gap:8px;align-items:center"><button class="btn btn-publish" id="btnSaveFile" onclick="saveCodeFile()">💾 Enregistrer</button><button class="btn btn-reset" id="btnFileVersions" onclick="toggleFichierVersions()">Historique</button></span></div>
+            <div id="codeVersions" class="hidden" style="margin-top:10px"></div>
           </div>
         </div>
-        <p class="hint" style="margin:12px 0 0">En production, le code est validé côté serveur (pas de &lt;script&gt;, pas de {{…}}) et chaque publication crée une version — on peut revenir en arrière.</p>
+        <p class="hint" style="margin:12px 0 0">Chaque enregistrement crée une version en base — on peut revenir en arrière via l'Historique. Attention : une faute de syntaxe dans app.js peut casser le site ; vérifiez avant d'enregistrer.</p>
       </div>
     </div>
 
@@ -540,8 +541,8 @@
 
 <!--STUDIO_INIT-->
 <script src="/admin/studio/js/model.js?v=2"></script>
-<script src="/admin/studio/js/view.js?v=5"></script>
+<script src="/admin/studio/js/view.js?v=6"></script>
 <script src="/admin/studio/js/preview.js?v=5"></script>
-<script src="/admin/studio/js/controller.js?v=7"></script>
+<script src="/admin/studio/js/controller.js?v=8"></script>
 </body>
 </html>

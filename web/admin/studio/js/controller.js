@@ -36,12 +36,13 @@ function setFrontMode(mode){
   document.querySelectorAll('#frontMode button').forEach(x=>x.classList.toggle('active', x.dataset.mode===mode));
   $('#front-ui').classList.toggle('hidden', mode!=='ui');
   $('#front-code').classList.toggle('hidden', mode!=='code');
-  if(mode==='code'){ loadCodeFiles().then(()=>{ renderTabs(); if(currentFile) loadFile(currentFile); }); toast('Mode Code : les vrais fichiers du site (lecture seule).'); }
+  if(mode==='code'){ loadCodeFiles().then(()=>{ renderTabs(); if(currentFile) loadFile(currentFile); }); toast('Mode Code : les vrais fichiers du site — modifiez puis Enregistrer.'); }
 }
 
-/* C2 — mode Code : les vrais fichiers du site (GET /admin/api/fichiers).
-   Chargés une seule fois, à l'ouverture du mode Code. Lecture seule :
-   l'éditeur est en readonly, l'écriture arrive avec le T3. */
+/* C2+C4 — mode Code : les vrais fichiers du site (GET /admin/api/fichiers).
+   Chargés une seule fois, à l'ouverture du mode Code. C4 : l'éditeur est
+   modifiable, Enregistrer POSTe sur /admin/api/fichiers (version en base),
+   l'Historique permet de revenir en arrière (rollback 1 clic). */
 function renderFileTree(){
   const tree=$('#fileTree'); if(!tree) return;
   const names=Object.keys(FILES).sort();
@@ -75,7 +76,7 @@ async function loadCodeFiles(){
       }
       codeFilesLoaded=true;
       renderFileTree();
-      codeInput.readOnly=true;
+      codeInput.readOnly=false;
       const names=Object.keys(FILES).sort();
       if(names.length && !currentFile){
         openTabs=[names[0]]; currentFile=names[0];
@@ -86,7 +87,7 @@ async function loadCodeFiles(){
 
 codeInput.addEventListener('input', ()=>{
   FILES[currentFile].content = codeInput.value;
-  syncEditor();
+  syncEditor(); updateCodeMeta();
   if(FILES[currentFile].lang==='css'){
     front.customCSS = codeInput.value;
     const m = codeInput.value.match(/--accent\s*:\s*(#[0-9a-fA-F]{3,6})/);
@@ -94,6 +95,73 @@ codeInput.addEventListener('input', ()=>{
     renderPreview();
   }
 });
+/* C4 — enregistrer le fichier courant (POST /admin/api/fichiers).
+   Le contenu part en base (versionnée) ; un gabarit prend effet au
+   prochain reload(), un fichier static/* est servi depuis la base. */
+async function saveCodeFile(){
+  if(!currentFile || !FILES[currentFile]){ toast('Aucun fichier ouvert.'); return; }
+  const btn=$('#btnSaveFile'); if(btn) btn.disabled=true;
+  try{
+    const r=await fetch(window.location.origin + '/admin/api/fichiers', {method:'POST', headers:{'Content-Type':'application/json','X-CSRF':window.__STUDIO_CSRF__}, body:JSON.stringify({nom:currentFile, contenu:codeInput.value})});
+    const txt=await r.text(); let j=null; try{ j=JSON.parse(txt); }catch(e){}
+    if(!r.ok || !j || !j.ok){ throw new Error((j&&j.msg)||('HTTP '+r.status+' — '+txt.slice(0,120))); }
+    FILES[currentFile].content = codeInput.value;
+    FILES[currentFile].saved = codeInput.value;
+    updateCodeMeta();
+    toast('✅ Fichier enregistré (version '+j.version+').');
+    loadFichierVersions();
+  }catch(e){ toast('❌ Enregistrement impossible : '+(e&&e.message?e.message:e)); }
+  finally{ if(btn) btn.disabled=false; }
+}
+
+/* C4 — historique des versions du fichier courant (GET versions). */
+let fichierVersionsCache=[];
+async function loadFichierVersions(){
+  const box=$('#codeVersions'); if(!box) return;
+  if(!currentFile || !FILES[currentFile]){ box.innerHTML=''; return; }
+  try{
+    const r=await fetch(window.location.origin + '/admin/api/fichiers/versions?nom='+encodeURIComponent(currentFile));
+    const j=await r.json();
+    fichierVersionsCache=(j&&j.ok&&Array.isArray(j.versions))?j.versions:[];
+  }catch(e){ fichierVersionsCache=[]; }
+  renderFichierVersions();
+}
+function renderFichierVersions(){
+  const box=$('#codeVersions'); if(!box) return;
+  if(!fichierVersionsCache.length){ box.innerHTML='<p class="hint">Aucune version enregistrée pour ce fichier (il vient du disque).</p>'; return; }
+  let html='<div class="ft-section" style="margin-top:4px">Historique — '+currentFile+'</div>';
+  for(const v of fichierVersionsCache){
+    html+='<div style="display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid #eee"><span><b>Version '+v.version+'</b>'+(v.actif?' <span style="color:#15803d">● active</span>':'')+'</span><span style="color:#666">'+(v.cree_le||'')+' — '+(v.auteur||'')+'</span>'+(v.actif?'':'<button class="btn btn-reset" style="margin-left:auto" onclick="activateFichierVersion('+v.version+')">Réactiver</button>')+'</div>';
+  }
+  box.innerHTML=html;
+}
+function toggleFichierVersions(){
+  const box=$('#codeVersions'); if(!box) return;
+  if(box.classList.contains('hidden')){ box.classList.remove('hidden'); loadFichierVersions(); }
+  else box.classList.add('hidden');
+}
+
+/* C4 — rollback : réactiver une ancienne version du fichier courant. */
+async function activateFichierVersion(n){
+  if(!currentFile) return;
+  if(!confirm('Réactiver la version '+n+' de '+currentFile+' ? Le contenu actuel sera remplacé.')) return;
+  try{
+    const r=await fetch(window.location.origin + '/admin/api/fichiers/versions/'+n+'/activer?nom='+encodeURIComponent(currentFile), {method:'POST', headers:{'X-CSRF':window.__STUDIO_CSRF__}});
+    const txt=await r.text(); let j=null; try{ j=JSON.parse(txt); }catch(e){}
+    if(!r.ok || !j || !j.ok){ throw new Error('HTTP '+r.status+' — '+txt.slice(0,120)); }
+    toast('✅ Version '+n+' réactivée.');
+    refreshCodeFiles();
+  }catch(e){ toast('❌ Réactivation impossible : '+(e&&e.message?e.message:e)); }
+}
+
+/* C4 — recharger les fichiers depuis le serveur (après un rollback). */
+async function refreshCodeFiles(){
+  codeFilesLoaded=false;
+  await loadCodeFiles();
+  if(currentFile) loadFile(currentFile);
+  loadFichierVersions();
+}
+
 codeInput.addEventListener('scroll', ()=>{
   codePre.scrollTop = codeInput.scrollTop; codePre.scrollLeft = codeInput.scrollLeft;
   codeGutter.scrollTop = codeInput.scrollTop;

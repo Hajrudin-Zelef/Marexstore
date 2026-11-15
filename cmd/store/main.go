@@ -148,9 +148,11 @@ func main() {
 	}
 
 	r.Get("/assets/facets.js", app.FacetsJS)
-	static := http.FileServer(http.Dir("static"))
-	r.Handle("/static/*", http.StripPrefix("/static/", withCache(static)))
-	r.Handle("/assets/*", http.StripPrefix("/assets/", withCache(http.FileServer(http.Dir("static")))))
+	// Fichiers statiques : version base d'abord (C4, si elle existe), sinon
+	// disque — StaticFile gère le Cache-Control (no-cache pour la base,
+	// long pour le disque). withCache n'est plus appliqué ici.
+	r.Handle("/static/*", http.StripPrefix("/static/", app.StaticFile()))
+	r.Handle("/assets/*", http.StripPrefix("/assets/", app.StaticFile()))
 	imgs := http.FileServer(http.Dir("./images"))
 	r.Handle("/images/*", http.StripPrefix("/images/", withImageCache(imgs)))
 
@@ -201,6 +203,9 @@ func main() {
 	r.Post("/admin/api/design/versions/{n}/activer", app.AdminDesignActivate)
 	r.Get("/admin/api/snapshot", app.AdminSnapshot)
 	r.Get("/admin/api/fichiers", app.AdminFichiers)
+	r.Post("/admin/api/fichiers", app.AdminFichiers)
+	r.Get("/admin/api/fichiers/versions", app.AdminFichiersVersions)
+	r.Post("/admin/api/fichiers/versions/{n}/activer", app.AdminFichiersActiver)
 	r.Get("/admin/systeme", app.AdminSysteme)
 	r.Post("/admin/systeme", app.AdminSysteme)
 
@@ -215,13 +220,6 @@ func main() {
 	log.Printf("marexstore :%s env=%s db=%s produits=%d", cfg.Port, cfg.Env, cfg.DBPath, len(app.Store.Products))
 	_ = database.Ping()
 	log.Fatal(srv.ListenAndServe())
-}
-
-func withCache(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "public, max-age=31536000, immutable")
-		next.ServeHTTP(w, r)
-	})
 }
 
 func withImageCache(next http.Handler) http.Handler {
