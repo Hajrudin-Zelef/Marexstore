@@ -47,6 +47,27 @@ func ImgTag(p *catalog.RawProduct, prefix string) string {
 	return `<div class="noimg">Photo à venir</div>`
 }
 
+// GalCarousel : carrousel de la fiche produit (principale + extras, max 5) :
+// flèches avant/arrière + miniatures cliquables. Une seule photo = ImgTag
+// classique (la parité v3.25 reste intacte).
+func GalCarousel(p *catalog.RawProduct, prefix string) string {
+	imgs := p.Gallery()
+	var thumbs strings.Builder
+	for i, src := range imgs {
+		on := ""
+		if i == 0 {
+			on = ` class="on"`
+		}
+		fmt.Fprintf(&thumbs, `<button type="button" data-gal-thumb="%d"%s aria-label="Photo %d"><img src="%s" alt="%s" loading="lazy"></button>`,
+			i, on, i+1, esc(prefix+src), esc(p.Nom))
+	}
+	return `<div class="gal" data-gal>` +
+		`<button type="button" class="gal-prev" data-gal-prev aria-label="Photo précédente">‹</button>` +
+		`<img src="` + esc(prefix+imgs[0]) + `" alt="` + esc(p.Nom) + `" data-gal-main>` +
+		`<button type="button" class="gal-next" data-gal-next aria-label="Photo suivante">›</button>` +
+		`<div class="gal-thumbs">` + thumbs.String() + `</div></div>`
+}
+
 func BadgeDispo(p *catalog.RawProduct) string {
 	switch p.Dispo {
 	case "en stock":

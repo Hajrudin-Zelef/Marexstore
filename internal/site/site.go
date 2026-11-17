@@ -143,13 +143,16 @@ func rowToProduct(cols map[string]any) *catalog.RawProduct {
 	var cons []catalog.Consommable
 	_ = json.Unmarshal([]byte(str("consommables_json")), &cons)
 	p.Consommables = cons
+	var extras []string
+	_ = json.Unmarshal([]byte(str("images_json")), &extras)
+	p.Extras = extras
 	p.StoreURL = str("store_url")
 	return p
 }
 
 func LoadStore(db *sql.DB) (*catalog.Store, error) {
 	rows, err := db.Query(`SELECT slug,nom,marque,prix,prix_boutique,prix_avant,devise,dispo,
-		categorie,accroche,description,image,specs_json,pointsforts_json,consommables_json,store_url,ref,ref_fabricant,stock,
+		categorie,accroche,description,image,images_json,specs_json,pointsforts_json,consommables_json,store_url,ref,ref_fabricant,stock,
 		main,main_slug,sub,sub_slug,live_top,live_sub FROM products ORDER BY rowid`)
 	if err != nil {
 		return nil, err

@@ -563,6 +563,71 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 <div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`, r))
 }
 
+// mergeGallery : fusionne les extras existants (moins les suppressions
+// cochées) avec les nouveaux uploads : ordre conservé, sans doublon ni
+// vide, plafond 4 extras (5 photos avec la principale).
+func mergeGallery(kept []string, deleted map[string]bool, uploaded []string) []string {
+	out := []string{}
+	seen := map[string]bool{}
+	add := func(s string) {
+		if s == "" || seen[s] {
+			return
+		}
+		seen[s] = true
+		out = append(out, s)
+	}
+	for _, s := range kept {
+		if !deleted[s] {
+			add(s)
+		}
+	}
+	for _, s := range uploaded {
+		add(s)
+	}
+	if len(out) > 4 {
+		out = out[:4]
+	}
+	return out
+}
+
+// saveGallery : applique les suppressions cochées (cases del_img) et les
+// nouveaux uploads (input multiple "photos"), persiste images_json et
+// supprime du disque les fichiers retirés (best-effort). Retourne un
+// message d'erreur affichable, ou "" si tout est OK.
+func (a *App) saveGallery(r *http.Request, slug string, existing []string) string {
+	del := map[string]bool{}
+	for _, d := range r.Form["del_img"] {
+		if d = strings.TrimSpace(d); d != "" {
+			del[d] = true
+		}
+	}
+	var kept []string
+	for _, s := range existing {
+		if !del[s] {
+			kept = append(kept, s)
+		}
+	}
+	up, err := a.saveUploads(r, slug, kept, 4)
+	if err != nil {
+		return err.Error()
+	}
+	merged := mergeGallery(kept, map[string]bool{}, up)
+	b, _ := json.Marshal(merged)
+	if _, err := a.DB.Exec(`UPDATE products SET images_json=? WHERE slug=?`, string(b), slug); err != nil {
+		return "enregistrement galerie impossible"
+	}
+	inMerged := map[string]bool{}
+	for _, s := range merged {
+		inMerged[s] = true
+	}
+	for _, s := range existing {
+		if del[s] && !inMerged[s] && strings.HasPrefix(s, "images/") && !strings.Contains(s, "..") {
+			os.Remove(s) // best-effort
+		}
+	}
+	return ""
+}
+
 // saveUpload : photo produit (JPG/PNG/WebP ≤ 5 Mo) → images/<slug>.<ext>.
 func (a *App) saveUpload(r *http.Request, slug string) (string, error) {
 	f, h, err := r.FormFile("photo")
@@ -592,4 +657,81 @@ func (a *App) saveUpload(r *http.Request, slug string) (string, error) {
 		return "", err
 	}
 	return rel, nil
+}
+
+// saveUploads : photos supplémentaires de la galerie (input multiple
+// "photos", JPG/PNG/WebP ≤ 5 Mo chacun). Noms stables
+// images/<slug>-<k>.<ext>, k = premier créneau libre 2..5 (jamais de
+// renommage, jamais d'orphelin : on s'arrête à maxTotal extras).
+func (a *App) saveUploads(r *http.Request, slug string, kept []string, maxTotal int) ([]string, error) {
+	if r.MultipartForm == nil {
+		if err := r.ParseMultipartForm(32 << 20); err != nil && err != http.ErrNotMultipart {
+			return nil, err
+		}
+	}
+	if r.MultipartForm == nil {
+		return nil, nil
+	}
+	used := map[string]bool{}
+	slotUsed := map[int]bool{}
+	for _, s := range kept {
+		used[s] = true
+		if stem := strings.TrimSuffix(filepath.Base(s), filepath.Ext(s)); strings.HasPrefix(stem, slug+"-") {
+			if k, err := strconv.Atoi(strings.TrimPrefix(stem, slug+"-")); err == nil {
+				slotUsed[k] = true
+			}
+		}
+	}
+	var out []string
+	for _, h := range r.MultipartForm.File["photos"] {
+		if h == nil || h.Filename == "" {
+			continue
+		}
+		if len(kept)+len(out) >= maxTotal {
+			break
+		}
+		if h.Size > 5<<20 {
+			return nil, fmt.Errorf("fichier trop lourd (max 5 Mo) : %s", h.Filename)
+		}
+		ext := strings.ToLower(filepath.Ext(h.Filename))
+		switch ext {
+		case ".jpg", ".jpeg", ".png", ".webp":
+			if ext == ".jpeg" {
+				ext = ".jpg"
+			}
+		default:
+			return nil, fmt.Errorf("format refusé (JPG/PNG/WebP uniquement) : %s", h.Filename)
+		}
+		rel := ""
+		for k := 2; k <= 5; k++ {
+			if slotUsed[k] {
+				continue
+			}
+			rel = fmt.Sprintf("images/%s-%d%s", slug, k, ext)
+			slotUsed[k] = true
+			break
+		}
+		if rel == "" {
+			break
+		}
+		src, err := h.Open()
+		if err != nil {
+			return nil, err
+		}
+		dst, err := os.Create(rel)
+		if err != nil {
+			src.Close()
+			return nil, err
+		}
+		_, err = io.Copy(dst, src)
+		dst.Close()
+		src.Close()
+		if err != nil {
+			os.Remove(rel)
+			return nil, err
+		}
+		used[rel] = true
+		out = append(out, rel)
+	}
+	return out, nil
 }

@@ -79,18 +79,22 @@ type Spec struct {
 }
 
 type RawProduct struct {
-	Slug         string          `json:"slug"`
-	Nom          string          `json:"nom"`
-	Marque       string          `json:"marque"`
-	Prix         *int64          `json:"prix"`
-	PrixBoutique *int64          `json:"prix_boutique"`
-	PrixAvant    *int64          `json:"prix_avant"`
-	Devise       string          `json:"devise"`
-	Dispo        string          `json:"disponibilite"`
-	Categorie    string          `json:"categorie"`
-	Accroche     string          `json:"accroche"`
-	Description  string          `json:"description"`
-	Image        string          `json:"image"`
+	Slug         string `json:"slug"`
+	Nom          string `json:"nom"`
+	Marque       string `json:"marque"`
+	Prix         *int64 `json:"prix"`
+	PrixBoutique *int64 `json:"prix_boutique"`
+	PrixAvant    *int64 `json:"prix_avant"`
+	Devise       string `json:"devise"`
+	Dispo        string `json:"disponibilite"`
+	Categorie    string `json:"categorie"`
+	Accroche     string `json:"accroche"`
+	Description  string `json:"description"`
+	Image        string `json:"image"`
+	// Extras : photos supplémentaires gérées depuis /admin (colonne DB
+	// images_json). Le champ JSON "images" des catalogues sources est
+	// volontairement ignoré (données mortes, fichiers souvent absents).
+	Extras       []string        `json:"extras"`
 	Specs        json.RawMessage `json:"specs"`
 	Ref          string          `json:"ref"`
 	RefFabricant string          `json:"reference_fabricant"`
@@ -118,6 +122,25 @@ func (p *RawProduct) PrixAffiche() *int64 {
 		return p.PrixBoutique
 	}
 	return p.Prix
+}
+
+// Gallery : photos de la fiche produit — la principale d'abord, puis les
+// extras (admin, max 4), plafond 5 photos (exigence boutique).
+func (p *RawProduct) Gallery() []string {
+	var out []string
+	if p.Image != "" {
+		out = append(out, p.Image)
+	}
+	for _, im := range p.Extras {
+		if im == "" {
+			continue
+		}
+		out = append(out, im)
+		if len(out) >= 5 {
+			break
+		}
+	}
+	return out
 }
 
 func LoadRaw(path string) ([]*RawProduct, error) {

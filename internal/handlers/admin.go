@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -440,13 +442,15 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 	}
 	var p catalog.RawProduct
 	var prix, pb, pa, stock sql.NullInt64
+	var imgJSON string
 	if !isNew {
-		err := a.DB.QueryRow(`SELECT slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,ref_fabricant,stock,main,sub,live_top,live_sub
-		FROM products WHERE slug=?`, slug).Scan(&p.Slug, &p.Nom, &p.Marque, &prix, &pb, &pa, &p.Dispo, &p.Accroche, &p.Description, &p.Image, &p.RefFabricant, &stock, &p.Main, &p.Sub, &p.LiveTop, &p.LiveSub)
+		err := a.DB.QueryRow(`SELECT slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,images_json,ref_fabricant,stock,main,sub,live_top,live_sub
+		FROM products WHERE slug=?`, slug).Scan(&p.Slug, &p.Nom, &p.Marque, &prix, &pb, &pa, &p.Dispo, &p.Accroche, &p.Description, &p.Image, &imgJSON, &p.RefFabricant, &stock, &p.Main, &p.Sub, &p.LiveTop, &p.LiveSub)
 		if err != nil {
 			http.NotFound(w, r)
 			return
 		}
+		_ = json.Unmarshal([]byte(imgJSON), &p.Extras)
 	}
 	if r.Method == http.MethodPost {
 		if !a.checkAdminCSRF(r) {
@@ -482,6 +486,10 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 			} else if rel != "" {
 				_, _ = a.DB.Exec(`UPDATE products SET image=? WHERE slug=?`, rel, slug)
 			}
+			if gerr := a.saveGallery(r, slug, nil); gerr != "" {
+				a.write(w, 200, a.adminPage("Nouveau produit", "produits", render.MxNotice("", "Produit créé, mais galerie refusée : "+gerr), r))
+				return
+			}
 		} else {
 			_, err := a.DB.Exec(`UPDATE products SET nom=?,marque=?,prix=?,prix_boutique=?,prix_avant=?,dispo=?,accroche=?,description=?,image=?,stock=?,main=?,sub=?,live_top=?,live_sub=? WHERE slug=?`,
 				nn("nom"), nn("marque"), ni("prix"), ni("prix_boutique"), ni("prix_avant"), nn("dispo"), nn("accroche"), nn("description"), nn("image"), ni("stock"), nn("main"), nn("sub"), nn("live_top"), nn("live_sub"), slug)
@@ -494,6 +502,10 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 				return
 			} else if rel != "" {
 				_, _ = a.DB.Exec(`UPDATE products SET image=? WHERE slug=?`, rel, slug)
+			}
+			if gerr := a.saveGallery(r, slug, p.Extras); gerr != "" {
+				a.write(w, 200, a.adminPage("Modifier — "+p.Nom, "produits", render.MxNotice("", "Enregistré, mais galerie refusée : "+gerr), r))
+				return
 			}
 		}
 		a.reload()
@@ -551,6 +563,14 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 	if p.Marque == "" {
 		pvBadgeStyle = ` style="display:none"`
 	}
+	galBlock := `<p class="hint">Galerie : 0/4 photo supplémentaire (5 au total avec la principale).</p>`
+	if len(p.Extras) > 0 {
+		var th strings.Builder
+		for _, e := range p.Extras {
+			fmt.Fprintf(&th, `<label class="mx-gthumb"><img src="/%s" alt=""><span><input type="checkbox" name="del_img" value="%s"> Supprimer</span></label>`, render.Esc(e), render.Esc(e))
+		}
+		galBlock = `<p class="hint">Galerie : ` + fmt.Sprint(len(p.Extras)) + `/4 photos supplémentaires (cocher pour supprimer).</p><div class="pv-photos">` + th.String() + `</div>`
+	}
 	voirBtn := ""
 	if !isNew {
 		voirBtn = `<a class="mx-btn ghost" href="/produits/` + p.Slug + `.html">Voir</a>`
@@ -575,6 +595,8 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 <div class="pv-photo">
 <label>Image <input name="image" id="f-image" value="`+render.Esc(p.Image)+`" placeholder="images/…"></label>
 <label>Fichier (JPG/PNG/WebP, max 5 Mo) <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp"></label>
+<label>Fichiers galerie (JPG/PNG/WebP, 5 Mo max chacun) <input type="file" name="photos" multiple accept=".jpg,.jpeg,.png,.webp"></label>
+`+galBlock+`
 </div>
 </div>
 <div class="mx-fcol">
@@ -602,13 +624,39 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 </div></form>`, r))
 }
 
-// adminDupliquer : copie un produit sous un slug -copie (prix/stock repris).
+// adminDupliquer : copie un produit sous un slug -copie (prix/stock repris,
+// galerie dupliquée avec ses fichiers).
 func (a *App) adminDupliquer(w http.ResponseWriter, r *http.Request, slug string) {
-	_, err := a.DB.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,ref_fabricant,stock,main,sub,live_top,live_sub,facets_json,search_index)
-		SELECT slug||'-copie',nom||' (copie)',marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,ref_fabricant,stock,main,sub,live_top,live_sub,facets_json,search_index FROM products WHERE slug=?`, slug)
+	_, err := a.DB.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,images_json,ref_fabricant,stock,main,sub,live_top,live_sub,facets_json,search_index)
+		SELECT slug||'-copie',nom||' (copie)',marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,images_json,ref_fabricant,stock,main,sub,live_top,live_sub,facets_json,search_index FROM products WHERE slug=?`, slug)
 	if err != nil {
 		http.Redirect(w, r, "/admin/produits?err=Duplication+impossible+(existe+d%C3%A9j%C3%A0+?)", http.StatusSeeOther)
 		return
+	}
+	// Duplique les fichiers de la galerie sous le nouveau slug (best-effort).
+	var imgJSON string
+	if err := a.DB.QueryRow(`SELECT images_json FROM products WHERE slug=?`, slug).Scan(&imgJSON); err == nil {
+		var extras []string
+		if _ = json.Unmarshal([]byte(imgJSON), &extras); len(extras) > 0 {
+			var copied []string
+			for i, src := range extras {
+				if !strings.HasPrefix(src, "images/") || strings.Contains(src, "..") {
+					continue
+				}
+				ext := strings.ToLower(filepath.Ext(src))
+				dst := fmt.Sprintf("images/%s-copie-%d%s", slug, i+2, ext)
+				if b, err := os.ReadFile(src); err == nil {
+					if err := os.WriteFile(dst, b, 0644); err == nil {
+						copied = append(copied, dst)
+					}
+				}
+			}
+			if len(copied) > 0 {
+				if b, _ := json.Marshal(copied); true {
+					_, _ = a.DB.Exec(`UPDATE products SET images_json=? WHERE slug=?`, string(b), slug+"-copie")
+				}
+			}
+		}
 	}
 	a.reload()
 	db.SyncFTS(a.DB, slug+"-copie")

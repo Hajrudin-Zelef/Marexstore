@@ -320,6 +320,17 @@ ul.pf{line-height:1.7}
 [data-pane]:not([hidden]){animation:fadeUp .35s ease}
 .tabs button{transition:background .2s,color .2s}
 .tabs button:hover:not(.on){color:var(--link)}
+/* ---------- Galerie fiche produit : carrousel (flèches + miniatures) ---------- */
+.pdetail .gal{position:relative}
+.gal .gal-prev,.gal .gal-next{position:absolute;top:38%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--link);font-size:22px;line-height:1;cursor:pointer;z-index:2}
+.gal .gal-prev{left:8px}
+.gal .gal-next{right:8px}
+.gal .gal-prev:hover,.gal .gal-next:hover{border-color:var(--link)}
+.gal-thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.gal-thumbs button{border:2px solid var(--border);border-radius:8px;padding:2px;background:#fff;cursor:pointer}
+.gal-thumbs button.on{border-color:var(--brand)}
+.gal-thumbs img{width:64px;height:64px;object-fit:contain;display:block}
+
 /* Page produit : galerie zoom doux */
 .pdetail .gal{overflow:hidden;border-radius:10px}
 .pdetail .gal img{transition:transform .5s ease}

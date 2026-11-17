@@ -96,6 +96,7 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 		"live_top":          "TEXT NOT NULL DEFAULT ''",
 		"live_sub":          "TEXT NOT NULL DEFAULT ''",
 		"facets_json":       "TEXT NOT NULL DEFAULT '{}'",
+		"images_json":       "TEXT NOT NULL DEFAULT '[]'",
 	}
 	for col, typ := range want {
 		if !cols[col] {

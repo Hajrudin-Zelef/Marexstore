@@ -406,7 +406,7 @@ func Footer(s *catalog.Store, prefix string) string {
 ` + cols + `
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=339"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=341"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
@@ -572,9 +572,12 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 			}
 		}
 	}
-	gal := `<div class="noimg">Photo à venir</div>`
+	gal := `<div class="gal">` + `<div class="noimg">Photo à venir</div>` + `</div>`
 	if p.Image != "" {
-		gal = ImgTag(p, "../")
+		gal = `<div class="gal">` + ImgTag(p, "../") + `</div>`
+	}
+	if len(p.Gallery()) > 1 {
+		gal = GalCarousel(p, "../")
 	}
 	stock := "Disponible"
 	if p.Stock != nil {
@@ -595,7 +598,7 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 	body := `
 <div class="wrap"><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › <a href="../categories/` + esc(catalog.MainSlug[p.Main]) + `.html">` + esc(p.Main) + `</a> › ` + esc(p.Sub) + ` › ` + esc(p.Nom) + `</div>
 <div><div class="pdetail" data-reveal>
-<div class="gal">` + gal + `</div>
+` + gal + `
 <div><div class="cat" style="color:#999;font-size:13px">` + esc(p.Main) + ` › ` + esc(p.Sub) + `</div>
 <h1>` + esc(p.Nom) + `</h1>
 <div>` + BadgeDispo(p) + `</div>

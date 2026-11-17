@@ -51,6 +51,32 @@
       });
     }
 
+    /* ---------- Galerie fiche produit : flèches avant/arrière + miniatures ---------- */
+    document.querySelectorAll('[data-gal]').forEach(function (gal) {
+      var main = gal.querySelector('[data-gal-main]');
+      var thumbs = Array.prototype.slice.call(gal.querySelectorAll('[data-gal-thumb]'));
+      if (!main || thumbs.length < 2) return;
+      var cur = 0;
+      function show(n) {
+        cur = (n + thumbs.length) % thumbs.length;
+        var img = thumbs[cur].querySelector('img');
+        if (img) {
+          main.setAttribute('src', img.getAttribute('src'));
+          if (img.getAttribute('alt')) main.setAttribute('alt', img.getAttribute('alt'));
+        }
+        thumbs.forEach(function (t, k) { t.classList.toggle('on', k === cur); });
+      }
+      gal.querySelectorAll('[data-gal-prev]').forEach(function (b) {
+        b.addEventListener('click', function () { show(cur - 1); });
+      });
+      gal.querySelectorAll('[data-gal-next]').forEach(function (b) {
+        b.addEventListener('click', function () { show(cur + 1); });
+      });
+      thumbs.forEach(function (t, k) {
+        t.addEventListener('click', function () { show(k); });
+      });
+    });
+
     /* ---------- Révélation au défilement (fondu + montée douce) ---------- */
     var reveal = document.querySelectorAll('[data-reveal]');
     if ('IntersectionObserver' in window) {
@@ -341,6 +367,12 @@
           if (state.main !== 'all' && c.getAttribute('data-main') !== state.main) return false;
           if (state.marque && c.getAttribute('data-marque') !== state.marque) return false;
           if (state.dispo && c.getAttribute('data-dispo') !== state.dispo) return false;
+          // « En stock » = disponible à l'achat immédiat : dispo en-stock ET
+          // prix affiché (les fiches « Prix sur demande » restent masquées).
+          if (state.dispo === 'en-stock') {
+            var pd = parseInt(c.getAttribute('data-prix'), 10);
+            if (isNaN(pd)) return false;
+          }
           if (state.etat && c.getAttribute('data-etat') !== state.etat) return false;
           for (var sk in state.specs) {
             if (!state.specs[sk]) continue;
