@@ -117,6 +117,78 @@
   });
 })();
 
+// Galerie fiche produit : bouton "+" qui ajoute un volet d'upload par image
+// (un fichier par volet, nom "photos" identique au serveur), plafond 4
+// extras. Sans JS : aucun volet, les extras existants restent gérables.
+(function () {
+  var box = document.getElementById('mx-gal-slots');
+  if (!box) return;
+  var add = document.getElementById('mx-gal-add');
+  if (!add) return;
+  var max = parseInt(box.getAttribute('data-gal-free') || '0', 10);
+  if (max < 0) max = 0;
+  function count() {
+    return box.querySelectorAll('[data-gal-slot]').length;
+  }
+  function refresh() {
+    var left = max - count();
+    if (left <= 0) {
+      add.style.display = 'none';
+      return;
+    }
+    add.style.display = '';
+    add.textContent = '+ Ajouter une image (' + left + ' restante' + (left > 1 ? 's' : '') + ')';
+  }
+  add.addEventListener('click', function () {
+    if (count() >= max) return;
+    var d = document.createElement('div');
+    d.className = 'mx-gslot';
+    d.setAttribute('data-gal-slot', '');
+    var n = count() + 1;
+    var lab = document.createElement('span');
+    lab.className = 'mx-gslot-t';
+    lab.textContent = 'Image +' + n;
+    var inp = document.createElement('input');
+    inp.type = 'file';
+    inp.name = 'photos';
+    inp.accept = '.jpg,.jpeg,.png,.webp';
+    var prev = document.createElement('img');
+    prev.alt = '';
+    prev.style.display = 'none';
+    var rm = document.createElement('button');
+    rm.type = 'button';
+    rm.className = 'mx-btn ghost';
+    rm.setAttribute('data-gal-rm', '');
+    rm.textContent = 'Retirer';
+    d.appendChild(lab);
+    d.appendChild(inp);
+    d.appendChild(prev);
+    d.appendChild(rm);
+    box.appendChild(d);
+    refresh();
+  });
+  box.addEventListener('change', function (e) {
+    var t = e.target;
+    if (!t || t.name !== 'photos' || !t.files || !t.files[0]) return;
+    var slot = t.closest('[data-gal-slot]');
+    if (!slot) return;
+    var prev = slot.querySelector('img');
+    if (!prev) return;
+    try {
+      prev.src = URL.createObjectURL(t.files[0]);
+      prev.style.display = 'block';
+    } catch (err) {}
+  });
+  box.addEventListener('click', function (e) {
+    var rm = e.target.closest('[data-gal-rm]');
+    if (!rm) return;
+    var slot = rm.closest('[data-gal-slot]');
+    if (slot) slot.remove();
+    refresh();
+  });
+  refresh();
+})();
+
 // Postboxes repliables + confirmations destructives (dupliquer, supprimer).
 (function () {
   document.addEventListener('click', function (e) {

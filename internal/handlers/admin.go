@@ -581,6 +581,22 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 		}
 		galBlock = `<p class="hint">Galerie : ` + fmt.Sprint(len(p.Extras)) + `/4 photos supplémentaires (cocher pour supprimer).</p><div class="pv-photos">` + th.String() + `</div>`
 	}
+	// Volets d'ajout : un "+" par image (un fichier par volet, nom "photos"
+	// inchangé côté serveur), plafond 4 extras. Le premier volet est rendu
+	// côté serveur (repli sans JS) ; le "+" en ajoute via admin.js.
+	free := 4 - len(p.Extras)
+	if free < 0 {
+		free = 0
+	}
+	slot1 := ""
+	if free > 0 {
+		slot1 = `<div class="mx-gslot" data-gal-slot><span class="mx-gslot-t">Image +1</span><input type="file" name="photos" accept=".jpg,.jpeg,.png,.webp"><img alt="" style="display:none"></div>`
+	}
+	addStyle := ""
+	if free <= 1 {
+		addStyle = ` style="display:none"`
+	}
+	galBlock += `<div id="mx-gal-slots" data-gal-free="` + fmt.Sprint(free) + `">` + slot1 + `</div><button type="button" class="mx-btn ghost" id="mx-gal-add" data-gal-add` + addStyle + `>+ Ajouter une image</button><p class="hint">JPG/PNG/WebP, 5 Mo max par image.</p>`
 	voirBtn := ""
 	if !isNew {
 		voirBtn = `<a class="mx-btn ghost" href="/produits/` + p.Slug + `.html">Voir</a>`
@@ -605,7 +621,6 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 <div class="pv-photo">
 <label>Image <input name="image" id="f-image" value="`+render.Esc(p.Image)+`" placeholder="images/…"></label>
 <label>Fichier (JPG/PNG/WebP, max 5 Mo) <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp"></label>
-<label>Fichiers galerie (JPG/PNG/WebP, 5 Mo max chacun) <input type="file" name="photos" multiple accept=".jpg,.jpeg,.png,.webp"></label>
 `+galBlock+`
 </div>
 </div>

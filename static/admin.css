@@ -305,3 +305,10 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-gthumb{display:flex !important;flex-direction:column;align-items:center;gap:6px;border:1px solid var(--mx-border);border-radius:10px;padding:6px;background:#fff;cursor:pointer}
 .mx-gthumb img{width:72px;height:72px;object-fit:contain;display:block}
 .mx-gthumb span{font-size:11px;display:flex;align-items:center;gap:4px}
+
+/* ---------- Galerie fiche produit : volets d'ajout (+) ---------- */
+#mx-gal-add{margin-top:10px}
+.mx-gslot{display:flex;align-items:center;gap:10px;border:1px dashed var(--mx-lime-dark);border-radius:10px;padding:8px 10px;background:#fff;margin-top:8px;flex-wrap:wrap}
+.mx-gslot-t{font-size:12px;font-weight:700;color:var(--mx-brand)}
+.mx-gslot input{border:none !important;padding:0 !important;margin:0 !important;width:auto;flex:1;min-width:180px}
+.mx-gslot img{width:56px;height:56px;object-fit:contain;border:1px solid var(--mx-border);border-radius:8px}
