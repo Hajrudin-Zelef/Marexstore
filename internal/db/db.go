@@ -67,6 +67,11 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 	if err := Migrate(d, migDir+"/004_backend_ops.sql"); err != nil {
 		return fmt.Errorf("004: %w", err)
 	}
+	// T5 — gestion des catégories : types déclarés même vides (005).
+	// Jamais destructif (IF NOT EXISTS), rejouable sans risque.
+	if err := Migrate(d, migDir+"/005_types_gestion.sql"); err != nil {
+		return fmt.Errorf("005: %w", err)
+	}
 	cols := map[string]bool{}
 	rows, err := d.Query(`PRAGMA table_info(products)`)
 	if err != nil {
