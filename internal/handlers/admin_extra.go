@@ -428,6 +428,37 @@ func splitType(v string) (string, string) {
 	return "", v
 }
 
+// adminTypesAction : gestion des catégories (créer/renommer/fusionner/
+// supprimer/creer_top). Chaque succès : reload + audit + msg ; chaque
+// échec : err honnête, rien à moitié appliqué.
+func (a *App) adminTypesAction(w http.ResponseWriter, r *http.Request, act string) {
+	switch act {
+	case "creer":
+		top := strings.TrimSpace(r.FormValue("top"))
+		sub := strings.TrimSpace(r.FormValue("sub"))
+		if top == "" || sub == "" || strings.Contains(top, "|") || strings.Contains(sub, "|") {
+			http.Redirect(w, r, "/admin/types?err=Nom+de+cat%C3%A9gorie+invalide", http.StatusSeeOther)
+			return
+		}
+		var n, nd int
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top=? AND live_sub=?`, top, sub).Scan(&n)
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top=? AND sub=?`, top, sub).Scan(&nd)
+		if n+nd > 0 {
+			http.Redirect(w, r, "/admin/types?err=Cat%C3%A9gorie+d%C3%A9j%C3%A0+existante", http.StatusSeeOther)
+			return
+		}
+		if _, err := a.DB.Exec(`INSERT INTO declared_types(top, sub) VALUES(?,?)`, top, sub); err != nil {
+			http.Redirect(w, r, "/admin/types?err=Cr%C3%A9ation+impossible", http.StatusSeeOther)
+			return
+		}
+		a.reload()
+		a.auditAdmin(r, "types.creer", top+"|"+sub)
+		http.Redirect(w, r, "/admin/types?msg=Cat%C3%A9gorie+cr%C3%A9%C3%A9e", http.StatusSeeOther)
+	default:
+		http.Redirect(w, r, "/admin/types?err=Action+inconnue", http.StatusSeeOther)
+	}
+}
+
 // AdminTypes : regroupements (live_top/live_sub) + compteurs + fusion.
 func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
@@ -436,6 +467,13 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		if !a.checkAdminCSRF(r) {
 			http.Error(w, "refusé", http.StatusForbidden)
+			return
+		}
+		// Gestion des catégories : action explicite (créer/renommer/
+		// fusionner/supprimer). Sans action : fusion legacy (formulaire
+		// historique top/src/dst) pour compatibilité.
+		if act := strings.TrimSpace(r.FormValue("action")); act != "" {
+			a.adminTypesAction(w, r, act)
 			return
 		}
 		// Les selects portent "top|sub" : le store se déduit de la source
