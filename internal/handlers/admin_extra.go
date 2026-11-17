@@ -490,6 +490,26 @@ func (a *App) adminTypesAction(w http.ResponseWriter, r *http.Request, act strin
 		a.reload()
 		a.auditAdmin(r, "types.creer", top+"|"+sub)
 		http.Redirect(w, r, "/admin/types?msg=Cat%C3%A9gorie+cr%C3%A9%C3%A9e", http.StatusSeeOther)
+	case "creer_top":
+		top := strings.TrimSpace(r.FormValue("top"))
+		if top == "" || strings.Contains(top, "|") {
+			http.Redirect(w, r, "/admin/types?err=Nom+de+store+invalide", http.StatusSeeOther)
+			return
+		}
+		var n, nd int
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top=?`, top).Scan(&n)
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top=?`, top).Scan(&nd)
+		if n+nd > 0 {
+			http.Redirect(w, r, "/admin/types?err=Store+d%C3%A9j%C3%A0+existant", http.StatusSeeOther)
+			return
+		}
+		if _, err := a.DB.Exec(`INSERT INTO declared_types(top, sub) VALUES(?,'')`, top); err != nil {
+			http.Redirect(w, r, "/admin/types?err=Cr%C3%A9ation+impossible", http.StatusSeeOther)
+			return
+		}
+		a.reload()
+		a.auditAdmin(r, "types.creer_top", top)
+		http.Redirect(w, r, "/admin/types?msg=Store+cr%C3%A9%C3%A9", http.StatusSeeOther)
 	case "renommer":
 		top := strings.TrimSpace(r.FormValue("top"))
 		ancien := strings.TrimSpace(r.FormValue("ancien"))
@@ -749,6 +769,7 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 			miniStat("/admin/produits", "Produits", fmt.Sprint(nProd), "#6fa82e")+
 			miniStat("/admin/types", "Plus gros top", fmt.Sprint(bigN)+" · "+render.Esc(bigLab), "#dba617")+
 			`</div>
+<p><details class="mx-type-addtop" data-types-addtop><summary class="mx-btn">+ Nouveau store</summary><form class="mx-form" method="post"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`"><input type="hidden" name="action" value="creer_top"><input name="top" placeholder="Nom du store…" maxlength="80" required><button class="mx-btn primary">Créer</button></form></details></p>
 <div class="mx-grid mx-types">`+cards.String()+`</div>`, r))
 }
 

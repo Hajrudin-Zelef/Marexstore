@@ -249,3 +249,71 @@ func TestAdminTypesSupprimeVideEtRefuseNonVide(t *testing.T) {
 		t.Fatal("type non vide touché par la suppression")
 	}
 }
+
+// Nouveau store (niveau 1) + audit complet : chaque action laisse une
+// trace (creer ×2, renommer, fusionner, supprimer) ; fusion et suppression
+// exigent une confirmation côté page.
+func TestAdminTypesCreeStoreEtAudit(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a1','A1','t1','x')`); err != nil {
+		t.Fatal(err)
+	}
+	post := func(v url.Values) string {
+		v.Set("csrf", app.adminCSRF())
+		req := httptest.NewRequest(http.MethodPost, "/admin/types", strings.NewReader(v.Encode()))
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		req.SetBasicAuth("admin", "test1234")
+		rec := httptest.NewRecorder()
+		app.AdminTypes(rec, req)
+		if rec.Code != http.StatusSeeOther {
+			t.Fatalf("POST types : %d, attendu 303", rec.Code)
+		}
+		return rec.Header().Get("Location")
+	}
+	act := func(name string, kv ...string) url.Values {
+		v := url.Values{}
+		v.Set("action", name)
+		for i := 0; i+1 < len(kv); i += 2 {
+			v.Set(kv[i], kv[i+1])
+		}
+		return v
+	}
+	if loc := post(act("creer", "top", "t1", "sub", "z")); !strings.Contains(loc, "msg=") {
+		t.Fatalf("creer : %q", loc)
+	}
+	if loc := post(act("creer_top", "top", "nouveau")); !strings.Contains(loc, "msg=") {
+		t.Fatalf("creer_top : %q", loc)
+	}
+	if loc := post(act("renommer", "top", "t1", "ancien", "z", "nouveau", "w")); !strings.Contains(loc, "msg=") {
+		t.Fatalf("renommer : %q", loc)
+	}
+	if loc := post(act("fusionner", "src", "t1|x", "dst", "t1|y")); !strings.Contains(loc, "msg=") {
+		t.Fatalf("fusionner : %q", loc)
+	}
+	if loc := post(act("supprimer", "top", "t1", "sub", "w")); !strings.Contains(loc, "msg=") {
+		t.Fatalf("supprimer : %q", loc)
+	}
+	var nAudit int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM admin_audit WHERE action LIKE 'types.%'`).Scan(&nAudit)
+	if nAudit != 5 {
+		t.Fatalf("audit : %d traces types.*, attendu 5", nAudit)
+	}
+	var nCard int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top='nouveau'`).Scan(&nCard)
+	if nCard != 1 {
+		t.Fatal("store déclaré absent de declared_types")
+	}
+	req := httptest.NewRequest(http.MethodGet, "/admin/types", nil)
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminTypes(rec, req)
+	body := rec.Body.String()
+	if !strings.Contains(body, `data-top="nouveau"`) {
+		t.Fatal("carte du nouveau store absente du rendu")
+	}
+	for _, want := range []string{"Fusionner", "Supprimer", "data-mx-confirm"} {
+		if c := strings.Count(body, want); c < 1 {
+			t.Fatalf("confirmation %q absente (%d)", want, c)
+		}
+	}
+}

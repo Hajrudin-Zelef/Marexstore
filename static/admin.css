@@ -331,3 +331,6 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-type-fuse summary{padding:8px 10px;border-radius:8px;font-size:13.5px;cursor:pointer}
 .mx-type-fuse summary:hover{background:#f1f5f1}
 .mx-type-fuse form{padding:4px 10px 8px}
+.mx-type-addtop summary{list-style:none;cursor:pointer;display:inline-block}
+.mx-type-addtop summary::-webkit-details-marker{display:none}
+.mx-type-addtop form{margin-top:8px;max-width:420px}
