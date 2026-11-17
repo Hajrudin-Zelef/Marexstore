@@ -420,6 +420,14 @@ func (a *App) AdminMedias(w http.ResponseWriter, r *http.Request) {
 			views+`<div class="mx-media">`+grid+`</div>`, r))
 }
 
+// splitType : valeur de select "top|sub" → (top, sub).
+func splitType(v string) (string, string) {
+	if i := strings.Index(v, "|"); i >= 0 {
+		return v[:i], v[i+1:]
+	}
+	return "", v
+}
+
 // AdminTypes : regroupements (live_top/live_sub) + compteurs + fusion.
 func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
@@ -430,23 +438,36 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "refusé", http.StatusForbidden)
 			return
 		}
-		top, src, dst := r.FormValue("top"), r.FormValue("src"), r.FormValue("dst")
-		if top != "" && src != "" && dst != "" && src != dst {
-			res, err := a.DB.Exec(`UPDATE products SET live_sub=? WHERE live_top=? AND live_sub=?`, dst, top, src)
+		// Les selects portent "top|sub" : le store se déduit de la source
+		// côté serveur (aucun JS inline, doctrine CSP script-src 'self').
+		srcTop, srcSub := splitType(r.FormValue("src"))
+		dstTop, dstSub := splitType(r.FormValue("dst"))
+		identique := srcTop == dstTop && srcSub == dstSub
+		if srcTop != "" && srcSub != "" && dstSub != "" && !identique {
+			res, err := a.DB.Exec(`UPDATE products SET live_sub=? WHERE live_top=? AND live_sub=?`, dstSub, srcTop, srcSub)
 			if err == nil {
 				if n, _ := res.RowsAffected(); n > 0 {
-					slugs, _ := a.DB.Query(`SELECT slug FROM products WHERE live_top=? AND live_sub=?`, top, dst)
-					if slugs != nil {
+					// Collecter avant SyncFTS : la DB n'a qu'une connexion
+					// (MaxOpenConns 1), un Exec pendant des rows ouvertes
+					// bloque pour toujours.
+					var fusionnes []string
+					if slugs, qerr := a.DB.Query(`SELECT slug FROM products WHERE live_top=? AND live_sub=?`, srcTop, dstSub); qerr == nil && slugs != nil {
 						for slugs.Next() {
 							var s string
 							_ = slugs.Scan(&s)
-							db.SyncFTS(a.DB, s)
+							fusionnes = append(fusionnes, s)
 						}
 						slugs.Close()
 					}
+					for _, s := range fusionnes {
+						db.SyncFTS(a.DB, s)
+					}
 					a.reload()
+					a.auditAdmin(r, "types.fusionner", srcTop+"|"+srcSub+" -> "+dstSub)
+					http.Redirect(w, r, "/admin/types?msg=Types+fusionn%C3%A9s", http.StatusSeeOther)
+					return
 				}
-				http.Redirect(w, r, "/admin/types?msg=Types+fusionn%C3%A9s", http.StatusSeeOther)
+				http.Redirect(w, r, "/admin/types?err=Rien+%C3%A0+fusionner+(type+source+vide)", http.StatusSeeOther)
 				return
 			}
 		}
@@ -523,10 +544,9 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 <div class="mx-fsec" style="max-width:640px"><h3>Fusionner deux types</h3><form class="mx-form" method="post"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
 <div class="mx-fgrid"><label>De (sera vidé) <select name="src">`+opts.String()+`</select></label>
 <label>Vers <select name="dst">`+opts.String()+`</select></label></div>
-<input type="hidden" name="top" id="mx-top"><div class="mx-form-actions"><button class="mx-btn primary">Fusionner</button></div>
+<div class="mx-form-actions"><button class="mx-btn primary">Fusionner</button></div>
 <p class="hint">Le store est déduit du type source (« top|sub »). Irréversible : les produits du type source rejoignent le type cible.</p>
-</form></div>
-<script>document.querySelector('select[name=src]').addEventListener('change',function(e){document.getElementById('mx-top').value=e.target.value.split('|')[0];});document.getElementById('mx-top').value=document.querySelector('select[name=src]').value.split('|')[0];</script>`, r))
+</form></div>`, r))
 }
 
 // AdminReglages : maintenance + WhatsApp (appliqué au redémarrage).
