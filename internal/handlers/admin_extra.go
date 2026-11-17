@@ -518,6 +518,7 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 		n   int
 	}
 	byTop := map[string][]subRow{}
+	seen := map[string]bool{}
 	var tops []string
 	topTotal := map[string]int{}
 	nTypes, nProd := 0, 0
@@ -531,10 +532,36 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 				tops = append(tops, top)
 			}
 			byTop[top] = append(byTop[top], subRow{sub, n})
+			seen[top+"\x00"+sub] = true
 			topTotal[top] += n
 			nTypes++
 			nProd += n
 		}
+	}
+	// Déclarées (même vides) : en bas de leur carte, par création. Un store
+	// déclaré sans type (sub='') ne fait que lister la carte vide.
+	if dr, err := a.DB.Query(`SELECT top, sub FROM declared_types ORDER BY cree_le, rowid`); err == nil && dr != nil {
+		for dr.Next() {
+			var top, sub string
+			_ = dr.Scan(&top, &sub)
+			if sub == "" {
+				if _, ok := byTop[top]; !ok {
+					tops = append(tops, top)
+					byTop[top] = []subRow{}
+				}
+				continue
+			}
+			if seen[top+"\x00"+sub] {
+				continue
+			}
+			seen[top+"\x00"+sub] = true
+			if _, ok := byTop[top]; !ok {
+				tops = append(tops, top)
+			}
+			byTop[top] = append(byTop[top], subRow{sub, 0})
+			nTypes++
+		}
+		dr.Close()
 	}
 	var opts strings.Builder
 	for _, top := range tops {
@@ -559,7 +586,8 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 		if lab == "" {
 			lab = top
 		}
-		fmt.Fprintf(&cards, `<section class="mx-card mx-type"><h2>%s</h2><span class="mx-type-total">%d produit(s)</span><ul class="mx-type-list">`, render.Esc(lab), topTotal[top])
+		fmt.Fprintf(&cards, `<section class="mx-card mx-type" data-types-card data-top="%s"><div class="mx-type-head"><h2>%s</h2><details class="mx-type-add" data-types-add><summary title="Ajouter une sous-catégorie">+</summary><form class="mx-form" method="post"><input type="hidden" name="csrf" value="%s"><input type="hidden" name="action" value="creer"><input type="hidden" name="top" value="%s"><input name="sub" placeholder="Nouvelle catégorie…" maxlength="80" required><button class="mx-btn primary">Créer</button></form></details></div><span class="mx-type-total">%d produit(s)</span><ul class="mx-type-list">`,
+			render.Esc(top), render.Esc(lab), a.adminCSRF(), render.Esc(top), topTotal[top])
 		for _, s := range byTop[top] {
 			lab := s.sub
 			href := fmt.Sprintf(`/categories/%s.html?type=%s`, render.Esc(top), render.Esc(s.sub))
@@ -567,7 +595,7 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 				lab = "Sans type"
 				href = fmt.Sprintf(`/categories/%s.html`, render.Esc(top))
 			}
-			fmt.Fprintf(&cards, `<li><a href="%s">%s</a><span class="vl">%d</span></li>`, href, render.Esc(lab), s.n)
+			fmt.Fprintf(&cards, `<li data-types-row data-top="%s" data-sub="%s"><a href="%s">%s</a><span class="vl">%d</span></li>`, render.Esc(top), render.Esc(s.sub), href, render.Esc(lab), s.n)
 		}
 		cards.WriteString(`</ul></section>`)
 	}
