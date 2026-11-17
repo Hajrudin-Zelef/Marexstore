@@ -86,3 +86,69 @@ func TestAdminTypesRenduBoutonPlus(t *testing.T) {
 		t.Fatal("JS inline détecté (doctrine script-src 'self')")
 	}
 }
+
+// Renommer : produits + déclaré déplacés en transaction, FTS + store
+// rechargés. Cible déjà prise → err, rien ne bouge (rollback).
+func TestAdminTypesRenomme(t *testing.T) {
+	app, database := testAppDesign(t)
+	for _, q := range []string{
+		`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a1','A1','t1','x')`,
+		`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a2','A2','t1','x')`,
+		`INSERT INTO declared_types(top, sub) VALUES('t1','x')`,
+	} {
+		if _, err := database.Exec(q); err != nil {
+			t.Fatal(err)
+		}
+	}
+	v := url.Values{}
+	v.Set("csrf", app.adminCSRF())
+	v.Set("action", "renommer")
+	v.Set("top", "t1")
+	v.Set("ancien", "x")
+	v.Set("nouveau", "z")
+	req := httptest.NewRequest(http.MethodPost, "/admin/types", strings.NewReader(v.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminTypes(rec, req)
+	if rec.Code != http.StatusSeeOther || !strings.Contains(rec.Header().Get("Location"), "msg=") {
+		t.Fatalf("renommer : %d %q, attendu 303 msg=", rec.Code, rec.Header().Get("Location"))
+	}
+	var nx, nz, dx, dz int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top='t1' AND live_sub='x'`).Scan(&nx)
+	_ = database.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top='t1' AND live_sub='z'`).Scan(&nz)
+	_ = database.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top='t1' AND sub='x'`).Scan(&dx)
+	_ = database.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top='t1' AND sub='z'`).Scan(&dz)
+	if nx != 0 || nz != 2 || dx != 0 || dz != 1 {
+		t.Fatalf("renommage partiel : produits x=%d z=%d, déclarés x=%d z=%d", nx, nz, dx, dz)
+	}
+	if p := app.Store.BySlug["a1"]; p == nil || p.LiveSub != "z" {
+		t.Fatal("store périmé après renommage")
+	}
+}
+
+func TestAdminTypesRenommeRefuseCiblePrise(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a1','A1','t1','x'),('b1','B1','t1','y')`); err != nil {
+		t.Fatal(err)
+	}
+	v := url.Values{}
+	v.Set("csrf", app.adminCSRF())
+	v.Set("action", "renommer")
+	v.Set("top", "t1")
+	v.Set("ancien", "x")
+	v.Set("nouveau", "y")
+	req := httptest.NewRequest(http.MethodPost, "/admin/types", strings.NewReader(v.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminTypes(rec, req)
+	if loc := rec.Header().Get("Location"); !strings.Contains(loc, "err=") {
+		t.Fatalf("cible prise : %q, attendu err=", loc)
+	}
+	var nx int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top='t1' AND live_sub='x'`).Scan(&nx)
+	if nx != 1 {
+		t.Fatalf("rollback raté : x=%d, attendu 1", nx)
+	}
+}

@@ -454,6 +454,55 @@ func (a *App) adminTypesAction(w http.ResponseWriter, r *http.Request, act strin
 		a.reload()
 		a.auditAdmin(r, "types.creer", top+"|"+sub)
 		http.Redirect(w, r, "/admin/types?msg=Cat%C3%A9gorie+cr%C3%A9%C3%A9e", http.StatusSeeOther)
+	case "renommer":
+		top := strings.TrimSpace(r.FormValue("top"))
+		ancien := strings.TrimSpace(r.FormValue("ancien"))
+		nouveau := strings.TrimSpace(r.FormValue("nouveau"))
+		if top == "" || ancien == "" || nouveau == "" || ancien == nouveau ||
+			strings.Contains(top, "|") || strings.Contains(ancien, "|") || strings.Contains(nouveau, "|") {
+			http.Redirect(w, r, "/admin/types?err=Renommage+impossible", http.StatusSeeOther)
+			return
+		}
+		var pris, prisD int
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top=? AND live_sub=?`, top, nouveau).Scan(&pris)
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top=? AND sub=?`, top, nouveau).Scan(&prisD)
+		if pris+prisD > 0 {
+			http.Redirect(w, r, "/admin/types?err=Cible+d%C3%A9j%C3%A0+prise", http.StatusSeeOther)
+			return
+		}
+		tx, err := a.DB.Begin()
+		if err != nil {
+			http.Redirect(w, r, "/admin/types?err=Renommage+impossible", http.StatusSeeOther)
+			return
+		}
+		defer tx.Rollback()
+		if _, err := tx.Exec(`UPDATE products SET live_sub=? WHERE live_top=? AND live_sub=?`, nouveau, top, ancien); err != nil {
+			http.Redirect(w, r, "/admin/types?err=Renommage+impossible", http.StatusSeeOther)
+			return
+		}
+		if _, err := tx.Exec(`UPDATE declared_types SET sub=? WHERE top=? AND sub=?`, nouveau, top, ancien); err != nil {
+			http.Redirect(w, r, "/admin/types?err=Renommage+impossible", http.StatusSeeOther)
+			return
+		}
+		if err := tx.Commit(); err != nil {
+			http.Redirect(w, r, "/admin/types?err=Renommage+impossible", http.StatusSeeOther)
+			return
+		}
+		var renommes []string
+		if slugs, qerr := a.DB.Query(`SELECT slug FROM products WHERE live_top=? AND live_sub=?`, top, nouveau); qerr == nil && slugs != nil {
+			for slugs.Next() {
+				var s string
+				_ = slugs.Scan(&s)
+				renommes = append(renommes, s)
+			}
+			slugs.Close()
+		}
+		for _, s := range renommes {
+			db.SyncFTS(a.DB, s)
+		}
+		a.reload()
+		a.auditAdmin(r, "types.renommer", top+"|"+ancien+" -> "+nouveau)
+		http.Redirect(w, r, "/admin/types?msg=Cat%C3%A9gorie+renomm%C3%A9e", http.StatusSeeOther)
 	default:
 		http.Redirect(w, r, "/admin/types?err=Action+inconnue", http.StatusSeeOther)
 	}
