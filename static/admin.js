@@ -189,6 +189,89 @@
   refresh();
 })();
 
+// Types d'équipements : + (focus + sélection), renommer inline,
+// ajouter (ouvre le + de la carte), fermeture des autres menus ⋯.
+// Les formulaires postent en natif : marche aussi sans JS via <details>.
+(function () {
+  function csrf() {
+    var el = document.querySelector('form input[name="csrf"]');
+    return el ? el.value : '';
+  }
+  document.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!(d instanceof HTMLDetailsElement)) return;
+    if (d.hasAttribute('data-types-add') && d.open) {
+      var inp = d.querySelector('input[name="sub"]');
+      if (inp) { inp.focus(); inp.select(); }
+      return;
+    }
+    if (d.hasAttribute('data-types-menu') && d.open) {
+      document.querySelectorAll('details[data-types-menu][open]').forEach(function (o) {
+        if (o !== d) o.open = false;
+      });
+    }
+  }, true);
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-types-act]');
+    if (!b) return;
+    var li = b.closest('[data-types-row]');
+    if (!li) return;
+    var top = li.getAttribute('data-top') || '';
+    var sub = li.getAttribute('data-sub') || '';
+    if (b.getAttribute('data-types-act') === 'ajouter') {
+      var card = b.closest('[data-types-card]');
+      var add = card ? card.querySelector('details[data-types-add]') : null;
+      if (add) {
+        add.open = true;
+        var inp = add.querySelector('input[name="sub"]');
+        if (inp) { inp.focus(); inp.select(); }
+      }
+      var m = b.closest('details[data-types-menu]');
+      if (m) m.open = false;
+      return;
+    }
+    if (b.getAttribute('data-types-act') !== 'renommer' || li.querySelector('[data-types-rename]')) return;
+    var link = li.querySelector('a');
+    var form = document.createElement('form');
+    form.method = 'post';
+    form.setAttribute('data-types-rename', '');
+    function hidden(n, v) {
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = n; i.value = v;
+      form.appendChild(i);
+    }
+    hidden('csrf', csrf());
+    hidden('action', 'renommer');
+    hidden('top', top);
+    hidden('ancien', sub);
+    var input = document.createElement('input');
+    input.name = 'nouveau';
+    input.value = sub;
+    input.maxLength = 80;
+    input.required = true;
+    var ok = document.createElement('button');
+    ok.className = 'mx-btn primary';
+    ok.textContent = 'OK';
+    var ko = document.createElement('button');
+    ko.type = 'button';
+    ko.className = 'mx-btn ghost';
+    ko.textContent = 'Annuler';
+    ko.addEventListener('click', function () { form.remove(); if (link) link.style.display = ''; });
+    form.appendChild(input);
+    form.appendChild(ok);
+    form.appendChild(ko);
+    input.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') { form.remove(); if (link) link.style.display = ''; }
+    });
+    if (link) link.style.display = 'none';
+    li.insertBefore(form, li.firstChild);
+    input.focus();
+    input.select();
+    var m2 = b.closest('details[data-types-menu]');
+    if (m2) m2.open = false;
+  });
+})();
+
 // Postboxes repliables + confirmations destructives (dupliquer, supprimer).
 (function () {
   document.addEventListener('click', function (e) {
