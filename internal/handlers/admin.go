@@ -467,6 +467,7 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 			fmt.Sscan(v, &n)
 			return n
 		}
+		var warns []string
 		if isNew {
 			nslug := catalog.Slugify(nn("nom"))
 			if nslug == "" {
@@ -481,15 +482,22 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 			}
 			slug = nslug
 			if rel, uerr := a.saveUpload(r, slug); uerr != nil {
-				a.write(w, 200, a.adminPage("Nouveau produit", "produits", render.MxNotice("", "Produit créé, mais photo refusée : "+uerr.Error()), r))
-				return
+				warns = append(warns, "photo refusée : "+uerr.Error())
 			} else if rel != "" {
 				_, _ = a.DB.Exec(`UPDATE products SET image=? WHERE slug=?`, rel, slug)
 			}
 			if gerr := a.saveGallery(r, slug, nil); gerr != "" {
-				a.write(w, 200, a.adminPage("Nouveau produit", "produits", render.MxNotice("", "Produit créé, mais galerie refusée : "+gerr), r))
-				return
+				warns = append(warns, "galerie refusée : "+gerr)
 			}
+			a.reload()
+			db.SyncFTS(a.DB, slug)
+			a.auditAdmin(r, "produit.enregistrer", slug)
+			loc := "/admin/produits/" + slug + "?msg=Produit+cr%C3%A9%C3%A9"
+			if len(warns) > 0 {
+				loc += "&err=" + url.QueryEscape(strings.Join(warns, " — "))
+			}
+			http.Redirect(w, r, loc, http.StatusSeeOther)
+			return
 		} else {
 			_, err := a.DB.Exec(`UPDATE products SET nom=?,marque=?,prix=?,prix_boutique=?,prix_avant=?,dispo=?,accroche=?,description=?,image=?,stock=?,main=?,sub=?,live_top=?,live_sub=? WHERE slug=?`,
 				nn("nom"), nn("marque"), ni("prix"), ni("prix_boutique"), ni("prix_avant"), nn("dispo"), nn("accroche"), nn("description"), nn("image"), ni("stock"), nn("main"), nn("sub"), nn("live_top"), nn("live_sub"), slug)
@@ -498,20 +506,22 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			if rel, uerr := a.saveUpload(r, slug); uerr != nil {
-				a.write(w, 200, a.adminPage("Modifier — "+p.Nom, "produits", render.MxNotice("", "Enregistré, mais photo refusée : "+uerr.Error()), r))
-				return
+				warns = append(warns, "photo refusée : "+uerr.Error())
 			} else if rel != "" {
 				_, _ = a.DB.Exec(`UPDATE products SET image=? WHERE slug=?`, rel, slug)
 			}
 			if gerr := a.saveGallery(r, slug, p.Extras); gerr != "" {
-				a.write(w, 200, a.adminPage("Modifier — "+p.Nom, "produits", render.MxNotice("", "Enregistré, mais galerie refusée : "+gerr), r))
-				return
+				warns = append(warns, "galerie refusée : "+gerr)
 			}
 		}
 		a.reload()
 		db.SyncFTS(a.DB, slug)
 		a.auditAdmin(r, "produit.enregistrer", slug)
-		http.Redirect(w, r, "/admin/produits/"+slug+"?msg=Produit+enregistr%C3%A9", http.StatusSeeOther)
+		loc := "/admin/produits/" + slug + "?msg=Produit+enregistr%C3%A9"
+		if len(warns) > 0 {
+			loc += "&err=" + url.QueryEscape(strings.Join(warns, " — "))
+		}
+		http.Redirect(w, r, loc, http.StatusSeeOther)
 		return
 	}
 	str := func(v sql.NullInt64) string {

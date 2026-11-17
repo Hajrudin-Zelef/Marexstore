@@ -19,7 +19,7 @@ services:
     volumes:
       - ./data:/data
       - ./static:/app/static:ro
-      - ./images:/app/images:ro
+      - ./images:/app/images
     read_only: true
     tmpfs:
       - /tmp

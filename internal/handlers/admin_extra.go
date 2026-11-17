@@ -324,7 +324,8 @@ func (a *App) AdminMedias(w http.ResponseWriter, r *http.Request) {
 		vue = "all"
 	}
 	q := strings.TrimSpace(r.URL.Query().Get("q"))
-	// Références en base.
+	// Références en base : principale + galerie (images_json), sinon les
+	// extras passent pour orphelins et peuvent être supprimés à tort.
 	used := map[string]bool{}
 	ur, _ := a.DB.Query(`SELECT DISTINCT image FROM products WHERE image<>''`)
 	if ur != nil {
@@ -335,6 +336,21 @@ func (a *App) AdminMedias(w http.ResponseWriter, r *http.Request) {
 			used[im] = true
 		}
 	}
+	if jr, err := a.DB.Query(`SELECT images_json FROM products WHERE images_json<>'' AND images_json<>'[]'`); err == nil && jr != nil {
+		defer jr.Close()
+		for jr.Next() {
+			var js string
+			_ = jr.Scan(&js)
+			var extras []string
+			if _ = json.Unmarshal([]byte(js), &extras); extras != nil {
+				for _, e := range extras {
+					if e != "" {
+						used[e] = true
+					}
+				}
+			}
+		}
+	}
 	if r.Method == http.MethodPost && r.FormValue("supprimer") != "" {
 		if !a.checkAdminCSRF(r) {
 			http.Error(w, "refusé", http.StatusForbidden)
@@ -342,7 +358,10 @@ func (a *App) AdminMedias(w http.ResponseWriter, r *http.Request) {
 		}
 		rel := r.FormValue("supprimer")
 		if !used[rel] && !strings.Contains(rel, "..") && strings.HasPrefix(rel, "images/") {
-			_ = os.Remove(rel)
+			if err := os.Remove(rel); err != nil {
+				http.Redirect(w, r, "/admin/medias?err=Suppression+impossible+("+url.QueryEscape(err.Error())+")", http.StatusSeeOther)
+				return
+			}
 			http.Redirect(w, r, "/admin/medias?vue=orphelins&msg=Fichier+supprim%C3%A9", http.StatusSeeOther)
 			return
 		}
