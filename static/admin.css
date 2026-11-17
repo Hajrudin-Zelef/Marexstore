@@ -312,3 +312,22 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-gslot-t{font-size:12px;font-weight:700;color:var(--mx-brand)}
 .mx-gslot input{border:none !important;padding:0 !important;margin:0 !important;width:auto;flex:1;min-width:180px}
 .mx-gslot img{width:56px;height:56px;object-fit:contain;border:1px solid var(--mx-border);border-radius:8px}
+
+/* ---------- Types d'équipements : + par carte, menu ⋯ par ligne ---------- */
+.mx-type-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mx-type-head h2{margin:0}
+.mx-type-add summary{list-style:none;cursor:pointer;width:32px;height:32px;border-radius:50%;background:var(--mx-accent);color:#fff;font-size:20px;font-weight:800;line-height:32px;text-align:center;user-select:none}
+.mx-type-add summary::-webkit-details-marker{display:none}
+.mx-type-add summary:hover{filter:brightness(.92)}
+.mx-type-add form{margin-top:8px}
+.mx-type-list li{position:relative}
+.mx-type-menu{margin-left:auto}
+.mx-type-menu summary{list-style:none;cursor:pointer;border-radius:6px;padding:0 8px;font-weight:800;letter-spacing:2px;color:var(--mx-muted)}
+.mx-type-menu summary::-webkit-details-marker{display:none}
+.mx-type-menu summary:hover{background:#eef2ee;color:var(--mx-brand)}
+.mx-type-menu-list{position:absolute;right:0;top:100%;z-index:5;background:#fff;border:1px solid var(--mx-border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;min-width:190px;display:flex;flex-direction:column;gap:2px}
+.mx-type-menu-list button,.mx-type-menu-list a{text-align:left;background:none;border:none;padding:8px 10px;border-radius:8px;font-size:13.5px;color:var(--mx-ink);cursor:pointer;text-decoration:none;font-family:inherit}
+.mx-type-menu-list button:hover,.mx-type-menu-list a:hover{background:#f1f5f1}
+.mx-type-fuse summary{padding:8px 10px;border-radius:8px;font-size:13.5px;cursor:pointer}
+.mx-type-fuse summary:hover{background:#f1f5f1}
+.mx-type-fuse form{padding:4px 10px 8px}

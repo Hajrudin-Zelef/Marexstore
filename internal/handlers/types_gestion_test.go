@@ -152,3 +152,25 @@ func TestAdminTypesRenommeRefuseCiblePrise(t *testing.T) {
 		t.Fatalf("rollback raté : x=%d, attendu 1", nx)
 	}
 }
+
+// Menu ⋯ par ligne : renommer / ajouter / fusionner / voir / supprimer,
+// suppression et fusion avec confirmation, formulaires postables sans JS.
+func TestAdminTypesRenduMenu(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('p1','P1','t1','x'),('p2','P2','t1','y')`); err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest(http.MethodGet, "/admin/types", nil)
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminTypes(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("GET types : %d, attendu 200", rec.Code)
+	}
+	body := rec.Body.String()
+	for _, want := range []string{"data-types-menu", "Renommer", "Ajouter", "Fusionner", "Voir les produits", "Supprimer", "data-mx-confirm", `name="dst"`, `value="supprimer"`} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("menu ligne : %q absent", want)
+		}
+	}
+}

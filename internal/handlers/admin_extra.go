@@ -644,7 +644,32 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 				lab = "Sans type"
 				href = fmt.Sprintf(`/categories/%s.html`, render.Esc(top))
 			}
-			fmt.Fprintf(&cards, `<li data-types-row data-top="%s" data-sub="%s"><a href="%s">%s</a><span class="vl">%d</span></li>`, render.Esc(top), render.Esc(s.sub), href, render.Esc(lab), s.n)
+			var dstOpts strings.Builder
+			for _, o := range byTop[top] {
+				if o.sub == s.sub {
+					continue
+				}
+				olab := o.sub
+				if olab == "" {
+					olab = "Sans type"
+				}
+				fmt.Fprintf(&dstOpts, `<option value="%s|%s">%s</option>`, render.Esc(top), render.Esc(o.sub), render.Esc(olab))
+			}
+			fmt.Fprintf(&cards, `<li data-types-row data-top="%s" data-sub="%s"><a href="%s">%s</a><span class="vl">%d</span>`+
+				`<details class="mx-type-menu" data-types-menu><summary title="Actions">⋯</summary><div class="mx-type-menu-list">`+
+				`<button type="button" data-types-act="renommer">Renommer</button>`+
+				`<button type="button" data-types-act="ajouter">Ajouter</button>`+
+				`<details class="mx-type-fuse"><summary>Fusionner…</summary>`+
+				`<form class="mx-form" method="post"><input type="hidden" name="csrf" value="%s"><input type="hidden" name="action" value="fusionner"><input type="hidden" name="src" value="%s|%s">`+
+				`<label>Vers <select name="dst">%s</select></label><button class="mx-btn primary" data-mx-confirm="Fusionner « %s » vers la cible ? Irréversible.">Fusionner</button></form></details>`+
+				`<a href="/admin/produits?cat=%s">Voir les produits</a>`+
+				`<form class="mx-form" method="post"><input type="hidden" name="csrf" value="%s"><input type="hidden" name="action" value="supprimer"><input type="hidden" name="top" value="%s"><input type="hidden" name="sub" value="%s">`+
+				`<button data-mx-confirm="Supprimer définitivement ce type ?">Supprimer</button></form>`+
+				`</div></details></li>`,
+				render.Esc(top), render.Esc(s.sub), href, render.Esc(lab), s.n,
+				a.adminCSRF(), render.Esc(top), render.Esc(s.sub), dstOpts.String(), render.Esc(lab),
+				render.Esc(top),
+				a.adminCSRF(), render.Esc(top), render.Esc(s.sub))
 		}
 		cards.WriteString(`</ul></section>`)
 	}
