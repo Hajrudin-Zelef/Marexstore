@@ -174,3 +174,78 @@ func TestAdminTypesRenduMenu(t *testing.T) {
 		}
 	}
 }
+
+// Fusion depuis la carte (même moteur que le legacy) : DB + store + FTS.
+func TestAdminTypesFusionneDepuisCarte(t *testing.T) {
+	app, database := testAppDesign(t)
+	for _, q := range []string{
+		`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a1','A1','t1','x')`,
+		`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a2','A2','t1','x')`,
+		`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('b1','B1','t1','y')`,
+	} {
+		if _, err := database.Exec(q); err != nil {
+			t.Fatal(err)
+		}
+	}
+	v := url.Values{}
+	v.Set("csrf", app.adminCSRF())
+	v.Set("action", "fusionner")
+	v.Set("src", "t1|x")
+	v.Set("dst", "t1|y")
+	req := httptest.NewRequest(http.MethodPost, "/admin/types", strings.NewReader(v.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminTypes(rec, req)
+	if rec.Code != http.StatusSeeOther || !strings.Contains(rec.Header().Get("Location"), "msg=") {
+		t.Fatalf("fusion carte : %d %q, attendu 303 msg=", rec.Code, rec.Header().Get("Location"))
+	}
+	var ny int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top='t1' AND live_sub='y'`).Scan(&ny)
+	if ny != 3 {
+		t.Fatalf("fusion carte : y=%d, attendu 3", ny)
+	}
+	if p := app.Store.BySlug["a1"]; p == nil || p.LiveSub != "y" {
+		t.Fatal("store périmé après fusion carte")
+	}
+}
+
+// Supprimer : vide OK (msg + ligne partie), non vide refusé (err + intact).
+func TestAdminTypesSupprimeVideEtRefuseNonVide(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO products(slug,nom,live_top,live_sub) VALUES('a1','A1','t1','x')`); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := database.Exec(`INSERT INTO declared_types(top, sub) VALUES('t1','z')`); err != nil {
+		t.Fatal(err)
+	}
+	post := func(top, sub string) string {
+		v := url.Values{}
+		v.Set("csrf", app.adminCSRF())
+		v.Set("action", "supprimer")
+		v.Set("top", top)
+		v.Set("sub", sub)
+		req := httptest.NewRequest(http.MethodPost, "/admin/types", strings.NewReader(v.Encode()))
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		req.SetBasicAuth("admin", "test1234")
+		rec := httptest.NewRecorder()
+		app.AdminTypes(rec, req)
+		return rec.Header().Get("Location")
+	}
+	if loc := post("t1", "x"); !strings.Contains(loc, "err=") {
+		t.Fatalf("supprimer non vide : %q, attendu err=", loc)
+	}
+	if loc := post("t1", "z"); !strings.Contains(loc, "msg=") {
+		t.Fatalf("supprimer vide : %q, attendu msg=", loc)
+	}
+	var n int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM declared_types WHERE top='t1' AND sub='z'`).Scan(&n)
+	if n != 0 {
+		t.Fatal("type vide toujours déclaré après suppression")
+	}
+	var nx int
+	_ = database.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top='t1' AND live_sub='x'`).Scan(&nx)
+	if nx != 1 {
+		t.Fatal("type non vide touché par la suppression")
+	}
+}

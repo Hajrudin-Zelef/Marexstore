@@ -428,6 +428,42 @@ func splitType(v string) (string, string) {
 	return "", v
 }
 
+// fuseTypes : déplace les produits live_sub src→dst sous srcTop, en
+// transaction (rollback complet en cas d'erreur). La source déclarée est
+// retirée (elle serait vide et fantôme). Retourne les slugs déplacés.
+func (a *App) fuseTypes(srcTop, srcSub, dstSub string) ([]string, error) {
+	tx, err := a.DB.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+	res, err := tx.Exec(`UPDATE products SET live_sub=? WHERE live_top=? AND live_sub=?`, dstSub, srcTop, srcSub)
+	if err != nil {
+		return nil, err
+	}
+	if n, _ := res.RowsAffected(); n == 0 {
+		return nil, nil
+	}
+	var moved []string
+	rows, err := tx.Query(`SELECT slug FROM products WHERE live_top=? AND live_sub=?`, srcTop, dstSub)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var s string
+		_ = rows.Scan(&s)
+		moved = append(moved, s)
+	}
+	rows.Close()
+	if _, err := tx.Exec(`DELETE FROM declared_types WHERE top=? AND sub=?`, srcTop, srcSub); err != nil {
+		return nil, err
+	}
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+	return moved, nil
+}
+
 // adminTypesAction : gestion des catégories (créer/renommer/fusionner/
 // supprimer/creer_top). Chaque succès : reload + audit + msg ; chaque
 // échec : err honnête, rien à moitié appliqué.
@@ -503,6 +539,54 @@ func (a *App) adminTypesAction(w http.ResponseWriter, r *http.Request, act strin
 		a.reload()
 		a.auditAdmin(r, "types.renommer", top+"|"+ancien+" -> "+nouveau)
 		http.Redirect(w, r, "/admin/types?msg=Cat%C3%A9gorie+renomm%C3%A9e", http.StatusSeeOther)
+	case "fusionner":
+		srcTop, srcSub := splitType(strings.TrimSpace(r.FormValue("src")))
+		_, dstSub := splitType(strings.TrimSpace(r.FormValue("dst")))
+		dstTop, _ := splitType(strings.TrimSpace(r.FormValue("dst")))
+		if srcTop == "" || srcSub == "" || dstSub == "" || (srcTop == dstTop && srcSub == dstSub) {
+			http.Redirect(w, r, "/admin/types?err=Fusion+impossible", http.StatusSeeOther)
+			return
+		}
+		moved, err := a.fuseTypes(srcTop, srcSub, dstSub)
+		if err != nil {
+			http.Redirect(w, r, "/admin/types?err=Fusion+impossible", http.StatusSeeOther)
+			return
+		}
+		if len(moved) == 0 {
+			http.Redirect(w, r, "/admin/types?err=Rien+%C3%A0+fusionner+(type+source+vide)", http.StatusSeeOther)
+			return
+		}
+		for _, s := range moved {
+			db.SyncFTS(a.DB, s)
+		}
+		a.reload()
+		a.auditAdmin(r, "types.fusionner", srcTop+"|"+srcSub+" -> "+dstSub)
+		http.Redirect(w, r, "/admin/types?msg=Types+fusionn%C3%A9s", http.StatusSeeOther)
+	case "supprimer":
+		top := strings.TrimSpace(r.FormValue("top"))
+		sub := strings.TrimSpace(r.FormValue("sub"))
+		if top == "" || sub == "" || strings.Contains(top, "|") || strings.Contains(sub, "|") {
+			http.Redirect(w, r, "/admin/types?err=Suppression+impossible", http.StatusSeeOther)
+			return
+		}
+		var nprod int
+		_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE live_top=? AND live_sub=?`, top, sub).Scan(&nprod)
+		if nprod > 0 {
+			http.Redirect(w, r, "/admin/types?err=Type+non+vide+("+fmt.Sprint(nprod)+"+produit(s)+%3A+fusionner+d%27abord)", http.StatusSeeOther)
+			return
+		}
+		res, err := a.DB.Exec(`DELETE FROM declared_types WHERE top=? AND sub=?`, top, sub)
+		if err != nil {
+			http.Redirect(w, r, "/admin/types?err=Suppression+impossible", http.StatusSeeOther)
+			return
+		}
+		if n, _ := res.RowsAffected(); n == 0 {
+			http.Redirect(w, r, "/admin/types?err=Type+introuvable", http.StatusSeeOther)
+			return
+		}
+		a.reload()
+		a.auditAdmin(r, "types.supprimer", top+"|"+sub)
+		http.Redirect(w, r, "/admin/types?msg=Type+supprim%C3%A9", http.StatusSeeOther)
 	default:
 		http.Redirect(w, r, "/admin/types?err=Action+inconnue", http.StatusSeeOther)
 	}
@@ -527,36 +611,27 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 		}
 		// Les selects portent "top|sub" : le store se déduit de la source
 		// côté serveur (aucun JS inline, doctrine CSP script-src 'self').
+		// Même moteur que l'action "fusionner" (transaction + declared).
 		srcTop, srcSub := splitType(r.FormValue("src"))
 		dstTop, dstSub := splitType(r.FormValue("dst"))
 		identique := srcTop == dstTop && srcSub == dstSub
 		if srcTop != "" && srcSub != "" && dstSub != "" && !identique {
-			res, err := a.DB.Exec(`UPDATE products SET live_sub=? WHERE live_top=? AND live_sub=?`, dstSub, srcTop, srcSub)
-			if err == nil {
-				if n, _ := res.RowsAffected(); n > 0 {
-					// Collecter avant SyncFTS : la DB n'a qu'une connexion
-					// (MaxOpenConns 1), un Exec pendant des rows ouvertes
-					// bloque pour toujours.
-					var fusionnes []string
-					if slugs, qerr := a.DB.Query(`SELECT slug FROM products WHERE live_top=? AND live_sub=?`, srcTop, dstSub); qerr == nil && slugs != nil {
-						for slugs.Next() {
-							var s string
-							_ = slugs.Scan(&s)
-							fusionnes = append(fusionnes, s)
-						}
-						slugs.Close()
-					}
-					for _, s := range fusionnes {
-						db.SyncFTS(a.DB, s)
-					}
-					a.reload()
-					a.auditAdmin(r, "types.fusionner", srcTop+"|"+srcSub+" -> "+dstSub)
-					http.Redirect(w, r, "/admin/types?msg=Types+fusionn%C3%A9s", http.StatusSeeOther)
-					return
-				}
-				http.Redirect(w, r, "/admin/types?err=Rien+%C3%A0+fusionner+(type+source+vide)", http.StatusSeeOther)
+			moved, err := a.fuseTypes(srcTop, srcSub, dstSub)
+			if err != nil {
+				http.Redirect(w, r, "/admin/types?err=Fusion+impossible", http.StatusSeeOther)
 				return
 			}
+			if len(moved) > 0 {
+				for _, s := range moved {
+					db.SyncFTS(a.DB, s)
+				}
+				a.reload()
+				a.auditAdmin(r, "types.fusionner", srcTop+"|"+srcSub+" -> "+dstSub)
+				http.Redirect(w, r, "/admin/types?msg=Types+fusionn%C3%A9s", http.StatusSeeOther)
+				return
+			}
+			http.Redirect(w, r, "/admin/types?err=Rien+%C3%A0+fusionner+(type+source+vide)", http.StatusSeeOther)
+			return
 		}
 		http.Redirect(w, r, "/admin/types?err=Fusion+impossible", http.StatusSeeOther)
 		return
@@ -611,12 +686,6 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 			nTypes++
 		}
 		dr.Close()
-	}
-	var opts strings.Builder
-	for _, top := range tops {
-		for _, s := range byTop[top] {
-			fmt.Fprintf(&opts, `<option value="%s|%s">%s › %s</option>`, render.Esc(top), render.Esc(s.sub), render.Esc(top), render.Esc(s.sub))
-		}
 	}
 	// Cartes par top (libellé français, total, liste des types avec compteurs).
 	var cards strings.Builder
@@ -680,13 +749,7 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 			miniStat("/admin/produits", "Produits", fmt.Sprint(nProd), "#6fa82e")+
 			miniStat("/admin/types", "Plus gros top", fmt.Sprint(bigN)+" · "+render.Esc(bigLab), "#dba617")+
 			`</div>
-<div class="mx-grid mx-types">`+cards.String()+`</div>
-<div class="mx-fsec" style="max-width:640px"><h3>Fusionner deux types</h3><form class="mx-form" method="post"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
-<div class="mx-fgrid"><label>De (sera vidé) <select name="src">`+opts.String()+`</select></label>
-<label>Vers <select name="dst">`+opts.String()+`</select></label></div>
-<div class="mx-form-actions"><button class="mx-btn primary">Fusionner</button></div>
-<p class="hint">Le store est déduit du type source (« top|sub »). Irréversible : les produits du type source rejoignent le type cible.</p>
-</form></div>`, r))
+<div class="mx-grid mx-types">`+cards.String()+`</div>`, r))
 }
 
 // AdminReglages : maintenance + WhatsApp (appliqué au redémarrage).
