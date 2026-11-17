@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path"
 	"path/filepath"
@@ -449,6 +450,57 @@ func (a *App) AdminStudioFile(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
+// ficheOptsFromQuery : bascules de l'onglet Fiche du Studio (?f_*=).
+// Absents = tout visible (rendu identique à la prod).
+func ficheOptsFromQuery(q url.Values) render.FicheOpts {
+	o := render.DefaultFicheOpts()
+	if q.Get("page") != "fiche" {
+		return o
+	}
+	boolOf := func(k string) (bool, bool) {
+		switch q.Get(k) {
+		case "1":
+			return true, true
+		case "0":
+			return false, true
+		}
+		return false, false
+	}
+	if v, ok := boolOf("f_specs"); ok {
+		o.Specs = v
+	}
+	if v, ok := boolOf("f_sim"); ok {
+		o.Similar = v
+	}
+	if v, ok := boolOf("f_avis"); ok {
+		o.Avis = v
+	}
+	if v, ok := boolOf("f_conso"); ok {
+		o.Conso = v
+	}
+	if v, ok := boolOf("f_wa"); ok {
+		o.Wa = v
+	}
+	if v, ok := boolOf("f_devis"); ok {
+		o.Devis = v
+	}
+	if v := strings.TrimSpace(q.Get("f_simn")); v != "" {
+		if n, err := strconv.Atoi(v); err == nil && n > 0 && n <= 24 {
+			o.SimilarNb = n
+		}
+	}
+	if q.Get("f_gal") == "vignettes" {
+		o.Gallery = "vignettes"
+	}
+	if v := strings.TrimSpace(q.Get("f_tdevis")); v != "" {
+		o.BtnDevis = v
+	}
+	if v := strings.TrimSpace(q.Get("f_twa")); v != "" {
+		o.BtnWa = v
+	}
+	return o
+}
+
 // AdminDesignPreview : rendu de la vraie page (brouillon POST / query string
 // ou thème live en GET). Phase A1 : la page complète (en-tête + corps + pied
 // de page) avec le thème brouillon, pour l'aperçu réel du Studio.
@@ -480,7 +532,7 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		title = p.Nom + " — aperçu"
-		body = render.HeaderTheme(a.Store, "", "", th) + render.FicheBody(a.Store, p) + "\n" + render.Footer(a.Store, "")
+		body = render.HeaderTheme(a.Store, "", "", th) + render.FicheBodyOpts(a.Store, p, ficheOptsFromQuery(q)) + "\n" + render.Footer(a.Store, "")
 	default: // accueil (IndexBodyTheme inclut déjà en-tête + pied de page)
 		title = "Accueil — aperçu"
 		body = render.IndexBodyTheme(a.Store, a.Recents, th)

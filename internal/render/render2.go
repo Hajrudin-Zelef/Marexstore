@@ -540,6 +540,12 @@ func SpecVal(v string) string {
 }
 
 func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
+	return FicheBodyOpts(s, p, DefaultFicheOpts())
+}
+
+// FicheBodyOpts : fiche produit avec bascules d'aperçu (onglet Fiche du
+// Studio). DefaultFicheOpts() = rendu historique byte-identique (parité).
+func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string {
 	var pf strings.Builder
 	for _, x := range p.PointsForts {
 		fmt.Fprintf(&pf, "<li>%s</li>", esc(x))
@@ -553,7 +559,7 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 		fmt.Fprintf(&specs, "<tr><td>%s</td><td>%s</td></tr>", esc(sp.Label), SpecVal(sp.Valeur))
 	}
 	var consHTML strings.Builder
-	if len(p.Consommables) > 0 {
+	if o.Conso && len(p.Consommables) > 0 {
 		var cards strings.Builder
 		for _, c := range p.Consommables {
 			fmt.Fprintf(&cards, `<div class="card"><div class="cat">Consommable</div><h3>%s</h3>
@@ -562,21 +568,29 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 		consHTML.WriteString("<h2>Consommables</h2><div class='catalog view-grid'>" + cards.String() + "</div>")
 	}
 	var sim strings.Builder
+	simMax := 3
+	if o.SimilarNb > 0 {
+		simMax = o.SimilarNb
+	}
 	n := 0
 	for _, g := range s.Products {
 		if g.Main == p.Main && g.Slug != p.Slug {
 			sim.WriteString(Card(s, g, "../", "main_slug"))
 			n++
-			if n >= 3 {
+			if n >= simMax {
 				break
 			}
 		}
+	}
+	simHTML := ""
+	if o.Similar {
+		simHTML = `<div class="sec"><h2>Produits similaires</h2><div class="catalog view-grid">` + sim.String() + `</div></div>`
 	}
 	gal := `<div class="gal">` + `<div class="noimg">Photo à venir</div>` + `</div>`
 	if p.Image != "" {
 		gal = `<div class="gal">` + ImgTag(p, "../") + `</div>`
 	}
-	if len(p.Gallery()) > 1 {
+	if o.Gallery != "vignettes" && len(p.Gallery()) > 1 {
 		gal = GalCarousel(p, "../")
 	}
 	stock := "Disponible"
@@ -595,6 +609,29 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 	if refFab == "" {
 		refFab = "—"
 	}
+	btnDevis, btnWa := "Demander un devis", "Commander sur WhatsApp"
+	if o.BtnDevis != "" {
+		btnDevis = o.BtnDevis
+	}
+	if o.BtnWa != "" {
+		btnWa = o.BtnWa
+	}
+	devisBtn, waBtn := "", ""
+	if o.Devis {
+		devisBtn = `<a class="btn" href="` + DevisLink(p) + `">` + esc(btnDevis) + `</a>`
+	}
+	if o.Wa {
+		waBtn = `<a class="btn wa" href="` + WaLink(p) + `">` + esc(btnWa) + `</a>`
+	}
+	specsHTML := ""
+	if o.Specs {
+		specsHTML = `<h2>Caractéristiques</h2><table class="specs">` + specs.String() + `</table>`
+	}
+	avisBtn, avisPane := "", ""
+	if o.Avis {
+		avisBtn = `<button type="button" data-tab="3">Avis (0)</button>`
+		avisPane = `<div data-pane="3" hidden><h2>Avis</h2><p>Aucun avis pour le moment.</p></div>`
+	}
 	body := `
 <div class="wrap"><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › <a href="../categories/` + esc(catalog.MainSlug[p.Main]) + `.html">` + esc(p.Main) + `</a> › ` + esc(p.Sub) + ` › ` + esc(p.Nom) + `</div>
 <div><div class="pdetail" data-reveal>
@@ -606,19 +643,19 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 <div class="pr">` + PrixHTML(p) + `</div>
 <div class="qty">Quantité <input id="qty" type="number" value="1" min="1"> <span style="color:#666">` + esc(stock) + `</span></div>
 ` + addBtn + `
-<a class="btn" href="` + DevisLink(p) + `">Demander un devis</a>
-<a class="btn wa" href="` + WaLink(p) + `">Commander sur WhatsApp</a>
+` + devisBtn + `
+` + waBtn + `
 <div style="margin-top:12px;color:#666;font-size:13px">Réf. ` + esc(nonVide(p.RefFabricant, p.Ref)) + ` · Marque : ` + esc(marque) + `</div>
 </div></div>
 <div class="ptabs" data-reveal data-tabs>
 <div class="tabs"><button type="button" class="on" data-tab="1">Description</button>
-<button type="button" data-tab="2">Marque</button><button type="button" data-tab="3">Avis (0)</button></div>
+<button type="button" data-tab="2">Marque</button>` + avisBtn + `</div>
 <div data-pane="1"><h2>Description</h2><p class="desc-text">` + esc(p.Description) + `</p>` + pfHTML + `
-<h2>Caractéristiques</h2><table class="specs">` + specs.String() + `</table>` + consHTML.String() + `</div>
+` + specsHTML + consHTML.String() + `</div>
 <div data-pane="2" hidden><h2>Marque</h2><p>` + esc(nonVide(p.Marque, "Non précisée")) + ` — Référence fabricant : ` + esc(refFab) + `.</p></div>
-<div data-pane="3" hidden><h2>Avis</h2><p>Aucun avis pour le moment.</p></div>
+` + avisPane + `
 </div>
-<div class="sec"><h2>Produits similaires</h2><div class="catalog view-grid">` + sim.String() + `</div></div>
+` + simHTML + `
 </div></div>`
 	return body
 }

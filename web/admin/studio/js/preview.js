@@ -51,6 +51,20 @@ function previewURL(){
   if(currentTab==='boutique'||currentTab==='panier')page='boutique';
   else if(currentTab==='fiche')page='fiche';
   q.set('page',page);
+  if(page==='fiche'){
+    // L'aperçu réel (serveur) doit suivre les bascules de l'onglet Fiche :
+    // sans ces params, l'URL ne change pas et l'iframe ne recharge jamais.
+    q.set('f_wa',fiche.showWa?'1':'0');
+    q.set('f_devis',fiche.showDevis?'1':'0');
+    q.set('f_specs',fiche.showSpecs?'1':'0');
+    q.set('f_sim',fiche.showSimilar?'1':'0');
+    q.set('f_avis',fiche.showAvis?'1':'0');
+    q.set('f_conso',fiche.showConso?'1':'0');
+    q.set('f_simn',fiche.similarNb);
+    q.set('f_gal',fiche.gallery);
+    q.set('f_tdevis',T('devis'));
+    q.set('f_twa',T('wa'));
+  }
   return '/admin/design/apercu?'+q.toString();
 }
 function renderPreview(){

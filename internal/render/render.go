@@ -47,6 +47,20 @@ func ImgTag(p *catalog.RawProduct, prefix string) string {
 	return `<div class="noimg">Photo à venir</div>`
 }
 
+// FicheOpts : bascules d'aperçu du Studio (onglet Fiche). Par défaut tout
+// est visible et le rendu est byte-identique à l'historique (parité).
+type FicheOpts struct {
+	Specs, Similar, Avis, Conso, Wa, Devis bool
+	SimilarNb                              int    // 0 = défaut (3)
+	Gallery                                string // "" ou "grande" = carrousel ; "vignettes" = photo simple
+	BtnDevis, BtnWa                        string // "" = libellés par défaut
+}
+
+// DefaultFicheOpts : tout visible, valeurs de production.
+func DefaultFicheOpts() FicheOpts {
+	return FicheOpts{Specs: true, Similar: true, Avis: true, Conso: true, Wa: true, Devis: true}
+}
+
 // GalCarousel : carrousel de la fiche produit (principale + extras, max 5) :
 // flèches avant/arrière + miniatures cliquables. Une seule photo = ImgTag
 // classique (la parité v3.25 reste intacte).

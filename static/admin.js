@@ -272,12 +272,28 @@
   });
 })();
 
+// Flèches de repliage des modules : injectées dans chaque titre de module
+// (.mx-postbox, .mx-fsec, .mx-card, carte de type), le handler data-mx-toggle
+// existant replie la carte (CSS .closed). Sans JS : tout reste déplié.
+(function () {
+  document.querySelectorAll('.mx-postbox > h2, .mx-fsec > h3, .mx-card > h2, .mx-type-head > h2').forEach(function (h) {
+    if (h.querySelector('[data-mx-toggle]')) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'mx-fold';
+    b.setAttribute('data-mx-toggle', '');
+    b.setAttribute('aria-label', 'Replier / déplier');
+    b.textContent = '▾';
+    h.appendChild(b);
+  });
+})();
+
 // Postboxes repliables + confirmations destructives (dupliquer, supprimer).
 (function () {
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-mx-toggle]');
     if (t) {
-      var box = t.closest('.mx-postbox');
+      var box = t.closest('.mx-postbox,.mx-fsec,.mx-card,.mx-type');
       if (box) box.classList.toggle('closed');
       return;
     }

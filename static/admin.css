@@ -334,3 +334,13 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-type-addtop summary{list-style:none;cursor:pointer;display:inline-block}
 .mx-type-addtop summary::-webkit-details-marker{display:none}
 .mx-type-addtop form{margin-top:8px;max-width:420px}
+
+/* ---------- Modules repliables : flèche dans chaque titre ---------- */
+.mx-postbox > h2,.mx-fsec > h3,.mx-type-head > h2{display:flex;align-items:center;gap:8px}
+.mx-fold{margin-left:auto;flex:none;width:28px;height:28px;border-radius:8px;border:1px solid var(--mx-border);background:#fff;color:var(--mx-muted);font-size:15px;line-height:1;cursor:pointer;padding:0}
+.mx-fold:hover{color:var(--mx-brand);border-color:var(--mx-lime-dark)}
+.mx-postbox.closed > .in{display:none}
+.mx-fsec.closed > :not(h3){display:none}
+.mx-card.closed > :not(h2):not(.mx-type-head){display:none}
+.mx-type.closed > :not(.mx-type-head){display:none}
+.closed .mx-fold{transform:rotate(-90deg)}
