@@ -374,7 +374,7 @@ function publishStudio(){
   fetch(window.location.origin + '/admin/api/design',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json','X-CSRF':window.__STUDIO_CSRF__||''},body:JSON.stringify(designJSON())})
     .then(r=>{if(!r.ok)return r.text().then(t=>{throw new Error('HTTP '+r.status+' — '+t.slice(0,120))});return r.json()})
     .then(d=>{
-      pubSnap=snap(); b.classList.remove('busy'); b.innerHTML=ic('check-circle')+'<span class="t">Publié</span>';
+      if(d&&d.version)window.__STUDIO_DESIGN_VERSION__=d.version; pubSnap=snap(); b.classList.remove('busy'); b.innerHTML=ic('check-circle')+'<span class="t">Publié</span>';
       renderPreview(); toast('✅ Studio publié ! Le site est à jour (design v'+(d.version||'?')+', thème v'+(d.theme_version||'?')+').');
       setTimeout(()=>{b.innerHTML=ic('upload')+'<span class="t">Publier</span>'},1800);
       loadServerVersionsV13();

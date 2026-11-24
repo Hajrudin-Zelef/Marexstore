@@ -412,7 +412,7 @@ const snap=()=>JSON.stringify({front,rows,shop,fiche,panier,Tx,txtPages,menu,seo
 function updateStatus(){
   if(!BASE||restoring)return;
   const dirty=snap()!==pubSnap;
-  $('#status').classList.toggle('dirty',dirty); $('#statusTxt').textContent=dirty?'Brouillon — non publié':'Publié';
+  $('#status').classList.toggle('dirty',dirty); $('#statusTxt').textContent=dirty?'Brouillon — non publié':((window.__STUDIO_DESIGN_VERSION__|0)>0?'Publié':'Aucune version publiée');
   clearTimeout(histTimer); histTimer=setTimeout(()=>{pushHist();histBtns()},350);
 }
 

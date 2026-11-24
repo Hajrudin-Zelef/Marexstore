@@ -420,3 +420,31 @@ svg.e{width:1em;height:1em;vertical-align:-.14em;stroke-width:1.6}
 .acc-sec .brow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 12px;font-size:13px}
 .acc-sec .brow input{accent-color:var(--accent);width:18px;height:18px}
 .acc-title{font-weight:700;font-size:13px;margin:14px 0 6px}
+
+/* ===== Premium v17 : pastilles de couleur ===== */
+#editorPanel input[type="color"]{-webkit-appearance:none;appearance:none;width:46px;height:38px;padding:3px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:border-color .15s}
+#editorPanel input[type="color"]::-webkit-color-swatch-wrapper{padding:0}
+#editorPanel input[type="color"]::-webkit-color-swatch{border:0;border-radius:7px}
+#editorPanel input[type="color"]::-moz-color-swatch{border:0;border-radius:7px}
+#editorPanel input[type="color"]:hover{border-color:var(--accent)}
+#editorPanel input[type="color"]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== Premium v17 : sections, recherche, lisibilité ===== */
+.px-hide{display:none!important}
+.px-searchwrap{margin-bottom:12px}
+.px-search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink)}
+.px-search:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.px-a11y{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.4;margin-bottom:12px}
+.px-a11y:empty{display:none}
+.px-a11y.ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.px-a11y.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.px-collapsible>label:first-child{cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.px-collapsible>label:first-child::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .15s;margin-right:4px}
+.px-collapsible.px-collapsed>label:first-child::after{transform:rotate(-45deg)}
+.px-collapsible.px-collapsed>:not(:first-child){display:none!important}
+.px-collapsible>label:first-child:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.px-hex{font:600 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);margin-left:8px;vertical-align:middle}
+.px-contrast{font-size:12.5px;font-weight:600;margin:6px 0 10px}
+.px-contrast:empty{display:none}
+.px-contrast.ok{color:#047857}
+.px-contrast.warn{color:#b45309}

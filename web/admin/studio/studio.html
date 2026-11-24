@@ -50,11 +50,11 @@
     <!-- ============ ONGLET : FRONT ============ -->
     <div id="tab-front">
       <h2>Front — personnaliser le site</h2>
-      <p class="hint">Le cœur du Studio : le design de tout le site (boutique, fiches, panier…), <b>en interface</b> pour les juniors ou <b>en code</b> pour les seniors. L'aperçu à droite est le vrai site — il se met à jour en direct.</p>
+      <p class="hint">Le cœur du Studio : le design de tout le site (boutique, fiches, panier…), <b>en mode simple</b> (cliquer, choisir) ou <b>en mode avancé</b> (code). L'aperçu à droite est le vrai site — il se met à jour en direct.</p>
 
       <div class="mode-toggle" id="frontMode">
-        <button data-mode="ui" class="active" onclick="setFrontMode('ui')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>Interface (UI)<small>cliquer, choisir, voir</small></button>
-        <button data-mode="code" onclick="setFrontMode('code')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Code<small>fichiers + éditeur, pour les seniors</small></button>
+        <button data-mode="ui" class="active" onclick="setFrontMode('ui')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>Simple<small>cliquer, choisir, voir</small></button>
+        <button data-mode="code" onclick="setFrontMode('code')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>Avancé<small>fichiers + éditeur de code</small></button>
       </div>
 
       <!-- ---- MODE UI ---- -->
@@ -544,5 +544,6 @@
 <script src="/admin/studio/js/view.js?v=6"></script>
 <script src="/admin/studio/js/preview.js?v=6"></script>
 <script src="/admin/studio/js/controller.js?v=8"></script>
+<script src="/admin/studio/js/premium.js?v=1"></script>
 </body>
 </html>
