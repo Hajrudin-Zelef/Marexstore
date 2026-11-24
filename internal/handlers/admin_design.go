@@ -452,6 +452,17 @@ func (a *App) AdminStudioFile(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
 	case ".html":
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	// Logo et visuels du Studio (assets statiques, sans exécution).
+	case ".png":
+		w.Header().Set("Content-Type", "image/png")
+	case ".jpg", ".jpeg":
+		w.Header().Set("Content-Type", "image/jpeg")
+	case ".webp":
+		w.Header().Set("Content-Type", "image/webp")
+	case ".svg":
+		w.Header().Set("Content-Type", "image/svg+xml")
+	case ".ico":
+		w.Header().Set("Content-Type", "image/x-icon")
 	default:
 		http.NotFound(w, r)
 		return
