@@ -1123,10 +1123,66 @@
       loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
         var fd = new FormData(loginForm);
-        var a = loadAcct();
+        var email = (fd.get('email') || '').trim();
+        var pw = fd.get('password') || '';
         var err = document.querySelector('[data-login-error]');
-        if (a && a.email === (fd.get('email') || '').trim() && a.password === (fd.get('password') || '')) { saveSession(true); renderAcct(); closeAuth(); showToast('Bonjour ' + (a.prenom || '') + ' !'); }
-        else if (err) err.hidden = false;
+        if (err) err.hidden = true;
+        function showErr() { if (err) err.hidden = false; }
+        // Le serveur décide quand il est joignable ; le compte local ne
+        // sert qu'en repli hors-ligne (jamais un refus serveur).
+        function localLogin() {
+          var a = loadAcct();
+          if (a && (a.email || '').trim().toLowerCase() === email.toLowerCase() && a.password === pw) {
+            saveSession(true); renderAcct(); closeAuth(); showToast('Bonjour ' + (a.prenom || '') + ' !');
+            return true;
+          }
+          return false;
+        }
+        function pageCsrf() {
+          var m = document.querySelector('meta[name="csrf-token"]');
+          if (m && m.getAttribute('content')) return m.getAttribute('content');
+          var h = loginForm.querySelector('input[name="csrf"]');
+          return h ? h.value : '';
+        }
+        function doLogin(csrfv) {
+          var body = new FormData();
+          body.append('csrf', csrfv);
+          body.append('email', email);
+          body.append('password', pw);
+          return fetch('/auth/connexion', { method: 'POST', body: body, credentials: 'same-origin', headers: { 'X-Mirror': '1' } }).then(function (r) {
+            if (r.status === 403) return { state: 'retry' };
+            if (!r.ok) return { state: 'bad' };
+            return r.json().then(function (j) {
+              if (j && (j.ok === '1' || j.ok === true)) return { state: 'ok', nom: j.nom || '' };
+              return { state: 'bad' };
+            }, function () { return { state: 'ok', nom: '' }; });
+          }, function () { return { state: 'offline' }; });
+        }
+        function done(res) {
+          if (res.state === 'retry') {
+            fetch('/api/csrf', { credentials: 'same-origin' }).then(function (r) { return r.json(); }, function () { return {}; }).then(function (j) {
+              var fresh = (j && j.csrf) || pageCsrf();
+              var m = document.querySelector('meta[name="csrf-token"]');
+              if (m && fresh) m.setAttribute('content', fresh);
+              doLogin(fresh).then(done);
+            });
+            return;
+          }
+          if (res.state === 'ok') {
+            var prev = loadAcct();
+            var acct = (prev && (prev.email || '').trim().toLowerCase() === email.toLowerCase()) ? prev :
+              { civilite: 'M.', prenom: '', nom: '', numero: '', adresses: [] };
+            acct.email = email.toLowerCase();
+            acct.password = pw;
+            if (res.nom && !acct.nom) acct.nom = res.nom;
+            saveAcct(acct);
+            saveSession(true); renderAcct(); closeAuth(); showToast('Bonjour ' + (acct.prenom || '') + ' !');
+            return;
+          }
+          if (res.state === 'offline' && localLogin()) return;
+          showErr();
+        }
+        doLogin(pageCsrf()).then(done);
       });
     }
     document.querySelectorAll('[data-logout]').forEach(function (b) {

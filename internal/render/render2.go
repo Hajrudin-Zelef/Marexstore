@@ -406,7 +406,7 @@ func Footer(s *catalog.Store, prefix string) string {
 ` + cols + `
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=341"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
+<script src="` + prefix + `assets/app.js?v=342"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=1" defer></script>`
 }
 
 // ---------- Document ----------
