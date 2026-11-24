@@ -213,7 +213,51 @@
     input.addEventListener('input', applySearch);
   }
 
-  function refresh() { decorateColors(); annContrast(); a11yBox(); }
+  /* 8. Champs de texte : dire la vérité. Le site ne rend que ces clés
+     (relevées dans internal/render : d.Text(...) + Tx.bandeau) ; toutes les
+     autres n'existent que dans la maquette. Sans ce marquage, l'interface
+     promet des réglages sans effet. */
+  var LIVE_TX = {
+    bienvenue: 1, recherche_ph: 1, rechercher: 1, toutes_cat: 1, suivi_commande: 1,
+    inscription: 1, boutique_ico: 1, compte_ico: 1, panier_ico: 1, prefs_ico: 1,
+    newsletter_titre: 1, newsletter_texte: 1, newsletter_ph: 1, newsletter_btn: 1,
+    copyright: 1, bandeau: 1
+  };
+
+  function markTextFields() {
+    var inputs = panel.querySelectorAll('input[data-k]');
+    for (var i = 0; i < inputs.length; i++) {
+      var inp = inputs[i];
+      var k = inp.getAttribute('data-k') || '';
+      if (!k) continue;
+      var row = inp.closest('.txt-item') || inp.closest('label') || inp.parentElement;
+      if (!row || row.querySelector('.px-tx')) continue;
+      var live = !!LIVE_TX[k];
+      var tag = document.createElement('span');
+      tag.className = 'px-tx ' + (live ? 'live' : 'proto');
+      tag.textContent = live ? 'publié' : 'aperçu';
+      tag.title = live
+        ? 'Ce texte est rendu par le site : l\'aperçu et la publication l\'appliquent.'
+        : 'Ce texte n\'existe que dans la maquette du Studio : le site ne l\'affiche pas encore.';
+      inp.insertAdjacentElement('afterend', tag);
+    }
+  }
+
+  function txSummary() {
+    var host = document.getElementById('txtList');
+    if (!host || document.getElementById('pxTxSummary')) return;
+    var n = host.querySelectorAll('.px-tx.live').length;
+    var tot = host.querySelectorAll('.px-tx').length;
+    if (!tot) return;
+    var p = document.createElement('p');
+    p.id = 'pxTxSummary';
+    p.className = 'hint px-tx-summary';
+    p.textContent = n + ' texte' + (n > 1 ? 's' : '') + ' réellement publié' + (n > 1 ? 's' : '') +
+      ' · ' + (tot - n) + ' libellé' + (tot - n > 1 ? 's' : '') + ' de maquette (aperçu seulement).';
+    host.parentNode.insertBefore(p, host);
+  }
+
+  function refresh() { decorateColors(); annContrast(); a11yBox(); markTextFields(); txSummary(); }
   function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 80); }
 
   function organize() {
