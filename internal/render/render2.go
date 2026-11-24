@@ -417,7 +417,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=336">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=337">
 <script src="` + prefix + `assets/theme.js?v=2"></script>
 ` + extraHead
 }

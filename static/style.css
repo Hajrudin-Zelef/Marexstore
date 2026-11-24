@@ -13,7 +13,7 @@ header.main{background:var(--surface);position:sticky;top:0;z-index:50;box-shado
 header.main .in{max-width:1200px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .logo{display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none}
 .logo img{height:56px;width:auto;display:block}
-.logo .store{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:3px;text-indent:3px;white-space:nowrap;text-transform:uppercase;color:var(--brand-dark)}
+.logo .store{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:3px;text-indent:3px;white-space:nowrap;text-transform:uppercase;color:#dc3545}
 .logo .store::before,.logo .store::after{content:"";width:18px;height:1px;background:var(--brand)}
 .search{flex:1;display:flex;min-width:260px;border:2px solid var(--brand);border-radius:999px;overflow:hidden;background:var(--surface)}
 .search select{border:0;padding:10px 8px;color:var(--text2);max-width:190px;background:var(--bg)}
@@ -584,7 +584,7 @@ body{background:var(--bg);color:var(--text)}
 [data-theme="dark"] .mega-rail button.on{background:#1d3a52}
 [data-theme="dark"] table.specs{background-image:none}
 [data-theme="dark"] .logo img{background:#fff;border-radius:8px;padding:4px 8px}
-[data-theme="dark"] .logo .store{color:#e8e8e8}
+[data-theme="dark"] .logo .store{color:#dc3545}
 [data-theme="dark"] .logo .store::before,[data-theme="dark"] .logo .store::after{background:#888}
 [data-theme="dark"] .f-range input[type=range]::-webkit-slider-runnable-track{background:#33475c}
 [data-theme="dark"] .f-range input[type=range]::-moz-range-track{background:#33475c}
