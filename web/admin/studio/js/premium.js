@@ -70,6 +70,84 @@
     var t = sec.firstElementChild;
     if (t) t.setAttribute('aria-expanded', on ? 'false' : 'true');
   }
+
+  /* 5. Scission du panneau « Style fin et identité » : identité (logo,
+     favicon, partage, mode sombre) séparée des formes (arrondis, ombres…).
+     Déplace des nœuds existants — les liaisons par id de bindV16Controls
+     survivent. Idempotent via data-px-split. */
+  function splitStylePanel() {
+    var panels = panel.querySelectorAll('.v16-feature-panel');
+    var src = null;
+    for (var i = 0; i < panels.length; i++) {
+      var l = panels[i].querySelector('label');
+      if (l && norm(l.textContent).indexOf('style fin') === 0) { src = panels[i]; break; }
+    }
+    if (!src || src.getAttribute('data-px-split')) return;
+    src.setAttribute('data-px-split', '1');
+    var kids = Array.prototype.slice.call(src.children);
+    var formes = [], identite = [], bucket = 'formes';
+    kids.forEach(function (c) {
+      var isLabel = c.tagName === 'LABEL' && !c.querySelector('input,select,textarea');
+      if (isLabel) {
+        var t = norm(c.textContent);
+        if (t.indexOf('identite') === 0 || t.indexOf('mode sombre') === 0) bucket = 'identite';
+        else if (t.indexOf('animations') === 0 || t.indexOf('formes') === 0 || t.indexOf('style fin') === 0) bucket = 'formes';
+      }
+      (bucket === 'identite' ? identite : formes).push(c);
+    });
+    var titreFormes = formes.shift();
+    if (titreFormes && titreFormes.tagName === 'LABEL') {
+      titreFormes.textContent = 'Formes et finitions';
+      formes.unshift(titreFormes);
+    } else if (titreFormes) {
+      formes.unshift(titreFormes);
+    }
+
+    var idPanel = document.createElement('section');
+    idPanel.className = 'field v16-feature-panel';
+    identite.forEach(function (c) { idPanel.appendChild(c); });
+
+    src.innerHTML = '';
+    formes.forEach(function (c) { src.appendChild(c); });
+    if (identite.length) src.parentNode.insertBefore(idPanel, src.nextSibling);
+  }
+
+  /* 6. Ordre logique : Thèmes → Identité → Couleurs → Typographie → Formes
+     → Bandeau → Badges → Textes. Idempotent : on ne touche au DOM que si
+     l'ordre réel diffère (premium.js observe le panneau, un déplacement
+     inutile relancerait l'observateur en boucle). */
+  function sectionWeight(el) {
+    var t = norm(el.textContent || '').trim();
+    var l = el.querySelector('label'), fl = l ? norm(l.textContent).trim() : '';
+    if (el.classList.contains('px-keep')) return 5;
+    if (el.classList.contains('v13-gallery')) return 10;
+    if (el.classList.contains('v16-feature-panel') && fl.indexOf('identite') === 0) return 20;
+    if (t.indexOf('couleur principale') === 0) return 30;
+    if (t.indexOf('fond du site') === 0) return 31;
+    if (t.indexOf('police') === 0) return 40;
+    if (t.indexOf('forme des boutons') === 0) return 50;
+    if (el.classList.contains('v16-feature-panel')) return 55;
+    if (el.classList.contains('v13-ann')) return 60;
+    if (t.indexOf('afficher le badge') === 0) return 70;
+    if (t.indexOf('textes de cette page') === 0) return 80;
+    return 90;
+  }
+
+  function orderSectionsPx() {
+    var host = document.getElementById('front-ui');
+    if (!host) return false;
+    var nodes = Array.prototype.slice.call(host.children);
+    var want = nodes.map(function (el, i) { return { el: el, w: sectionWeight(el), i: i }; })
+      .sort(function (a, b) { return a.w - b.w || a.i - b.i; });
+    var same = true;
+    for (var i = 0; i < want.length; i++) { if (nodes[i] !== want[i].el) { same = false; break; } }
+    if (same) return false;
+    want.forEach(function (x) { host.appendChild(x.el); });
+    return true;
+  }
+  window.orderSectionsPx = orderSectionsPx;
+
+  /* 7. Sections repliables (après la scission, pour couvrir les 2 panneaux) */
   function makeCollapsible() {
     var host = document.getElementById('front-ui');
     if (!host) return;
@@ -90,13 +168,13 @@
         t.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') toggle(e);
         });
-        setCollapsed(s, norm(t.textContent).indexOf('style fin') === 0);
+        var st = norm(t.textContent);
+        setCollapsed(s, st.indexOf('style fin') === 0 || st.indexOf('formes') === 0);
       })(secs[i]);
     }
   }
 
-  /* 5. Recherche de réglage */
-  function applySearch() {
+  /* 5. Recherche de réglage */  function applySearch() {
     var host = document.getElementById('front-ui'), inp = document.getElementById('pxSearch');
     if (!host || !inp) return;
     var q = norm(inp.value).trim(), shown = 0, kids = host.children;
@@ -138,16 +216,22 @@
   function refresh() { decorateColors(); annContrast(); a11yBox(); }
   function schedule() { clearTimeout(timer); timer = setTimeout(refresh, 80); }
 
+  function organize() {
+    splitStylePanel();
+    orderSectionsPx();
+    makeCollapsible();
+  }
+
   function init() {
     buildTop();
-    makeCollapsible();
+    organize();
     refresh();
     ['input', 'change', 'click', 'keyup'].forEach(function (ev) {
       document.addEventListener(ev, schedule, true);
     });
     new MutationObserver(function () {
       buildTop();
-      makeCollapsible();
+      organize();
       schedule();
     }).observe(panel, { childList: true, subtree: true });
   }
