@@ -718,14 +718,27 @@ function renderShareCardV16(){const i=studioV16.identity;$('#v16ShareCard').inne
 
 function openChangeListV16(mods){const settings=$('#studioNav button[data-tab="reglages"]');if(settings)settings.click();const box=$('#v16Counters');if(!box)return;box.querySelectorAll('.v16-change-module').forEach(d=>{const name=d.querySelector('summary')?.textContent||'';d.open=!mods||mods.some(m=>name.startsWith(({accueil:'Accueil',boutique:'Boutique',fiche:'Fiche',panier:'Panier',compte:'Compte',pagesInfo:'Pages d’information',reglages:'Réglages'}[m]||m)))});box.scrollIntoView({behavior:'smooth',block:'center'})}
 
+let __pubBaseRaw=null,__pubBaseObj=null;
 function renderCountersV16(){
- if(!pubSnap)return;let base;try{base=JSON.parse(pubSnap)}catch(_){return}
+ if(!pubSnap)return;
+ if(pubSnap!==__pubBaseRaw){try{__pubBaseObj=JSON.parse(pubSnap);__pubBaseRaw=pubSnap}catch(_){return}}
+ const base=__pubBaseObj;if(!base)return;
  const textValues=(mod,source)=>Object.fromEntries((MODULE_TEXTS[mod]||[]).map(x=>[x.key,(source||Tx)[x.key]]));
  const current={front:{state:{accent:front.accent,priceColor:front.priceColor,bg:front.bg,text:front.text,font:front.font,theme:front.theme},v16:studioV16,texts:textValues('front')},header:{state:header,texts:textValues('header')},footer:{state:footer,texts:textValues('footer')},accueil:{state:{rows}},boutique:{state:shop},fiche:{state:fiche},panier:{state:panier},menu:{state:menu,texts:textValues('menu')},compte:{state:acc,texts:textValues('compte')},seo:{state:seo},reglages:{state:reglages},pagesInfo:{texts:textValues('pagesInfo'),pages:studioV16.pages}};
  const baseTx=base.Tx||{},baseline={front:{state:{accent:base.front?.accent,priceColor:base.front?.priceColor,bg:base.front?.bg,text:base.front?.text,font:base.front?.font,theme:base.front?.theme},v16:base.front?._studioV16,texts:textValues('front',baseTx)},header:{state:base.header,texts:textValues('header',baseTx)},footer:{state:base.footer,texts:textValues('footer',baseTx)},accueil:{state:{rows:base.rows}},boutique:{state:base.shop},fiche:{state:base.fiche},panier:{state:base.panier},menu:{state:base.menu,texts:textValues('menu',baseTx)},compte:{state:base.acc,texts:textValues('compte',baseTx)},seo:{state:base.seo},reglages:{state:base.reglages},pagesInfo:{texts:textValues('pagesInfo',baseTx),pages:(base.front?._studioV16||{}).pages}};
  const changes=Object.fromEntries(Object.keys(current).map(k=>[k,v16DiffLeaves(current[k],baseline[k])]).filter(([,v])=>v.length));
- const changed=Object.keys(changes);$('#v16ChangeCount').textContent=changed.length+' module'+(changed.length===1?'':'s')+' modifié'+(changed.length===1?'':'s');
- const names={accueil:'Accueil',boutique:'Boutique',fiche:'Fiche',panier:'Panier',compte:'Compte',pagesInfo:'Pages d’information',reglages:'Réglages'};
+ const changed=Object.keys(changes);
+ /* Compteur au niveau des SOUS-CLÉS (pas des modules) : une couleur et un
+    texte modifiés = 2, pas 1. Infobulle = détail par module. Marche aussi
+    quand #v16ChangeCount est absent (accès null-safe). */
+ const names={front:'Front',accueil:'Accueil',boutique:'Boutique',fiche:'Fiche',panier:'Panier',compte:'Compte',textes:'Textes',menu:'Menu',seo:'SEO',header:'En-tête',footer:'Pied de page',pagesInfo:'Pages d’information',reglages:'Réglages'};
+ const total=changed.reduce((n,k)=>n+changes[k].length,0);
+ const totalTxt=total===0?'Aucune modification non publiée':total+' section'+(total>1?'s':'')+' modifiée'+(total>1?'s':'');
+ const tipTxt=changed.length?changed.map(k=>(names[k]||k)+' : '+changes[k].length).join(' · '):'';
+ const cnt=document.getElementById('v16ChangeCount');
+ if(cnt){if(cnt.textContent!==totalTxt)cnt.textContent=totalTxt;cnt.setAttribute('title',tipTxt);}
+ const dirty=document.getElementById('dirtyCount');
+ if(dirty){if(dirty.textContent!==totalTxt)dirty.textContent=totalTxt;dirty.setAttribute('title',tipTxt);dirty.classList.toggle('on',total>0);}
  const labels={};Object.values(MODULE_TEXTS).flat().forEach(x=>labels[x.key]=x.label);
  const host=$('#v16Counters');if(host)host.innerHTML=changed.length?changed.map(mod=>'<details class="v16-change-module"><summary>'+esc(names[mod]||mod)+' · '+changes[mod].length+' changement(s)</summary>'+changes[mod].map(x=>{const textKey=x.path.startsWith('texts.')?x.path.slice(6):'';const label=textKey?(labels[textKey]||textKey):x.path.replaceAll('.',' · ');return '<div class="v16-change-row"><span>'+esc(label)+'</span><button type="button" data-reset-module="'+mod+'" data-reset-path="'+x.path+'" title="Restaurer ce champ">↺</button></div>'}).join('')+'</details>').join(''):'<span class="hint">Aucun changement depuis la référence locale.</span>';
  host?.querySelectorAll('[data-reset-module]').forEach(btn=>btn.onclick=()=>{resetModuleFieldV16(btn.dataset.resetModule,btn.dataset.resetPath,baseline);syncUI();bindV16Controls();renderPageEditorV16();renderAllModuleTexts();renderTxtList();renderMenuList();renderPreview();toast('Champ restauré à sa valeur de référence.')});

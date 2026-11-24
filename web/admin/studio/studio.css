@@ -448,3 +448,8 @@ svg.e{width:1em;height:1em;vertical-align:-.14em;stroke-width:1.6}
 .px-contrast:empty{display:none}
 .px-contrast.ok{color:#047857}
 .px-contrast.warn{color:#b45309}
+
+/* Compteur de modifications non publiées (à côté de Publier) */
+.status-dirty{font-size:11.5px;font-weight:600;color:var(--mut);white-space:nowrap;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+.status-dirty.on{color:#8a5a00}
+@media(max-width:900px){.status-dirty{display:none}}

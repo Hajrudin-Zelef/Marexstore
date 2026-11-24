@@ -413,6 +413,9 @@ function updateStatus(){
   if(!BASE||restoring)return;
   const dirty=snap()!==pubSnap;
   $('#status').classList.toggle('dirty',dirty); $('#statusTxt').textContent=dirty?'Brouillon — non publié':((window.__STUDIO_DESIGN_VERSION__|0)>0?'Publié':'Aucune version publiée');
+  // Compteur de modifications : recalculé ici (l'aperçu serveur ne déclenche
+  // pas renderCountersV16, faute de #root dans l'iframe).
+  if(typeof renderCountersV16==='function'){try{renderCountersV16()}catch(_){}}
   clearTimeout(histTimer); histTimer=setTimeout(()=>{pushHist();histBtns()},350);
 }
 
