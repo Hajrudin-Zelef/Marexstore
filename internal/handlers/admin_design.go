@@ -586,7 +586,7 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		title = p.Nom + " — aperçu"
-		body = render.HeaderThemeDoc(doc, a.Store, "", "", th) + render.FicheBodyOpts(a.Store, p, ficheOptsFromQuery(q)) + "\n" + render.FooterDoc(doc, a.Store, "")
+		body = render.HeaderThemeDoc(doc, a.Store, "", "", th) + render.FicheBodyOptsDoc(doc, a.Store, p, ficheOptsFromQuery(q)) + "\n" + render.FooterDoc(doc, a.Store, "")
 	default: // accueil (IndexBodyThemeDoc inclut déjà en-tête + pied de page)
 		title = "Accueil — aperçu"
 		body = render.IndexBodyThemeDoc(doc, a.Store, a.Recents, th)

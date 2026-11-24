@@ -247,11 +247,17 @@ func AddCartBtn(p *catalog.RawProduct, qtyAttr string) string {
 }
 
 func AddCartBtnFull(p *catalog.RawProduct) string {
+	return addCartBtnFullTx(design.Current(), p)
+}
+
+// addCartBtnFullTx : bouton « Ajouter au panier » avec le libellé du design
+// (défaut = chaîne actuelle, parité intacte).
+func addCartBtnFullTx(d *design.Document, p *catalog.RawProduct) string {
 	pr := p.PrixAffiche()
 	if pr == nil {
 		return ""
 	}
-	return `<button class="btn cart-btn" type="button" data-add-cart data-slug="` + esc(p.Slug) + `" data-nom="` + esc(p.Nom) + `" data-prix="` + fmt.Sprint(*pr) + `" data-image="` + esc(p.Image) + `" data-qty="#qty">` + CartSVG + ` Ajouter au panier</button>`
+	return `<button class="btn cart-btn" type="button" data-add-cart data-slug="` + esc(p.Slug) + `" data-nom="` + esc(p.Nom) + `" data-prix="` + fmt.Sprint(*pr) + `" data-image="` + esc(p.Image) + `" data-qty="#qty">` + CartSVG + ` ` + escTx(d.Text("ajouter_panier", "Ajouter au panier")) + `</button>`
 }
 
 func Card(s *catalog.Store, p *catalog.RawProduct, prefix, filterKey string) string {
@@ -553,8 +559,16 @@ func FicheBody(s *catalog.Store, p *catalog.RawProduct) string {
 }
 
 // FicheBodyOpts : fiche produit avec bascules d'aperçu (onglet Fiche du
-// Studio). DefaultFicheOpts() = rendu historique byte-identique (parité).
+// Studio) et textes du design publié. DefaultFicheOpts() = rendu historique
+// byte-identique (parité) : chaque libellé garde sa chaîne actuelle comme
+// défaut quand le design n'en fournit pas.
 func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string {
+	return FicheBodyOptsDoc(design.Current(), s, p, o)
+}
+
+// FicheBodyOptsDoc : idem avec un document de design explicite (aperçu
+// brouillon : textes non publiés, sans toucher au design actif).
+func FicheBodyOptsDoc(d *design.Document, s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string {
 	var pf strings.Builder
 	for _, x := range p.PointsForts {
 		fmt.Fprintf(&pf, "<li>%s</li>", esc(x))
@@ -574,7 +588,7 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 			fmt.Fprintf(&cards, `<div class="card"><div class="cat">Consommable</div><h3>%s</h3>
 <div class="pr">%s</div></div>`, esc(c.Nom), esc(c.Prix))
 		}
-		consHTML.WriteString("<h2>Consommables</h2><div class='catalog view-grid'>" + cards.String() + "</div>")
+		consHTML.WriteString("<h2>" + escTx(d.Text("conso", "Consommables")) + "</h2><div class='catalog view-grid'>" + cards.String() + "</div>")
 	}
 	var sim strings.Builder
 	simMax := 3
@@ -593,7 +607,7 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 	}
 	simHTML := ""
 	if o.Similar {
-		simHTML = `<div class="sec"><h2>Produits similaires</h2><div class="catalog view-grid">` + sim.String() + `</div></div>`
+		simHTML = `<div class="sec"><h2>` + escTx(d.Text("similaires", "Produits similaires")) + `</h2><div class="catalog view-grid">` + sim.String() + `</div></div>`
 	}
 	gal := `<div class="gal">` + `<div class="noimg">Photo à venir</div>` + `</div>`
 	if p.Image != "" {
@@ -608,7 +622,7 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 	}
 	addBtn := ""
 	if p.PrixAffiche() != nil {
-		addBtn = AddCartBtnFull(p)
+		addBtn = addCartBtnFullTx(d, p)
 	}
 	marque := p.Marque
 	if marque == "" {
@@ -619,6 +633,13 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 		refFab = "—"
 	}
 	btnDevis, btnWa := "Demander un devis", "Commander sur WhatsApp"
+	if v := d.Text("devis", ""); v != "" {
+		btnDevis = v
+	}
+	if v := d.Text("wa", ""); v != "" {
+		btnWa = v
+	}
+	// Les libellés de l'onglet Fiche (aperçu) gagnent sur le design.
 	if o.BtnDevis != "" {
 		btnDevis = o.BtnDevis
 	}
@@ -634,12 +655,12 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 	}
 	specsHTML := ""
 	if o.Specs {
-		specsHTML = `<h2>Caractéristiques</h2><table class="specs">` + specs.String() + `</table>`
+		specsHTML = `<h2>` + escTx(d.Text("specs", "Caractéristiques")) + `</h2><table class="specs">` + specs.String() + `</table>`
 	}
 	avisBtn, avisPane := "", ""
 	if o.Avis {
-		avisBtn = `<button type="button" data-tab="3">Avis (0)</button>`
-		avisPane = `<div data-pane="3" hidden><h2>Avis</h2><p>Aucun avis pour le moment.</p></div>`
+		avisBtn = `<button type="button" data-tab="3">` + escTx(d.Text("tab_avis", "Avis (0)")) + `</button>`
+		avisPane = `<div data-pane="3" hidden><h2>` + escTx(d.Text("avis", "Avis")) + `</h2><p>` + escTx(d.Text("aucun_avis", "Aucun avis pour le moment.")) + `</p></div>`
 	}
 	body := `
 <div class="wrap"><div class="crumb"><a href="../index.html">Accueil</a> › <a href="../boutique.html">Store</a> › <a href="../categories/` + esc(catalog.MainSlug[p.Main]) + `.html">` + esc(p.Main) + `</a> › ` + esc(p.Sub) + ` › ` + esc(p.Nom) + `</div>
@@ -654,14 +675,14 @@ func FicheBodyOpts(s *catalog.Store, p *catalog.RawProduct, o FicheOpts) string 
 ` + addBtn + `
 ` + devisBtn + `
 ` + waBtn + `
-<div style="margin-top:12px;color:#666;font-size:13px">Réf. ` + esc(nonVide(p.RefFabricant, p.Ref)) + ` · Marque : ` + esc(marque) + `</div>
+<div style="margin-top:12px;color:#666;font-size:13px">` + escTx(d.Text("fiche_ref", "Réf.")) + ` ` + esc(nonVide(p.RefFabricant, p.Ref)) + ` · Marque : ` + esc(marque) + `</div>
 </div></div>
 <div class="ptabs" data-reveal data-tabs>
-<div class="tabs"><button type="button" class="on" data-tab="1">Description</button>
-<button type="button" data-tab="2">Marque</button>` + avisBtn + `</div>
-<div data-pane="1"><h2>Description</h2><p class="desc-text">` + esc(p.Description) + `</p>` + pfHTML + `
+<div class="tabs"><button type="button" class="on" data-tab="1">` + escTx(d.Text("tab_desc", "Description")) + `</button>
+<button type="button" data-tab="2">` + escTx(d.Text("tab_marque", "Marque")) + `</button>` + avisBtn + `</div>
+<div data-pane="1"><h2>` + escTx(d.Text("tab_desc", "Description")) + `</h2><p class="desc-text">` + esc(p.Description) + `</p>` + pfHTML + `
 ` + specsHTML + consHTML.String() + `</div>
-<div data-pane="2" hidden><h2>Marque</h2><p>` + esc(nonVide(p.Marque, "Non précisée")) + ` — Référence fabricant : ` + esc(refFab) + `.</p></div>
+<div data-pane="2" hidden><h2>` + escTx(d.Text("tab_marque", "Marque")) + `</h2><p>` + esc(nonVide(p.Marque, "Non précisée")) + ` — Référence fabricant : ` + esc(refFab) + `.</p></div>
 ` + avisPane + `
 </div>
 ` + simHTML + `

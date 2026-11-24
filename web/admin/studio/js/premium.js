@@ -221,7 +221,10 @@
     bienvenue: 1, recherche_ph: 1, rechercher: 1, toutes_cat: 1, suivi_commande: 1,
     inscription: 1, boutique_ico: 1, compte_ico: 1, panier_ico: 1, prefs_ico: 1,
     newsletter_titre: 1, newsletter_texte: 1, newsletter_ph: 1, newsletter_btn: 1,
-    copyright: 1, bandeau: 1
+    copyright: 1, bandeau: 1,
+    // Fiche produit (branchée au rendu serveur — lot A)
+    specs: 1, similaires: 1, conso: 1, ajouter_panier: 1, devis: 1, wa: 1,
+    fiche_ref: 1, tab_desc: 1, tab_marque: 1, tab_avis: 1, avis: 1, aucun_avis: 1
   };
 
   function markTextFields() {
