@@ -723,9 +723,19 @@ function renderCountersV16(){
  if(!pubSnap)return;
  if(pubSnap!==__pubBaseRaw){try{__pubBaseObj=JSON.parse(pubSnap);__pubBaseRaw=pubSnap}catch(_){return}}
  const base=__pubBaseObj;if(!base)return;
- const textValues=(mod,source)=>Object.fromEntries((MODULE_TEXTS[mod]||[]).map(x=>[x.key,(source||Tx)[x.key]]));
- const current={front:{state:{accent:front.accent,priceColor:front.priceColor,bg:front.bg,text:front.text,font:front.font,theme:front.theme},v16:studioV16,texts:textValues('front')},header:{state:header,texts:textValues('header')},footer:{state:footer,texts:textValues('footer')},accueil:{state:{rows}},boutique:{state:shop},fiche:{state:fiche},panier:{state:panier},menu:{state:menu,texts:textValues('menu')},compte:{state:acc,texts:textValues('compte')},seo:{state:seo},reglages:{state:reglages},pagesInfo:{texts:textValues('pagesInfo'),pages:studioV16.pages}};
- const baseTx=base.Tx||{},baseline={front:{state:{accent:base.front?.accent,priceColor:base.front?.priceColor,bg:base.front?.bg,text:base.front?.text,font:base.front?.font,theme:base.front?.theme},v16:base.front?._studioV16,texts:textValues('front',baseTx)},header:{state:base.header,texts:textValues('header',baseTx)},footer:{state:base.footer,texts:textValues('footer',baseTx)},accueil:{state:{rows:base.rows}},boutique:{state:base.shop},fiche:{state:base.fiche},panier:{state:base.panier},menu:{state:base.menu,texts:textValues('menu',baseTx)},compte:{state:base.acc,texts:textValues('compte',baseTx)},seo:{state:base.seo},reglages:{state:base.reglages},pagesInfo:{texts:textValues('pagesInfo',baseTx),pages:(base.front?._studioV16||{}).pages}};
+ /* Chaque clé de texte appartient à UN seul module (le premier déclaré) :
+    sans ça, `bienvenue` (listée dans Front et En-tête) comptait 2 fois.
+    Les clés qu'aucun module ne liste (prix_min, prix_max, page_sur) sont
+    regroupées dans « Textes » pour ne jamais être invisibles. */
+ const __keyOwner=(()=>{const m={};Object.keys(MODULE_TEXTS).forEach(mod=>(MODULE_TEXTS[mod]||[]).forEach(x=>{if(!(x.key in m))m[x.key]=mod;}));return m;})();
+ const __orphanKeys=(()=>Object.keys(Tx).filter(k=>!__keyOwner[k]))();
+ const textValues=(mod,source)=>{
+   const src=source||Tx;
+   if(mod==='textes')return Object.fromEntries(__orphanKeys.map(k=>[k,src[k]]));
+   return Object.fromEntries((MODULE_TEXTS[mod]||[]).filter(x=>__keyOwner[x.key]===mod).map(x=>[x.key,src[x.key]]));
+ };
+ const current={front:{state:{accent:front.accent,priceColor:front.priceColor,bg:front.bg,text:front.text,font:front.font,theme:front.theme},v16:studioV16,texts:textValues('front')},header:{state:header,texts:textValues('header')},footer:{state:footer,texts:textValues('footer')},accueil:{state:{rows}},boutique:{state:shop},fiche:{state:fiche},panier:{state:panier},menu:{state:menu,texts:textValues('menu')},compte:{state:acc,texts:textValues('compte')},seo:{state:seo},reglages:{state:reglages},pagesInfo:{texts:textValues('pagesInfo'),pages:studioV16.pages},textes:{texts:textValues('textes')}};
+ const baseTx=base.Tx||{},baseline={front:{state:{accent:base.front?.accent,priceColor:base.front?.priceColor,bg:base.front?.bg,text:base.front?.text,font:base.front?.font,theme:base.front?.theme},v16:base.front?._studioV16,texts:textValues('front',baseTx)},header:{state:base.header,texts:textValues('header',baseTx)},footer:{state:base.footer,texts:textValues('footer',baseTx)},accueil:{state:{rows:base.rows}},boutique:{state:base.shop},fiche:{state:base.fiche},panier:{state:base.panier},menu:{state:base.menu,texts:textValues('menu',baseTx)},compte:{state:base.acc,texts:textValues('compte',baseTx)},seo:{state:base.seo},reglages:{state:base.reglages},pagesInfo:{texts:textValues('pagesInfo',baseTx),pages:(base.front?._studioV16||{}).pages},textes:{texts:textValues('textes',baseTx)}};
  const changes=Object.fromEntries(Object.keys(current).map(k=>[k,v16DiffLeaves(current[k],baseline[k])]).filter(([,v])=>v.length));
  const changed=Object.keys(changes);
  /* Compteur au niveau des SOUS-CLÉS (pas des modules) : une couleur et un
