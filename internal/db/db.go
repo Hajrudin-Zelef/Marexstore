@@ -10,7 +10,7 @@ import (
 )
 
 func Open(path string) (*sql.DB, error) {
-	d, err := sql.Open("sqlite", path+"?cache=shared")
+	d, err := sql.Open("sqlite", path+"?cache=shared&_pragma=busy_timeout(5000)&_pragma=foreign_keys(1)")
 	if err != nil {
 		return nil, err
 	}

@@ -159,13 +159,18 @@ func (a *App) themeToSettings(t catalog.Theme) {
 		return
 	}
 	defer tx.Rollback()
+	var setErr error
 	set := func(k, v string) {
-		_, _ = tx.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
+		if setErr != nil {
+			return
+		}
+		_, setErr = tx.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
 	}
 	var nv int
 	if err := tx.QueryRow(`INSERT INTO settings(nom,valeur) VALUES('theme_version','1')
 		ON CONFLICT(nom) DO UPDATE SET valeur=CAST(settings.valeur AS INTEGER)+1
 		RETURNING CAST(valeur AS INTEGER)`).Scan(&nv); err != nil {
+		log.Printf("thème : theme_version impossible (%v)", err)
 		return
 	}
 	t.Version = nv
@@ -181,6 +186,10 @@ func (a *App) themeToSettings(t catalog.Theme) {
 	set("theme_annonce_texte", t.AnnonceTexte)
 	set("theme_sections", strings.Join(t.Sections, ","))
 	set("theme_css", t.CSS)
+	if setErr != nil {
+		log.Printf("thème : écriture des réglages impossible (%v) — publication annulée", setErr)
+		return
+	}
 	if err := tx.Commit(); err != nil {
 		return
 	}
@@ -209,7 +218,9 @@ func (a *App) AdminDesign(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		for _, k := range []string{"theme_couleur", "theme_accent", "theme_mode", "theme_police", "theme_annonce_on", "theme_annonce_texte", "theme_sections", "theme_css", "theme_version"} {
-			_, _ = a.DB.Exec(`DELETE FROM settings WHERE nom=?`, k)
+			if _, err := a.DB.Exec(`DELETE FROM settings WHERE nom=?`, k); err != nil {
+				log.Printf("reset design : suppression de %s impossible (%v)", k, err)
+			}
 		}
 		catalog.SiteTheme = catalog.DefaultTheme()
 		a.reload()
@@ -445,7 +456,13 @@ func (a *App) AdminStudioFile(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	w.Header().Set("Cache-Control", "public, max-age=3600")
+	w.Header().Set("Cache-Control", "private, no-cache")
+	etag := studioETag(data)
+	w.Header().Set("ETag", etag)
+	if studioETagMatch(r.Header.Get("If-None-Match"), etag) {
+		w.WriteHeader(http.StatusNotModified)
+		return
+	}
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(data)
 }

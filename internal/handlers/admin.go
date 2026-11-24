@@ -23,7 +23,7 @@ import (
 func (a *App) adminAuth(w http.ResponseWriter, r *http.Request) bool {
 	user, pass, ok := r.BasicAuth()
 	if !ok || user != a.Cfg.AdminUser || a.Cfg.AdminPassHash == "" ||
-		!auth.CheckPassword(a.Cfg.AdminPassHash, pass) {
+		!adminPassOK(a.Cfg.AdminPassHash, pass) {
 		w.Header().Set("WWW-Authenticate", `Basic realm="admin"`)
 		http.Error(w, "Non autorisé.", http.StatusUnauthorized)
 		return false

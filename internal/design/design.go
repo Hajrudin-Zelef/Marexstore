@@ -55,7 +55,7 @@ type Version struct {
 // de gabarit). {{…}} est interdit car le moteur de rendu n'utilise aucun
 // gabarit côté design — une accolade double ne peut être que malveillante.
 var forbiddenValue = []string{
-	"<script", "<iframe", "<form", "<object", "<embed", "{{", "}}",
+	"<script", "<iframe", "<form", "<object", "<embed", "{{", "}}", "</style", "@import", "<base", "<link", "<meta",
 	"javascript:", "vbscript:", "data:text/html",
 }
 
@@ -63,12 +63,12 @@ var forbiddenValue = []string{
 // d'info sont du vrai HTML et le formulaire de contact y est légitime.
 // <script>/<iframe>/{{...}/javascript:/on*= restent interdits (C1).
 var forbiddenValueTxtPages = []string{
-	"<script", "<iframe", "<object", "<embed", "{{", "}}",
+	"<script", "<iframe", "<object", "<embed", "{{", "}}", "</style", "@import", "<base", "<link", "<meta",
 	"javascript:", "vbscript:", "data:text/html",
 }
 
 // forbiddenAttr : attributs gestionnaires d'événements (onclick=, onerror=…).
-var forbiddenAttr = regexp.MustCompile(`(?i)\son[a-z]+\s*=`)
+var forbiddenAttr = regexp.MustCompile(`(?i)[\s"'/]on[a-z]+\s*=`)
 
 // numericForbiddenKeys : noms de clés sous lesquels une valeur NUMÉRIQUE est
 // refusée (un vrai prix, un vrai stock, un vrai total). Les libellés du
@@ -102,6 +102,9 @@ func Validate(raw []byte) error {
 	var v any
 	if err := json.Unmarshal(raw, &v); err != nil {
 		return fmt.Errorf("JSON invalide : %w", err)
+	}
+	if err := validateCustomCSS(v); err != nil {
+		return err
 	}
 	// La validation suit la clé de premier niveau : sous "txtPages" (pages
 	// d'info = vrai HTML), <form> est autorisé (C1).

@@ -79,6 +79,7 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.SecurityHeaders(os.Getenv("CSP_REPORT_ONLY") != "0"))
 	r.Use(middleware.RateLimit(40, 80))
+	r.Use(bodyLimit)
 	// Anti-indexation des zones privées/API (complète robots.txt côté nginx).
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
