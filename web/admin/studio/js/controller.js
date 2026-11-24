@@ -370,8 +370,26 @@ function applyServerTheme(){
    et en extrait le thème (theme_version +1) — la boutique suit le thème publié. */
 function publishStudio(){
   const b=$('#btnPublish'); if(b.classList.contains('busy'))return;
+  // Double verrou (code à recopier + mot de passe admin) avant d'écrire en
+  // production : renvoie un jeton court exigé par le serveur.
+  const nbSections=(function(){
+    try{
+      const base=JSON.parse(pubSnap||'{}');
+      const cur={front,rows,shop,fiche,panier,Tx,txtPages,menu,seo,reglages,header,footer,acc};
+      return Object.keys(cur).filter(k=>JSON.stringify(cur[k])!==JSON.stringify(base[k])).length;
+    }catch(_){return 0}
+  })();
+  if(typeof publierAvecConfirmation==='function'){
+    publierAvecConfirmation(nbSections,(token)=>publierMaintenant(token));
+    return;
+  }
+  publierMaintenant('');
+}
+
+function publierMaintenant(publishToken){
+  const b=$('#btnPublish'); if(b.classList.contains('busy'))return;
   b.classList.add('busy'); b.innerHTML=ic('spinner','i spin')+'<span class="t">Publication…</span>';
-  fetch(window.location.origin + '/admin/api/design',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json','X-CSRF':window.__STUDIO_CSRF__||''},body:JSON.stringify(designJSON())})
+  fetch(window.location.origin + '/admin/api/design',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json','X-CSRF':window.__STUDIO_CSRF__||'','X-Publish-Confirm':publishToken||''},body:JSON.stringify(designJSON())})
     .then(r=>{if(!r.ok)return r.text().then(t=>{throw new Error('HTTP '+r.status+' — '+t.slice(0,120))});return r.json()})
     .then(d=>{
       if(d&&d.version)window.__STUDIO_DESIGN_VERSION__=d.version; pubSnap=snap(); b.classList.remove('busy'); b.innerHTML=ic('check-circle')+'<span class="t">Publié</span>';

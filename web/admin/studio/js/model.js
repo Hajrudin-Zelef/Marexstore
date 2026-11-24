@@ -121,13 +121,13 @@ const Tx = {
   produits_suffix:'produits',
   livraison_mention:'Livraison offerte dès 100 000 F',
   // Fiche
-  specs:'Spécifications',
+  specs:'Caractéristiques',
   similaires:'Produits similaires',
-  avis:'Avis clients',
-  conso:'Consommables compatibles',
+  avis:'Avis',
+  conso:'Consommables',
   ajouter_panier:'Ajouter au panier',
   devis:'Demander un devis',
-  wa:'WhatsApp',
+  wa:'Commander sur WhatsApp',
   fiche_ref:'Réf.',
   // Panier
   sous_total:'Sous-total',

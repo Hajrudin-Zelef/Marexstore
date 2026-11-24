@@ -341,6 +341,10 @@ func (a *App) AdminDesignAPI(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "refusé", http.StatusForbidden)
 			return
 		}
+		// Double verrou : token obtenu après saisie du mot de passe admin.
+		if !a.requirePublishToken(w, r) {
+			return
+		}
 		raw, err := io.ReadAll(io.LimitReader(r.Body, design.MaxDesignBytes+1))
 		if err != nil {
 			http.Error(w, "lecture impossible", http.StatusBadRequest)

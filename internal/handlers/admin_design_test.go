@@ -256,6 +256,30 @@ func TestAdminDesignPubliePreserveSections(t *testing.T) {
 const designPhase2V1 = `{"front":{"accent":"#2E5136","font":"Inter","showAnnonce":true,"customCSS":""},"rows":[],"shop":{},"fiche":{},"panier":{},"Tx":{"bandeau":"Boutique Phase 2"},"txtPages":{},"menu":{},"seo":{},"reglages":{},"header":{},"footer":{},"acc":{}}`
 const designPhase2V2 = `{"front":{"accent":"#84CC16","font":"Inter","showAnnonce":true,"customCSS":""},"rows":[],"shop":{},"fiche":{},"panier":{},"Tx":{"bandeau":"Boutique Phase 2 v2"},"txtPages":{},"menu":{},"seo":{},"reglages":{},"header":{},"footer":{},"acc":{}}`
 
+// publishHeader : jeton de confirmation (double verrou) pour les tests qui
+// publient réellement. Le mot de passe de test est "test1234".
+func publishHeader(t *testing.T, app *App, req *http.Request) *http.Request {
+	t.Helper()
+	if req.Method != http.MethodPost {
+		return req
+	}
+	rec := httptest.NewRecorder()
+	c := httptest.NewRequest(http.MethodPost, "/admin/api/publish/confirm", strings.NewReader(`{"password":"test1234"}`))
+	c.Header.Set("Content-Type", "application/json")
+	c.Header.Set("X-CSRF", app.adminCSRF())
+	c.SetBasicAuth("admin", "test1234")
+	app.AdminPublishConfirm(rec, c)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("confirmation de publication : %d", rec.Code)
+	}
+	var out struct {
+		Token string `json:"token"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &out)
+	req.Header.Set("X-Publish-Confirm", out.Token)
+	return req
+}
+
 func testAppDesign(t *testing.T) (*App, *sql.DB) {
 	t.Helper()
 	dir := t.TempDir()
@@ -279,7 +303,7 @@ func TestAdminDesignAPIPublieEtCharge(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/admin/api/design", nil)
 	req.SetBasicAuth("admin", "test1234")
 	rec := httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("GET /admin/api/design (vide) : status %d, attendu 200", rec.Code)
 	}
@@ -292,7 +316,7 @@ func TestAdminDesignAPIPublieEtCharge(t *testing.T) {
 	req.Header.Set("X-CSRF", app.adminCSRF())
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("POST /admin/api/design : status %d, attendu 200 (corps : %s)", rec.Code, rec.Body.String())
 	}
@@ -328,7 +352,7 @@ func TestAdminDesignAPIPublieEtCharge(t *testing.T) {
 	req = httptest.NewRequest(http.MethodGet, "/admin/api/design", nil)
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "Boutique Phase 2") {
 		t.Fatalf("GET après publication : status %d, corps sans le libellé", rec.Code)
 	}
@@ -339,7 +363,7 @@ func TestAdminDesignAPIRefuse(t *testing.T) {
 	// Sans auth : 401.
 	req := httptest.NewRequest(http.MethodGet, "/admin/api/design", nil)
 	rec := httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusUnauthorized {
 		t.Fatalf("GET sans auth : status %d, attendu 401", rec.Code)
 	}
@@ -348,7 +372,7 @@ func TestAdminDesignAPIRefuse(t *testing.T) {
 	req.Header.Set("Content-Type", "application/json")
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusForbidden {
 		t.Fatalf("POST sans CSRF : status %d, attendu 403", rec.Code)
 	}
@@ -358,7 +382,7 @@ func TestAdminDesignAPIRefuse(t *testing.T) {
 	req.Header.Set("X-CSRF", app.adminCSRF())
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusBadRequest {
 		t.Fatalf("POST avec script : status %d, attendu 400", rec.Code)
 	}
@@ -368,7 +392,7 @@ func TestAdminDesignAPIRefuse(t *testing.T) {
 	req.Header.Set("X-CSRF", app.adminCSRF())
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusBadRequest {
 		t.Fatalf("POST avec clé inconnue : status %d, attendu 400", rec.Code)
 	}
@@ -383,7 +407,7 @@ func TestAdminDesignVersionsEtActiver(t *testing.T) {
 		req.Header.Set("X-CSRF", app.adminCSRF())
 		req.SetBasicAuth("admin", "test1234")
 		rec := httptest.NewRecorder()
-		app.AdminDesignAPI(rec, req)
+		app.AdminDesignAPI(rec, publishHeader(t, app, req))
 		if rec.Code != http.StatusOK {
 			t.Fatalf("POST /admin/api/design : status %d", rec.Code)
 		}
@@ -425,7 +449,7 @@ func TestAdminDesignVersionsEtActiver(t *testing.T) {
 	req = httptest.NewRequest(http.MethodGet, "/admin/api/design", nil)
 	req.SetBasicAuth("admin", "test1234")
 	rec = httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if !strings.Contains(rec.Body.String(), "Boutique Phase 2") || strings.Contains(rec.Body.String(), "v2") {
 		t.Fatalf("GET après activation v1 : corps inattendu %s", rec.Body.String())
 	}
@@ -455,7 +479,7 @@ func TestAdminDesignServeStudioInjecteDesign(t *testing.T) {
 	req.Header.Set("X-CSRF", app.adminCSRF())
 	req.SetBasicAuth("admin", "test1234")
 	rec := httptest.NewRecorder()
-	app.AdminDesignAPI(rec, req)
+	app.AdminDesignAPI(rec, publishHeader(t, app, req))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("POST /admin/api/design : status %d", rec.Code)
 	}
