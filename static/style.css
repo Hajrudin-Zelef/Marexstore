@@ -13,8 +13,8 @@ header.main{background:var(--surface);position:sticky;top:0;z-index:50;box-shado
 header.main .in{max-width:1200px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .logo{display:flex;flex-direction:column;align-items:center;gap:1px;text-decoration:none}
 .logo img{height:56px;width:auto;display:block}
-.logo .store{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:7px;text-indent:7px;text-transform:uppercase;color:var(--brand-dark)}
-.logo .store::before,.logo .store::after{content:"";width:26px;height:1px;background:var(--brand)}
+.logo .store{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:3px;text-indent:3px;white-space:nowrap;text-transform:uppercase;color:var(--brand-dark)}
+.logo .store::before,.logo .store::after{content:"";width:18px;height:1px;background:var(--brand)}
 .search{flex:1;display:flex;min-width:260px;border:2px solid var(--brand);border-radius:999px;overflow:hidden;background:var(--surface)}
 .search select{border:0;padding:10px 8px;color:var(--text2);max-width:190px;background:var(--bg)}
 .search input{flex:1;border:0;padding:10px 12px;font-size:15px;outline:none;min-width:80px}
@@ -819,8 +819,8 @@ img{height:auto}
 @media(max-width:640px){
   /* En-tête : logo compact, recherche pleine largeur en 2e ligne. */
   .logo img{height:42px}
-  .logo .store{font-size:9px;letter-spacing:5px;text-indent:5px}
-  .logo .store::before,.logo .store::after{width:16px}
+  .logo .store{font-size:8px;letter-spacing:2px;text-indent:2px}
+  .logo .store::before,.logo .store::after{width:10px}
   .hicons{margin-left:auto}
   .search{order:3;flex-basis:100%;min-width:0}
   .topbar .in{gap:10px 14px;font-size:12px}
