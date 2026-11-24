@@ -596,7 +596,7 @@ function themeGalleryV13(){
 
 function announceEditorV13(){
  const host=document.createElement('section');host.className='field v13-ann';
- host.innerHTML='<label>Bandeau d’annonce — toutes les pages</label><label class="checkrow"><input id="v13AnnOn" type="checkbox"> Afficher le bandeau</label><div class="grid2"><div class="field"><label>Message</label><input id="v13AnnText" type="text" placeholder="Message d’annonce"></div><div class="field"><label>Lien (facultatif)</label><input id="v13AnnUrl" type="text" placeholder="/boutique"></div></div><div class="grid2"><div class="field"><label>Fond</label><input id="v13AnnBg" type="color" value="#2E5136"></div><div class="field"><label>Texte</label><input id="v13AnnFg" type="color" value="#ffffff"></div></div><label class="checkrow"><input id="v13AnnClose" type="checkbox" checked> Afficher la croix de fermeture (aperçu)</label><p class="hint">Simule la croix de fermeture dans l’aperçu uniquement ; elle n’est pas encore active sur le site publié.</p>';
+ host.innerHTML='<label>Bandeau d’annonce — toutes les pages</label><label class="checkrow"><input id="v13AnnOn" type="checkbox"> Afficher le bandeau</label><div class="grid2"><div class="field"><label>Message</label><input id="v13AnnText" type="text" placeholder="Message d’annonce"></div><div class="field"><label>Lien (facultatif)</label><input id="v13AnnUrl" type="text" placeholder="/boutique"></div></div><div class="grid2"><div class="field"><label>Fond</label><input id="v13AnnBg" type="color" value="#2E5136"></div><div class="field"><label>Texte</label><input id="v13AnnFg" type="color" value="#ffffff"></div></div>';
  $('#front-ui').prepend(host);
  const bind=(id,fn)=>$('#'+id).addEventListener('input',()=>{fn();renderPreview()});
  $('#v13AnnOn').addEventListener('change',e=>{front.showAnnonce=e.target.checked;renderPreview()});
@@ -604,7 +604,6 @@ function announceEditorV13(){
  bind('v13AnnUrl',()=>front.announcementUrl=$('#v13AnnUrl').value);
  bind('v13AnnBg',()=>front.announcementBg=$('#v13AnnBg').value);
  bind('v13AnnFg',()=>front.announcementFg=$('#v13AnnFg').value);
- bind('v13AnnClose',()=>front.announcementClose=$('#v13AnnClose').checked);
 }
 
 function syncV13Fields(){
@@ -614,7 +613,6 @@ function syncV13Fields(){
  $('#v13AnnUrl').value=front.announcementUrl||'';
  $('#v13AnnBg').value=front.announcementBg||front.accent||'#2E5136';
  $('#v13AnnFg').value=front.announcementFg||'#ffffff';
- $('#v13AnnClose').checked=front.announcementClose!==false;
 }
 
 function annHtmlV13(){
@@ -622,7 +620,7 @@ function annHtmlV13(){
  const label=front.banner||T('bandeau')||'';
  const text=esc(label),bg=front.announcementBg||front.accent,fg=front.announcementFg||'#ffffff';
  const href=front.announcementUrl?esc(front.announcementUrl):'';
- return '<div class="pv-announcement" style="background:'+bg+';color:'+fg+';text-align:center;font-size:12px;font-weight:700;padding:7px 40px;position:relative">'+(href?'<a href="'+href+'" style="color:inherit">'+text+'</a>':text)+(front.announcementClose!==false?'<span aria-hidden="true" style="position:absolute;right:12px;top:4px;font-size:18px">×</span>':'')+'</div>';
+ return '<div class="pv-announcement" style="background:'+bg+';color:'+fg+';text-align:center;font-size:12px;font-weight:700;padding:7px 40px;position:relative">'+(href?'<a href="'+href+'" style="color:inherit">'+text+'</a>':text)+'</div>';
 }
 
 function contrastDialogV13(issues,proceed){
