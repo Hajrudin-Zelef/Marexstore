@@ -817,6 +817,8 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 		set("paiement_moov_numero", strings.TrimSpace(r.FormValue("paiement_moov_numero")))
 		set("paiement_cod_on", payOn("paiement_cod_on"))
 
+		set("notif_numero", strings.TrimSpace(r.FormValue("notif_numero")))
+
 		a.auditAdmin(r, "reglages.enregistrer", "maintenance="+maint)
 		http.Redirect(w, r, "/admin/reglages?msg=R%C3%A9glages+enregistr%C3%A9s", http.StatusSeeOther)
 		return
@@ -836,6 +838,9 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 	payMoovNum := get("paiement_moov_numero", "")
 	payCodOn := get("paiement_cod_on", "0")
 
+	notifNumero := get("notif_numero", wa)
+	stockReportLink := a.buildStockReportWaLink(notifNumero)
+
 	status := `<div class="mx-notice" style="margin-bottom:16px">Boutique <strong>en ligne</strong> — les visiteurs voient le catalogue normalement.</div>`
 	if maint == "1" {
 		status = `<div class="mx-notice warn" style="margin-bottom:16px">Mode maintenance <strong>actif</strong> — la boutique affiche un message aux visiteurs, /admin reste accessible.</div>`
@@ -847,6 +852,7 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 	b.WriteString(reglagesSectionContact(wa))
 	b.WriteString(reglagesSectionPaiement(payOrangeOn, payOrangeNum, payMtnOn, payMtnNum, payWaveOn, payWaveNum, payMoovOn, payMoovNum, payCodOn))
 	b.WriteString(`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`)
+	b.WriteString(reglagesSectionNotifications(notifNumero, stockReportLink))
 
 	a.write(w, 200, a.adminPage("Réglages", "reglages", status+b.String(), r))
 }
@@ -868,6 +874,77 @@ func reglagesSectionContact(wa string) string {
 	return `<div class="mx-fsec" style="max-width:640px"><h3>Contact</h3>
 <div class="mx-fgrid"><label class="span2">WhatsApp <input name="whatsapp" value="` + render.Esc(wa) + `"></label></div>
 <p class="hint">Appliqué au redémarrage du conteneur.</p>
+</div>`
+}
+
+// escQForWa : réplique l'échappement utilisé par render.qesc pour les liens
+// wa.me (espaces en %20, slash non échappé), afin de rester cohérent avec
+// les liens WhatsApp déjà générés ailleurs sur le site.
+func escQForWa(s string) string {
+	q := url.QueryEscape(s)
+	q = strings.ReplaceAll(q, "+", "%20")
+	return strings.ReplaceAll(q, "%2F", "/")
+}
+
+// buildStockReportWaLink : construit un lien wa.me prérempli listant les
+// produits en rupture et en stock faible (≤3), prêt à envoyer en un clic
+// depuis Réglages > Notifications.
+func (a *App) buildStockReportWaLink(numero string) string {
+	var b strings.Builder
+	b.WriteString("📋 Rapport stock — Marexstore\n")
+
+	rrows, _ := a.DB.Query(`SELECT nom FROM products WHERE dispo='rupture de stock' OR (stock IS NOT NULL AND stock<=0) ORDER BY nom LIMIT 30`)
+	var ruptures []string
+	if rrows != nil {
+		defer rrows.Close()
+		for rrows.Next() {
+			var nom string
+			_ = rrows.Scan(&nom)
+			ruptures = append(ruptures, nom)
+		}
+	}
+	b.WriteString(fmt.Sprintf("\n🔴 Rupture (%d) :\n", len(ruptures)))
+	if len(ruptures) == 0 {
+		b.WriteString("Aucune\n")
+	}
+	for _, nom := range ruptures {
+		b.WriteString("- " + nom + "\n")
+	}
+
+	frows, _ := a.DB.Query(`SELECT nom, stock FROM products WHERE stock IS NOT NULL AND stock>0 AND stock<=3 ORDER BY stock, nom LIMIT 30`)
+	type faible struct {
+		nom   string
+		stock int
+	}
+	var faibles []faible
+	if frows != nil {
+		defer frows.Close()
+		for frows.Next() {
+			var nom string
+			var st int
+			_ = frows.Scan(&nom, &st)
+			faibles = append(faibles, faible{nom, st})
+		}
+	}
+	b.WriteString(fmt.Sprintf("\n🟡 Stock faible (%d) :\n", len(faibles)))
+	if len(faibles) == 0 {
+		b.WriteString("Aucun\n")
+	}
+	for _, f := range faibles {
+		b.WriteString(fmt.Sprintf("- %s (%d)\n", f.nom, f.stock))
+	}
+
+	// numero vient d'un champ admin : échappé pour l'attribut href.
+	return "https://wa.me/" + render.Esc(strings.TrimSpace(numero)) + "?text=" + escQForWa(b.String())
+}
+
+// reglagesSectionNotifications : bloc "Notifications" (rapport stock bas).
+func reglagesSectionNotifications(numero, waLink string) string {
+	return `<div class="mx-fsec" style="max-width:640px"><h3>Notifications</h3>
+<div class="mx-fgrid"><label class="span2">Numéro destinataire des alertes <input name="notif_numero" value="` + render.Esc(numero) + `"></label></div>
+<p class="hint">Par défaut, le numéro WhatsApp de Contact. Modifie-le ici pour envoyer les alertes à un autre numéro.</p>
+<p class="hint">Génère un message listant les produits en rupture et en stock faible (≤3), à envoyer manuellement.</p>
+<a class="mx-btn primary" target="_blank" rel="noopener" href="` + waLink + `">📋 Envoyer le rapport stock bas</a>
 </div>`
 }
 
