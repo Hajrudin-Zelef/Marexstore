@@ -114,6 +114,12 @@ func Header(s *catalog.Store, prefix, searchQ string) string {
 // header.show* masquent les blocs — défauts = les chaînes actuelles, donc
 // parité sans design publié.
 func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) string {
+	return HeaderThemeDoc(design.Current(), s, prefix, searchQ, t)
+}
+
+// HeaderThemeDoc : idem avec un document de design explicite (aperçu
+// brouillon : textes non publiés, sans toucher au design actif).
+func HeaderThemeDoc(d *design.Document, s *catalog.Store, prefix, searchQ string, t catalog.Theme) string {
 	var opts strings.Builder
 	for _, m := range catalog.MainOrder {
 		fmt.Fprintf(&opts, `<option value="%s">%s</option>`, catalog.MainSlug[m], esc(m))
@@ -122,7 +128,6 @@ func HeaderTheme(s *catalog.Store, prefix, searchQ string, t catalog.Theme) stri
 	if t.AnnonceOn && strings.TrimSpace(t.AnnonceTexte) != "" {
 		annonce = `<div class="mx-annonce">` + esc(t.AnnonceTexte) + `</div>`
 	}
-	d := design.Current()
 	topbar := ""
 	if d.Bool("header", "showTopbar", true) {
 		phone := ""
@@ -390,7 +395,11 @@ func WidgetsHTML(s *catalog.Store, prefix string) string {
 // depuis Tx, bascules footer.showNewsletter / showCols — défauts = les
 // chaînes actuelles, donc parité sans design publié.
 func Footer(s *catalog.Store, prefix string) string {
-	d := design.Current()
+	return FooterDoc(design.Current(), s, prefix)
+}
+
+// FooterDoc : idem avec un document de design explicite.
+func FooterDoc(d *design.Document, s *catalog.Store, prefix string) string {
 	news := ""
 	if d.Bool("footer", "showNewsletter", true) {
 		news = `

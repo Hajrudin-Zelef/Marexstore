@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
+	"github.com/Hajrudin-Zelef/Marexstore/internal/design"
 )
 
 // ---------- Accueil ----------
@@ -124,6 +125,11 @@ var DarkBannerData = DarkBanner{
 const DealSlug = "kyocera-taskalfa-3011i"
 
 func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.Theme) string {
+	return IndexBodyThemeDoc(design.Current(), s, recents, t)
+}
+
+// IndexBodyThemeDoc : accueil avec un document de design explicite.
+func IndexBodyThemeDoc(d *design.Document, s *catalog.Store, recents []*catalog.RawProduct, t catalog.Theme) string {
 	var slides strings.Builder
 	for i, b := range Banners {
 		on := ""
@@ -258,10 +264,10 @@ func IndexBodyTheme(s *catalog.Store, recents []*catalog.RawProduct, t catalog.T
 			mid.WriteString(b + "\n")
 		}
 	}
-	body := HeaderTheme(s, "", "", t) + `
+	body := HeaderThemeDoc(d, s, "", "", t) + `
 <div class="wrap">
 ` + mid.String() + `</div>
-` + Footer(s, "")
+` + FooterDoc(d, s, "")
 	return body
 }
 
@@ -314,16 +320,25 @@ func BoutiqueBodyQuery(s *catalog.Store, q url.Values) string {
 // BoutiqueBodyQueryTheme : comme BoutiqueBodyQuery mais avec le thème fourni
 // (aperçu brouillon du Studio, phase A1).
 func BoutiqueBodyQueryTheme(s *catalog.Store, q url.Values, t catalog.Theme) string {
-	return boutiqueBodyQuery(s, q, t)
+	return BoutiqueBodyQueryThemeDoc(design.Current(), s, q, t)
+}
+
+// BoutiqueBodyQueryThemeDoc : boutique avec un document de design explicite.
+func BoutiqueBodyQueryThemeDoc(d *design.Document, s *catalog.Store, q url.Values, t catalog.Theme) string {
+	return boutiqueBodyQueryDoc(d, s, q, t)
 }
 
 func boutiqueBodyQuery(s *catalog.Store, q url.Values, t catalog.Theme) string {
+	return boutiqueBodyQueryDoc(design.Current(), s, q, t)
+}
+
+func boutiqueBodyQueryDoc(d *design.Document, s *catalog.Store, q url.Values, t catalog.Theme) string {
 	prefiltered := HasFilterParam(q)
 	hubHidden, listHidden := "", " hidden"
 	if prefiltered {
 		hubHidden, listHidden = " hidden", ""
 	}
-	return HeaderTheme(s, "", "", t) + `
+	return HeaderThemeDoc(d, s, "", "", t) + `
 <div class="wrap">
 <div class="crumb"><a href="index.html">Accueil</a> › Store</div>
 ` + HubHTML(s, hubHidden) + `
@@ -334,7 +349,7 @@ func boutiqueBodyQuery(s *catalog.Store, q url.Values, t catalog.Theme) string {
 <p style="color:#666">` + fmt.Sprint(len(s.Products)) + ` produits · inventaire du 21 septembre 2026 + produits du store — prix et disponibilités à confirmer avant commande.</p>
 ` + CatalogWrap(s, SortedStockFirst(s.Products), "", "sub_slug", "", "grid", nil, "") + `
 </div></div></div>
-` + Footer(s, "")
+` + FooterDoc(d, s, "")
 }
 
 // ---------- Catégories ----------

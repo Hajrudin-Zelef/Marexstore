@@ -154,3 +154,32 @@ func (d *Document) List(section, key string) []map[string]any {
 func (d *Document) Has(section string) bool {
 	return d.section(section) != nil
 }
+
+// WithTx : copie du document avec des textes surchargés (aperçu brouillon).
+// Le document d'origine n'est pas modifié (immuabilité conservée), donc
+// aucune requête publique ne peut voir un brouillon.
+func WithTx(base *Document, tx map[string]string) *Document {
+	if len(tx) == 0 {
+		return base
+	}
+	var raw map[string]any
+	var version int
+	if base != nil {
+		raw = base.raw
+		version = base.version
+	}
+	cp := make(map[string]any, len(raw)+1)
+	for k, v := range raw {
+		cp[k] = v
+	}
+	cur, _ := cp["Tx"].(map[string]any)
+	merged := make(map[string]any, len(cur)+len(tx))
+	for k, v := range cur {
+		merged[k] = v
+	}
+	for k, v := range tx {
+		merged[k] = v
+	}
+	cp["Tx"] = merged
+	return &Document{raw: cp, version: version}
+}

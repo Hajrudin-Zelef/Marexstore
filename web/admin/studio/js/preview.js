@@ -47,6 +47,16 @@ function previewURL(){
   q.set('annonce_texte',t.annonce_texte);
   if(t.sections&&t.sections.length)q.set('sections',t.sections.join(','));
   if(t.css)q.set('css',t.css);
+  // Textes modifiés (brouillon) → t_<clé>=valeur. Uniquement le diff par
+  // rapport au dernier état publié/base : URL courte, et l'URL change dès
+  // qu'un texte change (sinon l'iframe ne recharge jamais).
+  try{
+    const base=JSON.parse(pubSnap||'{}'), bTx=(base&&base.Tx)||{};
+    Object.keys(Tx).forEach(function(k){
+      const v=(Tx[k]==null?'':String(Tx[k]));
+      if(v!==(bTx[k]==null?'':String(bTx[k]))) q.set('t_'+k, v);
+    });
+  }catch(_){}
   let page='accueil';
   if(currentTab==='boutique'||currentTab==='panier')page='boutique';
   else if(currentTab==='fiche')page='fiche';

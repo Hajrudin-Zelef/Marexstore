@@ -529,6 +529,25 @@ func ficheOptsFromQuery(q url.Values) render.FicheOpts {
 	return o
 }
 
+// previewTxOverrides : textes de brouillon passés en query (t_<clé>=valeur).
+// Bornes défensives (clé non vide, valeur ≤ 2000 octets, 400 clés max) :
+// l'aperçu est admin, mais aucune requête ne doit pouvoir peser sur la mémoire.
+func previewTxOverrides(q url.Values) map[string]string {
+	out := map[string]string{}
+	for k, vs := range q {
+		if !strings.HasPrefix(k, "t_") || len(vs) == 0 {
+			continue
+		}
+		key := strings.TrimPrefix(k, "t_")
+		v := vs[0]
+		if key == "" || len(v) > 2000 || len(out) >= 400 {
+			continue
+		}
+		out[key] = v
+	}
+	return out
+}
+
 // AdminDesignPreview : rendu de la vraie page (brouillon POST / query string
 // ou thème live en GET). Phase A1 : la page complète (en-tête + corps + pied
 // de page) avec le thème brouillon, pour l'aperçu réel du Studio.
@@ -545,11 +564,18 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 		th = themeFromForm(r)
 	}
 	q := r.URL.Query()
+	// Textes en brouillon : le Studio envoie t_<clé>=<valeur> (uniquement les
+	// textes modifiés). Surcharge locale à l'aperçu — le design publié n'est
+	// jamais modifié, aucune requête publique ne voit le brouillon.
+	doc := design.Current()
+	if ov := previewTxOverrides(q); len(ov) > 0 {
+		doc = design.WithTx(doc, ov)
+	}
 	var body, title string
 	switch q.Get("page") {
 	case "boutique":
 		title = "Store — aperçu"
-		body = render.BoutiqueBodyQueryTheme(a.Store, q, th)
+		body = render.BoutiqueBodyQueryThemeDoc(doc, a.Store, q, th)
 	case "fiche":
 		p := a.Store.BySlug[q.Get("slug")]
 		if p == nil && len(a.Store.Products) > 0 {
@@ -560,10 +586,10 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		title = p.Nom + " — aperçu"
-		body = render.HeaderTheme(a.Store, "", "", th) + render.FicheBodyOpts(a.Store, p, ficheOptsFromQuery(q)) + "\n" + render.Footer(a.Store, "")
-	default: // accueil (IndexBodyTheme inclut déjà en-tête + pied de page)
+		body = render.HeaderThemeDoc(doc, a.Store, "", "", th) + render.FicheBodyOpts(a.Store, p, ficheOptsFromQuery(q)) + "\n" + render.FooterDoc(doc, a.Store, "")
+	default: // accueil (IndexBodyThemeDoc inclut déjà en-tête + pied de page)
 		title = "Accueil — aperçu"
-		body = render.IndexBodyTheme(a.Store, a.Recents, th)
+		body = render.IndexBodyThemeDoc(doc, a.Store, a.Recents, th)
 	}
 	// <base href="/"> : la page est servie sous /admin/design/apercu mais ses
 	// URLs relatives (assets/, images/, produits/) visent la racine du site.
