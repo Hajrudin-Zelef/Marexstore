@@ -401,7 +401,7 @@ function T(k){return Tx[k]!==undefined?Tx[k]:''}
 
 const PATHS={boutique:'/boutique',fiche:'/produit/hp-elitebook-850-g3',panier:'/panier',compte:'/compte',header:'/',footer:'/',menu:'/boutique',seo:'/',reglages:'/'};
 
-let BASE=null,ORIGIN=null,pubSnap=null,hist=[],hi=0,restoring=false,histTimer=null;
+let BASE=null,ORIGIN=null,pubSnap=null,savedSnap=null,draftMeta=null,hist=[],hi=0,restoring=false,histTimer=null;
 
 const SEGS={segTitle:'front.titleSize',segBtn:'front.btnShape',segCard:'front.cardLayout',segShopLayout:'shop.layout',segShopPer:'shop.perPage',segShopPage:'shop.previewPage',segSimNb:'fiche.similarNb',segGallery:'fiche.gallery'};
 
@@ -411,7 +411,8 @@ const snap=()=>JSON.stringify({front,rows,shop,fiche,panier,Tx,txtPages,menu,seo
 
 function updateStatus(){
   if(!BASE||restoring)return;
-  const dirty=snap()!==pubSnap;
+  const base=savedSnap||pubSnap;
+  const dirty=savedSnap?snap()!==savedSnap:snap()!==pubSnap;
   $('#status').classList.toggle('dirty',dirty); $('#statusTxt').textContent=dirty?'Brouillon — non publié':((window.__STUDIO_DESIGN_VERSION__|0)>0?'Publié':'Aucune version publiée');
   // Compteur de modifications : recalculé ici (l'aperçu serveur ne déclenche
   // pas renderCountersV16, faute de #root dans l'iframe).

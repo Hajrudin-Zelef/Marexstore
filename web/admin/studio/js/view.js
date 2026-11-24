@@ -720,8 +720,11 @@ function openChangeListV16(mods){const settings=$('#studioNav button[data-tab="r
 
 let __pubBaseRaw=null,__pubBaseObj=null;
 function renderCountersV16(){
- if(!pubSnap)return;
- if(pubSnap!==__pubBaseRaw){try{__pubBaseObj=JSON.parse(pubSnap);__pubBaseRaw=pubSnap}catch(_){return}}
+ /* Référence = dernier état SAUVEGARDÉ (bouton Sauvegarder), sinon publié :
+    c'est ce qui définit « modifications en attente ». */
+ const ref=savedSnap||pubSnap;
+ if(!ref)return;
+ if(ref!==__pubBaseRaw){try{__pubBaseObj=JSON.parse(ref);__pubBaseRaw=ref}catch(_){return}}
  const base=__pubBaseObj;if(!base)return;
  /* Chaque clé de texte appartient à UN seul module (le premier déclaré) :
     sans ça, `bienvenue` (listée dans Front et En-tête) comptait 2 fois.

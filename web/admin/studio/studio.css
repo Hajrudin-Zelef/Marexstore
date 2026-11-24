@@ -480,3 +480,22 @@ svg.e{width:1em;height:1em;vertical-align:-.14em;stroke-width:1.6}
 .pub-input:focus{outline:2px solid #22c55e;outline-offset:1px}
 .pub-err{color:#b91c1c;font-size:12.5px;font-weight:700;margin:8px 0 0}
 .pub-act{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+
+/* Sauvegarde explicite + compteur de modifications en attente */
+.save-wrap{position:relative;display:inline-flex;align-items:center;gap:6px}
+.btn-save{border:1px solid rgba(255,255,255,.18)}
+.btn-save:disabled{opacity:.45;cursor:default}
+.btn-save.has-pending{box-shadow:0 0 0 2px rgba(250,204,21,.55)}
+.pending-badge{min-width:22px;height:22px;border-radius:999px;border:0;background:#dc2626;color:#fff;font-size:11.5px;font-weight:800;line-height:22px;padding:0 6px;cursor:pointer;box-shadow:0 2px 6px rgba(220,38,38,.45)}
+.pending-badge:hover{filter:brightness(1.08)}
+.pending-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:120;width:290px;background:#fff;color:#111;border:1px solid #e2e6e2;border-radius:12px;box-shadow:0 18px 40px -16px rgba(0,0,0,.45);padding:12px 14px}
+.pend-head{margin:0 0 8px;font-weight:800;font-size:13px;color:#b91c1c}
+.pend-list{list-style:none;margin:0;padding:0}
+.pend-list li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:3px 0;border-top:1px solid #f0f2f0}
+.pend-list li:first-child{border-top:0}
+.pend-list b{color:#166534}
+.pend-more{color:#6b7280;font-style:italic}
+.pend-foot{margin:8px 0 0;font-size:11.5px;color:#6b7280}
+.pend-empty{margin:0;font-size:12.5px;color:#6b7280}
+.draft-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#eff6ff;border-bottom:1px solid #bfdbfe;color:#1e3a8a;font-size:12.5px;padding:8px 18px}
+.draft-banner .btn{padding:4px 10px;font-size:12px}
