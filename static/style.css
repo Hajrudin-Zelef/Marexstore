@@ -1025,3 +1025,11 @@ img{height:auto}
 @media(max-width:1000px){.about-pro .sol-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.about-pro .sol-cards{grid-template-columns:1fr}.about-pro .sol-card:first-child{grid-column:auto}.about-pro .banner{padding:28px 22px}.about-pro .banner>div:last-child,.about-pro .banner .btn{width:100%}}
 @media(max-width:560px){.about-pro .stats{grid-template-columns:1fr}}
+
+/* Panier : moyens de paiement actifs (injectés par app.js, HTML serveur intact) */
+.cart-pay{margin:0 0 12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)}
+.cart-pay .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2);margin-bottom:6px}
+.cart-pay .cp-row{display:flex;align-items:center;gap:8px;font-size:13.5px;padding:4px 0;cursor:pointer}
+.cart-pay .cp-row input{accent-color:var(--brand);width:16px;height:16px}
+.cart-pay .cp-lab{flex:1}
+.cart-pay .cp-num{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text2)}

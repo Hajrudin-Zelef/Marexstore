@@ -101,6 +101,54 @@
     /* ---------- Panier (volet latéral, conservé dans le navigateur) ---------- */
     var CART_KEY = 'mediatec-panier-v1';
     var WA_NUMBER = '2250705087507';
+
+    /* ---------- Moyens de paiement actifs (réglages admin) ----------
+       Chargés depuis /api/paiements, injectés dans le tiroir panier.
+       Aucun HTML serveur n'est modifié : la page publique reste identique
+       (parité v3.25) et le bloc n'apparaît que si un moyen est activé. */
+    var PAIEMENTS = [];
+    var paiementChoisi = '';
+    function chargerPaiements() {
+      fetch('/api/paiements', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { PAIEMENTS = (j && j.paiements) || []; renderPaiements(); })
+        .catch(function () {});
+    }
+    function libellePaiement(cle) {
+      for (var i = 0; i < PAIEMENTS.length; i++) { if (PAIEMENTS[i].cle === cle) return PAIEMENTS[i]; }
+      return null;
+    }
+    function renderPaiements() {
+      var host = document.querySelector('[data-cart-paiement]');
+      if (!host) {
+        var foot = document.querySelector('.drawer-foot');
+        if (!foot || !PAIEMENTS.length) return;
+        host = document.createElement('div');
+        host.className = 'cart-pay';
+        host.setAttribute('data-cart-paiement', '');
+        foot.insertBefore(host, foot.firstChild);
+      }
+      if (!PAIEMENTS.length) { host.innerHTML = ''; host.hidden = true; return; }
+      host.hidden = false;
+      // un seul moyen actif → présélectionné (zéro friction)
+      if (!paiementChoisi && PAIEMENTS.length === 1) paiementChoisi = PAIEMENTS[0].cle;
+      host.innerHTML = '<div class="cp-titre">Moyen de paiement</div>' + PAIEMENTS.map(function (p) {
+        var on = p.cle === paiementChoisi ? ' checked' : '';
+        var num = p.numero ? '<span class="cp-num">' + p.numero + '</span>' : '';
+        return '<label class="cp-row"><input type="radio" name="cart-paiement" value="' + p.cle + '"' + on + '>' +
+          '<span class="cp-lab">' + p.libelle + '</span>' + num + '</label>';
+      }).join('');
+      host.querySelectorAll('input[name="cart-paiement"]').forEach(function (inp) {
+        inp.addEventListener('change', function () {
+          paiementChoisi = inp.value;
+          renderCart();
+        });
+      });
+    }
+    document.addEventListener('change', function (e) {
+      var inp = e.target.closest ? e.target.closest('input[name="cart-paiement"]') : null;
+      if (inp) paiementChoisi = inp.value;
+    });
     function loadCart() { try { return JSON.parse(window.localStorage.getItem(CART_KEY)) || []; } catch (e) { return []; } }
     function saveCart(c) { try { window.localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) {} }
     var cart = loadCart();
@@ -156,10 +204,15 @@
           order.classList.remove('disabled');
           var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
           var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n') + '\nTotal : ' + fmt(cartSubtotal());
+          var p = paiementChoisi ? libellePaiement(paiementChoisi) : null;
+          if (p) {
+            msg += '\nPaiement : ' + p.libelle + (p.numero ? ' — numéro ' + p.numero : '');
+          }
           order.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
         }
       }
     }
+    chargerPaiements();
     document.addEventListener('click', function (e) {
       var add = e.target.closest('[data-add-cart]');
       if (add) {

@@ -597,7 +597,7 @@ func (a *App) AdminDesignPreview(w http.ResponseWriter, r *http.Request) {
 	}
 	// <base href="/"> : la page est servie sous /admin/design/apercu mais ses
 	// URLs relatives (assets/, images/, produits/) visent la racine du site.
-	extra := render.ThemeHead(th) + `<script src="/static/theme.js?v=2" defer></script><script src="/static/app.js?v=342" defer></script><script src="/static/htmx.min.js?v=1912" defer></script><script src="/static/mirror.js?v=1" defer></script>`
+	extra := render.ThemeHead(th) + `<script src="/static/theme.js?v=2" defer></script><script src="/static/app.js?v=343" defer></script><script src="/static/htmx.min.js?v=1912" defer></script><script src="/static/mirror.js?v=1" defer></script>`
 	s := render.DocTheme(title, body, "", extra, th.HtmlAttrs())
 	a.write(w, 200, absolutizePreview(s))
 }
