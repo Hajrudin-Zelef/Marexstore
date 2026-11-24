@@ -800,30 +800,97 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 		set("maintenance", maint)
 		set("maintenance_message", strings.TrimSpace(r.FormValue("maintenance_message")))
 		set("whatsapp", strings.TrimSpace(r.FormValue("whatsapp")))
+
+		payOn := func(name string) string {
+			if r.FormValue(name) == "1" {
+				return "1"
+			}
+			return "0"
+		}
+		set("paiement_orange_on", payOn("paiement_orange_on"))
+		set("paiement_orange_numero", strings.TrimSpace(r.FormValue("paiement_orange_numero")))
+		set("paiement_mtn_on", payOn("paiement_mtn_on"))
+		set("paiement_mtn_numero", strings.TrimSpace(r.FormValue("paiement_mtn_numero")))
+		set("paiement_wave_on", payOn("paiement_wave_on"))
+		set("paiement_wave_numero", strings.TrimSpace(r.FormValue("paiement_wave_numero")))
+		set("paiement_moov_on", payOn("paiement_moov_on"))
+		set("paiement_moov_numero", strings.TrimSpace(r.FormValue("paiement_moov_numero")))
+		set("paiement_cod_on", payOn("paiement_cod_on"))
+
 		a.auditAdmin(r, "reglages.enregistrer", "maintenance="+maint)
 		http.Redirect(w, r, "/admin/reglages?msg=R%C3%A9glages+enregistr%C3%A9s", http.StatusSeeOther)
 		return
 	}
+
 	maint := get("maintenance", "0")
 	mmsg := get("maintenance_message", "Boutique en maintenance, retour très vite.")
 	wa := get("whatsapp", a.Cfg.WhatsApp)
-	chk := ""
+
+	payOrangeOn := get("paiement_orange_on", "0")
+	payOrangeNum := get("paiement_orange_numero", "")
+	payMtnOn := get("paiement_mtn_on", "0")
+	payMtnNum := get("paiement_mtn_numero", "")
+	payWaveOn := get("paiement_wave_on", "0")
+	payWaveNum := get("paiement_wave_numero", "")
+	payMoovOn := get("paiement_moov_on", "0")
+	payMoovNum := get("paiement_moov_numero", "")
+	payCodOn := get("paiement_cod_on", "0")
+
 	status := `<div class="mx-notice" style="margin-bottom:16px">Boutique <strong>en ligne</strong> — les visiteurs voient le catalogue normalement.</div>`
 	if maint == "1" {
-		chk = " checked"
 		status = `<div class="mx-notice warn" style="margin-bottom:16px">Mode maintenance <strong>actif</strong> — la boutique affiche un message aux visiteurs, /admin reste accessible.</div>`
 	}
-	a.write(w, 200, a.adminPage("Réglages", "reglages", status+
-		`<form method="post"><input type="hidden" name="csrf" value="`+a.adminCSRF()+`">
-<div class="mx-fsec" style="max-width:640px"><h3>Boutique</h3>
-<label class="mx-switch-row"><span class="mx-switch-tx"><strong>Mode maintenance</strong><span class="hint">La boutique affiche un message, /admin reste accessible.</span></span><span class="mx-switch"><input type="checkbox" name="maintenance" value="1"`+chk+`><span class="mx-switch-sl"></span></span></label>
-<div class="mx-fgrid"><label class="span2">Message de maintenance <input name="maintenance_message" value="`+render.Esc(mmsg)+`"></label></div>
-</div>
-<div class="mx-fsec" style="max-width:640px"><h3>Contact</h3>
-<div class="mx-fgrid"><label class="span2">WhatsApp <input name="whatsapp" value="`+render.Esc(wa)+`"></label></div>
+
+	var b strings.Builder
+	b.WriteString(`<form method="post"><input type="hidden" name="csrf" value="` + a.adminCSRF() + `">`)
+	b.WriteString(reglagesSectionBoutique(maint, mmsg))
+	b.WriteString(reglagesSectionContact(wa))
+	b.WriteString(reglagesSectionPaiement(payOrangeOn, payOrangeNum, payMtnOn, payMtnNum, payWaveOn, payWaveNum, payMoovOn, payMoovNum, payCodOn))
+	b.WriteString(`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`)
+
+	a.write(w, 200, a.adminPage("Réglages", "reglages", status+b.String(), r))
+}
+
+// reglagesSectionBoutique : bloc "Boutique" (mode maintenance + message).
+func reglagesSectionBoutique(maint, mmsg string) string {
+	chk := ""
+	if maint == "1" {
+		chk = " checked"
+	}
+	return `<div class="mx-fsec" style="max-width:640px"><h3>Boutique</h3>
+<label class="mx-switch-row"><span class="mx-switch-tx"><strong>Mode maintenance</strong><span class="hint">La boutique affiche un message, /admin reste accessible.</span></span><span class="mx-switch"><input type="checkbox" name="maintenance" value="1"` + chk + `><span class="mx-switch-sl"></span></span></label>
+<div class="mx-fgrid"><label class="span2">Message de maintenance <input name="maintenance_message" value="` + render.Esc(mmsg) + `"></label></div>
+</div>`
+}
+
+// reglagesSectionContact : bloc "Contact" (WhatsApp).
+func reglagesSectionContact(wa string) string {
+	return `<div class="mx-fsec" style="max-width:640px"><h3>Contact</h3>
+<div class="mx-fgrid"><label class="span2">WhatsApp <input name="whatsapp" value="` + render.Esc(wa) + `"></label></div>
 <p class="hint">Appliqué au redémarrage du conteneur.</p>
-</div>
-<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`, r))
+</div>`
+}
+
+// reglagesSectionPaiement : bloc "Paiement" (Orange Money, MTN MoMo, Wave, Moov Money, à la livraison).
+func reglagesSectionPaiement(orangeOn, orangeNum, mtnOn, mtnNum, waveOn, waveNum, moovOn, moovNum, codOn string) string {
+	sw := func(name, label, hint, numVal string, on string, showNumero bool) string {
+		chk := ""
+		if on == "1" {
+			chk = " checked"
+		}
+		numField := ""
+		if showNumero {
+			numField = `<div class="mx-fgrid"><label class="span2">Numéro marchand <input name="` + name + `_numero" value="` + render.Esc(numVal) + `"></label></div>`
+		}
+		return `<label class="mx-switch-row"><span class="mx-switch-tx"><strong>` + label + `</strong><span class="hint">` + hint + `</span></span><span class="mx-switch"><input type="checkbox" name="` + name + `_on" value="1"` + chk + `><span class="mx-switch-sl"></span></span></label>` + numField
+	}
+	return `<div class="mx-fsec" style="max-width:640px"><h3>Paiement</h3>` +
+		sw("paiement_orange", "Orange Money", "Paiement via Orange Money", orangeNum, orangeOn, true) +
+		sw("paiement_mtn", "MTN Mobile Money", "Paiement via MTN MoMo", mtnNum, mtnOn, true) +
+		sw("paiement_wave", "Wave", "Paiement via Wave", waveNum, waveOn, true) +
+		sw("paiement_moov", "Moov Money", "Paiement via Moov Money", moovNum, moovOn, true) +
+		sw("paiement_cod", "Paiement à la livraison", "Le client paie en espèces à la réception", "", codOn, false) +
+		`</div>`
 }
 
 // mergeGallery : fusionne les extras existants (moins les suppressions
