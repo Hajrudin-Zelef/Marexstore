@@ -79,8 +79,12 @@ function previewURL(){
 }
 function renderPreview(){
   updateStatus(); setPath();
+  if(currentTab==='seo'||currentTab==='textes'){
+    clearTimeout(pvTimer); pvCurrentURL='';
+    pvReady=false; pvI.srcdoc=mockupShellHTML(); if(currentTab==='seo')pvSeo(); else pvTextes(); return;
+  }
   const url=previewURL();
-  if(url===pvCurrentURL)return; // déjà affiché
+  if(url===pvCurrentURL){pvFocus();return;} // déjà affiché
   clearTimeout(pvTimer);
   /* Différé : ne pas relancer un rendu serveur à chaque frappe, attendre
      que l'utilisateur marque une pause (~400 ms). */
@@ -515,3 +519,36 @@ function applyV16Preview(){
  renderCountersV16();
 }
 
+
+/* Aperçu : montrer la zone correspondant à l'onglet choisi */
+let pvFocused='';
+function pvFocus(){
+  const d=pvI.contentDocument, w=pvI.contentWindow;
+  if(!d||!d.body||pvI.hasAttribute('srcdoc'))return;
+  const mega=d.querySelector('[data-mega-panel]');
+  if(mega&&pvFocused==='menu'&&currentTab!=='menu')mega.hidden=true;
+  if(pvFocused==='footer'&&currentTab!=='footer')w.scrollTo({top:0,behavior:'instant'});
+  pvFocused=currentTab;
+  [['panier','[data-cart-drawer],[data-cart-overlay]'],
+   ['compte','[data-auth-modal],[data-auth-overlay]']].forEach(function(p){
+    d.querySelectorAll(p[1]).forEach(function(el){el.classList.toggle('open',currentTab===p[0]);});
+  });
+  if(currentTab==='menu'&&mega){w.scrollTo({top:0,behavior:'instant'});mega.hidden=false;}
+  if(currentTab==='footer'){
+    const go=function(){
+      if(currentTab!=='footer')return;
+      const f=d.querySelector('footer');
+      const y=f?f.getBoundingClientRect().top+w.scrollY:d.documentElement.scrollHeight;
+      w.scrollTo({top:y,behavior:'instant'});
+    };
+    go(); setTimeout(go,600);
+  }
+}
+pvI.addEventListener('load',function(){pvFocused='';pvFocus();});
+
+/* Textes : rafraîchir quand on change de page ou qu'on écrit */
+['change','input'].forEach(function(ev){
+  document.addEventListener(ev,function(e){
+    if(e.target.id==='selTxtPage'||e.target.id==='taTxtPage')setTimeout(function(){renderPreview();},0);
+  });
+});
