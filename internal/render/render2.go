@@ -432,7 +432,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=337">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=338">
 <script src="` + prefix + `assets/theme.js?v=2"></script>
 ` + extraHead
 }
@@ -609,6 +609,37 @@ func FicheBodyOptsDoc(d *design.Document, s *catalog.Store, p *catalog.RawProduc
 	if o.Similar {
 		simHTML = `<div class="sec"><h2>` + escTx(d.Text("similaires", "Produits similaires")) + `</h2><div class="catalog view-grid">` + sim.String() + `</div></div>`
 	}
+	// Modèles de la gamme : pastilles des autres modèles réels de la même
+	// gamme (marque + ligne/série), modèle courant actif, prix quand il
+	// existe. Affiché seulement si la gamme compte au moins 2 modèles.
+	gammeHTML := ""
+	if sibs := s.GammeSiblings(p); len(sibs) > 0 {
+		var chips strings.Builder
+		chip := func(g *catalog.RawProduct, actif bool) {
+			price := ""
+			if g.PrixAffiche() != nil {
+				price = `<span class="gprix">` + esc(catalog.FmtPrix(g.PrixAffiche())) + `</span>`
+			}
+			if actif {
+				chips.WriteString(`<span class="gchip on">` + esc(catalog.GammeChipLabel(g)) + price + `</span>`)
+			} else {
+				chips.WriteString(`<a class="gchip" href="../produits/` + esc(g.Slug) + `.html">` + esc(catalog.GammeChipLabel(g)) + price + `</a>`)
+			}
+		}
+		chip(p, true)
+		shown := 0
+		for _, g := range sibs {
+			if shown >= 7 {
+				break
+			}
+			chip(g, false)
+			shown++
+		}
+		if reste := len(sibs) - shown; reste > 0 {
+			chips.WriteString(`<span class="gchip more">+` + fmt.Sprint(reste) + `</span>`)
+		}
+		gammeHTML = `<div class="gamme"><div class="gamme-t">` + escTx(d.Text("gamme", "Modèles de la gamme")) + ` <span>` + esc(catalog.GammeLabel(p)) + `</span></div><div class="gamme-chips">` + chips.String() + `</div></div>`
+	}
 	gal := `<div class="gal">` + `<div class="noimg">Photo à venir</div>` + `</div>`
 	if p.Image != "" {
 		gal = `<div class="gal">` + ImgTag(p, "../") + `</div>`
@@ -674,7 +705,7 @@ func FicheBodyOptsDoc(d *design.Document, s *catalog.Store, p *catalog.RawProduc
 <div class="qty">Quantité <input id="qty" type="number" value="1" min="1"> <span style="color:#666">` + esc(stock) + `</span></div>
 ` + addBtn + `
 ` + devisBtn + `
-` + waBtn + `
+` + waBtn + gammeHTML + `
 <div style="margin-top:12px;color:#666;font-size:13px">` + escTx(d.Text("fiche_ref", "Réf.")) + ` ` + esc(nonVide(p.RefFabricant, p.Ref)) + ` · Marque : ` + esc(marque) + `</div>
 </div></div>
 <div class="ptabs" data-reveal data-tabs>

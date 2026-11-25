@@ -262,7 +262,12 @@
   ],
   "stock": 14,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/asus-zenbook-u5-qwerty-ux3405c-2.jpg",
+   "images/asus-zenbook-u5-qwerty-ux3405c-3.jpg",
+   "images/asus-zenbook-u5-qwerty-ux3405c-4.jpg"
+  ]
  },
  {
   "accroche": "Ultrabook 14 pouces OLED : Intel Core Ultra 7, écran tactile OLED lumineux, 1,28 kg et Wi-Fi 7.",
@@ -361,7 +366,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/asus-zenbook-u7-qwerty-ux3405c-2.jpg",
+   "images/asus-zenbook-u7-qwerty-ux3405c-3.jpg",
+   "images/asus-zenbook-u7-qwerty-ux3405c-4.jpg"
+  ]
  },
  {
   "accroche": "Ultrabook professionnel 14 pouces : châssis magnésium de 1,36 kg, écran Full HD, processeur Intel Core i5/i7 et batterie 60 Wh.",
@@ -453,7 +463,12 @@
   "stock": 3,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/dell-1.jpg",
   "store_url": "https://mediatec-ci.com/product/dell-latitude-7480/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/dell-latitude-latitude-7480-2.jpg",
+   "images/dell-latitude-latitude-7480-3.jpg",
+   "images/dell-latitude-latitude-7480-4.jpg"
+  ]
  },
  {
   "accroche": "Portable professionnel 15,6 pouces : écran Full HD IPS, sécurité renforcée et châssis aluminium élégant.",
@@ -627,7 +642,12 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/hp-probook-440-g10-9g2l4et-2.jpg",
+   "images/hp-probook-440-g10-9g2l4et-3.jpg",
+   "images/hp-probook-440-g10-9g2l4et-4.jpg"
+  ]
  },
  {
   "accroche": "Portable professionnel 16 pouces : processeur Intel Core Ultra avec NPU IA, écran WUXGA IPS 16:10, DDR5 et pavé numérique.",
@@ -872,7 +892,12 @@
   "store_image": null,
   "image_source_final": "lot",
   "prix_boutique": 900000,
-  "prix_avant": 975000
+  "prix_avant": 975000,
+  "extras": [
+   "images/lenovo-thinkpad-e14g5-21jk00dagq-2.jpg",
+   "images/lenovo-thinkpad-e14g5-21jk00dagq-3.jpg",
+   "images/lenovo-thinkpad-e14g5-21jk00dagq-4.jpg"
+  ]
  },
  {
   "accroche": "Portable professionnel ThinkPad 14 pouces, robuste et réparable : processeur Intel Core de 4e génération, double batterie et clavier ThinkPad.",
@@ -959,7 +984,11 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/laptop-lenovo-t440-3.jpg",
+   "images/laptop-lenovo-t440-4.jpg"
+  ]
  },
  {
   "accroche": "Serveur rack 1U compact : un processeur Intel Xeon 6 jusqu'à 144 cœurs, mémoire DDR5 jusqu'à 6 400 MT/s et stockage NVMe Gen5.",
@@ -1039,7 +1068,12 @@
   "stock": 3,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/serveur-1.avif",
   "store_url": "https://mediatec-ci.com/product/serveur-dell-r470/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/dell-r470-2.jpg",
+   "images/dell-r470-3.jpg",
+   "images/dell-r470-4.jpg"
+  ]
  },
  {
   "accroche": "Écran compact 17 pouces au format 5:4, robuste et économique, idéal pour les caisses, les postes de contrôle et les petits espaces.",
@@ -1136,7 +1170,12 @@
   "stock": 2,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/dell3.avif",
   "store_url": "https://mediatec-ci.com/product/ecran-dell-e1715s/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/ecran-dell-e1715s-2.jpg",
+   "images/ecran-dell-e1715s-3.jpg",
+   "images/ecran-dell-e1715s-4.jpg"
+  ]
  },
  {
   "accroche": "Grand écran bureautique 27 pouces Full HD IPS, lumineux (300 cd/m²), avec DisplayPort et technologie ComfortView anti-fatigue visuelle.",
@@ -1229,7 +1268,12 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/dell2-2.jpg",
   "store_url": "https://mediatec-ci.com/product/ecran-dell-e2720h/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/ecran-dell-e2720h-2.jpg",
+   "images/ecran-dell-e2720h-3.jpg",
+   "images/ecran-dell-e2720h-4.jpg"
+  ]
  },
  {
   "accroche": "Écran professionnel 23,8 pouces Full HD IPS avec cadre micro-bord sur 3 côtés et pied réglable en hauteur, pivot et rotation.",
@@ -1331,7 +1375,11 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/E243.jpg",
   "store_url": "https://mediatec-ci.com/product/ecran-hp-elite-m243/",
   "image_source_final": "store",
-  "prix_boutique": 190000
+  "prix_boutique": 190000,
+  "extras": [
+   "images/ecran-hp-elite-m243-2.jpg",
+   "images/ecran-hp-elite-m243-4.jpg"
+  ]
  },
  {
   "accroche": "Écran bureautique 18,5 pouces HD, simple et économique, avec HDMI et VGA pour équiper un poste de travail à petit budget.",
@@ -1432,7 +1480,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/hp1.jpg",
   "store_url": "https://mediatec-ci.com/product/ecran-hp-p19b-g4/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/ecran-hp-p19b-g4-2.jpg",
+   "images/ecran-hp-p19b-g4-3.jpg"
+  ]
  },
  {
   "accroche": "Grand écran 27 pouces Full HD IPS à 100 Hz, couleurs 99 % sRGB et design fin sans bordure — fluide pour le travail comme pour le divertissement.",
@@ -1534,7 +1586,11 @@
   "store_image": null,
   "image_source_final": "lot",
   "prix_boutique": 150000,
-  "prix_avant": 170000
+  "prix_avant": 170000,
+  "extras": [
+   "images/ecran-hp-serie-527sf-s527sf-2.jpg",
+   "images/ecran-hp-serie-527sf-s527sf-3.jpg"
+  ]
  },
  {
   "accroche": "Écran professionnel 23,8 pouces Full HD IPS sans bordure, avec hub USB et pied ergonomique complet — certifié confort visuel TÜV Rheinland.",
@@ -1635,7 +1691,12 @@
   "stock": 2,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/ecran-lenovo.jpg",
   "store_url": "https://mediatec-ci.com/product/ecran-lenovo-thinkvision-t24i-20/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/ecran-lenovo-thinkvision-t24i-20-2.jpg",
+   "images/ecran-lenovo-thinkvision-t24i-20-3.jpg",
+   "images/ecran-lenovo-thinkvision-t24i-20-4.jpg"
+  ]
  },
  {
   "accroche": "Écran 27 pouces 4K UHD IPS avec USB-C (charge jusqu'à 90 W), HDR 400 et couleurs DCI-P3 95 % — le choix des créatifs et des postes exigeants.",
@@ -1739,7 +1800,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/lg-monitor-27-27up85np-w-2.jpg",
+   "images/lg-monitor-27-27up85np-w-3.jpg"
+  ]
  },
  {
   "accroche": "Antenne extérieure 5 GHz 802.11ac avec panneau 24 dBi intégré et RouterBOARD — liaison point à point longue distance robuste, étanche IP54.",
@@ -1840,7 +1905,10 @@
   "stock": 3,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/mikrotik.webp",
   "store_url": "https://mediatec-ci.com/product/microtic-qrt5ac/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/microtic-qrt5ac-4.jpg"
+  ]
  },
  {
   "accroche": "Switch manageable 24 ports Gigabit avec 12 ports PoE+ (budget 195 W) et 2 liaisons fibre SFP — pour alimenter caméras, bornes Wi-Fi et téléphones IP sans injecteurs.",
@@ -1937,7 +2005,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/switch-aruba.jpg",
   "store_url": "https://mediatec-ci.com/product/switch-hpe-aruba-instant-on-1830/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/switch-hpe-aruba-instant-on-1830-3.jpg",
+   "images/switch-hpe-aruba-instant-on-1830-4.jpg"
+  ]
  },
  {
   "accroche": "Écran Dell en stock — modèle exact non identifié à partir de la référence 020CR8, à confirmer sur l'étiquette de l'appareil.",
@@ -2094,7 +2166,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/scanner-epson-lq2190-3.jpg",
+   "images/scanner-epson-lq2190-4.jpg"
+  ]
  },
  {
   "accroche": "Scanner de documents A3 compact : 60 pages/min, chargeur de 100 feuilles et jusqu'à 18 000 pages par jour.",
@@ -2206,7 +2282,12 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/ricoh-fi7460-scanner-fi7460-2.jpg",
+   "images/ricoh-fi7460-scanner-fi7460-3.jpg",
+   "images/ricoh-fi7460-scanner-fi7460-4.jpg"
+  ]
  },
  {
   "accroche": "Module d'extension 24 ports SFP Gigabit pour commutateurs HP ProCurve 5400zl et 8200zl.",
@@ -2276,7 +2357,11 @@
   ],
   "stock": 4,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/procurve-j8706a-2.jpg",
+   "images/procurve-j8706a-3.jpg"
+  ]
  },
  {
   "accroche": "Kit de fusion d'origine HP 220 V pour imprimante Color LaserJet 5550 : durée de vie d'environ 150 000 pages.",
@@ -2329,7 +2414,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/hp-q3985a-qrt5ac-2.jpg",
+   "images/hp-q3985a-qrt5ac-3.jpg",
+   "images/hp-q3985a-qrt5ac-4.jpg"
+  ]
  },
  {
   "accroche": "Scanner de production A3 : 110 pages/min en recto-verso, chargeur de 300 feuilles et volume jusqu'à 35 000 pages par jour.",
@@ -2427,7 +2517,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kodak-i3500-2.jpg",
+   "images/kodak-i3500-3.jpg",
+   "images/kodak-i3500-4.jpg"
+  ]
  },
  {
   "accroche": "Accessoire à plat A4/Legal qui se loge sous votre scanner Kodak E1000, S2000 ou N2000 pour numériser livres, reliures et documents fragiles.",
@@ -2505,7 +2600,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kodak-a4-legal-integrated-a4-legal-size-2.jpg",
+   "images/kodak-a4-legal-integrated-a4-legal-size-3.jpg",
+   "images/kodak-a4-legal-integrated-a4-legal-size-4.jpg"
+  ]
  },
  {
   "accroche": "Revolabs, marque audio-conférence de Yamaha : micros sans fil et téléphones de conférence pour salles de réunion — modèle exact à préciser.",
@@ -2640,7 +2740,12 @@
   ],
   "stock": 21,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/zebra-ruban-zt3000t-2.jpg",
+   "images/zebra-ruban-zt3000t-3.jpg",
+   "images/zebra-ruban-zt3000t-4.jpg"
+  ]
  },
  {
   "ref": "TONER_05A_NOIR",
@@ -2804,7 +2909,12 @@
   "notes": "Produit ancien : la fiche produit actuelle n'existe plus sur hp.com. Référence Q6001A et rendement (~2 000 pages, ISO/IEC 19798) confirmés par la fiche technique HP 124 (doc. 4AA5-6788EEE, mai 2015) et par le guide HP Fast Finder ; image HP non disponible sur hp.com, photo de la boîte d'origine vérifiée (HTTP 200) sur un site revendeur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/124a-cyan.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-124a-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-124a-cyan-2.jpg",
+   "images/toner-124a-cyan-3.jpg",
+   "images/toner-124a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_128A_MAGENTA",
@@ -2890,7 +3000,11 @@
   "notes": "Image HP non disponible en accès direct (la boutique HP utilise un CDN qui ne répond pas aux vérifications par curl depuis cet environnement) ; photo de la boîte d'origine HP 128A Magenta CE323A vérifiée visuellement et en HTTP 200 sur un site revendeur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/128a-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-a-128a-magenta/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-128a-magenta-2.jpg",
+   "images/toner-128a-magenta-4.jpg"
+  ]
  },
  {
   "ref": "TONER_131A_JAUNE",
@@ -2976,7 +3090,11 @@
   "notes": "Image HP non disponible en accès direct (CDN de la boutique HP inaccessible aux vérifications par curl) ; photo de la boîte d'origine HP 131A Jaune CF212A vérifiée visuellement et en HTTP 200 sur un site revendeur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/131a-jaune.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-131a-jaune/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-131a-jaune-2.jpg",
+   "images/toner-131a-jaune-4.jpg"
+  ]
  },
  {
   "ref": "TONER_131A_NOIR",
@@ -3062,7 +3180,11 @@
   "notes": "Écart de rendement selon les sources HP : la fiche technique HP 131 (nov. 2021) et les fiches produit HP actuelles indiquent environ 1 520 pages ; l'ancien argumentaire HP et le rapport d'essai ISO déclaraient 1 600 pages. Valeur retenue : ~1 520 pages (donnée HP la plus récente). Image HP non disponible en accès direct (CDN de la boutique HP inaccessible aux vérifications par curl) ; photo de la boîte d'origine vérifiée visuellement et en HTTP 200 sur un site revendeur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/131a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-131a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-131a-noir-2.jpg",
+   "images/toner-131a-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_201A_MAGENTA",
@@ -3148,7 +3270,11 @@
   "notes": "Écart de rendement selon les sources HP : la fiche technique HP 201 (nov. 2021) et les fiches produit HP actuelles indiquent environ 1 330 pages ; les pages des imprimantes M252/M277 arrondissent à environ 1 400 pages. Valeur retenue : ~1 330 pages (donnée HP la plus précise). Image HP non disponible en accès direct (CDN de la boutique HP inaccessible aux vérifications par curl) ; photo de la boîte d'origine HP 201A Magenta CF403A vérifiée visuellement et en HTTP 200 sur un site revendeur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/201-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-201a-magenta/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-201a-magenta-2.jpg",
+   "images/toner-201a-magenta-3.jpg"
+  ]
  },
  {
   "ref": "TONER_205A_CYAN",
@@ -3235,7 +3361,12 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/205a-cyan.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-205a-cyan/",
   "image_source_final": "store",
-  "prix_boutique": 30000
+  "prix_boutique": 30000,
+  "extras": [
+   "images/toner-205a-cyan-2.jpg",
+   "images/toner-205a-cyan-3.jpg",
+   "images/toner-205a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_205A_MAGENTA",
@@ -3322,7 +3453,11 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/205a-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-205a-magenta/",
   "image_source_final": "store",
-  "prix_boutique": 30000
+  "prix_boutique": 30000,
+  "extras": [
+   "images/toner-205a-magenta-2.jpg",
+   "images/toner-205a-magenta-3.jpg"
+  ]
  },
  {
   "ref": "TONER_205A_NOIR",
@@ -3409,7 +3544,10 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/205a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-205a-noir/",
   "image_source_final": "store",
-  "prix_boutique": 30000
+  "prix_boutique": 30000,
+  "extras": [
+   "images/toner-205a-noir-2.jpg"
+  ]
  },
  {
   "ref": "TONER_205A_YELLOW",
@@ -3496,7 +3634,10 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/205a-jaune.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-205a-jaune/",
   "image_source_final": "store",
-  "prix_boutique": 30000
+  "prix_boutique": 30000,
+  "extras": [
+   "images/toner-205a-yellow-3.jpg"
+  ]
  },
  {
   "ref": "TONER_304A_CYAN",
@@ -3583,7 +3724,12 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/304a-bleu.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-304a-cyan/",
   "image_source_final": "store",
-  "prix_boutique": 40000
+  "prix_boutique": 40000,
+  "extras": [
+   "images/toner-304a-cyan-2.jpg",
+   "images/toner-304a-cyan-3.jpg",
+   "images/toner-304a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_304A_MAGENTA",
@@ -3670,7 +3816,11 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/304a-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-304a-magenta/",
   "image_source_final": "store",
-  "prix_boutique": 40000
+  "prix_boutique": 40000,
+  "extras": [
+   "images/toner-304a-magenta-3.jpg",
+   "images/toner-304a-magenta-4.jpg"
+  ]
  },
  {
   "ref": "TONER_305A_CYAN",
@@ -3752,7 +3902,11 @@
   "notes": "Image hébergée sur le CDN HP Widen : l'URL se termine en .png mais le serveur renvoie du WebP (content-type image/webp, HTTP 200 vérifié) ; visuel vérifié : boîte 305A Cyan CE411A.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/305a-cyan.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-305a-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-305a-cyan-2.jpg",
+   "images/toner-305a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_410X_CYAN",
@@ -3837,7 +3991,12 @@
   "image_source": "ssl-product-images.www8-hp.com",
   "notes": "",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/toner-410x-cyan-2.jpg",
+   "images/toner-410x-cyan-3.jpg",
+   "images/toner-410x-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_410X_MAGENTA",
@@ -3923,7 +4082,12 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/410x-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-410x-magenta/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-410x-magenta-2.jpg",
+   "images/toner-410x-magenta-3.jpg",
+   "images/toner-410x-magenta-4.jpg"
+  ]
  },
  {
   "ref": "TONER_410X_NOIR",
@@ -4008,7 +4172,12 @@
   "image_source": "ssl-product-images.www8-hp.com",
   "notes": "",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/toner-410x-noir-2.jpg",
+   "images/toner-410x-noir-3.jpg",
+   "images/toner-410x-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_42A_NOIR",
@@ -4094,7 +4263,11 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/42a.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-42-a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-42a-noir-2.jpg",
+   "images/toner-42a-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_49A_BLACK",
@@ -4180,7 +4353,12 @@
   "notes": "Image trouvée sur le CDN de la boutique HP Malaisie (my-media.apjonlinecdn.com, domaine HP) après plusieurs tentatives : les pages produit HP US et Nigeria n'exposent pas d'image directe pour ce modèle ancien. Image de faible résolution (310 x 181 px) mais visuel vérifié : boîte 49A Q5949A, imprimantes 1160/1320/3390. HTTP 200 et content-type image/png vérifiés.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/49a-nOir.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-49a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-49a-black-2.jpg",
+   "images/toner-49a-black-3.jpg",
+   "images/toner-49a-black-4.jpg"
+  ]
  },
  {
   "ref": "TONER_53A_NOIR",
@@ -4266,7 +4444,10 @@
   "notes": "Image vérifiée visuellement : la première image de la page HP est celle de la 53X (Q7553X) ; l'image retenue est bien la boîte 53A (Q7553A). Vérification image : la requête HEAD (curl -I) est rejetée par le CDN HP (503) ; chaque image de ce lot a été vérifiée par téléchargement GET (HTTP 200, content-type image) et contrôle visuel de la référence et de la couleur.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/53a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-53a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-53a-noir-3.jpg"
+  ]
  },
  {
   "ref": "TONER_55A_NOIR",
@@ -4344,7 +4525,12 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/Toner-HP-55A.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-55-a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-55a-noir-2.jpg",
+   "images/toner-55a-noir-3.jpg",
+   "images/toner-55a-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_647A_NOIR",
@@ -4422,7 +4608,11 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/647a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-647a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-647a-noir-3.jpg",
+   "images/toner-647a-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_64A_NOIR",
@@ -4500,7 +4690,12 @@
   "notes": "Image vérifiée visuellement : la première image de la page HP est celle de la 64X (CC364X) ; l'image retenue est bien la boîte 64A (CC364A, P4014, P4015, P4515).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/64-a.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-64a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-64a-noir-2.jpg",
+   "images/toner-64a-noir-3.jpg",
+   "images/toner-64a-noir-4.jpg"
+  ]
  },
  {
   "ref": "TONER_650A_CYAN",
@@ -4574,7 +4769,11 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/650cyan.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-650-a-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-650a-cyan-2.jpg",
+   "images/toner-650a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_650A_MAGENTA",
@@ -4649,7 +4848,11 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/650a1.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-650a-magenta/",
   "image_source_final": "store",
-  "prix_boutique": 110000
+  "prix_boutique": 110000,
+  "extras": [
+   "images/toner-650a-magenta-2.jpg",
+   "images/toner-650a-magenta-3.jpg"
+  ]
  },
  {
   "ref": "TONER_650A_YELLOW",
@@ -4724,7 +4927,12 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/650a-3.webp",
   "store_url": "https://mediatec-ci.com/product/toner-650a-jaune/",
   "image_source_final": "store",
-  "prix_boutique": 110000
+  "prix_boutique": 110000,
+  "extras": [
+   "images/toner-650a-yellow-2.jpg",
+   "images/toner-650a-yellow-3.jpg",
+   "images/toner-650a-yellow-4.jpg"
+  ]
  },
  {
   "ref": "TONER_654_YELLOW",
@@ -4806,7 +5014,12 @@
   "notes": "Image vérifiée visuellement : la galerie HP de cette page mélange les variantes 654A/654X ; l'image retenue est bien la boîte 654A Yellow (CF332A).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/654-jaune.avif",
   "store_url": "https://mediatec-ci.com/product/toner-hp-654a-yellow/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-654-yellow-2.jpg",
+   "images/toner-654-yellow-3.jpg",
+   "images/toner-654-yellow-4.jpg"
+  ]
  },
  {
   "ref": "TONER_655A_CYAN",
@@ -4884,7 +5097,11 @@
   "notes": "",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/655-cyan.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-655a-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-655a-cyan-3.jpg",
+   "images/toner-655a-cyan-4.jpg"
+  ]
  },
  {
   "ref": "TONER_655A_YELLOW",
@@ -4971,7 +5188,12 @@
   "notes": "Référence HP vérifiée : CF452A (la piste CF472A était inexacte — CF472X est la référence du jaune haute capacité 657X, pas du 655A). EAN non renseigné : HP publie un code UPC (889894325433), pas d'EAN.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/655-yellow.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-655a-jaune/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-655a-yellow-2.jpg",
+   "images/toner-655a-yellow-3.jpg",
+   "images/toner-655a-yellow-4.jpg"
+  ]
  },
  {
   "ref": "TONER_659A_NOIR",
@@ -5058,7 +5280,11 @@
   "notes": "Compatibilité vérifiée : HP Color LaserJet Enterprise M856 et MFP M776 (la piste M653/M656 était inexacte). Référence HP vérifiée : W2010A. EAN non renseigné : HP publie un code UPC (192545710992), pas d'EAN.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/659a-noir.png",
   "store_url": "https://mediatec-ci.com/product/toner-hp-659a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-659a-noir-2.jpg",
+   "images/toner-659a-noir-3.jpg"
+  ]
  },
  {
   "ref": "TONER_711A_BLACK",
@@ -5232,7 +5458,10 @@
   "notes": "CORRECTION IMPORTANTE : le 711A n'est pas un toner mais une cartouche d'ENCRE pour traceurs HP DesignJet (le nom « Toner 711A CYAN » du stock est conservé tel quel, sans modification).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/711-bleu.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-711a-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-711a-cyan-2.jpg"
+  ]
  },
  {
   "ref": "TONER_711A_MAGENTA",
@@ -5319,7 +5548,10 @@
   "notes": "CORRECTION IMPORTANTE : le 711A n'est pas un toner mais une cartouche d'ENCRE pour traceurs HP DesignJet (le nom « Toner 711A MAGENTA » du stock est conservé tel quel, sans modification).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/712-rose.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-711a-magenta/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-711a-magenta-2.jpg"
+  ]
  },
  {
   "ref": "TONER_711A_YELLOW",
@@ -5406,7 +5638,10 @@
   "notes": "CORRECTION IMPORTANTE : le 711A n'est pas un toner mais une cartouche d'ENCRE pour traceurs HP DesignJet (le nom « Toner 711A YELLOW » du stock est conservé tel quel, sans modification).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/711-jaune.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-711a-jaune/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-711a-yellow-2.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 78A (CE278A) : environ 2 100 pages pour les LaserJet Pro P1566, P1606 et M1536.",
@@ -5493,7 +5728,12 @@
   "stock": 4,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/78a-noir.png",
   "store_url": "https://mediatec-ci.com/product/toner-hp-78a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-78a-noir-2.jpg",
+   "images/toner-78a-noir-3.jpg",
+   "images/toner-78a-noir-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 79A (CF279A) avec technologie JetIntelligence : environ 1 000 pages pour les LaserJet Pro M12 et MFP M26.",
@@ -5580,7 +5820,10 @@
   "stock": 3,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/79a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-79a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-79a-noir-2.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 80A (CF280A) : environ 2 560 pages pour les LaserJet Pro 400 M401 et MFP M425.",
@@ -5659,7 +5902,10 @@
   "stock": 2,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/80A-noir.png",
   "store_url": "https://mediatec-ci.com/product/toner-hp-80a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-80a-noir-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 827A (CF300A) : environ 29 500 pages pour les Color LaserJet Enterprise Flow MFP M880.",
@@ -5737,7 +5983,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/827a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-827a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-827a-noir-2.jpg",
+   "images/toner-827a-noir-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 85A (CE285A) : environ 1 600 pages pour les LaserJet Pro P1102 et M1212nf MFP.",
@@ -5812,7 +6062,10 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/85a-noir.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-85a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-85a-noir-2.jpg"
+  ]
  },
  {
   "accroche": "Cartouche de toner noir HP 90A (CE390A) : environ 10 000 pages pour les LaserJet Enterprise M4555 MFP et 600 M601, M602, M603.",
@@ -5895,7 +6148,12 @@
   "stock": 2,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/10/90a.png",
   "store_url": "https://mediatec-ci.com/product/toner-hp-90a-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-90a-noir-2.jpg",
+   "images/toner-90a-noir-3.jpg",
+   "images/toner-90a-noir-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche laser jaune d'origine Canon pour imprimantes et multifonctions couleur i-SENSYS, avec un rendement d'environ 2 900 pages.",
@@ -6044,7 +6302,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/CE515A-1_T1678950985.avif",
   "store_url": "https://mediatec-ci.com/product/toner-ce515a/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-ce515a-2.jpg",
+   "images/toner-ce515a-4.jpg"
+  ]
  },
  {
   "accroche": "Toner noir d'origine Canon pour copieurs imageRUNNER 2535 et 2545, avec un rendement estimé de 19 400 pages.",
@@ -6121,7 +6383,10 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-cexv32-noir-3.jpg"
+  ]
  },
  {
   "accroche": "Toner noir d'origine Canon pour copieurs imageRUNNER 2202, 2204 et 2206, avec un rendement de 10 200 pages (ISO/IEC 19752).",
@@ -6203,7 +6468,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/c-exv-42noir.png",
   "store_url": "https://mediatec-ci.com/product/toner-canon-cexv42-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-cexv42-noir-2.jpg",
+   "images/toner-cexv42-noir-3.jpg"
+  ]
  },
  {
   "accroche": "Toner magenta d'origine Canon pour multifonctions couleur imageRUNNER ADVANCE DX C5800, avec un rendement de 60 000 pages.",
@@ -6285,7 +6554,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/cexv58-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-canon-cexv58-magenta/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-cexv58-magenta-3.jpg",
+   "images/toner-cexv58-magenta-4.jpg"
+  ]
  },
  {
   "accroche": "Toner noir d'origine Canon pour copieurs imageRUNNER 2725i, 2730i et 2745i, avec un rendement estimé de 30 000 pages.",
@@ -6362,7 +6635,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/toner-cexv63-noir-3.jpg",
+   "images/toner-cexv63-noir-4.jpg"
+  ]
  },
  {
   "accroche": "Kit de maintenance HP LaserJet L0H25A 220 V (fusor) : jusqu'à 225 000 pages pour les LaserJet Enterprise M607, M608 et M609.",
@@ -6433,7 +6710,12 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/LO25H.jpg",
   "store_url": "https://mediatec-ci.com/product/kit-de-maintenance-l0h25a/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-l0h25a-2.jpg",
+   "images/toner-l0h25a-3.jpg",
+   "images/toner-l0h25a-4.jpg"
+  ]
  },
  {
   "accroche": "Tête d'impression HP 72 noir mat et jaune (C9384A) pour traceurs DesignJet T610 à T2300 — précision et fiabilité d'origine.",
@@ -6606,7 +6888,10 @@
   "stock": 4,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/72a-gris.webp",
   "store_url": "https://mediatec-ci.com/product/tete-de-cartouche-72a-gris-noir/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-tete-72-gris-noir-2.jpg"
+  ]
  },
  {
   "accroche": "Tête d'impression HP 72 magenta et cyan (C9383A) pour traceurs DesignJet T610 à T2300 — précision et fiabilité d'origine.",
@@ -6693,7 +6978,10 @@
   "stock": 3,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/72a-rose-et-bleu.jpg",
   "store_url": "https://mediatec-ci.com/product/tete-de-cartouche-72-magenta-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-tete-72-magenta-cyan-2.jpg"
+  ]
  },
  {
   "accroche": "Kit toner noir original Kyocera TK-410 pour KM-1620/1650/2020/2050 et TASKalfa 180/220, rendement de 15 000 pages.",
@@ -6763,7 +7051,10 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/tk410-kyocera.jpg",
   "store_url": "https://mediatec-ci.com/product/tk-410-toner-kit/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-tk-410-toner-kit-2.jpg"
+  ]
  },
  {
   "accroche": "Kit toner noir original Kyocera TK-450 pour l'imprimante A3 FS-6970DN, rendement de 15 000 pages (ISO/IEC 19752).",
@@ -6845,7 +7136,11 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/tk-450.jpg",
   "store_url": "https://mediatec-ci.com/product/tk-450-toner-kit/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-tk-450-toner-kit-3.jpg",
+   "images/toner-tk-450-toner-kit-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche toner jaune originale Xerox pour WorkCentre 7120/7125 et 7220/7225, rendement de 15 000 pages.",
@@ -6919,7 +7214,12 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/xerox-jaune.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-xerox-006r01462-jaune/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-xerox-006r01462-jaune-2.jpg",
+   "images/toner-xerox-006r01462-jaune-3.jpg",
+   "images/toner-xerox-006r01462-jaune-4.jpg"
+  ]
  },
  {
   "accroche": "Cartouche toner magenta originale Xerox pour WorkCentre 7120/7125 et 7220/7225, rendement de 15 000 pages.",
@@ -6994,7 +7294,10 @@
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/xeox-rose.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-xerox-006r01463-magenta/",
   "image_source_final": "store",
-  "prix_boutique": 80000
+  "prix_boutique": 80000,
+  "extras": [
+   "images/toner-xerox-006r01463-magenta-2.jpg"
+  ]
  },
  {
   "accroche": "Cartouche toner cyan originale Xerox pour WorkCentre 7120/7125 et 7220/7225, rendement de 15 000 pages.",
@@ -7068,7 +7371,12 @@
   "stock": 1,
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/xerox-cyan.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-xerox-006r01464-cyan/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/toner-xerox-006r01464-cyan-2.jpg",
+   "images/toner-xerox-006r01464-cyan-3.jpg",
+   "images/toner-xerox-006r01464-cyan-4.jpg"
+  ]
  },
  {
   "accroche": "Point d'accès Wi-Fi double bande Cisco Aironet 1262N : 802.11n jusqu'à 300 Mbit/s, antennes externes et alimentation PoE, pour les environnements exigeants.",
@@ -7166,7 +7474,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cisco-rlap-1262n-e-k9-3.jpg",
+   "images/cisco-rlap-1262n-e-k9-4.jpg"
+  ]
  },
  {
   "accroche": "Téléphone IP Cisco 7821 : 2 lignes, écran 3,5 pouces rétroéclairé, haut-parleur mains libres et audio large bande, alimenté en PoE.",
@@ -7264,7 +7576,10 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "image-search"
+  "image_source_final": "image-search",
+  "extras": [
+   "images/telephone-cisco-cp7821-4.jpg"
+  ]
  },
  {
   "accroche": "Appliance de sécurité et SD-WAN Cisco Meraki pour site distant : pare-feu nouvelle génération, VPN et gestion 100 % cloud, jusqu'à 750 utilisateurs.",
@@ -7366,7 +7681,10 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/meraki-mx-105-mx105-hw-4.jpg"
+  ]
  },
  {
   "accroche": "Appliance de sécurité et SD-WAN Cisco Meraki pour grand campus : pare-feu jusqu'à 7,5 Gbit/s, concentrateur VPN et 24 ports LAN, pour 2 000 appareils.",
@@ -7468,7 +7786,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/meraki-mx250-mx250-hw-2.jpg",
+   "images/meraki-mx250-mx250-hw-3.jpg",
+   "images/meraki-mx250-mx250-hw-4.jpg"
+  ]
  },
  {
   "accroche": "Câble d'empilage FlexStack de 0,5 m pour relier deux commutateurs Catalyst 2960 en une seule pile logique.",
@@ -7538,7 +7861,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cab-stack-stack-e-0-5m-2.jpg",
+   "images/cab-stack-stack-e-0-5m-3.jpg"
+  ]
  },
  {
   "accroche": "Kit de montage en rack 2U pour pare-feu Cisco Firepower 1010E, avec plateau et équerres de fixation.",
@@ -7607,7 +7934,12 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cisco-fpr1k-dt-rack-mnt-2.jpg",
+   "images/cisco-fpr1k-dt-rack-mnt-3.jpg",
+   "images/cisco-fpr1k-dt-rack-mnt-4.jpg"
+  ]
  },
  {
   "accroche": "Module d'extension Catalyst 9200 : 4 ports SFP 1 Gigabit Ethernet, remplaçable à chaud, pour les liaisons montantes fibre.",
@@ -7791,7 +8123,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cisco-1941-k9-2.jpg",
+   "images/cisco-1941-k9-3.jpg",
+   "images/cisco-1941-k9-4.jpg"
+  ]
  },
  {
   "accroche": "Routeur de services intégrés ISR G2 1U pour petite agence : 2 ports Gigabit Ethernet, voix et vidéo intégrées, 4 emplacements d'extension.",
@@ -7881,7 +8218,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cisco-2901-k1-fgl203911gg-2.jpg",
+   "images/cisco-2901-k1-fgl203911gg-3.jpg",
+   "images/cisco-2901-k1-fgl203911gg-4.jpg"
+  ]
  },
  {
   "accroche": "Commutateur d'accès Gigabit Ethernet Catalyst 2960-X, licence LAN Lite, empilable FlexStack-Plus.",
@@ -8050,7 +8392,11 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/reconditionne-recuperer-a-smi-ws-c3560-48p-2.jpg",
+   "images/reconditionne-recuperer-a-smi-ws-c3560-48p-3.jpg"
+  ]
  },
  {
   "accroche": "Boîtier d'alimentation centralisé pour vidéosurveillance : il alimente jusqu'à 18 caméras depuis une seule source, avec une protection individuelle par sortie.",
@@ -8402,7 +8748,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/streaming-webcam-695j5aa-2.jpg",
+   "images/streaming-webcam-695j5aa-3.jpg",
+   "images/streaming-webcam-695j5aa-4.jpg"
+  ]
  },
  {
   "accroche": "Jarretière fibre optique hybride LC-SC pour relier un équipement actif à port LC à un tiroir optique ou un panneau de brassage à port SC.",
@@ -8657,7 +9008,11 @@
   ],
   "stock": 14,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/webcam-c270-3.jpg",
+   "images/webcam-c270-4.jpg"
+  ]
  },
  {
   "accroche": "Disque dur externe de bureau de 8 To avec chiffrement matériel AES 256 bits et logiciel de sauvegarde : une solution fiable pour sauvegarder photos, vidéos et documents.",
@@ -9167,7 +9522,12 @@
   ],
   "stock": 234,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/cadre-saillie-40mm-mosaic-pour-2m-lg-802-81-2.jpg",
+   "images/cadre-saillie-40mm-mosaic-pour-2m-lg-802-81-3.jpg",
+   "images/cadre-saillie-40mm-mosaic-pour-2m-lg-802-81-4.jpg"
+  ]
  },
  {
   "accroche": "Prise RJ45 Catégorie 6 STP à blindage métal Mosaic, 1 module : un raccordement réseau gigabit fiable, rapide et sans outil.",
@@ -9269,7 +9629,11 @@
   ],
   "stock": 250,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/prise-rj45-cat-6-stp-blindee-mosaic-1-m-lg076583-3.jpg",
+   "images/prise-rj45-cat-6-stp-blindee-mosaic-1-m-lg076583-4.jpg"
+  ]
  },
  {
   "ref": "CASQUE_LOGITECH_H111",
@@ -9358,7 +9722,11 @@
   "store_url": "https://mediatec-ci.com/product/casque-logitech-h111/",
   "image_source_final": "store",
   "prix_boutique": 14500,
-  "prix_avant": 18000
+  "prix_avant": 18000,
+  "extras": [
+   "images/casque-logitech-h111-2.jpg",
+   "images/casque-logitech-h111-3.jpg"
+  ]
  },
  {
   "ref": "CASQUE_LOGITECH_H340",
@@ -9448,7 +9816,12 @@
   "image_source": "tsbohemia.cz",
   "notes": "Impédance de 20 ohms selon la majorité des sources (certaines indiquent 22 ohms selon la variante). Pas de commandes de volume ou de sourdine sur le câble : le réglage se fait depuis l'ordinateur ou l'application d'appel.",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/casque-logitech-h340-2.jpg",
+   "images/casque-logitech-h340-3.jpg",
+   "images/casque-logitech-h340-4.jpg"
+  ]
  },
  {
   "ref": "CASQUE_LOGITECH_LOGITECH_H390",
@@ -9542,7 +9915,12 @@
   "image_source": "tech-discount.com",
   "notes": "Poids non repris : les sources divergent (environ 120 g ou 197 g selon la source). Il existe aussi une variante USB-C du H390 (réf. 981-001575) ; la fiche concerne la version USB-A.",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/casque-logitech-logitech-h390-2.jpg",
+   "images/casque-logitech-logitech-h390-3.jpg",
+   "images/casque-logitech-logitech-h390-4.jpg"
+  ]
  },
  {
   "ref": "CASQUES_HP_H360GS",
@@ -9636,7 +10014,11 @@
   "image_source": "pcinformatica.info",
   "notes": "Sensibilité de 110 dB ±3 dB indiquée sur la variante H360G (sans S) ; la valeur 108 dB ±3 dB est celle relevée pour le H360GS. Poids non repris (les 0,59 kg cités par certains revendeurs correspondent au poids expédié).",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/casques-hp-h360gs-2.jpg",
+   "images/casques-hp-h360gs-3.jpg"
+  ]
  },
  {
   "ref": "CASQUE_SONY_WH_CH520",
@@ -9738,7 +10120,11 @@
   "image_source": "vieni.lt",
   "notes": "Autonomies annoncées par Sony dans ses propres conditions de test ; l'autonomie réelle varie selon le volume et l'usage. Couleur du produit en stock non précisée dans le fichier (le WH-CH520 existe en noir, bleu, blanc et beige).",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/casque-sony-wh-ch520-2.jpg",
+   "images/casque-sony-wh-ch520-3.jpg"
+  ]
  },
  {
   "ref": "POINTEUR_LASER_R400",
@@ -9816,7 +10202,11 @@
   "image_source": "alternate.be",
   "notes": "",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/pointeur-laser-r400-2.jpg",
+   "images/pointeur-laser-r400-3.jpg"
+  ]
  },
  {
   "ref": "CLE_USB_16GB",
@@ -11177,7 +11567,10 @@
   ],
   "stock": 3,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-hp-cs500-2.jpg"
+  ]
  },
  {
   "accroche": "Kit clavier et souris sans fil HP CS700 AZERTY : frappe silencieuse, souris à 3 vitesses et autonomie jusqu'à 12 mois.",
@@ -11263,7 +11656,12 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-hp-cs700-2.jpg",
+   "images/kit-hp-cs700-3.jpg",
+   "images/kit-hp-cs700-4.jpg"
+  ]
  },
  {
   "accroche": "Kit gaming HP : clavier et souris pensés pour le jeu, pour équiper un poste joueur sans attendre.",
@@ -11392,7 +11790,11 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-hp-k-1700-2.jpg",
+   "images/kit-hp-k-1700-3.jpg"
+  ]
  },
  {
   "accroche": "Kit clavier et souris filaires HP 320MK : frappe silencieuse, pavé numérique et souris optique 1000 dpi, en plug-and-play USB.",
@@ -11478,7 +11880,12 @@
   ],
   "stock": 3,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-hp-wireless-320mk-2.jpg",
+   "images/kit-hp-wireless-320mk-3.jpg",
+   "images/kit-hp-wireless-320mk-4.jpg"
+  ]
  },
  {
   "accroche": "Ensemble clavier et souris sans fil multi-appareils : frappe confortable, molette ultra-rapide et bascule instantanée entre 3 appareils.",
@@ -11564,7 +11971,12 @@
   ],
   "stock": 6,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-logitech-mk850-2.jpg",
+   "images/kit-logitech-mk850-3.jpg",
+   "images/kit-logitech-mk850-4.jpg"
+  ]
  },
  {
   "accroche": "Ensemble clavier et souris sans fil ultra-fin : frappe de type ordinateur portable, molette SmartWheel et bascule entre 3 appareils.",
@@ -11654,7 +12066,12 @@
   ],
   "stock": 5,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/kit-logitech-mk950-2.jpg",
+   "images/kit-logitech-mk950-3.jpg",
+   "images/kit-logitech-mk950-4.jpg"
+  ]
  },
  {
   "accroche": "Client léger NComputing L300 : jusqu'à 30 postes virtuels sur un seul PC hôte, pour seulement 5 W de consommation.",
@@ -11748,7 +12165,12 @@
   ],
   "stock": 22,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/ncomputing-l300-2.jpg",
+   "images/ncomputing-l300-3.jpg",
+   "images/ncomputing-l300-4.jpg"
+  ]
  },
  {
   "accroche": "Ruban couleur Fargo 84051 YMCK : 500 cartes couleur pour imprimantes de cartes Fargo HDP5000 et HDPii.",
@@ -11822,7 +12244,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/ruban-fargo-84051-2.jpg",
+   "images/ruban-fargo-84051-3.jpg",
+   "images/ruban-fargo-84051-4.jpg"
+  ]
  },
  {
   "accroche": "Un seul adaptateur, 11 ports : étendez la connectique de votre ordinateur portable en un geste.",
@@ -11967,7 +12394,11 @@
    }
   ],
   "stock": 0,
-  "store_image": null
+  "store_image": null,
+  "extras": [
+   "images/apc-5-ports-2.jpg",
+   "images/apc-5-ports-3.jpg"
+  ]
  },
  {
   "accroche": "Disque dur NAS 8 To à 7 200 tr/min, conçu pour tourner 24 h/24 et 7 j/7 dans les boîtiers NAS de 1 à 8 baies.",
@@ -12070,7 +12501,12 @@
   ],
   "stock": 8,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/disque-dur-nas-8tb-ironwolf-2.jpg",
+   "images/disque-dur-nas-8tb-ironwolf-3.jpg",
+   "images/disque-dur-nas-8tb-ironwolf-4.jpg"
+  ]
  },
  {
   "accroche": "GPS portable robuste à écran tactile 5 pouces, avec messagerie satellite inReach et SOS interactif, même hors couverture mobile.",
@@ -12174,7 +12610,12 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "manuel"
+  "image_source_final": "manuel",
+  "extras": [
+   "images/gps-montana-700i-2.jpg",
+   "images/gps-montana-700i-3.jpg",
+   "images/gps-montana-700i-4.jpg"
+  ]
  },
  {
   "accroche": "Multiprise parafoudre 8 prises : branchez tout votre poste de travail et protégez-le des surtensions en une seule fois.",
@@ -12299,7 +12740,10 @@
   ],
   "stock": 4,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/ruban-evolis-r5f208m100-2.jpg"
+  ]
  },
  {
   "accroche": "NAS 4 baies évolutif pour petites entreprises : sauvegarde, partage et synchronisation centralisés sous DSM, extensible à 9 disques.",
@@ -12407,7 +12851,12 @@
   ],
   "stock": 1,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/synology-ds923-2carte-2.jpg",
+   "images/synology-ds923-2carte-3.jpg",
+   "images/synology-ds923-2carte-4.jpg"
+  ]
  },
  {
   "accroche": "Téléphone IP haut de gamme à grand écran tactile couleur 7 pouces, 16 comptes SIP et voix HD, pour cadres et professionnels.",
@@ -12524,7 +12973,11 @@
   ],
   "stock": 2,
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/telephone-ip-yealink-sip-t48u-2.jpg",
+   "images/telephone-ip-yealink-sip-t48u-3.jpg"
+  ]
  },
  {
   "ref": "CARTE_MEMOIRE_AP_32GB_SD32_32GB",
@@ -12767,7 +13220,12 @@
   "image_source": "jbl.com (CDN Harman, boutique officielle JBL) — visuel officiel PartyBox 310",
   "notes": "Specs vérifiées sur fr.jbl.com (fiche JBLPARTYBOX310EU-Z). Catégorie corrigée : « Sacs & housses » dans l'entrée → « Enceintes de soirée » ; famille « Informatique » conservée telle quelle. EAN non renseigné : l'EAN 6925281994647 vu sur fr.jbl.com concerne la variante UK (JBLPARTYBOX310UK-Z), non confirmé pour la variante EU. Accessoires compatibles cités par JBL (micro sans fil PartyBox, câble de charge voiture) non repris en options faute de référence produit vérifiée.",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/jbl-310-310-jbl-2.jpg",
+   "images/jbl-310-310-jbl-3.jpg",
+   "images/jbl-310-310-jbl-4.jpg"
+  ]
  },
  {
   "ref": "SOURIS_HP_S3700",
@@ -12857,7 +13315,10 @@
   "notes": "La référence « S3700 » est introuvable chez HP (S3700 désigne une gamme de SSD) : la fiche a été rapprochée de la souris sans fil HP Z3700, le modèle HP correspondant le plus proche ; à confirmer avec le stock physique (couleur et référence exacte non précisées dans l'inventaire). La couleur du stock n'est pas précisée : la photo montre la variante or (X7Q43AA) et l'EAN n'a donc pas été renseigné (il varie selon la couleur). Référence fabricant « S3700 » conservée telle quelle depuis l'entrée.",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/souris-hp-1.jpg",
   "store_url": "https://mediatec-ci.com/product/souris-hp-s3700/",
-  "image_source_final": "store"
+  "image_source_final": "store",
+  "extras": [
+   "images/souris-hp-s3700-2.jpg"
+  ]
  },
  {
   "ref": "SOURIS_HP_ORDINAIRE",
@@ -12997,7 +13458,12 @@
   "image_source": "logitech.com (CDN resource.logitech.com) — visuel officiel Pebble 2 M350s, variante blanche, vue de dessus",
   "notes": "Specs vérifiées sur logitech.com (fr-fr) et fiches distributeurs concordantes. La couleur du stock n'est pas précisée dans l'inventaire (blanc, graphite, rose, bleu…) : la photo montre la variante blanche et l'EAN n'a pas été renseigné car il varie selon la couleur (ex. blanc 5099206110441, graphite 5099206110427). Le récepteur USB Logi Bolt n'est pas inclus ; il se vend séparément.",
   "store_image": null,
-  "image_source_final": "lot"
+  "image_source_final": "lot",
+  "extras": [
+   "images/souris-m350s-2.jpg",
+   "images/souris-m350s-3.jpg",
+   "images/souris-m350s-4.jpg"
+  ]
  },
  {
   "nom": "Kyocera TASKalfa 3011i",
@@ -13033,7 +13499,12 @@
    "Volume mensuel max": "125 000 pages"
   },
   "consommables": [],
-  "prix_avant": 1999900
+  "prix_avant": 1999900,
+  "extras": [
+   "images/kyocera-taskalfa-3011i-2.jpg",
+   "images/kyocera-taskalfa-3011i-3.jpg",
+   "images/kyocera-taskalfa-3011i-4.jpg"
+  ]
  },
  {
   "nom": "HP All-in-One 24 pouce i5",
@@ -13068,7 +13539,11 @@
    "Connectivité": "Wi-Fi, Bluetooth 5, RJ-45, USB, HDMI 1.4"
   },
   "consommables": [],
-  "prix_avant": 720000
+  "prix_avant": 720000,
+  "extras": [
+   "images/hp-all-in-one-24-pouce-i5-2.jpg",
+   "images/hp-all-in-one-24-pouce-i5-4.jpg"
+  ]
  },
  {
   "nom": "Epson EcoTank L3250",
@@ -13103,7 +13578,11 @@
    "Dimensions": "375 x 347 x 179 mm",
    "Poids": "3,9 kg"
   },
-  "consommables": []
+  "consommables": [],
+  "extras": [
+   "images/epson-ecotank-l3250-2.jpg",
+   "images/epson-ecotank-l3250-4.jpg"
+  ]
  },
  {
   "nom": "HP LaserJet MFP 236sdn",
@@ -13138,7 +13617,12 @@
    "Dimensions": "41,8 x 30,8 x 29,4 cm",
    "Poids": "9,5 kg"
   },
-  "consommables": []
+  "consommables": [],
+  "extras": [
+   "images/hp-laserjet-mfp236sdn-2.jpg",
+   "images/hp-laserjet-mfp236sdn-3.jpg",
+   "images/hp-laserjet-mfp236sdn-4.jpg"
+  ]
  },
  {
   "nom": "Oukitel RT3 Plus (16 Go RAM / 128 Go)",
@@ -13175,7 +13659,12 @@
    "Poids": "625 g"
   },
   "consommables": [],
-  "prix_avant": 220000
+  "prix_avant": 220000,
+  "extras": [
+   "images/oukitel-rt3-plus-16-go-ram-128-go-2.jpg",
+   "images/oukitel-rt3-plus-16-go-ram-128-go-3.jpg",
+   "images/oukitel-rt3-plus-16-go-ram-128-go-4.jpg"
+  ]
  },
  {
   "nom": "Dell Latitude 5310 G10 (Reconditionnée)",
@@ -13212,7 +13701,12 @@
    "État": "Reconditionnée"
   },
   "consommables": [],
-  "prix_avant": 360000
+  "prix_avant": 360000,
+  "extras": [
+   "images/dell-latitude-5310-g10-2.jpg",
+   "images/dell-latitude-5310-g10-3.jpg",
+   "images/dell-latitude-5310-g10-4.jpg"
+  ]
  },
  {
   "nom": "HP EliteBook 840 G6",

@@ -48,6 +48,9 @@ var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button
 var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
 var reViewBtn = regexp.MustCompile(`<button type="button" class="[^"]*" data-view="([a-z]+)">`)
+var reGamme = regexp.MustCompile(`(?s)<div class="gamme">.*?(<div style="margin-top:12px)`)
+var reGalCarousel = regexp.MustCompile(`(?s)<div class="gal" data-gal>.*?<img src="([^"]*)"[^>]*data-gal-main>.*?</div></div>`)
+var reGalSimple = regexp.MustCompile(`(?s)<div class="gal"><img src="([^"]*)"[^>]*></div>`)
 
 func normPage(s string) string {
 	s = reHtmx.ReplaceAllString(s, "")
@@ -88,6 +91,12 @@ func normPage(s string) string {
 	// Hub des types (pages catégories, nouveau) : la fermeture du bloc
 	// [data-catalog-home] se colle à celle du catalogue.
 	s = strings.ReplaceAll(s, "</div></div>\n</div></div></div>", "</div>\n</div></div></div>")
+	// Bloc « Modèles de la gamme » (ajout volontaire 2026-11-25) : absent de
+	// la v3.25, retiré avant comparaison — vérifié par TestFicheBlocGamme.
+	s = reGamme.ReplaceAllString(s, "$1")
+	// Carrousel (ajout volontaire) : la v3.25 n'affichait qu'une photo. On
+	// compare la photo principale, sans les flèches ni les miniatures —
+	// la structure du carrousel est couverte par gallery_test.go.
 	var out []string
 	for _, ln := range strings.Split(s, "\n") {
 		if strings.Contains(ln, "csrf-token") {
@@ -109,6 +118,21 @@ func normPage(s string) string {
 		out = append(out, ln)
 	}
 	return strings.Join(out, "\n")
+}
+
+// normPageV325 : normalisation du test de parité v3.25 uniquement. Elle ne
+// doit PAS entrer dans normPage, qui sert aussi aux empreintes de
+// TestPariteSansDesign (toute modification y change les empreintes).
+func normPageV325(s string) string {
+	s = normPage(s)
+	// Galerie : la v3.25 n'avait qu'une photo, le lot photos ajoute des
+	// extras. Contenu couvert par gallery_test.go / gamme_test.go.
+	s = reGalCarousel.ReplaceAllString(s, `<div class="gal">@@</div>`)
+	s = reGalSimple.ReplaceAllString(s, `<div class="gal">@@</div>`)
+	s = strings.ReplaceAll(s, `<div class="gal"><div class="noimg">Photo à venir</div></div>`, `<div class="gal">@@</div>`)
+	// Retrait du bloc gamme : rétablir le saut de ligne consommé.
+	s = strings.ReplaceAll(s, `</a><div style="margin-top:12px`, "</a>\n<div style=\"margin-top:12px")
+	return s
 }
 
 func readOrig(t *testing.T, path string) string {
@@ -195,12 +219,12 @@ func applyRenommages(s string) string {
 // volontaires appliqués (le rendu courant, lui, porte déjà les nouveaux noms).
 func readOrigNorm(t *testing.T, path string) string {
 	t.Helper()
-	return normPage(applyRenommages(readOrig(t, path)))
+	return normPageV325(applyRenommages(readOrig(t, path)))
 }
 
 func TestBoutiqueParity(t *testing.T) {
 	s := testStore(t)
-	got := normPage(render.Doc("Store", render.BoutiqueBody(s), "", ""))
+	got := normPageV325(render.Doc("Store", render.BoutiqueBody(s), "", ""))
 	want := readOrigNorm(t, "boutique.html")
 	// Le tri "stock d'abord" réordonne les cartes : même jeu de cartes,
 	// reste de la page identique à l'octet près.
@@ -210,7 +234,7 @@ func TestBoutiqueParity(t *testing.T) {
 func TestIndexParity(t *testing.T) {
 	s := testStore(t)
 	recents := s.Recents(rel("../../catalogdata/store-sitemap.xml"))
-	got := normPage(render.Doc("Accueil", render.IndexBody(s, recents), "", ""))
+	got := normPageV325(render.Doc("Accueil", render.IndexBody(s, recents), "", ""))
 	want := readOrigNorm(t, "index.html")
 	if got != want {
 		diffFirst(t, got, want)
@@ -220,7 +244,7 @@ func TestIndexParity(t *testing.T) {
 func TestCategoriesParity(t *testing.T) {
 	s := testStore(t)
 	for _, m := range catalog.MainOrder {
-		got := normPage(render.Doc(m, render.CategoryPage(s, m), "../", ""))
+		got := normPageV325(render.Doc(m, render.CategoryPage(s, m), "../", ""))
 		want := readOrigNorm(t, "categories/"+catalog.MainSlug[m]+".html")
 		t.Logf("catégorie %s", m)
 		assertSameCards(t, got, want)
@@ -230,7 +254,7 @@ func TestCategoriesParity(t *testing.T) {
 func TestProduitsParity(t *testing.T) {
 	s := testStore(t)
 	for _, p := range s.Products {
-		got := normPage(render.Doc(p.Nom, render.Header(s, "../", "")+render.FicheBody(s, p)+"\n"+render.Footer(s, "../"), "../", ""))
+		got := normPageV325(render.Doc(p.Nom, render.Header(s, "../", "")+render.FicheBody(s, p)+"\n"+render.Footer(s, "../"), "../", ""))
 		want := readOrigNorm(t, "produits/"+p.Slug+".html")
 		if got != want {
 			t.Logf("produit %s", p.Slug)
