@@ -81,9 +81,10 @@ function renderPreview(){
   updateStatus(); setPath();
   if(currentTab==='seo'||currentTab==='textes'){
     clearTimeout(pvTimer); pvCurrentURL='';
-    pvReady=false; pvI.srcdoc=mockupShellHTML(); if(currentTab==='seo')pvSeo(); else pvTextes(); return;
+    if(!(pvReady&&pvI.hasAttribute('srcdoc')&&pvI.contentDocument.getElementById('root'))){pvReady=false; pvI.srcdoc=mockupShellHTML();} if(currentTab==='seo')pvSeo(); else pvTextes(); return;
   }
   const url=previewURL();
+  clearTimeout(pvTimer);
   if(url===pvCurrentURL){pvFocus();return;} // déjà affiché
   clearTimeout(pvTimer);
   /* Différé : ne pas relancer un rendu serveur à chaque frappe, attendre
@@ -95,8 +96,8 @@ function renderPreview(){
        faire pvI.srcdoc='' après : ça recrée un srcdoc vide, qui gagne
        encore sur src. */
     pvI.removeAttribute('srcdoc');
-    pvI.src=url;
-  },400);
+    pvLoad(url);
+  },150);
 }
 function pvHome(){
   const f = front;
@@ -551,4 +552,41 @@ pvI.addEventListener('load',function(){pvFocused='';pvFocus();});
   document.addEventListener(ev,function(e){
     if(e.target.id==='selTxtPage'||e.target.id==='taTxtPage')setTimeout(function(){renderPreview();},0);
   });
+});
+
+/* Chargement : couleurs appliquées sur place, sinon rechargement */
+let pvShown='', pvSeq=0, pvBusy=false, pvKeepY=0;
+function pvKey(u){
+  const q=new URLSearchParams(u.split('?')[1]||'');
+  ['couleur','accent','css','police'].forEach(function(k){q.delete(k);});
+  q.sort(); return q.toString();
+}
+async function pvLoad(url){
+  const seq=++pvSeq, d=pvI.contentDocument;
+  const site=!!(pvShown&&d&&d.body&&!pvI.hasAttribute('srcdoc'));
+  if(site&&!pvBusy&&pvKey(url)===pvKey(pvShown)){
+    try{
+      const r=await fetch(url,{credentials:'same-origin'});
+      if(!r.ok)throw new Error(r.status);
+      const n=new DOMParser().parseFromString(await r.text(),'text/html');
+      if(seq!==pvSeq)return;
+      const avant=d.getElementById('mx-theme'), apres=n.getElementById('mx-theme');
+      if(avant)avant.remove();
+      if(apres)d.head.appendChild(d.importNode(apres,true));
+      const c=n.documentElement.getAttribute('data-color');
+      if(c)d.documentElement.setAttribute('data-color',c);
+      else d.documentElement.removeAttribute('data-color');
+      pvShown=url; return;
+    }catch(e){console.warn('apercu',e);}
+    if(seq!==pvSeq)return;
+  }
+  const page=function(u){return new URLSearchParams(u.split('?')[1]||'').get('page');};
+  if(!pvBusy)pvKeepY=(site&&page(url)===page(pvShown))?pvI.contentWindow.scrollY:0;
+  pvShown=url; pvBusy=true;
+  pvI.removeAttribute('srcdoc'); pvI.src=url;
+}
+pvI.addEventListener('load',function(){
+  pvBusy=false;
+  if(pvKeepY&&currentTab!=='menu'&&currentTab!=='footer')pvI.contentWindow.scrollTo({top:pvKeepY,behavior:'instant'});
+  pvKeepY=0;
 });
