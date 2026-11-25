@@ -5458,10 +5458,7 @@
   "notes": "CORRECTION IMPORTANTE : le 711A n'est pas un toner mais une cartouche d'ENCRE pour traceurs HP DesignJet (le nom « Toner 711A CYAN » du stock est conservé tel quel, sans modification).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/711-bleu.jpg",
   "store_url": "https://mediatec-ci.com/product/toner-hp-711a-cyan/",
-  "image_source_final": "store",
-  "extras": [
-   "images/toner-711a-cyan-2.jpg"
-  ]
+  "image_source_final": "store"
  },
  {
   "ref": "TONER_711A_MAGENTA",
@@ -5548,10 +5545,7 @@
   "notes": "CORRECTION IMPORTANTE : le 711A n'est pas un toner mais une cartouche d'ENCRE pour traceurs HP DesignJet (le nom « Toner 711A MAGENTA » du stock est conservé tel quel, sans modification).",
   "store_image": "https://mediatec-ci.com/wp-content/uploads/2026/11/712-rose.webp",
   "store_url": "https://mediatec-ci.com/product/toner-hp-711a-magenta/",
-  "image_source_final": "store",
-  "extras": [
-   "images/toner-711a-magenta-2.jpg"
-  ]
+  "image_source_final": "store"
  },
  {
   "ref": "TONER_711A_YELLOW",
