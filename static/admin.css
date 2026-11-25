@@ -30,9 +30,14 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 /* ---------- Main + topbar ---------- */
 .mx-main{flex:1;min-width:0;display:flex;flex-direction:column}
 .mx-top{background:var(--mx-surface);border-bottom:1px solid var(--mx-border);padding:0 22px;height:56px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:40}
-.mx-top h1{font-size:18px;margin:0;font-weight:700}
+.mx-top h1{font-size:18px;margin:0;font-weight:700;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mx-top .sp{flex:1}
+.mx-top .mx-btn{flex:none;white-space:nowrap}
 .mx-burger{display:none;border:1px solid var(--mx-border);background:#fff;border-radius:6px;padding:6px 10px;font-size:16px;cursor:pointer}
+/* Retour hiérarchique : discret, toujours à gauche du titre */
+.mx-back{display:inline-flex;align-items:center;gap:6px;flex:none;padding:5px 10px;border:1px solid var(--mx-border);border-radius:6px;background:#fff;color:var(--mx-text)!important;text-decoration:none;font-size:13px;font-weight:600;line-height:1;white-space:nowrap}
+.mx-back:hover{background:var(--mx-brand);border-color:var(--mx-brand);color:#fff!important}
+.mx-back:focus-visible{outline:2px solid var(--mx-brand);outline-offset:2px}
 .mx-body{padding:22px;max-width:1280px;width:100%;margin:0 auto}
 /* ---------- Notices ---------- */
 .mx-notice{border-left:4px solid var(--mx-green);background:#fff;padding:10px 14px;margin:0 0 16px;border-radius:0 6px 6px 0;box-shadow:0 1px 2px rgba(0,0,0,.06)}
@@ -200,6 +205,10 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
   .mx-side{position:fixed;left:0;top:0;bottom:0;transform:translateX(-105%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.3)}
   body.mx.nav-open .mx-side{transform:none}
   .mx-burger{display:block}
+  /* Le retour reste accessible mais compact : « ← » seul, le titre garde la place. */
+  .mx-back .lb{display:none}
+  .mx-back{padding:6px 9px}
+  .mx-top{gap:10px;padding:0 14px}
   .mx-cols{grid-template-columns:1fr}
   .mx-pub{position:static}
   .mx-grid.two{grid-template-columns:1fr}

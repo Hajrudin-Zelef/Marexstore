@@ -12,6 +12,7 @@
 <!-- ============ BARRE DU STUDIO (page dédiée) ============ -->
 <header class="studio-top">
   <button class="back-btn" data-ic="back" onclick="location.href='/admin'"><span class="t">Retour à l'admin</span></button>
+  <button class="back-btn tab-back vide" id="btnTabBack" type="button" onclick="studioTabBack()" title="Revenir à l'onglet précédent" aria-label="Revenir à l'onglet précédent"><span aria-hidden="true">↶</span><span class="t">Onglet</span></button>
   <div class="logo"><span class="logo-mark"><img src="/admin/studio/logo-studio.png" alt="" class="logo-img"></span>Marexstore <span>Studio</span></div>
   <nav class="studio-nav" id="studioNav">
     <button data-tab="front" class="active"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11.5" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></svg></span>Front</button>
@@ -552,5 +553,6 @@
 <script src="/admin/studio/js/premium.js?v=4"></script>
 <script src="/admin/studio/js/publish-guard.js?v=1"></script>
 <script src="/admin/studio/js/save-draft.js?v=1"></script>
+<script src="/admin/studio/js/tab-back.js?v=1"></script>
 </body>
 </html>

@@ -65,10 +65,12 @@ func (a *App) counts() map[string]int {
 
 func (a *App) adminPage(title, active, inner string, r *http.Request) string {
 	msg := ""
+	back := ""
 	if r != nil {
 		msg = render.MxNotice(r.URL.Query().Get("msg"), r.URL.Query().Get("err"))
+		back = render.MxBackHTML(r.URL.Path)
 	}
-	return render.MxDoc(title, active, a.counts(), msg+inner)
+	return render.MxDoc(title, active, a.counts(), back, msg+inner)
 }
 
 func (a *App) Admin(w http.ResponseWriter, r *http.Request) {

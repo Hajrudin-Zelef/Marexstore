@@ -76,16 +76,64 @@ func MxNotice(okMsg, errMsg string) string {
 }
 
 // MxDoc : document admin complet (sans chrome boutique).
-func MxDoc(title, active string, counts map[string]int, body string) string {
+// MxBackLink : destination du retour hiérarchique d'une page admin.
+type MxBackLink struct {
+	Href  string
+	Label string
+}
+
+// MxBack déduit le parent logique d'une page admin depuis son chemin :
+// fiche → sa liste, section → tableau de bord, tableau de bord → site.
+// Le parent vient du chemin, jamais d'un paramètre de requête : aucune
+// redirection ouverte possible.
+func MxBack(path string) MxBackLink {
+	p := strings.TrimSuffix(path, "/")
+	if !strings.HasPrefix(p, "/admin") {
+		return MxBackLink{}
+	}
+	const dash = "/admin"
+	if p == dash {
+		return MxBackLink{Href: "/", Label: "le site"}
+	}
+	switch {
+	case p == dash+"/produits":
+		return MxBackLink{Href: dash, Label: "le tableau de bord"}
+	case strings.HasPrefix(p, dash+"/produits/"):
+		return MxBackLink{Href: dash + "/produits", Label: "la liste des produits"}
+	case p == dash+"/commandes":
+		return MxBackLink{Href: dash, Label: "le tableau de bord"}
+	case strings.HasPrefix(p, dash+"/commandes/"):
+		return MxBackLink{Href: dash + "/commandes", Label: "la liste des commandes"}
+	case p == dash+"/clients":
+		return MxBackLink{Href: dash, Label: "le tableau de bord"}
+	case strings.HasPrefix(p, dash+"/clients/"):
+		return MxBackLink{Href: dash + "/clients", Label: "la liste des clients"}
+	}
+	// Sections simples (médias, types, réglages, système, design…) et tout
+	// chemin inconnu sous /admin : on remonte au tableau de bord.
+	return MxBackLink{Href: dash, Label: "le tableau de bord"}
+}
+
+// MxBackHTML rend le bouton retour ; chaîne vide pour un chemin hors admin.
+func MxBackHTML(path string) string {
+	b := MxBack(path)
+	if b.Href == "" {
+		return ""
+	}
+	return `<a class="mx-back" href="` + b.Href + `" title="Retour à ` + Esc(b.Label) +
+		`" aria-label="Retour à ` + Esc(b.Label) + `">← <span class="lb">Retour</span></a>`
+}
+
+func MxDoc(title, active string, counts map[string]int, back, body string) string {
 	return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=7">
+<link rel="stylesheet" href="/static/admin.css?v=8">
 <script src="/static/theme.js?v=2"></script>
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, counts) +
-		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button><h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
+		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button>` + back + `<h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
 		body + `</div></div></div><script src="/static/admin.js?v=8"></script></body></html>`
 }
 
