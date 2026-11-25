@@ -105,7 +105,7 @@ func TestAdminDesignServeStudio(t *testing.T) {
 		`/admin/studio/js/model.js?v=2`,
 		`/admin/studio/js/view.js?v=7`,
 		`/admin/studio/js/preview.js?v=9`,
-		`/admin/studio/js/controller.js?v=8`,
+		`/admin/studio/js/controller.js?v=9`,
 		`id="tab-front"`,
 		`id="tab-boutique"`,
 	} {

@@ -258,12 +258,12 @@ function themeFromFront(){
     mode:'auto',
     police:(front.font||'Inter')==='Inter'?'inter':'systeme',
     annonce_on:front.showAnnonce?'1':'0',
-    annonce_texte:Tx.bandeau||'',
+    annonce_texte:Tx.bandeau||front.banner||'',
     /* Sections du serveur, renvoyées telles quelles (phase 1 : le Studio ne
        les gère pas — surtout pas rows.map, l'éditeur visuel n'a que 3 lignes
        alors que le site en a 9). */
     sections:(front._serverSections&&front._serverSections.length)?front._serverSections.slice():[],
-    css:front.customCSS||''
+    css:studioCSS()
   };
 }
 /* Design actif injecté par le serveur (window.__STUDIO_DESIGN__, phase 2) :
@@ -856,3 +856,23 @@ addEventListener('load',()=>{
   BASE=ORIGIN=pubSnap=snap();hist=[BASE];hi=0;histBtns();updateStatus();renderCountersV16();
 });
 
+
+/* Réglages d'apparence traduits en CSS (seulement s'ils diffèrent du défaut) */
+function studioCSS(){
+  const f=front, ok=v=>/^#[0-9a-f]{6}$/i.test(v||''), diff=(v,d)=>ok(v)&&v.toLowerCase()!==d;
+  const clair=h=>(parseInt(h.slice(1,3),16)*299+parseInt(h.slice(3,5),16)*587+parseInt(h.slice(5,7),16)*114)/1000>150;
+  let c='';
+  if(diff(f.priceColor,'#dc2626'))c+='.card .pr,.mx-price{color:'+f.priceColor+'!important}';
+  if(diff(f.bg,'#ffffff'))c+='html:not([data-theme="dark"]) body{background:'+f.bg+'!important}';
+  if(diff(f.footerBg,'#111827')){
+    const t=clair(f.footerBg)?'#222222':'#ffffff';
+    c+='footer{background:'+f.footerBg+'!important}footer,footer h4,footer p,footer li a{color:'+t+'!important}';
+  }
+  const titre={S:'16px',L:'26px'}[f.titleSize]; if(titre)c+='.sec h2{font-size:'+titre+'!important}';
+  const rayon={carre:'0',pilule:'999px'}[f.btnShape]; if(rayon)c+='.btn,.mx-btn{border-radius:'+rayon+'!important}';
+  if(f.showBadge===false)c+='.card .im .promo{display:none!important}';
+  if(ok(f.announcementBg))c+='.mx-annonce{background:'+f.announcementBg+'!important}';
+  if(ok(f.announcementFg))c+='.mx-annonce{color:'+f.announcementFg+'!important}';
+  const perso=(f.customCSS||'').replace(/\/\*mx-studio\*\/[\s\S]*?\/\*fin-mx-studio\*\//g,'').trim();
+  return c ? perso+'\n/*mx-studio*/'+c+'/*fin-mx-studio*/' : perso;
+}
