@@ -1057,7 +1057,7 @@
    "images/ecran-dell-e1715s.jpg"
   ],
   "marque": "Dell",
-  "nom": "Dell E1715S",
+  "nom": "Écran Dell E1715S",
   "notes": "Vérifié : modèle Dell E1715S confirmé (fiches Dell et revendeurs concordantes ; réf. fabricant 210-AEUR). EAN 5397184200537 relevé sur fiches revendeurs. Image vérifiée par curl (HTTP 200, image/jpeg ; fichier léger, 14 Ko).",
   "options": [],
   "points_forts": [
@@ -1154,7 +1154,7 @@
    "images/ecran-dell-e2720h.jpg"
   ],
   "marque": "Dell",
-  "nom": "Dell E2720H",
+  "nom": "Écran Dell E2720H",
   "notes": "Vérifié : modèle Dell E2720H confirmé (guide d'utilisation Dell E1920H/E2020H/E2220H/E2420H/E2720H et fiches revendeurs concordantes). EAN 5397184200711 relevé sur la fiche du manuel ; d'autres EAN existent selon les régions. Pas de haut-parleur intégré sur l'E2720H (contrairement à l'E2720HS). Image vérifiée par curl (HTTP 200, image/jpeg).",
   "options": [],
   "points_forts": [
@@ -1349,7 +1349,7 @@
    "images/ecran-hp-p19b-g4.jpg"
   ],
   "marque": "HP",
-  "nom": "HP P19b G4",
+  "nom": "Écran HP P19b G4",
   "notes": "Vérifié : modèle HP P19b G4 confirmé (fiche technique HP, réf. produit 9TY83AA). Attention : le nom commercial s'écrit « P19b » (b minuscule) et non « P19B ». EAN laissé à null : plusieurs EAN existent selon les régions (ex. 0194850133411 pour la version Smart Buy). Image vérifiée par curl (HTTP 200, image/jpeg).",
   "options": [],
   "points_forts": [
@@ -1653,7 +1653,7 @@
    "images/lg-monitor-27-27up85np-w.jpg"
   ],
   "marque": "LG",
-  "nom": "LG 27UP85NP-W",
+  "nom": "Écran LG 27UP85NP-W",
   "notes": "Vérifié : modèle LG 27UP85NP-W confirmé (page officielle lg.com, modèle arrêté mais fiche toujours en ligne). EAN 5715063290040 relevé sur fiche revendeur. Point d'attention : la puissance USB-C est indiquée à 90 W sur la page LG et à 96 W sur la fiche technique Icecat — valeur LG (90 W) retenue. Image : la première candidate (tekshop.co.uk) répondait 403, remplacée par une image vérifiée par curl (HTTP 200, image/jpeg).",
   "options": [],
   "points_forts": [
@@ -1997,7 +1997,7 @@
   "image_source": "laposte.fr",
   "image_url": "https://www.laposte.fr/ecom/occ/ecommerce/medias/sys_master/productsmedias/h16/h76/30253403865118/1200Wx1200H_mp-500136134_media/mp-500136134_media.jpg",
   "marque": "Epson",
-  "nom": "Epson LQ-2190",
+  "nom": "Imprimante matricielle Epson LQ-2190",
   "notes": "CORRECTION : la LQ-2190 n'est pas un scanner mais une imprimante matricielle Epson — nom corrigé ('Epson LQ-2190') et catégorie corrigée ('Imprimantes'). Specs vérifiées sur la page officielle Epson UK (vitesses, 360 x 180 dpi, 6 volets, MTBF, dimensions 693 x 405 x 268 mm, 13 kg). Une fiche Epson plus ancienne indique 639 x 402 x 256 mm : les dimensions du site Epson actuel ont été retenues. EAN 8715946468266 relevé chez Currys Business. Réf. Epson C11CA92001A0. Ruban C13S015086 (EMEA) ; la réf. C13S015531 existe pour l'Asie. Références des options non vérifiées (ref null).",
   "options": [
    {
@@ -2109,7 +2109,7 @@
   "image_source": "compusales.com.mx",
   "image_url": "https://compusales.com.mx/18118-tm_thickbox_default/scanner-fujitsu-fi-7460-pa03710-b055-60ppm-adf-duplex-fi7460-18000-pag-diarias.jpg",
   "marque": "Fujitsu",
-  "nom": "Fujitsu fi-7460",
+  "nom": "Scanner Fujitsu fi-7460",
   "notes": "CORRECTION : la série fi-7460 n'est pas Ricoh mais Fujitsu (PFU Limited) — nom corrigé ('Fujitsu fi-7460') et marque corrigée (Fujitsu). Précision : depuis le rachat de PFU par Ricoh, la gamme est commercialisée sous la marque Ricoh, mais l'appareil reste un Fujitsu fi-7460, réf. PA03710-B055 (variante B051). Specs vérifiées sur la fiche Ricoh/PFU (via GoScanShop et Adorama) : 60 ppm/120 ipm, 600 dpi, ADF 100 feuilles, 18 000 pages/jour, 380 x 209 x 168 mm, 7,6 kg. Une page revendeur indique par erreur 80 ppm/160 ipm en paysage (chiffres du fi-7480) et un volume de 9 000 pages : les valeurs officielles 60 ppm/120 ipm et 18 000 pages ont été retenues. EAN non retrouvé ; référence du kit de rouleaux (consommable) non vérifiée, donc consommables laissés vides.",
   "options": [
    {
@@ -2344,7 +2344,7 @@
   "image_source": "cdn.cs.1worldsync.com",
   "image_url": "https://cdn.cs.1worldsync.com/66/59/6659f66b-d8e3-436c-a0b7-588f5d92bbad.jpg",
   "marque": "Kodak Alaris",
-  "nom": "Kodak Alaris i3500",
+  "nom": "Scanner Kodak Alaris i3500",
   "notes": "Specs vérifiées sur le site Kodak Alaris (page série i3000) et la fiche SHI : 110 ppm/220 ipm, 600 dpi, ADF 300 feuilles, volume 35 000 pages/jour, dimensions 431,8 x 371 x 238 mm, 15,8 kg. Modèle arrêté (discontinued) selon Kodak Alaris — à signaler au client. Références fabricant relevées : 1805969 (Kodak) et 1780360 (SHI) ; EAN non retrouvé. Aucune référence de consommable (kit de rouleaux) vérifiée, donc consommables laissés vides.",
   "options": [],
   "points_forts": [
@@ -7282,7 +7282,7 @@
    "https://documentation.meraki.com/@api/deki/files/15371/MX95_MX105_Fairies_Front_Ports_Shadow.png?revision=1&size=bestfit&width=500&height=348"
   ],
   "marque": "Cisco Meraki",
-  "nom": "Cisco Meraki MX105",
+  "nom": "Appliance de sécurité Cisco Meraki MX105",
   "note_stock": null,
   "notes": "Débits repris de la fiche officielle Meraki mise à jour en sept. 2026 (5 Gbit/s pare-feu, 3,5 Gbit/s VPN) ; les anciennes fiches et revendeurs indiquent 3 Gbit/s et 1 Gbit/s. Licence Meraki obligatoire, vendue séparément.",
   "options": [],
@@ -7384,7 +7384,7 @@
    "https://lastbestprice.com/wp-content/uploads/2018/03/Cisco-Meraki-mx250.jpg"
   ],
   "marque": "Cisco Meraki",
-  "nom": "Cisco Meraki MX250",
+  "nom": "Appliance de sécurité Cisco Meraki MX250",
   "note_stock": null,
   "notes": "Débits repris de la fiche officielle Meraki mise à jour en sept. 2026 (7,5 Gbit/s NAT, 4 Gbit/s VPN) ; les anciennes fiches indiquent 4 Gbit/s et 1 Gbit/s. EAN vérifié sur deux revendeurs. Licence Meraki obligatoire, vendue séparément.",
   "options": [],
@@ -8585,7 +8585,7 @@
    "https://resource.logitech.com/w_1440,h_660,ar_24:11,c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/c270/migration-assets-for-delorean-2025/c270-hd-webcam.png"
   ],
   "marque": "Logitech",
-  "nom": "Logitech C270 HD",
+  "nom": "Webcam Logitech C270 HD",
   "note_stock": null,
   "notes": "Catégorie actuelle : Câbles HDMI — en réalité webcam. EAN non renseigné : il varie selon la référence commerciale (960-000694, 960-000584, 960-001063…).",
   "options": [],
@@ -9083,7 +9083,7 @@
    "https://assets.legrand.com/pim/PHOTOS-WEB/LEGRAND/08/LG-080281-WEB-R.jpg"
   ],
   "marque": "Legrand",
-  "nom": "Cadre saillie 40 mm Mosaic pour 2 modules",
+  "nom": "Cadre saillie Legrand Mosaic 40 mm pour 2 modules",
   "note_stock": null,
   "notes": "",
   "options": [],
@@ -9185,7 +9185,7 @@
    "https://assets.legrand.com/pim/PHOTOS-WEB/LG-076583-WEB-R.jpg"
   ],
   "marque": "Legrand",
-  "nom": "Prise RJ45 Cat. 6 STP blindée Mosaic 1 module",
+  "nom": "Prise RJ45 Legrand Cat. 6 STP blindée Mosaic 1 module",
   "note_stock": null,
   "notes": "",
   "options": [],
@@ -11121,7 +11121,7 @@
    "images/kit-hp-cs500.jpg"
   ],
   "marque": "HP",
-  "nom": "HP CS500",
+  "nom": "Kit clavier et souris HP CS500",
   "note_stock": null,
   "notes": "Modèle non référencé sur hp.com : aucune fiche officielle HP trouvée. Spécifications issues de fiches revendeurs concordantes (Terrabyt, Jumia, Noon, Jakmall). Nombre de touches : 104 retenu (une source indique 114, non retenu). Autonomie en mois non chiffrée par une source fiable, donc omise. EAN non vérifié.",
   "options": [],
@@ -11195,7 +11195,7 @@
    "images/kit-hp-cs700.jpg"
   ],
   "marque": "HP",
-  "nom": "HP CS700",
+  "nom": "Kit clavier et souris HP CS700",
   "note_stock": null,
   "notes": "Modèle non référencé sur hp.com : aucune fiche officielle HP trouvée. Spécifications issues de fiches revendeurs concordantes (Jumia CI, Maxfor, Atlantis Technologie, Djokstore CI). Dimensions détaillées du clavier et de la souris non vérifiées, donc omises. EAN non vérifié. Image : photo studio Jumia du kit avec son emballage.",
   "options": [],
@@ -11672,7 +11672,7 @@
    "images/ncomputing-l300.jpg"
   ],
   "marque": "NComputing",
-  "nom": "NComputing L300",
+  "nom": "Client léger NComputing L300",
   "note_stock": null,
   "notes": "Produit ancien (lancé en 2012) et arrêté par NComputing ; compatibilité avec vSpace Pro actuel à vérifier (abonnement AMP requis pour les appareils fabriqués avant 2015). UPC relevé chez un revendeur : 882508000221 — ce n'est pas un EAN, donc ean reste null. Catégorie corrigée : « Kits clavier / souris » dans l'inventaire → « Clients légers / Thin clients » (le L300 n'est ni un clavier ni une souris).",
   "options": [],

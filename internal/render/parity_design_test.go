@@ -24,10 +24,10 @@ import (
 // go test ./internal/render/ -run TestPariteSansDesign -v (les valeurs
 // calculées sont journalisées), puis les recopier ici.
 var empreintesSansDesign = map[string]string{
-	"index":     "b0ddd8c2a45d901fa09ec5ae8c1f65dcad12a9330616b6ab6796467e7060746b",
-	"boutique":  "707f2c587e853d2b9c19238740593bf951dd9fbdb2672c1edec7253df61fd8c4",
-	"fiche":     "b26f30c6817c283f7290c2bdce1c0f532fbb562cfb8cb2d6a5e04bd1e6b2e3bc",
-	"categorie": "63b490984c2afdbf1ddfacea16f0620a6a22eabfbb2ba5670cb61f0f8b4c68af",
+	"index":     "6708f70ed5ea98fcb3b78c7695b5f11f430f08780b8399aa86aaf67801665851",
+	"boutique":  "5d65784bf653f87ab6fd73a4fa6ee4e01b16e90408617094bb180710af2772bd",
+	"fiche":     "0edbf64bff08001ccd0193fe7b9a03c56ce4b1380c3ad6dc0c0bad418e95a1d1",
+	"categorie": "cc340501490b8ccf8df48344a2537178991fc9788d683132182bf6c5c353b914",
 }
 
 func hashPage(s string) string {

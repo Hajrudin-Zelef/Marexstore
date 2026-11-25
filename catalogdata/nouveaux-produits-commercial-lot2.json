@@ -62,7 +62,7 @@
  },
  {
   "slug": "qnap-ts-855x-8g",
-  "nom": "QNAP TS-855X-8G",
+  "nom": "NAS QNAP TS-855X-8G",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -119,7 +119,7 @@
  },
  {
   "slug": "qnap-ts-h1277axu",
-  "nom": "QNAP TS-h1277AXU",
+  "nom": "NAS QNAP TS-h1277AXU",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -176,7 +176,7 @@
  },
  {
   "slug": "qnap-ts-h3077afu",
-  "nom": "QNAP TS-h3077AFU",
+  "nom": "NAS QNAP TS-h3077AFU",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -290,7 +290,7 @@
  },
  {
   "slug": "synology-sa3410",
-  "nom": "Synology SA3410",
+  "nom": "NAS Synology SA3410",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -347,7 +347,7 @@
  },
  {
   "slug": "synology-ds1823xs",
-  "nom": "Synology DS1823xs+",
+  "nom": "NAS Synology DS1823xs+",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -404,7 +404,7 @@
  },
  {
   "slug": "kingston-dc600me",
-  "nom": "Kingston DC600ME",
+  "nom": "SSD Kingston DC600ME",
   "marque": "Kingston",
   "prix": null,
   "devise": "F CFA",
@@ -518,7 +518,7 @@
  },
  {
   "slug": "patriot-p400-v4",
-  "nom": "Patriot P400 V4",
+  "nom": "SSD Patriot P400 V4",
   "marque": "Patriot",
   "prix": null,
   "devise": "F CFA",
@@ -628,7 +628,7 @@
  },
  {
   "slug": "dahua-cs4006-4et2gt-60",
-  "nom": "Dahua CS4006-4ET2GT-60",
+  "nom": "Commutateur Dahua CS4006-4ET2GT-60",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -1369,7 +1369,7 @@
  },
  {
   "slug": "synology-hat5320",
-  "nom": "Synology HAT5320",
+  "nom": "NAS Synology HAT5320",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -1788,7 +1788,7 @@
  },
  {
   "slug": "secure-firewall-1210-ngfw",
-  "nom": "Secure Firewall 1210-NGFW",
+  "nom": "Cisco Secure Firewall 1210 NGFW",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2097,7 +2097,7 @@
  },
  {
   "slug": "hp-415x",
-  "nom": "HP 415X",
+  "nom": "Cartouche de toner HP 415X",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -2158,7 +2158,7 @@
  },
  {
   "slug": "kyocera-tk-1260",
-  "nom": "Kyocera TK-1260",
+  "nom": "Cartouche de toner Kyocera TK-1260",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -2211,7 +2211,7 @@
  },
  {
   "slug": "epson-502",
-  "nom": "Epson 502",
+  "nom": "Imprimante Epson 502",
   "marque": "Epson",
   "prix": null,
   "devise": "F CFA",
@@ -2447,7 +2447,7 @@
  },
  {
   "slug": "c819-m2m",
-  "nom": "Cisco C819 M2M",
+  "nom": "Routeur Cisco C819 M2M",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2760,7 +2760,7 @@
  },
  {
   "slug": "synology-ds925",
-  "nom": "Synology DS925+",
+  "nom": "NAS Synology DS925+",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -3065,7 +3065,7 @@
  },
  {
   "slug": "cbs110-8t",
-  "nom": "Cisco CBS110-8T",
+  "nom": "Commutateur Cisco CBS110-8T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3435,7 +3435,7 @@
  },
  {
   "slug": "9410r-cartes-lc-24t",
-  "nom": "9410R + cartes LC-24T",
+  "nom": "Cisco Catalyst 9410R + cartes LC-24T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -4143,7 +4143,7 @@
  },
  {
   "slug": "8841",
-  "nom": "Cisco 8841",
+  "nom": "Cisco IP Phone 8841",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -4257,7 +4257,7 @@
  },
  {
   "slug": "webex-desk-pro",
-  "nom": "Webex Desk Pro",
+  "nom": "Cisco Webex Desk Pro",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -4314,7 +4314,7 @@
  },
  {
   "slug": "dahua-sdt3e410-8p",
-  "nom": "Dahua SDT3E410-8P",
+  "nom": "Caméra Dahua SDT3E410-8P",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -4375,7 +4375,7 @@
  },
  {
   "slug": "hikvision-ds-k1102",
-  "nom": "Hikvision DS-K1102",
+  "nom": "Lecteur Hikvision DS-K1102",
   "marque": "Hikvision",
   "prix": null,
   "devise": "F CFA",
@@ -4436,7 +4436,7 @@
  },
  {
   "slug": "dahua-asi1212f",
-  "nom": "Dahua ASI1212F",
+  "nom": "Terminal Dahua ASI1212F",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -4558,7 +4558,7 @@
  },
  {
   "slug": "huawei-ap663",
-  "nom": "Huawei AP663",
+  "nom": "Point d'accès Huawei AP663",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -4676,7 +4676,7 @@
  },
  {
   "slug": "wap-ax",
-  "nom": "wAP ax",
+  "nom": "Point d'accès MikroTik wAP ax",
   "marque": "MikroTik",
   "prix": null,
   "devise": "F CFA",
@@ -4916,7 +4916,7 @@
  },
  {
   "slug": "firehunter-6000-20000",
-  "nom": "FireHunter 6000 → 20000",
+  "nom": "Huawei FireHunter 6000 → 20000",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",

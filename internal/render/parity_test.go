@@ -140,6 +140,22 @@ var renommages2026 = []struct{ ancien, nouveau string }{
 	{"Toner CEXV63 NOIR", "Toner Canon C-EXV63 Noir"},
 	{"Toner TK-410 TONER KIT", "Toner Kyocera TK-410 Noir"},
 	{"Toner TK-450 TONER KIT", "Toner Kyocera TK-450 Noir"},
+	// Lot 2 (même date) : type court ajouté devant marque + modèle.
+	{"Cadre saillie 40 mm Mosaic pour 2 modules", "Cadre saillie Legrand Mosaic 40 mm pour 2 modules"},
+	{"Dell E1715S", "Écran Dell E1715S"},
+	{"Dell E2720H", "Écran Dell E2720H"},
+	{"HP P19b G4", "Écran HP P19b G4"},
+	{"HP CS500", "Kit clavier et souris HP CS500"},
+	{"HP CS700", "Kit clavier et souris HP CS700"},
+	{"Kodak Alaris i3500", "Scanner Kodak Alaris i3500"},
+	{"LG 27UP85NP-W", "Écran LG 27UP85NP-W"},
+	{"Cisco Meraki MX105", "Appliance de sécurité Cisco Meraki MX105"},
+	{"Cisco Meraki MX250", "Appliance de sécurité Cisco Meraki MX250"},
+	{"NComputing L300", "Client léger NComputing L300"},
+	{"Prise RJ45 Cat. 6 STP blindée Mosaic 1 module", "Prise RJ45 Legrand Cat. 6 STP blindée Mosaic 1 module"},
+	{"Fujitsu fi-7460", "Scanner Fujitsu fi-7460"},
+	{"Epson LQ-2190", "Imprimante matricielle Epson LQ-2190"},
+	{"Logitech C270 HD", "Webcam Logitech C270 HD"},
 }
 
 // qescTest reprend l'encodage des liens rendus (qesc dans render2.go).
@@ -149,12 +165,28 @@ func qescTest(s string) string {
 	return strings.ReplaceAll(q, "%2F", "/")
 }
 
+// applyRenommages ne touche QUE les positions qui portent le nom affiché :
+// titre, attributs alt/data-nom, texte de lien/titre, et liens percent-encodés.
+// Un remplacement global réécrirait les descriptions (« Le <nom> est … »).
 func applyRenommages(s string) string {
 	for _, r := range renommages2026 {
-		s = strings.ReplaceAll(s, r.ancien, r.nouveau)
-		// Le nom apparaît aussi percent-encodé (liens devis / WhatsApp) :
-		// même encodage que qesc() dans render2.go.
-		s = strings.ReplaceAll(s, qescTest(r.ancien), qescTest(r.nouveau))
+		remplacements := [][2]string{
+			{"<title>" + r.ancien, "<title>" + r.nouveau},
+			{`alt="` + r.ancien + `"`, `alt="` + r.nouveau + `"`},
+			{`data-nom="` + r.ancien + `"`, `data-nom="` + r.nouveau + `"`},
+			// Attributs normalisés (minuscules sans accents) : ancrés au début
+			// de la valeur, sinon on toucherait le nom dans la description.
+			{`data-name="` + catalog.NormName(r.ancien), `data-name="` + catalog.NormName(r.nouveau)},
+			{`data-search="` + catalog.NormName(r.ancien), `data-search="` + catalog.NormName(r.nouveau)},
+			{">" + r.ancien + "<", ">" + r.nouveau + "<"},
+			// Fil d'Ariane : le nom est le dernier segment, avant </div>.
+			{"› " + r.ancien, "› " + r.nouveau},
+			// Liens devis / WhatsApp : même encodage que qesc() dans render2.go.
+			{qescTest(r.ancien), qescTest(r.nouveau)},
+		}
+		for _, m := range remplacements {
+			s = strings.ReplaceAll(s, m[0], m[1])
+		}
 	}
 	return s
 }

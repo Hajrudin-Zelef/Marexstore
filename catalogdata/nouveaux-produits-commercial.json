@@ -1921,7 +1921,7 @@
  },
  {
   "slug": "apple-ipad",
-  "nom": "Apple iPad",
+  "nom": "Apple iPad (2025, 11e génération)",
   "marque": "Apple",
   "prix": null,
   "devise": "F CFA",
@@ -2774,7 +2774,7 @@
  },
  {
   "slug": "asus-expertbook",
-  "nom": "ASUS ExpertBook",
+  "nom": "ASUS ExpertBook B9 OLED (B9403CVAR)",
   "marque": "ASUS",
   "prix": null,
   "devise": "F CFA",
@@ -4138,7 +4138,7 @@
  },
  {
   "slug": "ricoh-fi-series",
-  "nom": "Ricoh fi Series",
+  "nom": "Scanner Ricoh fi-7600",
   "marque": "Ricoh",
   "prix": null,
   "devise": "F CFA",
@@ -5601,7 +5601,7 @@
  },
  {
   "slug": "hikvision-ds-k1t341",
-  "nom": "Hikvision DS-K1T341",
+  "nom": "Terminal Hikvision DS-K1T341",
   "marque": "Hikvision",
   "prix": null,
   "devise": "F CFA",
@@ -5646,7 +5646,7 @@
  },
  {
   "slug": "hikvision-ds-k2604",
-  "nom": "Hikvision DS-K2604",
+  "nom": "Contrôleur Hikvision DS-K2604",
   "marque": "Hikvision",
   "prix": null,
   "devise": "F CFA",
@@ -5699,7 +5699,7 @@
  },
  {
   "slug": "dahua-asr1200",
-  "nom": "Dahua ASR1200",
+  "nom": "Lecteur Dahua ASR1200",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -5747,7 +5747,7 @@
  },
  {
   "slug": "dahua-asi7213x",
-  "nom": "Dahua ASI7213X",
+  "nom": "Terminal Dahua ASI7213X",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -6528,7 +6528,7 @@
  },
  {
   "slug": "huawei-ap361",
-  "nom": "Huawei AP361",
+  "nom": "Point d'accès Huawei AP361",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -6589,7 +6589,7 @@
  },
  {
   "slug": "huawei-ap362",
-  "nom": "Huawei AP362",
+  "nom": "Point d'accès Huawei AP362",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -6658,7 +6658,7 @@
  },
  {
   "slug": "huawei-ap263",
-  "nom": "Huawei AP263",
+  "nom": "Point d'accès Huawei AP263",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -6727,7 +6727,7 @@
  },
  {
   "slug": "huawei-ap363",
-  "nom": "Huawei AP363",
+  "nom": "Point d'accès Huawei AP363",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -6844,7 +6844,7 @@
  },
  {
   "slug": "u6-pro",
-  "nom": "U6 Pro",
+  "nom": "Point d'accès Wi-Fi 6 U6 Pro",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -6978,7 +6978,7 @@
  },
  {
   "slug": "hap-ax2",
-  "nom": "hAP ax²",
+  "nom": "Point d'accès Wi-Fi 6 hAP ax²",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7291,7 +7291,7 @@
  },
  {
   "slug": "huawei-ap673",
-  "nom": "Huawei AP673",
+  "nom": "Point d'accès Huawei AP673",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7360,7 +7360,7 @@
  },
  {
   "slug": "huawei-ap677",
-  "nom": "Huawei AP677",
+  "nom": "Point d'accès Huawei AP677",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7412,7 +7412,7 @@
  },
  {
   "slug": "huawei-ap771",
-  "nom": "Huawei AP771",
+  "nom": "Point d'accès Huawei AP771",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7469,7 +7469,7 @@
  },
  {
   "slug": "huawei-ap673e",
-  "nom": "Huawei AP673E",
+  "nom": "Point d'accès Huawei AP673E",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7526,7 +7526,7 @@
  },
  {
   "slug": "huawei-ap677e",
-  "nom": "Huawei AP677E",
+  "nom": "Point d'accès Huawei AP677E",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7578,7 +7578,7 @@
  },
  {
   "slug": "huawei-ap771e",
-  "nom": "Huawei AP771E",
+  "nom": "Point d'accès Huawei AP771E",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7700,7 +7700,7 @@
  },
  {
   "slug": "pro-max",
-  "nom": "Pro Max",
+  "nom": "Point d'accès Wi-Fi 7 Pro Max",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -7765,7 +7765,7 @@
  },
  {
   "slug": "outdoor",
-  "nom": "Outdoor",
+  "nom": "Point d'accès Huawei Wi-Fi 7 Outdoor",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -8337,7 +8337,7 @@
  },
  {
   "slug": "cx-6000-48g",
-  "nom": "HPE Aruba CX 6000 48G",
+  "nom": "Commutateur HPE Aruba CX 6000 48G",
   "marque": "HPE Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -8447,7 +8447,7 @@
  },
  {
   "slug": "cx-6000-6200f",
-  "nom": "CX 6000 6200F",
+  "nom": "Commutateur HPE Aruba CX 6200F",
   "marque": "HPE Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -8508,7 +8508,7 @@
  },
  {
   "slug": "cx-6300m",
-  "nom": "HPE Aruba CX 6300M",
+  "nom": "Commutateur HPE Aruba CX 6300M",
   "marque": "HPE Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -8565,7 +8565,7 @@
  },
  {
   "slug": "cx-8100",
-  "nom": "HPE Aruba CX 8100",
+  "nom": "Commutateur HPE Aruba CX 8100",
   "marque": "HPE Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -8626,7 +8626,7 @@
  },
  {
   "slug": "cx-8360",
-  "nom": "HPE Aruba CX 8360",
+  "nom": "Commutateur HPE Aruba CX 8360",
   "marque": "HPE Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -8691,7 +8691,7 @@
  },
  {
   "slug": "rog-strix-g16",
-  "nom": "ROG Strix G16",
+  "nom": "ASUS ROG Strix G16",
   "marque": "ASUS",
   "prix": null,
   "devise": "F CFA",
@@ -8744,7 +8744,7 @@
  },
  {
   "slug": "rog-zephyrus-g14",
-  "nom": "ROG Zephyrus G14",
+  "nom": "ASUS ROG Zephyrus G14",
   "marque": "ASUS",
   "prix": null,
   "devise": "F CFA",
@@ -8797,7 +8797,7 @@
  },
  {
   "slug": "tuf-gaming-a15",
-  "nom": "TUF Gaming A15",
+  "nom": "ASUS TUF Gaming A15",
   "marque": "ASUS",
   "prix": null,
   "devise": "F CFA",
@@ -8919,7 +8919,7 @@
  },
  {
   "slug": "hikvision-ds-2cd3b46g2t",
-  "nom": "Hikvision DS-2CD3B46G2T",
+  "nom": "Caméra Hikvision DS-2CD3B46G2T",
   "marque": "Hikvision",
   "prix": null,
   "devise": "F CFA",
@@ -8988,7 +8988,7 @@
  },
  {
   "slug": "hikvision-ds-2cd2783g2",
-  "nom": "Hikvision DS-2CD2783G2",
+  "nom": "Caméra Hikvision DS-2CD2783G2",
   "marque": "Hikvision",
   "prix": null,
   "devise": "F CFA",
@@ -9118,7 +9118,7 @@
  },
  {
   "slug": "dahua-nvr5208-ei2",
-  "nom": "Dahua NVR5208-EI2",
+  "nom": "Enregistreur Dahua NVR5208-EI2",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -9183,7 +9183,7 @@
  },
  {
   "slug": "dahua-cs4006-4gt-60-v2",
-  "nom": "Dahua CS4006-4GT-60-V2",
+  "nom": "Commutateur Dahua CS4006-4GT-60-V2",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -9244,7 +9244,7 @@
  },
  {
   "slug": "dahua-chs4110-8et-110",
-  "nom": "Dahua CHS4110-8ET-110",
+  "nom": "Commutateur Dahua CHS4110-8ET-110",
   "marque": "Dahua",
   "prix": null,
   "devise": "F CFA",
@@ -9789,7 +9789,7 @@
  },
  {
   "slug": "ezviz-h6c-3mp",
-  "nom": "EZVIZ H6c 3MP",
+  "nom": "Caméra EZVIZ H6c 3MP",
   "marque": "EZVIZ",
   "prix": null,
   "devise": "F CFA",
@@ -9964,7 +9964,7 @@
  },
  {
   "slug": "ezviz-h8c-2k",
-  "nom": "EZVIZ H8c 2K",
+  "nom": "Caméra EZVIZ H8c 2K",
   "marque": "EZVIZ",
   "prix": null,
   "devise": "F CFA",
@@ -10163,7 +10163,7 @@
  },
  {
   "slug": "webex-room-kit",
-  "nom": "Webex Room Kit",
+  "nom": "Cisco Webex Room Kit",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -10211,7 +10211,7 @@
  },
  {
   "slug": "room-kit-mini",
-  "nom": "Room Kit Mini",
+  "nom": "Cisco Webex Room Kit Mini",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -10795,7 +10795,7 @@
  },
  {
   "slug": "firepower-ngfw",
-  "nom": "Firepower -NGFW)",
+  "nom": "Cisco Firepower NGFW",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -11251,7 +11251,7 @@
  },
  {
   "slug": "isa3000-4c",
-  "nom": "Cisco ISA3000-4C",
+  "nom": "Pare-feu Cisco ISA3000-4C",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -11603,7 +11603,7 @@
  },
  {
   "slug": "isr-1100-c1111-4p",
-  "nom": "ISR 1100 (C1111-4P",
+  "nom": "Cisco ISR 1100 (C1111-4P)",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -11655,7 +11655,7 @@
  },
  {
   "slug": "8p-c1117-4pm-c1121-c1126",
-  "nom": "8P, C1117-4PM, C1121, C1126",
+  "nom": "Cisco ISR 1100 (C1117-4PM, C1121, C1126)",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -12055,7 +12055,7 @@
  },
  {
   "slug": "asr-1001-1002-x",
-  "nom": "ASR 1001-1002-X",
+  "nom": "Cisco ASR 1001-X / 1002-X",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -12115,7 +12115,7 @@
  },
  {
   "slug": "asr-1001-1009-x",
-  "nom": "ASR 1001-1009-X",
+  "nom": "Cisco ASR 1001-X / 1009-X",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -12575,7 +12575,7 @@
  },
  {
   "slug": "48p-24ux",
-  "nom": "48P, 24UX",
+  "nom": "Cisco Catalyst 9300 (48P, 24UX)",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -12895,7 +12895,7 @@
  },
  {
   "slug": "48y4c-9600-lc-48yl",
-  "nom": "48Y4C, 9600-LC-48YL",
+  "nom": "Cisco Catalyst 9600-LC-48YL",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -13007,7 +13007,7 @@
  },
  {
   "slug": "nexus-93180yc-9364c",
-  "nom": "Nexus 93180YC-9364C",
+  "nom": "Cisco Nexus 93180YC / 9364C",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -13555,7 +13555,7 @@
  },
  {
   "slug": "48t-24p",
-  "nom": "48T, 24P",
+  "nom": "Cisco Catalyst 48T/24P",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -14680,7 +14680,7 @@
  },
  {
   "slug": "hp-305",
-  "nom": "HP 305",
+  "nom": "Cartouche d'encre HP 305",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -14736,7 +14736,7 @@
  },
  {
   "slug": "hp-305xl",
-  "nom": "HP 305XL",
+  "nom": "Cartouche d'encre HP 305XL",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -14792,7 +14792,7 @@
  },
  {
   "slug": "hp-653",
-  "nom": "HP 653",
+  "nom": "Cartouche d'encre HP 653",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -14844,7 +14844,7 @@
  },
  {
   "slug": "hp-680",
-  "nom": "HP 680",
+  "nom": "Cartouche d'encre HP 680",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -14900,7 +14900,7 @@
  },
  {
   "slug": "hp-682",
-  "nom": "HP 682",
+  "nom": "Cartouche d'encre HP 682",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -14952,7 +14952,7 @@
  },
  {
   "slug": "canon-pg-545",
-  "nom": "Canon PG-545",
+  "nom": "Cartouche d'encre Canon PG-545",
   "marque": "Canon",
   "prix": null,
   "devise": "F CFA",
@@ -15008,7 +15008,7 @@
  },
  {
   "slug": "canon-pg-cl-546",
-  "nom": "Canon PG-CL-546",
+  "nom": "Cartouche d'encre Canon PG-CL-546",
   "marque": "Canon",
   "prix": null,
   "devise": "F CFA",
@@ -15060,7 +15060,7 @@
  },
  {
   "slug": "canon-pg-pg-540",
-  "nom": "Canon PG-PG-540",
+  "nom": "Cartouche d'encre Canon PG-PG-540",
   "marque": "Canon",
   "prix": null,
   "devise": "F CFA",
@@ -15116,7 +15116,7 @@
  },
  {
   "slug": "canon-gi-490",
-  "nom": "Canon GI-490",
+  "nom": "Bouteille d'encre Canon GI-490",
   "marque": "Canon",
   "prix": null,
   "devise": "F CFA",
@@ -15176,7 +15176,7 @@
  },
  {
   "slug": "canon-gi-gi-790",
-  "nom": "Canon GI-GI-790",
+  "nom": "Bouteille d'encre Canon GI-GI-790",
   "marque": "Canon",
   "prix": null,
   "devise": "F CFA",
@@ -15228,7 +15228,7 @@
  },
  {
   "slug": "epson-603",
-  "nom": "Epson 603",
+  "nom": "Cartouche d'encre Epson 603",
   "marque": "Epson",
   "prix": null,
   "devise": "F CFA",
@@ -15284,7 +15284,7 @@
  },
  {
   "slug": "epson-604",
-  "nom": "Epson 604",
+  "nom": "Cartouche d'encre Epson 604",
   "marque": "Epson",
   "prix": null,
   "devise": "F CFA",
@@ -16703,7 +16703,7 @@
  },
  {
   "slug": "24p-24lp2sr",
-  "nom": "24P, 24LP2SR",
+  "nom": "Commutateur Huawei 24 ports PoE (24P, 24LP2SR)",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -16805,7 +16805,7 @@
  },
  {
   "slug": "24t-24p",
-  "nom": "24T, 24P",
+  "nom": "Commutateur Huawei 24 ports (24T, 24P)",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -16858,7 +16858,7 @@
  },
  {
   "slug": "48p-24t4x",
-  "nom": "48P, 24T4X",
+  "nom": "Commutateur Huawei 48 ports PoE (48P, 24T4X)",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -17968,7 +17968,7 @@
  },
  {
   "slug": "couleur-ma2101cwfx",
-  "nom": "COULEUR — MA2101cwfx",
+  "nom": "Kyocera ECOSYS MA2101cwfx",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -18092,7 +18092,7 @@
  },
  {
   "slug": "couleur-pa2600cwx",
-  "nom": "COULEUR — PA2600cwx",
+  "nom": "Kyocera ECOSYS PA2600cwx",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -18148,7 +18148,7 @@
  },
  {
   "slug": "couleur-ma3500cix",
-  "nom": "COULEUR — MA3500cix",
+  "nom": "Kyocera ECOSYS MA3500cix",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -18284,7 +18284,7 @@
  },
  {
   "slug": "noir-blanc-pa4000x",
-  "nom": "NOIR & BLANC — PA4000x",
+  "nom": "Kyocera ECOSYS PA4000x",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -18464,7 +18464,7 @@
  },
  {
   "slug": "qnap-tl-d800c",
-  "nom": "QNAP TL-D800C",
+  "nom": "NAS QNAP TL-D800C",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18517,7 +18517,7 @@
  },
  {
   "slug": "qnap-ts-1655-8g",
-  "nom": "QNAP TS-1655-8G",
+  "nom": "NAS QNAP TS-1655-8G",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18586,7 +18586,7 @@
  },
  {
   "slug": "qnap-ts-433eu",
-  "nom": "QNAP TS-433eU",
+  "nom": "NAS QNAP TS-433eU",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18643,7 +18643,7 @@
  },
  {
   "slug": "qnap-ts-664-8g",
-  "nom": "QNAP TS-664-8G",
+  "nom": "NAS QNAP TS-664-8G",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18704,7 +18704,7 @@
  },
  {
   "slug": "qnap-ts-864eu-rp-8g",
-  "nom": "QNAP TS-864eU-RP-8G",
+  "nom": "NAS QNAP TS-864eU-RP-8G",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18761,7 +18761,7 @@
  },
  {
   "slug": "qnap-ts-932px-4g",
-  "nom": "QNAP TS-932PX-4G",
+  "nom": "NAS QNAP TS-932PX-4G",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -18814,7 +18814,7 @@
  },
  {
   "slug": "qnap-ts-h987xu-rp-e2334",
-  "nom": "QNAP TS-H987XU-RP-E2334",
+  "nom": "NAS QNAP TS-H987XU-RP-E2334",
   "marque": "QNAP",
   "prix": null,
   "devise": "F CFA",
@@ -19270,7 +19270,7 @@
  },
  {
   "slug": "hp-771",
-  "nom": "HP 771",
+  "nom": "Cartouche d'encre HP 771",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -19376,7 +19376,7 @@
  },
  {
   "slug": "hp-773",
-  "nom": "HP 773",
+  "nom": "Cartouche d'encre HP 773",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -20370,7 +20370,7 @@
  },
  {
   "slug": "15-pro",
-  "nom": "15 Pro",
+  "nom": "iPhone 15 Pro",
   "marque": "Apple",
   "prix": null,
   "devise": "F CFA",
@@ -20630,7 +20630,7 @@
  },
  {
   "slug": "kingston-dc3000me",
-  "nom": "Kingston DC3000ME",
+  "nom": "SSD Kingston DC3000ME",
   "marque": "Kingston",
   "prix": null,
   "devise": "F CFA",
@@ -20829,7 +20829,7 @@
  },
  {
   "slug": "synology-snv5420",
-  "nom": "Synology SNV5420",
+  "nom": "NAS Synology SNV5420",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -20947,7 +20947,7 @@
  },
  {
   "slug": "kingston-dc2000b",
-  "nom": "Kingston DC2000B",
+  "nom": "SSD Kingston DC2000B",
   "marque": "Kingston",
   "prix": null,
   "devise": "F CFA",
@@ -21012,7 +21012,7 @@
  },
  {
   "slug": "crucial-bx500",
-  "nom": "Crucial BX500",
+  "nom": "SSD Crucial BX500",
   "marque": "Crucial",
   "prix": null,
   "devise": "F CFA",
@@ -21134,7 +21134,7 @@
  },
  {
   "slug": "synology-hat3300",
-  "nom": "Synology HAT3300",
+  "nom": "NAS Synology HAT3300",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -21203,7 +21203,7 @@
  },
  {
   "slug": "synology-hat5300",
-  "nom": "Synology HAT5300",
+  "nom": "NAS Synology HAT5300",
   "marque": "Synology",
   "prix": null,
   "devise": "F CFA",
@@ -21272,7 +21272,7 @@
  },
  {
   "slug": "hp-305xl-toners",
-  "nom": "HP 305XL",
+  "nom": "Cartouche d'encre HP 305XL",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -21325,7 +21325,7 @@
  },
  {
   "slug": "hp-415a",
-  "nom": "HP 415A",
+  "nom": "Imprimante HP 415A",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -21382,7 +21382,7 @@
  },
  {
   "slug": "hp-207x",
-  "nom": "HP 207X",
+  "nom": "Imprimante HP 207X",
   "marque": "HP",
   "prix": null,
   "devise": "F CFA",
@@ -21435,7 +21435,7 @@
  },
  {
   "slug": "tk-8585m",
-  "nom": "Kyocera TK-8585M",
+  "nom": "Cartouche de toner Kyocera TK-8585M",
   "marque": "Kyocera",
   "prix": null,
   "devise": "F CFA",
@@ -21488,7 +21488,7 @@
  },
  {
   "slug": "tl-sg1024",
-  "nom": "TP-Link TL-SG1024",
+  "nom": "Commutateur TP-Link TL-SG1024",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21541,7 +21541,7 @@
  },
  {
   "slug": "tl-1016",
-  "nom": "TP-Link TL-SG1016",
+  "nom": "Commutateur TP-Link TL-SG1016",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21594,7 +21594,7 @@
  },
  {
   "slug": "tl-108",
-  "nom": "TP-Link TL-SG108",
+  "nom": "Commutateur TP-Link TL-SG108",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21647,7 +21647,7 @@
  },
  {
   "slug": "tl-sg3428",
-  "nom": "TP-Link TL-SG3428",
+  "nom": "Commutateur TP-Link TL-SG3428",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21700,7 +21700,7 @@
  },
  {
   "slug": "tl-3428x",
-  "nom": "TP-Link TL-SG3428X",
+  "nom": "Commutateur TP-Link TL-SG3428X",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21753,7 +21753,7 @@
  },
  {
   "slug": "tl-3452",
-  "nom": "TP-Link TL-SG3452",
+  "nom": "Commutateur TP-Link TL-SG3452",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21814,7 +21814,7 @@
  },
  {
   "slug": "tl-sx3016f",
-  "nom": "TP-Link TL-SX3016F",
+  "nom": "Commutateur TP-Link TL-SX3016F",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -21875,7 +21875,7 @@
  },
  {
   "slug": "sx3008f",
-  "nom": "TP-Link TL-SX3008F",
+  "nom": "Commutateur TP-Link TL-SX3008F",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -22054,7 +22054,7 @@
  },
  {
   "slug": "es241-p",
-  "nom": "ES241(P",
+  "nom": "TP-Link Omada ES241(P)",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -22103,7 +22103,7 @@
  },
  {
   "slug": "omada-x",
-  "nom": "Omada X)",
+  "nom": "TP-Link Omada X",
   "marque": "TP-Link",
   "prix": null,
   "devise": "F CFA",
@@ -22856,7 +22856,7 @@
  },
  {
   "slug": "banque-de-batteries-externe",
-  "nom": "Banque de batteries externe",
+  "nom": "Banque de batteries externe APC",
   "marque": "APC",
   "prix": null,
   "devise": "F CFA",
@@ -22905,7 +22905,7 @@
  },
  {
   "slug": "pack-batteries-modulaire",
-  "nom": "Pack batteries modulaire",
+  "nom": "Pack batteries modulaire APC",
   "marque": "APC",
   "prix": null,
   "devise": "F CFA",
@@ -22954,7 +22954,7 @@
  },
  {
   "slug": "e3sbt4-string-batteries",
-  "nom": "E3SBT4 — String batteries",
+  "nom": "Chaîne de batteries APC E3SBT4",
   "marque": "APC",
   "prix": null,
   "devise": "F CFA",
