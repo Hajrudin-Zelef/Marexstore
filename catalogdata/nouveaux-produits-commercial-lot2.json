@@ -1426,7 +1426,7 @@
  },
  {
   "slug": "fg-61f",
-  "nom": "FG-61F",
+  "nom": "Fortinet FortiGate 61F",
   "marque": "Fortinet",
   "prix": null,
   "devise": "F CFA",
@@ -1483,7 +1483,7 @@
  },
  {
   "slug": "fg-100f",
-  "nom": "FG-100F",
+  "nom": "Fortinet FortiGate 100F",
   "marque": "Fortinet",
   "prix": null,
   "devise": "F CFA",
@@ -1540,7 +1540,7 @@
  },
  {
   "slug": "firepower-2110",
-  "nom": "Firepower 2110",
+  "nom": "Cisco Firepower 2110",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1597,7 +1597,7 @@
  },
  {
   "slug": "firepower-2140",
-  "nom": "Firepower 2140",
+  "nom": "Cisco Firepower 2140",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1662,7 +1662,7 @@
  },
  {
   "slug": "firepower-4140",
-  "nom": "Firepower 4140",
+  "nom": "Cisco Firepower 4140",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1727,7 +1727,7 @@
  },
  {
   "slug": "secure-firewall-1210cp",
-  "nom": "Secure Firewall 1210CP",
+  "nom": "Cisco Secure Firewall 1210CP",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1849,7 +1849,7 @@
  },
  {
   "slug": "secure-firewall-1230",
-  "nom": "Secure Firewall 1230",
+  "nom": "Cisco Secure Firewall 1230",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1914,7 +1914,7 @@
  },
  {
   "slug": "isa3000-8c",
-  "nom": "ISA3000-8C",
+  "nom": "Cisco Secure Firewall ISA3000-8C",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -1979,7 +1979,7 @@
  },
  {
   "slug": "6500e",
-  "nom": "6500E",
+  "nom": "Huawei HiSecEngine USG6500E",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -2036,7 +2036,7 @@
  },
  {
   "slug": "usg6700e",
-  "nom": "USG6700E",
+  "nom": "Huawei HiSecEngine USG6700E",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -2272,7 +2272,7 @@
  },
  {
   "slug": "isr-4431",
-  "nom": "ISR 4431",
+  "nom": "Cisco ISR 4431",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2329,7 +2329,7 @@
  },
  {
   "slug": "isr-4461",
-  "nom": "ISR 4461",
+  "nom": "Cisco ISR 4461",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2386,7 +2386,7 @@
  },
  {
   "slug": "asr-1001-x",
-  "nom": "ASR 1001-X",
+  "nom": "Cisco ASR 1001-X",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2447,7 +2447,7 @@
  },
  {
   "slug": "c819-m2m",
-  "nom": "C819 M2M",
+  "nom": "Cisco C819 M2M",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2508,7 +2508,7 @@
  },
  {
   "slug": "nim-1mft-t1",
-  "nom": "NIM-1MFT-T1",
+  "nom": "Cisco NIM-1MFT-T1/E1",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2569,7 +2569,7 @@
  },
  {
   "slug": "xe9680l",
-  "nom": "XE9680L",
+  "nom": "Dell PowerEdge XE9680L",
   "marque": "Dell",
   "prix": null,
   "devise": "F CFA",
@@ -2634,7 +2634,7 @@
  },
  {
   "slug": "xr7620",
-  "nom": "XR7620",
+  "nom": "Dell PowerEdge XR7620",
   "marque": "Dell",
   "prix": null,
   "devise": "F CFA",
@@ -2699,7 +2699,7 @@
  },
  {
   "slug": "ucs-b200-m6",
-  "nom": "UCS B200 M6",
+  "nom": "Cisco UCS B200 M6",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2825,7 +2825,7 @@
  },
  {
   "slug": "catalyst-1300-48t",
-  "nom": "Catalyst 1300-48T",
+  "nom": "Cisco Catalyst 1300-48T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2890,7 +2890,7 @@
  },
  {
   "slug": "catalyst-1300-24xts",
-  "nom": "Catalyst 1300-24XTS",
+  "nom": "Cisco Catalyst 1300-24XTS",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -2955,7 +2955,7 @@
  },
  {
   "slug": "catalyst-1200-48t",
-  "nom": "Catalyst 1200-48T",
+  "nom": "Cisco Catalyst 1200-48T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3012,7 +3012,7 @@
  },
  {
   "slug": "catalyst-1000-24t",
-  "nom": "Catalyst 1000-24T",
+  "nom": "Cisco Catalyst 1000-24T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3065,7 +3065,7 @@
  },
  {
   "slug": "cbs110-8t",
-  "nom": "CBS110-8T",
+  "nom": "Cisco CBS110-8T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3126,7 +3126,7 @@
  },
  {
   "slug": "cbs350",
-  "nom": "CBS350",
+  "nom": "Cisco CBS350",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3183,7 +3183,7 @@
  },
  {
   "slug": "catalyst-48t",
-  "nom": "Catalyst 48T",
+  "nom": "Cisco Catalyst C9300-48T",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3248,7 +3248,7 @@
  },
  {
   "slug": "catalyst-9300-24p",
-  "nom": "Catalyst 9300 24P",
+  "nom": "Cisco Catalyst 9300-24P",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3313,7 +3313,7 @@
  },
  {
   "slug": "catalyst-9300-48uxm",
-  "nom": "Catalyst 9300 48UXM",
+  "nom": "Cisco Catalyst 9300 48UXM",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3374,7 +3374,7 @@
  },
  {
   "slug": "catalyst-9300-48un",
-  "nom": "Catalyst 9300 48UN",
+  "nom": "Cisco Catalyst 9300 48UN",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3492,7 +3492,7 @@
  },
  {
   "slug": "catalyst-9500-40x",
-  "nom": "Catalyst 9500-40X",
+  "nom": "Cisco Catalyst 9500-40X",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3553,7 +3553,7 @@
  },
  {
   "slug": "nexus-9336c-fx2",
-  "nom": "Nexus 9336C-FX2",
+  "nom": "Cisco Nexus 9336C-FX2",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -3614,7 +3614,7 @@
  },
  {
   "slug": "s110-24t",
-  "nom": "S110-24T",
+  "nom": "Huawei eKitEngine S110-24T",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -3671,7 +3671,7 @@
  },
  {
   "slug": "s220-8t",
-  "nom": "S220-8T",
+  "nom": "Huawei eKitEngine S220-8T4S",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -3728,7 +3728,7 @@
  },
  {
   "slug": "s220-48t",
-  "nom": "S220-48T",
+  "nom": "Huawei eKitEngine S220-48T",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -3789,7 +3789,7 @@
  },
  {
   "slug": "s310-16t",
-  "nom": "S310-16T",
+  "nom": "Huawei CloudEngine S310-16T",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -3846,7 +3846,7 @@
  },
  {
   "slug": "dgs-1210-24",
-  "nom": "DGS-1210-24",
+  "nom": "D-Link DGS-1210-24P",
   "marque": "D-Link",
   "prix": null,
   "devise": "F CFA",
@@ -3907,7 +3907,7 @@
  },
  {
   "slug": "dgs-1520-28",
-  "nom": "DGS-1520-28",
+  "nom": "D-Link DGS-1520-28",
   "marque": "D-Link",
   "prix": null,
   "devise": "F CFA",
@@ -3964,7 +3964,7 @@
  },
  {
   "slug": "dms-1250-10tp",
-  "nom": "DMS-1250-10TP",
+  "nom": "D-Link DMS-1250-10TP",
   "marque": "D-Link",
   "prix": null,
   "devise": "F CFA",
@@ -4021,7 +4021,7 @@
  },
  {
   "slug": "cx-6000-24g",
-  "nom": "CX 6000 24G",
+  "nom": "Aruba Networking CX 6000 24G 4SFP",
   "marque": "Aruba",
   "prix": null,
   "devise": "F CFA",
@@ -4143,7 +4143,7 @@
  },
  {
   "slug": "8841",
-  "nom": "8841",
+  "nom": "Cisco 8841",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -4200,7 +4200,7 @@
  },
  {
   "slug": "8845",
-  "nom": "8845",
+  "nom": "Cisco IP Phone 8845",
   "marque": "Cisco",
   "prix": null,
   "devise": "F CFA",
@@ -4497,7 +4497,7 @@
  },
  {
   "slug": "huawei-ap160",
-  "nom": "Huawei AP160",
+  "nom": "Huawei eKitEngine AP160",
   "marque": "Huawei",
   "prix": null,
   "devise": "F CFA",
@@ -4615,7 +4615,7 @@
  },
  {
   "slug": "u6-enterprise",
-  "nom": "U6 Enterprise",
+  "nom": "Ubiquiti UniFi U6 Enterprise",
   "marque": "Ubiquiti",
   "prix": null,
   "devise": "F CFA",
@@ -4855,7 +4855,7 @@
  },
  {
   "slug": "easy-ups-3s-120-kva",
-  "nom": "Easy UPS 3S 120 kVA",
+  "nom": "APC Easy UPS 3S 120 kVA",
   "marque": "APC",
   "prix": null,
   "devise": "F CFA",
@@ -4973,7 +4973,7 @@
  },
  {
   "slug": "cx-10000",
-  "nom": "CX 10000",
+  "nom": "Aruba Networking CX 10000",
   "marque": "Aruba",
   "prix": null,
   "devise": "F CFA",

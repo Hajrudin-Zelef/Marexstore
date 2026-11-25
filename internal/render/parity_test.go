@@ -2,6 +2,7 @@ package render_test
 
 import (
 	"encoding/json"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -36,6 +37,7 @@ var reHtmx = regexp.MustCompile("<script[^>]*htmx[^>]*></script>\n?")
 var reMirror = regexp.MustCompile("<script[^>]*mirror[^>]*></script>\n?")
 var reVer = regexp.MustCompile(`assets/[a-z0-9_.-]+\.css\?v=\d+|assets/[a-z0-9_.-]+\.js\?v=\d+`)
 var reFiltersToggle = regexp.MustCompile(`<button type="button" class="filters-toggle"[^>]*>.*?</button>\n?`)
+var reHubImg = regexp.MustCompile(`(<span class="hub-img"><img src=")[^"]*(" alt=")[^"]*(")`)
 var reMegaAll = regexp.MustCompile(`<a class="mega-all" href="[^"]*"`)
 var reHubMain = regexp.MustCompile(`<a class="hub-main" href="[^"]*"`)
 var reHubSub = regexp.MustCompile(`<li><a href="[^"]*">`)
@@ -118,10 +120,56 @@ func readOrig(t *testing.T, path string) string {
 	return string(b)
 }
 
+// renommages2026 : corrections de noms produits du 2026-11-25 (contenu
+// éditorial voulu, cf. plan/RAPPORT-CORRECTION-NOMS.md). La référence
+// site-orig reste la v3.25 : on y applique ces remplacements avant de
+// comparer, pour que la parité continue de porter à l'octet près sur la
+// structure, les prix, les descriptions et les attributs.
+var renommages2026 = []struct{ ancien, nouveau string }{
+	{"Toner 655A YELLOW", "Toner HP 655A Jaune (CF452A)"},
+	{"Toner 659A NOIR", "Toner HP 659A Noir (W2010A)"},
+	{"Toner 78A NOIR", "Toner HP 78A Noir (CE278A)"},
+	{"Toner 79A NOIR", "Toner HP 79A Noir (CF279A)"},
+	{"Toner 80A NOIR", "Toner HP 80A Noir (CF280A)"},
+	{"Toner 827A NOIR", "Toner HP 827A Noir (CF300A)"},
+	{"Toner 85A NOIR", "Toner HP 85A Noir (CE285A)"},
+	{"Toner 90A NOIR", "Toner HP 90A Noir (CE390A)"},
+	{"Toner CEXV32 NOIR", "Toner Canon C-EXV32 Noir"},
+	{"Toner CEXV42 NOIR", "Toner Canon C-EXV42 Noir"},
+	{"Toner CEXV58 MAGENTA", "Toner Canon C-EXV58 Magenta"},
+	{"Toner CEXV63 NOIR", "Toner Canon C-EXV63 Noir"},
+	{"Toner TK-410 TONER KIT", "Toner Kyocera TK-410 Noir"},
+	{"Toner TK-450 TONER KIT", "Toner Kyocera TK-450 Noir"},
+}
+
+// qescTest reprend l'encodage des liens rendus (qesc dans render2.go).
+func qescTest(s string) string {
+	q := url.QueryEscape(s)
+	q = strings.ReplaceAll(q, "+", "%20")
+	return strings.ReplaceAll(q, "%2F", "/")
+}
+
+func applyRenommages(s string) string {
+	for _, r := range renommages2026 {
+		s = strings.ReplaceAll(s, r.ancien, r.nouveau)
+		// Le nom apparaît aussi percent-encodé (liens devis / WhatsApp) :
+		// même encodage que qesc() dans render2.go.
+		s = strings.ReplaceAll(s, qescTest(r.ancien), qescTest(r.nouveau))
+	}
+	return s
+}
+
+// readOrigNorm : référence site-orig normalisée, avec les renommages
+// volontaires appliqués (le rendu courant, lui, porte déjà les nouveaux noms).
+func readOrigNorm(t *testing.T, path string) string {
+	t.Helper()
+	return normPage(applyRenommages(readOrig(t, path)))
+}
+
 func TestBoutiqueParity(t *testing.T) {
 	s := testStore(t)
 	got := normPage(render.Doc("Store", render.BoutiqueBody(s), "", ""))
-	want := normPage(readOrig(t, "boutique.html"))
+	want := readOrigNorm(t, "boutique.html")
 	// Le tri "stock d'abord" réordonne les cartes : même jeu de cartes,
 	// reste de la page identique à l'octet près.
 	assertSameCards(t, got, want)
@@ -131,7 +179,7 @@ func TestIndexParity(t *testing.T) {
 	s := testStore(t)
 	recents := s.Recents(rel("../../catalogdata/store-sitemap.xml"))
 	got := normPage(render.Doc("Accueil", render.IndexBody(s, recents), "", ""))
-	want := normPage(readOrig(t, "index.html"))
+	want := readOrigNorm(t, "index.html")
 	if got != want {
 		diffFirst(t, got, want)
 	}
@@ -141,7 +189,7 @@ func TestCategoriesParity(t *testing.T) {
 	s := testStore(t)
 	for _, m := range catalog.MainOrder {
 		got := normPage(render.Doc(m, render.CategoryPage(s, m), "../", ""))
-		want := normPage(readOrig(t, "categories/"+catalog.MainSlug[m]+".html"))
+		want := readOrigNorm(t, "categories/"+catalog.MainSlug[m]+".html")
 		t.Logf("catégorie %s", m)
 		assertSameCards(t, got, want)
 	}
@@ -151,7 +199,7 @@ func TestProduitsParity(t *testing.T) {
 	s := testStore(t)
 	for _, p := range s.Products {
 		got := normPage(render.Doc(p.Nom, render.Header(s, "../", "")+render.FicheBody(s, p)+"\n"+render.Footer(s, "../"), "../", ""))
-		want := normPage(readOrig(t, "produits/"+p.Slug+".html"))
+		want := readOrigNorm(t, "produits/"+p.Slug+".html")
 		if got != want {
 			t.Logf("produit %s", p.Slug)
 			diffFirst(t, got, want)
@@ -228,6 +276,12 @@ func extractCards(html string) (string, []string) {
 // assertSameCards : hors-cartes strictement identique + même multijeu de cartes.
 func assertSameCards(t *testing.T, got, want string) {
 	t.Helper()
+	// Hub de types : le produit représentant est choisi par ordre alphabétique ;
+	// les corrections de noms du 2026-11-25 changent donc légitimement l'image
+	// et l'alt affichés. Neutralisé ici seulement (pas dans normPage, pour ne
+	// pas toucher aux empreintes de TestPariteSansDesign).
+	got = reHubImg.ReplaceAllString(got, "${1}@@${2}@@${3}")
+	want = reHubImg.ReplaceAllString(want, "${1}@@${2}@@${3}")
 	gs, gslugs := extractCards(got)
 	ws, wslugs := extractCards(want)
 	if gs != ws {

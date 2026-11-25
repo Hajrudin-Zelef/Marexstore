@@ -25,7 +25,7 @@ import (
 // calculées sont journalisées), puis les recopier ici.
 var empreintesSansDesign = map[string]string{
 	"index":     "b0ddd8c2a45d901fa09ec5ae8c1f65dcad12a9330616b6ab6796467e7060746b",
-	"boutique":  "2a78d81f106e728f27ebfb8bafe7938869062a0df80322cd5652ddb27e2e2eaa",
+	"boutique":  "707f2c587e853d2b9c19238740593bf951dd9fbdb2672c1edec7253df61fd8c4",
 	"fiche":     "b26f30c6817c283f7290c2bdce1c0f532fbb562cfb8cb2d6a5e04bd1e6b2e3bc",
 	"categorie": "63b490984c2afdbf1ddfacea16f0620a6a22eabfbb2ba5670cb61f0f8b4c68af",
 }

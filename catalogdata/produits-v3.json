@@ -4889,7 +4889,7 @@
  {
   "ref": "TONER_655A_YELLOW",
   "marque": "HP",
-  "nom": "Toner 655A YELLOW",
+  "nom": "Toner HP 655A Jaune (CF452A)",
   "famille": "Impression",
   "categorie": "Toners & consommables",
   "accroche": "Toner jaune HP 655A d'origine (CF452A) : environ 10 500 pages pour les imprimantes HP Color LaserJet Enterprise M652, M653, M681 et M682.",
@@ -4976,7 +4976,7 @@
  {
   "ref": "TONER_659A_NOIR",
   "marque": "HP",
-  "nom": "Toner 659A NOIR",
+  "nom": "Toner HP 659A Noir (W2010A)",
   "famille": "Impression",
   "categorie": "Toners & consommables",
   "accroche": "Toner noir HP 659A d'origine (W2010A) : environ 16 000 pages pour les HP Color LaserJet Enterprise M856 et MFP M776.",
@@ -5424,7 +5424,7 @@
    "images/toner-78a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 78A NOIR",
+  "nom": "Toner HP 78A Noir (CE278A)",
   "note_stock": null,
   "notes": null,
   "options": [],
@@ -5511,7 +5511,7 @@
    "images/toner-79a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 79A NOIR",
+  "nom": "Toner HP 79A Noir (CF279A)",
   "note_stock": null,
   "notes": "Correction par rapport à la piste initiale : la référence exacte est CF279A (et non CE279A) et les imprimantes compatibles sont les LaserJet Pro M12 et MFP M26 — et non la M1212nf, qui utilise la cartouche HP 85A (CE285A).",
   "options": [],
@@ -5598,7 +5598,7 @@
    "images/toner-80a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 80A NOIR",
+  "nom": "Toner HP 80A Noir (CF280A)",
   "note_stock": null,
   "notes": "HP États-Unis indique environ 2 560 pages (ISO/IEC 19752) ; certaines boutiques HP en Asie annoncent 2 700 pages pour la même référence — la valeur de 2 560 pages a été retenue. Image vérifiée visuellement (cartouche HP 80A d'origine) mais de petite taille (560 x 400).",
   "options": [],
@@ -5677,7 +5677,7 @@
    "images/toner-827a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 827A NOIR",
+  "nom": "Toner HP 827A Noir (CF300A)",
   "note_stock": null,
   "notes": "Correction par rapport à la piste initiale : la cartouche HP 827A (CF300A) est destinée aux multifonctions Color LaserJet Enterprise Flow MFP M880 — et non aux M651/M680, qui utilisent les cartouches HP 650A.",
   "options": [],
@@ -5755,7 +5755,7 @@
    "images/toner-85a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 85A NOIR",
+  "nom": "Toner HP 85A Noir (CE285A)",
   "note_stock": null,
   "notes": null,
   "options": [],
@@ -5830,7 +5830,7 @@
    "images/toner-90a-noir.jpg"
   ],
   "marque": "HP",
-  "nom": "Toner 90A NOIR",
+  "nom": "Toner HP 90A Noir (CE390A)",
   "note_stock": null,
   "notes": "La fiche technique HP précise que la M601 n'accepte que la CE390A (pas la version haute capacité 90X).",
   "options": [],
@@ -6062,7 +6062,7 @@
    "images/toner-cexv32-noir.jpg"
   ],
   "marque": "Canon",
-  "nom": "Toner CEXV32 NOIR",
+  "nom": "Toner Canon C-EXV32 Noir",
   "note_stock": null,
   "notes": "Correction de compatibilité vérifiée : le C-EXV32 équipe les imageRUNNER 2535/2545 (code Canon 2786B002, fiche de sécurité Canon Europa), et non les imageRUNNER 2204/2206, qui utilisent le C-EXV42. Rendement 19 400 pages repris de la fiche de spécifications Canon des imageRUNNER 2545/2535. Image : photo revendeur (cartouche + boîte C-EXV32, vérifiée HTTP 200) ; aucune image hébergée par Canon n'a été trouvée pour cette référence. EAN non vérifié sur le site du constructeur.",
   "options": [],
@@ -6139,7 +6139,7 @@
    "images/toner-cexv42-noir.jpg"
   ],
   "marque": "Canon",
-  "nom": "Toner CEXV42 NOIR",
+  "nom": "Toner Canon C-EXV42 Noir",
   "note_stock": null,
   "notes": "Compatibilité confirmée : imageRUNNER 2202/2204/2206 (la piste initiale imageRUNNER 2202 est exacte). Rendement 10 200 pages ISO/IEC 19752 confirmé par plusieurs sources concordantes. Image : photo revendeur (boîte + cartouche C-EXV42, vérifiée HTTP 200, téléchargement réel contrôlé) ; aucune image hébergée par Canon n'a été trouvée pour cette référence. EAN non vérifié sur le site du constructeur.",
   "options": [],
@@ -6221,7 +6221,7 @@
    "images/toner-cexv58-magenta.jpg"
   ],
   "marque": "Canon",
-  "nom": "Toner CEXV58 MAGENTA",
+  "nom": "Toner Canon C-EXV58 Magenta",
   "note_stock": null,
   "notes": "Correction de compatibilité vérifiée : le C-EXV58 équipe les imageRUNNER ADVANCE DX C5840i/C5850i/C5860i/C5870i (code 3765C002), et non la série imageRUNNER ADVANCE C5500, qui utilise le C-EXV51 (GPR-55). Rendement 60 000 pages confirmé par plusieurs sources concordantes. Image : photo revendeur (cartouche magenta C-EXV58, vérifiée HTTP 200, téléchargement réel contrôlé) ; aucune image hébergée par Canon n'a été trouvée pour cette référence. EAN non vérifié sur le site du constructeur.",
   "options": [],
@@ -6303,7 +6303,7 @@
    "images/toner-cexv63-noir.jpg"
   ],
   "marque": "Canon",
-  "nom": "Toner CEXV63 NOIR",
+  "nom": "Toner Canon C-EXV63 Noir",
   "note_stock": null,
   "notes": "Correction de compatibilité vérifiée : le C-EXV63 équipe les imageRUNNER 2725i/2730i/2745i (série 2700, fiches de spécifications officielles Canon : rendement 30 000 pages à 6 %), et non la série imageRUNNER 2600, qui utilise le C-EXV59. Image : photo revendeur (cartouche + boîte C-EXV63, vérifiée HTTP 200, téléchargement réel contrôlé) ; aucune image hébergée par Canon n'a été trouvée pour cette référence. EAN non vérifié sur le site du constructeur.",
   "options": [],
@@ -6711,7 +6711,7 @@
    "images/toner-tk-410-toner-kit.jpg"
   ],
   "marque": "Kyocera",
-  "nom": "Toner TK-410 TONER KIT",
+  "nom": "Toner Kyocera TK-410 Noir",
   "note_stock": null,
   "notes": "Piste FS-2100D infirmée : l'imprimante FS-2100D utilise le toner TK-3100 (12 500 pages), pas le TK-410. EAN non repris (non publié sur kyocera.com) ; le code article 370AM010 cité par des revendeurs n'est pas confirmé sur le site constructeur.",
   "options": [],
@@ -6781,7 +6781,7 @@
    "images/toner-tk-450-toner-kit.jpg"
   ],
   "marque": "Kyocera",
-  "nom": "Toner TK-450 TONER KIT",
+  "nom": "Toner Kyocera TK-450 Noir",
   "note_stock": null,
   "notes": "Image : aucune image constructeur trouvée (la page consommables TK-450 a été retirée du site Kyocera) ; photo d'un revendeur vérifiée (JPEG 1000x1000, HTTP 200). EAN non repris : le code-barres 00632983008843 cité par des revendeurs n'est pas vérifié sur kyocera.com. Rendement et compatibilité vérifiés sur la fiche technique officielle FS-6970DN de Kyocera.",
   "options": [],
