@@ -58,7 +58,7 @@ function previewURL(){
     });
   }catch(_){}
   let page='accueil';
-  if(currentTab==='boutique'||currentTab==='panier')page='boutique';
+  if(currentTab==='boutique'||currentTab==='panier'||currentTab==='menu')page='boutique';
   else if(currentTab==='fiche')page='fiche';
   q.set('page',page);
   if(page==='fiche'){
