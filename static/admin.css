@@ -45,10 +45,6 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-pagehead{margin:2px 0 16px}
 .mx-pagehead h2{margin:0;font-size:20px;line-height:1.25;letter-spacing:-.01em}
 .mx-pagehead p{margin:4px 0 0;color:var(--mx-muted);font-size:13px;max-width:74ch}
-.mx-modtabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--mx-border);margin:0 0 20px;scrollbar-width:thin}
-.mx-main a.mx-modtab{flex:none;padding:9px 13px;font-size:13px;color:var(--mx-muted);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
-.mx-main a.mx-modtab:hover{color:var(--mx-ink)}
-.mx-main a.mx-modtab.on{color:var(--mx-ink);font-weight:600;border-bottom-color:var(--mx-lime-dark)}
 .mx-section{margin:0 0 24px}
 .mx-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
 .mx-section-head h3{margin:0;font-size:14px;font-weight:700;letter-spacing:.01em}
@@ -141,7 +137,8 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-kpi-ic svg{width:24px;height:24px}
 .mx-kpi-tx{min-width:0}
 .mx-kpi-tx h3{margin:0 0 2px}
-.mx-kpi .big{font-size:clamp(18px,2vw,24px);white-space:nowrap}
+.mx-kpi .big{font-size:clamp(18px,2vw,24px);white-space:normal;overflow-wrap:anywhere;line-height:1.15}
+.mx-kpi .big.num{white-space:nowrap;overflow-wrap:normal}
 .mx-kpi .unit{display:block;font-size:12px;font-weight:700;color:#646970;letter-spacing:.04em;margin-top:2px}
 .mx-kpi .sub{margin-top:2px}
 /* Cartes graphiques */
