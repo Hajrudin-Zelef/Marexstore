@@ -12,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/Hajrudin-Zelef/Marexstore/internal/catalog"
 	marexdb "github.com/Hajrudin-Zelef/Marexstore/internal/db"
@@ -197,6 +198,10 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 	icCmd := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>`
 	icProd := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>`
 	icStock := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V8H4v4M4 8l1-4h14l1 4M4 8v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/></svg>`
+	icTag := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>`
+	icPercent := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>`
+	icDown := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>`
+	icWarn := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>`
 	var inner strings.Builder
 	switch vue {
 	case "produits":
@@ -225,9 +230,9 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxTable([]string{"Produit", "Quantité vendue", "Revenu"}, tr))
 		}
 	case "revenu":
-		revTotal := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders`)
-		revMois := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE created_at >= datetime('now','start of month')`)
-		revPanier := a.statInt(`SELECT COALESCE(AVG(total),0) FROM orders`)
+		revTotal := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut<>'annule'`)
+		revMois := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut<>'annule' AND created_at >= datetime('now','start of month')`)
+		revPanier := a.statInt(`SELECT COALESCE(AVG(total),0) FROM orders WHERE statut<>'annule'`)
 		inner.WriteString(`<div class="mx-kpis">`)
 		inner.WriteString(kpiCard("Revenu total", fcfa(revTotal), "#2271b1", icCaisse))
 		inner.WriteString(kpiCard("Revenu ce mois-ci", fcfa(revMois), "#00a32a", icRevenu))
@@ -253,9 +258,13 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 	case "commandes":
 		cmdsTotal := a.statInt(`SELECT COUNT(*) FROM orders`)
 		cmds7j := a.statInt(`SELECT COUNT(*) FROM orders WHERE created_at >= datetime('now','-7 days')`)
+		cmdMontant := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut<>'annule'`)
+		aTraiter := a.statInt(`SELECT COUNT(*) FROM orders WHERE statut NOT IN ('livre','annule')`)
 		inner.WriteString(`<div class="mx-kpis">`)
 		inner.WriteString(kpiCard("Commandes totales", strconv.FormatInt(cmdsTotal, 10), "#2271b1", icCmd))
-		inner.WriteString(kpiCard("Commandes 7 derniers jours", strconv.FormatInt(cmds7j, 10), "#00a32a", icCmd))
+		inner.WriteString(kpiCard("7 derniers jours", strconv.FormatInt(cmds7j, 10), "#00a32a", icCmd))
+		inner.WriteString(kpiCard("Montant total", fcfa(cmdMontant), "#dba617", icCaisse))
+		inner.WriteString(kpiCard("À traiter", strconv.FormatInt(aTraiter, 10), "#d63638", icWarn))
 		inner.WriteString(`</div>`)
 		rows, err := a.DB.Query(`SELECT statut, COUNT(*), COALESCE(SUM(total),0) FROM orders GROUP BY statut ORDER BY COUNT(*) DESC`)
 		var tr [][]string
@@ -273,6 +282,39 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		} else {
 			inner.WriteString(`<h3 style="margin:22px 0 10px">Par statut</h3>`)
 			inner.WriteString(mxTable([]string{"Statut", "Commandes", "Montant"}, tr))
+		}
+		prows, perr := a.DB.Query(`SELECT moyen_paiement, COUNT(*), COALESCE(SUM(total),0) FROM orders GROUP BY moyen_paiement ORDER BY COUNT(*) DESC`)
+		var ptr [][]string
+		if perr == nil {
+			defer prows.Close()
+			for prows.Next() {
+				var moy string
+				var n, rev int64
+				_ = prows.Scan(&moy, &n, &rev)
+				ptr = append(ptr, []string{render.Esc(moy), strconv.FormatInt(n, 10), fcfa(rev)})
+			}
+		}
+		if len(ptr) > 0 {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Par moyen de paiement</h3>`)
+			inner.WriteString(mxTable([]string{"Moyen de paiement", "Commandes", "Montant"}, ptr))
+		}
+		orows, oerr := a.DB.Query(`SELECT id, created_at, statut, COALESCE(total,0), moyen_paiement FROM orders ORDER BY id DESC LIMIT 8`)
+		var otr [][]string
+		if oerr == nil {
+			defer orows.Close()
+			for orows.Next() {
+				var id, total int64
+				var date, st, moy string
+				_ = orows.Scan(&id, &date, &st, &total, &moy)
+				otr = append(otr, []string{
+					`<a href="/admin/commandes/` + strconv.FormatInt(id, 10) + `">#` + strconv.FormatInt(id, 10) + `</a>`,
+					render.Esc(date), render.Esc(st), fcfa(total), render.Esc(moy),
+				})
+			}
+		}
+		if len(otr) > 0 {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Dernières commandes</h3>`)
+			inner.WriteString(mxTable([]string{"Commande", "Date", "Statut", "Montant", "Paiement"}, otr))
 		}
 	case "categories":
 		rows, err := a.DB.Query(`SELECT p.main, SUM(oi.qty), COALESCE(SUM(oi.qty*oi.prix_unitaire),0) FROM order_items oi JOIN products p ON p.id=oi.product_id GROUP BY p.main ORDER BY SUM(oi.qty) DESC`)
@@ -292,6 +334,16 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxTable([]string{"Catégorie", "Quantité vendue", "Revenu"}, tr))
 		}
 	case "stock":
+		enStock := a.statInt(`SELECT COUNT(*) FROM products WHERE dispo='en stock'`)
+		rupture := a.statInt(`SELECT COUNT(*) FROM products WHERE dispo='rupture de stock'`)
+		faible := a.statInt(`SELECT COUNT(*) FROM products WHERE stock IS NOT NULL AND stock<=2`)
+		sansPrix := a.statInt(`SELECT COUNT(*) FROM products WHERE prix IS NULL AND prix_boutique IS NULL`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Produits en stock", strconv.FormatInt(enStock, 10), "#00a32a", icStock))
+		inner.WriteString(kpiCard("En rupture", strconv.FormatInt(rupture, 10), "#d63638", icWarn))
+		inner.WriteString(kpiCard("Stock faible (≤ 2)", strconv.FormatInt(faible, 10), "#dba617", icProd))
+		inner.WriteString(kpiCard("Sur devis (sans prix)", strconv.FormatInt(sansPrix, 10), "#9b51e0", icCaisse))
+		inner.WriteString(`</div>`)
 		rows, err := a.DB.Query(`SELECT slug,nom,dispo,stock FROM products WHERE dispo<>'en stock' OR (stock IS NOT NULL AND stock<=2) ORDER BY dispo, nom LIMIT 100`)
 		var tr [][]string
 		if err == nil {
@@ -310,23 +362,105 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucun produit en rupture ni en stock faible."))
 		} else {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Produits à surveiller</h3>`)
 			inner.WriteString(mxTable([]string{"Produit", "Disponibilité", "Stock"}, tr))
 		}
 	case "variations":
-		inner.WriteString(mxEmpty("Aucune variation vendue : les options des fiches sont informatives (prix sur demande)."))
+		nbOpts, nbProds := 0, 0
+		var vtr [][]string
+		for _, prod := range a.Store.Products {
+			names := catalog.OptionNames(prod)
+			if len(names) == 0 {
+				continue
+			}
+			nbProds++
+			nbOpts += len(names)
+			vtr = append(vtr, []string{
+				`<a href="/admin/produits/` + render.Esc(prod.Slug) + `">` + render.Esc(prod.Nom) + `</a>`,
+				strconv.Itoa(len(names)),
+				render.Esc(strings.Join(names, " · ")),
+			})
+		}
+		sort.Slice(vtr, func(i, j int) bool { return vtr[i][0] < vtr[j][0] })
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Produits avec options", strconv.Itoa(nbProds), "#2271b1", icTag))
+		inner.WriteString(kpiCard("Options proposées", strconv.Itoa(nbOpts), "#00a32a", icProd))
+		inner.WriteString(`</div>`)
+		inner.WriteString(`<p style="color:#646970;margin:6px 0 12px">Les options (capacités, variantes) sont affichées sur les fiches ; elles ne sont pas encore commandables séparément (prix sur demande).</p>`)
+		if len(vtr) == 0 {
+			inner.WriteString(mxEmpty("Aucun produit avec options."))
+		} else {
+			inner.WriteString(mxTable([]string{"Produit", "Options", "Valeurs"}, vtr))
+		}
 	case "promos":
-		inner.WriteString(mxEmpty("Voir le module Marketing > Codes promo pour la gestion des codes."))
+		a.ensurePromos()
+		actifs := a.statInt(`SELECT COUNT(*) FROM promos WHERE actif=1`)
+		total := a.statInt(`SELECT COUNT(*) FROM promos`)
+		usages := a.statInt(`SELECT COALESCE(SUM(usage_count),0) FROM promos`)
+		expires := a.statInt(`SELECT COUNT(*) FROM promos WHERE expire<>'' AND expire < date('now')`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Codes actifs", strconv.FormatInt(actifs, 10), "#00a32a", icTag))
+		inner.WriteString(kpiCard("Codes au total", strconv.FormatInt(total, 10), "#2271b1", icTag))
+		inner.WriteString(kpiCard("Utilisations", strconv.FormatInt(usages, 10), "#dba617", icCmd))
+		inner.WriteString(kpiCard("Expirés", strconv.FormatInt(expires, 10), "#d63638", icWarn))
+		inner.WriteString(`</div>`)
+		prows, err := a.DB.Query(`SELECT code,type,valeur,usage_count,limite,expire,actif FROM promos ORDER BY code`)
+		var ptr [][]string
+		if err == nil {
+			defer prows.Close()
+			for prows.Next() {
+				var code, typ, exp string
+				var val, usage int64
+				var limite *int64
+				var actif int
+				_ = prows.Scan(&code, &typ, &val, &usage, &limite, &exp, &actif)
+				valLb := fcfa(val)
+				if typ == "pourcentage" {
+					valLb = strconv.FormatInt(val, 10) + " %"
+				}
+				lim := "∞"
+				if limite != nil {
+					lim = strconv.FormatInt(*limite, 10)
+				}
+				if exp == "" {
+					exp = "—"
+				}
+				etat := "Actif"
+				if actif == 0 {
+					etat = "Inactif"
+				} else if exp != "—" && exp < time.Now().Format("2006-01-02") {
+					etat = "Expiré"
+				}
+				ptr = append(ptr, []string{render.Esc(code), render.Esc(valLb), strconv.FormatInt(usage, 10) + " / " + lim, render.Esc(exp), render.Esc(etat)})
+			}
+		}
+		inner.WriteString(`<p style="color:#646970;margin:6px 0 12px">Gestion dans <a href="/admin/marketing/promos">Marketing &gt; Codes promo</a>. Les codes ne sont pas encore appliqués au panier : les utilisations restent à 0.</p>`)
+		if len(ptr) == 0 {
+			inner.WriteString(mxEmpty("Aucun code promo créé."))
+		} else {
+			inner.WriteString(mxTable([]string{"Code", "Valeur", "Usage / Limite", "Expiration", "État"}, ptr))
+		}
 	case "taxes":
-		inner.WriteString(mxEmpty("Aucune taxe configurée : les prix sont affichés TTC."))
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Taux configuré", "0 %", "#2271b1", icPercent))
+		inner.WriteString(kpiCard("Régime d'affichage", "TTC", "#00a32a", icCaisse))
+		inner.WriteString(kpiCard("Règles de taxe", "0", "#dba617", icTag))
+		inner.WriteString(`</div>`)
+		inner.WriteString(mxEmpty("Aucune taxe configurée : les prix sont affichés TTC et aucune TVA n'est calculée à la commande."))
 	case "telechargements":
-		inner.WriteString(mxEmpty("Aucun produit téléchargeable dans le catalogue."))
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Produits téléchargeables", "0", "#2271b1", icDown))
+		inner.WriteString(kpiCard("Téléchargements", "0", "#00a32a", icDown))
+		inner.WriteString(`</div>`)
+		inner.WriteString(mxEmpty("Aucun produit numérique dans le catalogue : tout est vendu en matériel ou sur devis."))
 	default:
 		ventes := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders`)
+		ventesNettes := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut<>'annule'`)
 		cmds := a.statInt(`SELECT COUNT(*) FROM orders`)
 		vendus := a.statInt(`SELECT COALESCE(SUM(qty),0) FROM order_items`)
 		inner.WriteString(`<div class="mx-kpis">`)
 		inner.WriteString(kpiCard("Total des ventes", fcfa(ventes), "#2271b1", icCaisse))
-		inner.WriteString(kpiCard("Ventes nettes", fcfa(ventes), "#00a32a", icRevenu))
+		inner.WriteString(kpiCard("Ventes nettes", fcfa(ventesNettes), "#00a32a", icRevenu))
 		inner.WriteString(kpiCard("Commandes", strconv.FormatInt(cmds, 10), "#d63638", icCmd))
 		inner.WriteString(kpiCard("Produits vendus", strconv.FormatInt(vendus, 10), "#dba617", icProd))
 		inner.WriteString(kpiCard("Produits au catalogue", strconv.Itoa(len(a.Store.Products)), "#9b51e0", icStock))
