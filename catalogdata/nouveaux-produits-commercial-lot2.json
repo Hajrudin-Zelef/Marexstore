@@ -5274,5 +5274,3198 @@
    "images/cx-10000-2.jpg",
    "images/cx-10000-4.jpg"
   ]
+ },
+ {
+  "slug": "dell-poweredge-t150",
+  "nom": "Serveur tour Dell PowerEdge T150",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur tour d'entrée de gamme pour petites entreprises : Xeon E-2300, 128 Go de mémoire et 4 baies 3,5 pouces.",
+  "description": "Le Dell PowerEdge T150 est un serveur tour compact destiné aux petites entreprises et aux bureaux distants. Il embarque un processeur Intel Xeon E-2300 (jusqu'à 8 cœurs) ou un Intel Pentium, jusqu'à 128 Go de mémoire UDIMM DDR4 et jusqu'à 4 disques 3,5 pouces SAS/SATA. Son alimentation de 300 W Bronze et son format mini-tour 4U en font une base simple pour le partage de fichiers, la messagerie et les applications métiers.",
+  "image": "images/dell-poweredge-t150.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 (jusqu'à 8 cœurs) ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go UDIMM DDR4 max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 4 × 3,5″ SAS/SATA"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour mini 4U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "300 W Bronze"
+   }
+  ],
+  "ref": "PowerEdge T150",
+  "reference_fabricant": "PowerEdge T150",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Format tour compact",
+   "Xeon E-2300 jusqu'à 8 cœurs",
+   "128 Go de mémoire max",
+   "4 baies 3,5 pouces"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-t150-2.jpg",
+   "images/dell-poweredge-t150-3.jpg",
+   "images/dell-poweredge-t150-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-poweredge-t350",
+  "nom": "Serveur tour Dell PowerEdge T350",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur tour évolutif : Xeon E-2300, 128 Go de mémoire et jusqu'à 8 baies 3,5 pouces.",
+  "description": "Le Dell PowerEdge T350 est un serveur tour pour petites et moyennes entreprises qui ont besoin de plus de stockage et d'évolutivité. Processeur Intel Xeon E-2300 jusqu'à 8 cœurs, mémoire UDIMM DDR4 jusqu'à 128 Go et jusqu'à 8 disques 3,5 pouces SAS/SATA. Les alimentations vont de 450 W Bronze à 700 W Titanium, avec redondance hot-swap en option.",
+  "image": "images/dell-poweredge-t350.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 (jusqu'à 8 cœurs) ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go UDIMM DDR4 max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 8 × 3,5″ SAS/SATA"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour 4,5U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "450 W Bronze à 700 W Titanium, redondance en option"
+   }
+  ],
+  "ref": "PowerEdge T350",
+  "reference_fabricant": "PowerEdge T350",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Jusqu'à 8 baies 3,5 pouces",
+   "Alimentations redondantes en option",
+   "Xeon E-2300",
+   "Format tour"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-t350-2.jpg",
+   "images/dell-poweredge-t350-3.jpg",
+   "images/dell-poweredge-t350-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-poweredge-r250",
+  "nom": "Serveur rack Dell PowerEdge R250",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U d'entrée de gamme : Xeon E-2300, 128 Go de mémoire, 4 baies 3,5 pouces.",
+  "description": "Le Dell PowerEdge R250 est un serveur rack 1U compact pour les charges d'infrastructure de base : partage de fichiers, messagerie, applications web. Processeur Intel Xeon E-2300 jusqu'à 8 cœurs, mémoire UDIMM DDR4 jusqu'à 128 Go et jusqu'à 4 disques 3,5 pouces SAS/SATA. Alimentations câblées de 450 W Bronze à 700 W Titanium.",
+  "image": "images/dell-poweredge-r250.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 (jusqu'à 8 cœurs) ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go UDIMM DDR4 max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 4 × 3,5″ SAS/SATA"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "450 W Bronze à 700 W Titanium"
+   }
+  ],
+  "ref": "PowerEdge R250",
+  "reference_fabricant": "PowerEdge R250",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Rack 1U compact",
+   "Xeon E-2300",
+   "128 Go de mémoire max",
+   "4 baies 3,5 pouces"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-r250-2.jpg",
+   "images/dell-poweredge-r250-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-poweredge-r350",
+  "nom": "Serveur rack Dell PowerEdge R350",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U : Xeon E-2300, 128 Go de mémoire, 4 baies 3,5 pouces ou 8 baies 2,5 pouces.",
+  "description": "Le Dell PowerEdge R350 est un serveur rack 1U pour les PME et les sites distants. Processeur Intel Xeon E-2300, mémoire DDR4 UDIMM jusqu'à 128 Go et stockage jusqu'à 4 disques 3,5 pouces ou 8 disques 2,5 pouces hot-plug. Alimentation 600 W Platinum redondante.",
+  "image": "images/dell-poweredge-r350.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go DDR4 UDIMM max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 4 × 3,5″ ou 8 × 2,5″ hot-plug"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "600 W Platinum redondante"
+   }
+  ],
+  "ref": "PowerEdge R350",
+  "reference_fabricant": "PowerEdge R350",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Stockage hot-plug",
+   "Alimentation redondante",
+   "Rack 1U",
+   "Xeon E-2300"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-r350-2.jpg",
+   "images/dell-poweredge-r350-3.jpg",
+   "images/dell-poweredge-r350-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-poweredge-r450",
+  "nom": "Serveur rack Dell PowerEdge R450",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U bi-processeur : Xeon Scalable 3e génération, 1 To de mémoire, alimentations hot-plug.",
+  "description": "Le Dell PowerEdge R450 est un serveur rack 1U à deux processeurs Intel Xeon Scalable de 3e génération (jusqu'à 24 cœurs par processeur), pensé pour la virtualisation et les bases de données. Mémoire RDIMM DDR4 jusqu'à 1 To sur 16 emplacements et stockage jusqu'à 4 disques 3,5 pouces ou 8 disques 2,5 pouces SAS/SATA. Alimentations hot-plug de 600 W à 1100 W, redondance en option.",
+  "image": "images/dell-poweredge-r450.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Jusqu'à 2 × Intel Xeon Scalable 3e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "1 To RDIMM DDR4 max (16 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 4 × 3,5″ ou 8 × 2,5″ SAS/SATA"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "600 W à 1100 W hot-plug, redondance en option"
+   }
+  ],
+  "ref": "PowerEdge R450",
+  "reference_fabricant": "PowerEdge R450",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Bi-processeur Xeon Scalable",
+   "1 To de mémoire max",
+   "Alimentations hot-plug",
+   "Virtualisation et bases de données"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-r450-2.jpg",
+   "images/dell-poweredge-r450-3.jpg",
+   "images/dell-poweredge-r450-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-powervault-me5012",
+  "nom": "Baie de stockage Dell PowerVault ME5012",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "Baie de stockage SAN 2U : 12 baies 3,5 pouces pour le stockage partagé des PME.",
+  "description": "La Dell PowerVault ME5012 est une baie de stockage SAN au format rack 2U, conçue pour le stockage partagé simple et abordable. Son boîtier de base accueille 12 disques 3,5 pouces et elle se connecte aux serveurs en SAS, iSCSI ou Fibre Channel selon les contrôleurs choisis. Alimentation 580 W.",
+  "image": "images/dell-powervault-me5012.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "12 × 3,5″ (boîtier de base)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "580 W"
+   },
+   {
+    "label": "Protocoles",
+    "valeur": "SAS, iSCSI, Fibre Channel selon contrôleurs"
+   }
+  ],
+  "ref": "PowerVault ME5012",
+  "reference_fabricant": "PowerVault ME5012",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "12 baies 3,5 pouces",
+   "Stockage partagé SAN",
+   "Format rack 2U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-powervault-me5012-2.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-proliant-microserver-gen10-plus",
+  "nom": "Serveur tour HPE ProLiant MicroServer Gen10 Plus",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Micro-serveur tour ultra-compact : Xeon E-2200, 32 Go de mémoire, 4 baies 3,5 pouces.",
+  "description": "Le HPE ProLiant MicroServer Gen10 Plus est un micro-serveur tour pour les très petites entreprises et les bureaux distants. Processeur Intel Xeon E-2200 ou Pentium, mémoire DDR4 UDIMM ECC jusqu'à 32 Go et 4 baies 3,5 pouces SATA. Adaptateur d'alimentation externe de 180 W.",
+  "image": "images/hpe-proliant-microserver-gen10-plus.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2200 ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "32 Go DDR4 UDIMM ECC max (2 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "4 × 3,5″ SATA"
+   },
+   {
+    "label": "Format",
+    "valeur": "Ultra Micro Tower"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Adaptateur externe 180 W"
+   }
+  ],
+  "ref": "MicroServer Gen10 Plus",
+  "reference_fabricant": "MicroServer Gen10 Plus",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Ultra-compact",
+   "4 baies SATA",
+   "Idéal petit bureau"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-proliant-microserver-gen10-plus-2.jpg",
+   "images/hpe-proliant-microserver-gen10-plus-3.jpg",
+   "images/hpe-proliant-microserver-gen10-plus-4.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-proliant-dl20-gen10-plus",
+  "nom": "Serveur rack HPE ProLiant DL20 Gen10 Plus",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U : Xeon E-2300, 128 Go de mémoire, baies 3,5 ou 2,5 pouces.",
+  "description": "Le HPE ProLiant DL20 Gen10 Plus est un serveur rack 1U compact pour les charges d'infrastructure des PME. Processeur Intel Xeon E-2300, mémoire DDR4 UDIMM jusqu'à 128 Go et stockage en 2 baies 3,5 pouces ou jusqu'à 6 baies 2,5 pouces. Alimentation 290 W.",
+  "image": "images/hpe-proliant-dl20-gen10-plus.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go DDR4 UDIMM max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "2 × 3,5″ ou jusqu'à 6 × 2,5″"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "290 W"
+   }
+  ],
+  "ref": "ProLiant DL20 Gen10 Plus",
+  "reference_fabricant": "ProLiant DL20 Gen10 Plus",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Rack 1U compact",
+   "Xeon E-2300",
+   "128 Go de mémoire max"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-proliant-dl20-gen10-plus-2.jpg",
+   "images/hpe-proliant-dl20-gen10-plus-3.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-proliant-dl360-gen11",
+  "nom": "Serveur rack HPE ProLiant DL360 Gen11",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U bi-processeur : Xeon Scalable 4e/5e génération, DDR5 jusqu'à 8 To.",
+  "description": "Le HPE ProLiant DL360 Gen11 est un serveur rack 1U à un ou deux processeurs Intel Xeon Scalable de 4e et 5e génération, pour la virtualisation et les charges d'entreprise. Mémoire DDR5 jusqu'à 8 To sur 32 emplacements et stockage configurable en baies 3,5 pouces, 2,5 pouces ou EDSFF E3.S. Alimentations Flex Slot hot-plug redondantes de 500 W à 2200 W.",
+  "image": "images/hpe-proliant-dl360-gen11.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "1 ou 2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 To DDR5 max (32 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "4 × 3,5″, 10 × 2,5″ ou 20 × EDSFF E3.S"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Flex Slot hot-plug redondantes 500 W à 2200 W"
+   }
+  ],
+  "ref": "ProLiant DL360 Gen11",
+  "reference_fabricant": "ProLiant DL360 Gen11",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Bi-processeur Xeon Scalable",
+   "DDR5 jusqu'à 8 To",
+   "Alimentations redondantes",
+   "Virtualisation"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-proliant-dl360-gen11-2.jpg",
+   "images/hpe-proliant-dl360-gen11-3.jpg",
+   "images/hpe-proliant-dl360-gen11-4.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-msa-2060",
+  "nom": "Baie de stockage HPE MSA 2060",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "Baie de stockage SAN 2U : 12 baies 3,5 pouces ou 24 baies 2,5 pouces par boîtier.",
+  "description": "La HPE MSA 2060 est une baie de stockage SAN au format rack 2U pour le stockage partagé des PME et des sites distants. Le boîtier de base accueille 12 disques 3,5 pouces ou 24 disques 2,5 pouces, avec extension par boîtiers supplémentaires.",
+  "image": "images/hpe-msa-2060.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "12 × 3,5″ ou 24 × 2,5″ par boîtier"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   },
+   {
+    "label": "Type",
+    "valeur": "Baie SAN extensible"
+   }
+  ],
+  "ref": "MSA 2060",
+  "reference_fabricant": "MSA 2060",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "12 ou 24 baies par boîtier",
+   "Extensible",
+   "Stockage partagé SAN"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-msa-2060-2.jpg",
+   "images/hpe-msa-2060-3.jpg",
+   "images/hpe-msa-2060-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksystem-st50-v2",
+  "nom": "Serveur tour Lenovo ThinkSystem ST50 V2",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur tour petit format : Xeon E-2300, 128 Go de mémoire, baies 3,5 et 2,5 pouces.",
+  "description": "Le Lenovo ThinkSystem ST50 V2 est un serveur tour petit format pour les petites entreprises. Processeur Intel Xeon E-2300, mémoire TruDDR4 ECC UDIMM jusqu'à 128 Go et stockage mixte : 2 baies 3,5 pouces, 1 baie 2,5 pouces et 1 emplacement M.2. Alimentation fixe jusqu'à 500 W Platinum.",
+  "image": "images/lenovo-thinksystem-st50-v2.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go TruDDR4 ECC UDIMM max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "2 × 3,5″ + 1 × 2,5″ + 1 × M.2"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour petit format"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Jusqu'à 500 W Platinum"
+   }
+  ],
+  "ref": "ThinkSystem ST50 V2",
+  "reference_fabricant": "ThinkSystem ST50 V2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tour petit format",
+   "Stockage mixte + M.2",
+   "Xeon E-2300"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksystem-st50-v2-2.jpg",
+   "images/lenovo-thinksystem-st50-v2-3.jpg",
+   "images/lenovo-thinksystem-st50-v2-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksystem-sr250-v2",
+  "nom": "Serveur rack Lenovo ThinkSystem SR250 V2",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U : Xeon E-2300, 128 Go de mémoire, jusqu'à 10 baies 2,5 pouces hot-swap.",
+  "description": "Le Lenovo ThinkSystem SR250 V2 est un serveur rack 1U pour les PME et les sites distants. Processeur Intel Xeon E-2300, mémoire TruDDR4 ECC UDIMM jusqu'à 128 Go et jusqu'à 10 baies 2,5 pouces hot-swap ou 4 baies 3,5 pouces. Alimentations fixes 300 W Gold ou redondantes 450 W Platinum.",
+  "image": "images/lenovo-thinksystem-sr250-v2.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go TruDDR4 ECC UDIMM max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "Jusqu'à 10 × 2,5″ hot-swap ou 4 × 3,5″"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "300 W Gold ou 2 × 450 W Platinum redondantes"
+   }
+  ],
+  "ref": "ThinkSystem SR250 V2",
+  "reference_fabricant": "ThinkSystem SR250 V2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "10 baies hot-swap",
+   "Alimentations redondantes en option",
+   "Rack 1U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksystem-sr250-v2-2.jpg",
+   "images/lenovo-thinksystem-sr250-v2-3.jpg",
+   "images/lenovo-thinksystem-sr250-v2-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksystem-sr630-v3",
+  "nom": "Serveur rack Lenovo ThinkSystem SR630 V3",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U bi-processeur : Xeon Scalable 4e/5e génération, DDR5 jusqu'à 8 To.",
+  "description": "Le Lenovo ThinkSystem SR630 V3 est un serveur rack 1U à un ou deux processeurs Intel Xeon Scalable de 4e et 5e génération, pour la virtualisation et les bases de données. Mémoire TruDDR5 jusqu'à 8 To sur 32 emplacements et stockage jusqu'à 4 baies 3,5 pouces, 12 baies 2,5 pouces ou 16 modules EDSFF E1.S. Alimentations redondantes de 750 W à 1800 W.",
+  "image": "images/lenovo-thinksystem-sr630-v3.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "1 ou 2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 To TruDDR5 max (32 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "4 × 3,5″, 12 × 2,5″ ou 16 × EDSFF E1.S"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "Redondantes 750 W à 1800 W"
+   }
+  ],
+  "ref": "ThinkSystem SR630 V3",
+  "reference_fabricant": "ThinkSystem SR630 V3",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Bi-processeur Xeon Scalable",
+   "DDR5 jusqu'à 8 To",
+   "Alimentations redondantes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": []
+ },
+ {
+  "slug": "lenovo-thinksystem-de4000h",
+  "nom": "Baie de stockage Lenovo ThinkSystem DE4000H",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "Baie de stockage SAN hybride : boîtiers 12, 24 ou 60 baies, double contrôleur.",
+  "description": "La Lenovo ThinkSystem DE4000H est une baie de stockage SAN hybride à double contrôleur pour le stockage partagé des PME. Elle se décline en boîtiers 2U de 12 baies 3,5 pouces ou 24 baies 2,5 pouces, et en boîtier 4U de 60 baies 3,5 pouces, avec 64 Go de mémoire système au total.",
+  "image": "images/lenovo-thinksystem-de4000h.jpg",
+  "specs": [
+   {
+    "label": "Contrôleurs",
+    "valeur": "2 × Broadwell DE 2 cœurs 2,20 GHz"
+   },
+   {
+    "label": "Mémoire système",
+    "valeur": "64 Go (32 Go par contrôleur)"
+   },
+   {
+    "label": "Baies",
+    "valeur": "12 × 3,5″, 24 × 2,5″ ou 60 × 3,5″"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U ou 4U"
+   }
+  ],
+  "ref": "ThinkSystem DE4000H",
+  "reference_fabricant": "ThinkSystem DE4000H",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Double contrôleur",
+   "Jusqu'à 60 baies",
+   "Stockage SAN hybride"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksystem-de4000h-2.jpg",
+   "images/lenovo-thinksystem-de4000h-3.jpg",
+   "images/lenovo-thinksystem-de4000h-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-rs300-e11",
+  "nom": "Serveur rack ASUS RS300-E11",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U : Xeon E-2300, 128 Go de mémoire, 4 baies hot-swap, alimentation redondante.",
+  "description": "Le ASUS RS300-E11 est un serveur rack 1U à un processeur Intel Xeon E-2300 ou Pentium, pour les charges d'infrastructure des PME. Mémoire UDIMM DDR4 jusqu'à 128 Go, 4 baies 3,5 pouces hot-swap et alimentation redondante 450 W 80 PLUS Platinum.",
+  "image": "images/asus-rs300-e11.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Xeon E-2300 ou Intel Pentium"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "128 Go UDIMM DDR4 max (4 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "4 × 3,5″ hot-swap"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "1+1 redondante 450 W Platinum"
+   }
+  ],
+  "ref": "RS300-E11",
+  "reference_fabricant": "RS300-E11",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Alimentation redondante",
+   "Baies hot-swap",
+   "Rack 1U"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-rs300-e11-2.jpg",
+   "images/asus-rs300-e11-3.jpg",
+   "images/asus-rs300-e11-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-rs500a",
+  "nom": "Serveur rack ASUS RS500A",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 1U AMD EPYC 9004 : DDR5 jusqu'à 6 To, baies NVMe hot-swap.",
+  "description": "Le ASUS RS500A est un serveur rack 1U à un processeur AMD EPYC 9004, pour la virtualisation et les charges intensives. Mémoire DDR5 RDIMM jusqu'à 6 144 Go sur 24 emplacements et 4 baies 2,5 pouces hot-swap SATA/SAS/NVMe plus 2 connecteurs M.2. Alimentations redondantes Titanium ou Platinum.",
+  "image": "images/asus-rs500a.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "AMD EPYC 9004"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "6 144 Go DDR5 RDIMM max (24 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "4 × 2,5″ hot-swap + 2 × M.2"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 1U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "1+1 redondante Titanium/Platinum"
+   }
+  ],
+  "ref": "RS500A-E12",
+  "reference_fabricant": "RS500A-E12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "AMD EPYC 9004",
+   "DDR5 jusqu'à 6 To",
+   "Baies NVMe hot-swap"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-rs500a-2.jpg",
+   "images/asus-rs500a-3.jpg",
+   "images/asus-rs500a-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-rs720-e11",
+  "nom": "Serveur rack ASUS RS720-E11",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 2U bi-processeur : Xeon Scalable 4e/5e génération, 24 baies 2,5 pouces.",
+  "description": "Le ASUS RS720-E11 est un serveur rack 2U à deux processeurs Intel Xeon Scalable de 4e et 5e génération, pour la virtualisation dense et le stockage rapide. Mémoire DDR5 RDIMM jusqu'à 4 To sur 32 emplacements et 24 baies 2,5 pouces hot-swap plus 2 emplacements M.2. Alimentations redondantes Titanium ou Platinum.",
+  "image": "images/asus-rs720-e11.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 To DDR5 RDIMM max (32 emplacements)"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "24 × 2,5″ hot-swap + 2 × M.2"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "1+1 redondante Titanium/Platinum"
+   }
+  ],
+  "ref": "RS720-E11",
+  "reference_fabricant": "RS720-E11",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "24 baies hot-swap",
+   "Bi-processeur Xeon Scalable",
+   "DDR5 jusqu'à 4 To"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-rs720-e11-2.jpg",
+   "images/asus-rs720-e11-3.jpg",
+   "images/asus-rs720-e11-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-zenbook-14-oled",
+  "nom": "PC portable ASUS Zenbook 14 OLED",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Ordinateurs portables",
+  "famille": "Informatique",
+  "accroche": "Ultrabook 14 pouces OLED : Intel Core Ultra, écran 3K ou WUXGA, dès 1,20 kg.",
+  "description": "Le ASUS Zenbook 14 OLED (UX3405) est un ultrabook 14 pouces à écran OLED 3K (2880 × 1800) ou WUXGA selon configuration. Processeurs Intel Core Ultra 5, 7 ou 9, mémoire LPDDR5X jusqu'à 32 Go et SSD NVMe PCIe 4.0 de 512 Go ou 1 To. Poids de 1,20 à 1,28 kg selon configuration.",
+  "image": "images/asus-zenbook-14-oled.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Core Ultra 5 / 7 / 9"
+   },
+   {
+    "label": "Écran",
+    "valeur": "14″ OLED 3K ou WUXGA"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "Jusqu'à 32 Go LPDDR5X"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "SSD NVMe PCIe 4.0 512 Go ou 1 To"
+   },
+   {
+    "label": "Poids",
+    "valeur": "1,20 à 1,28 kg"
+   }
+  ],
+  "ref": "Zenbook 14 OLED UX3405",
+  "reference_fabricant": "Zenbook 14 OLED UX3405",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Écran OLED 14 pouces",
+   "Intel Core Ultra",
+   "Dès 1,20 kg"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-zenbook-14-oled-2.jpg",
+   "images/asus-zenbook-14-oled-3.jpg",
+   "images/asus-zenbook-14-oled-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-zenbook-s-14",
+  "nom": "PC portable ASUS Zenbook S 14",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Ordinateurs portables",
+  "famille": "Informatique",
+  "accroche": "Ultrabook 14 pouces OLED de 1,20 kg : Intel Core Ultra, jusqu'à 32 Go de mémoire.",
+  "description": "Le ASUS Zenbook S 14 (UX5406) est un ultrabook 14 pouces à écran OLED WUXGA ou 3K selon configuration, pensé pour la mobilité. Processeurs Intel Core Ultra 5, 7 ou 9, mémoire LPDDR5X de 16 ou 32 Go et SSD NVMe PCIe 4.0 de 512 Go ou 1 To, pour un poids de 1,20 kg.",
+  "image": "images/asus-zenbook-s-14.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Core Ultra 5 / 7 / 9"
+   },
+   {
+    "label": "Écran",
+    "valeur": "14″ OLED WUXGA ou 3K"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "16 ou 32 Go LPDDR5X"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "SSD NVMe PCIe 4.0 512 Go ou 1 To"
+   },
+   {
+    "label": "Poids",
+    "valeur": "1,20 kg"
+   }
+  ],
+  "ref": "Zenbook S 14 UX5406",
+  "reference_fabricant": "Zenbook S 14 UX5406",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1,20 kg seulement",
+   "Écran OLED",
+   "Intel Core Ultra"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-zenbook-s-14-2.jpg",
+   "images/asus-zenbook-s-14-3.jpg",
+   "images/asus-zenbook-s-14-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-zenbook-duo",
+  "nom": "PC portable ASUS Zenbook Duo",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Ordinateurs portables",
+  "famille": "Informatique",
+  "accroche": "Portable double écran 14 pouces OLED : deux écrans tactiles, clavier détachable.",
+  "description": "Le ASUS Zenbook Duo (UX8406) est un portable à double écran 14 pouces OLED (3K ou FHD selon configuration) avec clavier détachable, pour le multitâche et la création. Processeurs Intel Core Ultra 5, 7 ou 9, mémoire LPDDR5X de 16 ou 32 Go et SSD NVMe PCIe 4.0 jusqu'à 2 To. Poids total de 1,65 kg clavier inclus.",
+  "image": "images/asus-zenbook-duo.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "Intel Core Ultra 5 / 7 / 9"
+   },
+   {
+    "label": "Écran",
+    "valeur": "2 × 14″ OLED 3K ou FHD"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "16 ou 32 Go LPDDR5X"
+   },
+   {
+    "label": "Stockage",
+    "valeur": "SSD NVMe PCIe 4.0 jusqu'à 2 To"
+   },
+   {
+    "label": "Poids",
+    "valeur": "1,65 kg avec clavier"
+   }
+  ],
+  "ref": "Zenbook Duo UX8406",
+  "reference_fabricant": "Zenbook Duo UX8406",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Double écran OLED",
+   "Clavier détachable",
+   "Multitâche et création"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-zenbook-duo-2.jpg",
+   "images/asus-zenbook-duo-3.jpg",
+   "images/asus-zenbook-duo-4.jpg"
+  ]
+ },
+ {
+  "slug": "apc-back-ups-bx1200mi",
+  "nom": "Onduleur APC Back-UPS BX1200MI",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 1200 VA / 650 W pour poste bureautique : 6 prises IEC et régulation automatique de tension.",
+  "description": "L'APC Back-UPS BX1200MI protège un poste de travail et ses périphériques contre les coupures et les variations de tension. Puissance de 1200 VA / 650 W, technologie off-line avec régulation automatique de tension (AVR) et 6 prises IEC C13. Autonomie indicative : environ 1 minute à pleine charge et 5 minutes à mi-charge.",
+  "image": "images/apc-back-ups-bx1200mi.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1200 VA / 650 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line avec AVR"
+   },
+   {
+    "label": "Prises",
+    "valeur": "6 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "BX1200MI",
+  "reference_fabricant": "BX1200MI",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1200 VA / 650 W",
+   "Régulation de tension AVR",
+   "6 prises IEC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/apc-back-ups-bx1200mi-2.jpg",
+   "images/apc-back-ups-bx1200mi-3.jpg",
+   "images/apc-back-ups-bx1200mi-4.jpg"
+  ]
+ },
+ {
+  "slug": "apc-back-ups-bx1600mi",
+  "nom": "Onduleur APC Back-UPS BX1600MI",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 1600 VA / 900 W : 6 prises IEC, AVR, pour poste puissant ou petit équipement réseau.",
+  "description": "L'APC Back-UPS BX1600MI offre 1600 VA / 900 W pour protéger un poste de travail puissant, un NAS ou un petit équipement réseau. Technologie off-line avec régulation automatique de tension et 6 prises IEC C13. Autonomie indicative : environ 1 minute à pleine charge et 6 minutes 30 à mi-charge.",
+  "image": "images/apc-back-ups-bx1600mi.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1600 VA / 900 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line avec AVR"
+   },
+   {
+    "label": "Prises",
+    "valeur": "6 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "BX1600MI",
+  "reference_fabricant": "BX1600MI",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1600 VA / 900 W",
+   "Régulation de tension AVR",
+   "6 prises IEC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/apc-back-ups-bx1600mi-2.jpg",
+   "images/apc-back-ups-bx1600mi-3.jpg",
+   "images/apc-back-ups-bx1600mi-4.jpg"
+  ]
+ },
+ {
+  "slug": "apc-back-ups-bx2200mi",
+  "nom": "Onduleur APC Back-UPS BX2200MI",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 2200 VA / 1200 W : 6 prises IEC et AVR pour charges bureautiques importantes.",
+  "description": "L'APC Back-UPS BX2200MI délivre 2200 VA / 1200 W pour les charges bureautiques importantes : poste de travail, écrans et périphériques. Technologie off-line avec régulation automatique de tension et 6 prises IEC C13. Autonomie indicative : environ 1 minute à pleine charge et 8 minutes 30 à mi-charge.",
+  "image": "images/apc-back-ups-bx2200mi.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "2200 VA / 1200 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line avec AVR"
+   },
+   {
+    "label": "Prises",
+    "valeur": "6 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "BX2200MI",
+  "reference_fabricant": "BX2200MI",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "2200 VA / 1200 W",
+   "Régulation de tension AVR",
+   "6 prises IEC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/apc-back-ups-bx2200mi-2.jpg",
+   "images/apc-back-ups-bx2200mi-3.jpg",
+   "images/apc-back-ups-bx2200mi-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-3s-700",
+  "nom": "Onduleur Eaton 3S 700",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 700 VA / 420 W pour poste bureautique : 8 prises, dont 4 secourues par batterie.",
+  "description": "L'Eaton 3S 700 protège un poste de travail et ses périphériques avec 700 VA / 420 W. Il offre 8 prises IEC C13 : 4 secourues par batterie et 4 protégées contre les surtensions uniquement. Format tour compact.",
+  "image": "images/eaton-3s-700.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "700 VA / 420 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 × IEC C13 (4 batterie + 4 surtension)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "3S700I",
+  "reference_fabricant": "3S700I",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "700 VA / 420 W",
+   "8 prises",
+   "Format compact"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-3s-700-2.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-3s-850",
+  "nom": "Onduleur Eaton 3S 850",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 850 VA / 510 W : 8 prises, 4 secourues par batterie, pour poste bureautique.",
+  "description": "L'Eaton 3S 850 offre 850 VA / 510 W pour un poste de travail et ses périphériques. Ses 8 prises se répartissent entre 4 secourues par batterie et 4 protégées contre les surtensions uniquement. Format tour.",
+  "image": "images/eaton-3s-850.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "850 VA / 510 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 (4 batterie + 4 surtension)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "3S850F",
+  "reference_fabricant": "3S850F",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "850 VA / 510 W",
+   "8 prises",
+   "Poste bureautique"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-3s-850-2.jpg",
+   "images/eaton-3s-850-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-3p-ellipse-900",
+  "nom": "Onduleur Eaton 3P Ellipse 900",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 900 VA / 540 W : 4 prises IEC, protection des postes et équipements réseau.",
+  "description": "L'Eaton 3P Ellipse 900 protège postes de travail, NAS et équipements réseau avec 900 VA / 540 W. Il propose 4 prises IEC C13, dont 3 secourues par batterie et 1 protégée contre les surtensions uniquement, avec protection parafoudre et interface USB.",
+  "image": "images/eaton-3p-ellipse-900.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "900 VA / 540 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line"
+   },
+   {
+    "label": "Prises",
+    "valeur": "4 × IEC C13 (3 batterie + 1 surtension)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "3P900UI",
+  "reference_fabricant": "3P900UI",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "900 VA / 540 W",
+   "Protection parafoudre",
+   "Interface USB"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-3p-ellipse-900-2.jpg",
+   "images/eaton-3p-ellipse-900-3.jpg",
+   "images/eaton-3p-ellipse-900-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-3p-ellipse-1700",
+  "nom": "Onduleur Eaton 3P Ellipse 1700",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur 1700 VA / 1040 W : 8 prises, USB, pour poste puissant, NAS ou serveur domestique.",
+  "description": "L'Eaton 3P Ellipse 1700 délivre 1700 VA / 1040 W pour un poste puissant, un NAS ou un petit serveur. Ses 8 prises se répartissent entre 4 secourues par batterie et 4 protégées contre les surtensions uniquement, avec protection parafoudre, interface USB et batterie remplaçable.",
+  "image": "images/eaton-3p-ellipse-1700.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1700 VA / 1040 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Off-line"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 (4 batterie + 4 surtension)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   },
+   {
+    "label": "Batterie",
+    "valeur": "2 × 12 V / 9 Ah remplaçable"
+   }
+  ],
+  "ref": "3P1700UI",
+  "reference_fabricant": "3P1700UI",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1700 VA / 1040 W",
+   "8 prises",
+   "Batterie remplaçable"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-3p-ellipse-1700-2.jpg",
+   "images/eaton-3p-ellipse-1700-3.jpg",
+   "images/eaton-3p-ellipse-1700-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-5p-850",
+  "nom": "Onduleur Eaton 5P 850",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur line-interactive 850 VA / 600 W pour serveurs d'entrée de gamme et équipements réseau.",
+  "description": "L'Eaton 5P 850 est un onduleur line-interactive de 850 VA / 600 W pour les serveurs d'entrée de gamme, les équipements réseau et les postes critiques. Il offre 6 prises IEC C13 et une régulation de tension adaptée aux réseaux instables.",
+  "image": "images/eaton-5p-850-2.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "850 VA / 600 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Line-interactive"
+   },
+   {
+    "label": "Prises",
+    "valeur": "6 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "5P850I",
+  "reference_fabricant": "5P850I",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Line-interactive",
+   "850 VA / 600 W",
+   "Régulation de tension"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": []
+ },
+ {
+  "slug": "eaton-5p-1550",
+  "nom": "Onduleur Eaton 5P 1550",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur line-interactive 1550 VA / 1100 W : 8 prises IEC pour serveurs et réseau.",
+  "description": "L'Eaton 5P 1550 est un onduleur line-interactive de 1550 VA / 1100 W pour les serveurs, les baies réseau et les équipements critiques. Il propose 8 prises IEC C13 et une régulation de tension adaptée aux réseaux instables.",
+  "image": "images/eaton-5p-1550.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1550 VA / 1100 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Line-interactive"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Tour"
+   }
+  ],
+  "ref": "5P1550I",
+  "reference_fabricant": "5P1550I",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Line-interactive",
+   "1550 VA / 1100 W",
+   "8 prises IEC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-5p-1550-3.jpg",
+   "images/eaton-5p-1550-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-5px-1500",
+  "nom": "Onduleur Eaton 5PX 1500",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur line-interactive 1500 VA / 1500 W rack/tour 2U pour serveurs et baies réseau.",
+  "description": "L'Eaton 5PX 1500 est un onduleur line-interactive de 1500 VA / 1500 W au format rack/tour convertible 2U, pour les serveurs et les baies réseau. Il offre 8 prises IEC C13 et une gestion adaptée aux environnements informatiques.",
+  "image": "images/eaton-5px-1500.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "1500 VA / 1500 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Line-interactive"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 × IEC C13"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack/tour 2U"
+   }
+  ],
+  "ref": "5PX1500IRT2UG2",
+  "reference_fabricant": "5PX1500IRT2UG2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1500 VA / 1500 W",
+   "Rack/tour convertible",
+   "Line-interactive"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-5px-1500-2.jpg",
+   "images/eaton-5px-1500-3.jpg",
+   "images/eaton-5px-1500-4.jpg"
+  ]
+ },
+ {
+  "slug": "eaton-5px-2200",
+  "nom": "Onduleur Eaton 5PX 2200",
+  "marque": "Eaton",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Onduleur line-interactive 2200 VA / 2200 W rack/tour pour serveurs et infrastructures réseau.",
+  "description": "L'Eaton 5PX 2200 est un onduleur line-interactive de 2200 VA / 2200 W au format rack/tour convertible, pour les serveurs et les infrastructures réseau. Il propose 8 prises IEC C13 et 2 prises IEC C19.",
+  "image": "images/eaton-5px-2200.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "2200 VA / 2200 W"
+   },
+   {
+    "label": "Technologie",
+    "valeur": "Line-interactive"
+   },
+   {
+    "label": "Prises",
+    "valeur": "8 × IEC C13 + 2 × IEC C19"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack/tour convertible"
+   }
+  ],
+  "ref": "5PX2200IRT2UG2",
+  "reference_fabricant": "5PX2200IRT2UG2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "2200 VA / 2200 W",
+   "Prises C13 et C19",
+   "Line-interactive"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/eaton-5px-2200-2.jpg",
+   "images/eaton-5px-2200-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-yuasa-np7-12",
+  "nom": "Batterie Yuasa NP7-12 12 V 7 Ah",
+  "marque": "Yuasa",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie plomb scellé 12 V 7 Ah pour onduleurs 400 à 800 VA.",
+  "description": "La Yuasa NP7-12 est une batterie plomb scellé (AGM) de 12 V et 7 Ah, format standard des onduleurs bureautiques de 400 à 800 VA. Dimensions 151 × 65 × 97,5 mm, cosses F1 (version F2 : NP7-12-250). Vérifiez les dimensions et le type de cosses de votre ancienne batterie avant remplacement.",
+  "image": "images/batterie-yuasa-np7-12.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12 V"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "7 Ah"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "151 × 65 × 97,5 mm"
+   },
+   {
+    "label": "Cosses",
+    "valeur": "F1"
+   },
+   {
+    "label": "Poids",
+    "valeur": "2,20 kg"
+   }
+  ],
+  "ref": "NP7-12",
+  "reference_fabricant": "NP7-12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Format standard onduleurs 400-800 VA",
+   "Plomb scellé sans entretien"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-yuasa-np7-12-2.jpg",
+   "images/batterie-yuasa-np7-12-3.jpg",
+   "images/batterie-yuasa-np7-12-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-yuasa-np12-12",
+  "nom": "Batterie Yuasa NP12-12 12 V 12 Ah",
+  "marque": "Yuasa",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie plomb scellé 12 V 12 Ah pour onduleurs 1500 VA, souvent montée par deux.",
+  "description": "La Yuasa NP12-12 est une batterie plomb scellé (AGM) de 12 V et 12 Ah, utilisée notamment dans les onduleurs de 1500 VA, souvent par paire. Dimensions 151 × 98 × 97,5 mm, cosses F2. Vérifiez les dimensions et le type de cosses de votre ancienne batterie avant remplacement.",
+  "image": "images/batterie-yuasa-np12-12.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12 V"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "12 Ah"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "151 × 98 × 97,5 mm"
+   },
+   {
+    "label": "Cosses",
+    "valeur": "F2"
+   },
+   {
+    "label": "Poids",
+    "valeur": "4,05 kg"
+   }
+  ],
+  "ref": "NP12-12",
+  "reference_fabricant": "NP12-12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Onduleurs 1500 VA",
+   "Montage par paire fréquent"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-yuasa-np12-12-2.jpg",
+   "images/batterie-yuasa-np12-12-3.jpg",
+   "images/batterie-yuasa-np12-12-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-csb-gp1272",
+  "nom": "Batterie CSB GP1272 12 V",
+  "marque": "CSB",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie plomb scellé 12 V au format standard des onduleurs bureautiques.",
+  "description": "La CSB GP1272 est une batterie plomb scellé (AGM) de 12 V au format standard des onduleurs bureautiques. Dimensions 150,9 × 64,8 × 98,6 mm, cosses F2 (F1 disponible selon version). Vérifiez les dimensions et le type de cosses de votre ancienne batterie avant remplacement.",
+  "image": "images/batterie-csb-gp1272.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12 V"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "150,9 × 64,8 × 98,6 mm"
+   },
+   {
+    "label": "Cosses",
+    "valeur": "F2 (F1 selon version)"
+   },
+   {
+    "label": "Poids",
+    "valeur": "1,84 kg"
+   }
+  ],
+  "ref": "GP1272",
+  "reference_fabricant": "GP1272",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Format standard",
+   "Plomb scellé sans entretien"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-csb-gp1272-2.jpg",
+   "images/batterie-csb-gp1272-3.jpg",
+   "images/batterie-csb-gp1272-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-long-wp7-12",
+  "nom": "Batterie Long WP7-12 12 V 7 Ah",
+  "marque": "Long",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie plomb scellé 12 V 7 Ah pour onduleurs 400 à 800 VA.",
+  "description": "La Long WP7-12 est une batterie plomb scellé (AGM) de 12 V et 7 Ah pour les onduleurs bureautiques de 400 à 800 VA. Dimensions 151 × 65 × 94 mm. Vérifiez les dimensions et le type de cosses de votre ancienne batterie avant remplacement.",
+  "image": "images/batterie-long-wp7-12.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12 V"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "7 Ah"
+   },
+   {
+    "label": "Dimensions",
+    "valeur": "151 × 65 × 94 mm"
+   },
+   {
+    "label": "Poids",
+    "valeur": "2,18 kg"
+   }
+  ],
+  "ref": "WP7-12",
+  "reference_fabricant": "WP7-12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Onduleurs 400-800 VA",
+   "Plomb scellé sans entretien"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-long-wp7-12-2.jpg",
+   "images/batterie-long-wp7-12-3.jpg",
+   "images/batterie-long-wp7-12-4.jpg"
+  ]
+ },
+ {
+  "slug": "cartouche-apc-rbc17",
+  "nom": "Cartouche de batterie APC RBC17",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Cartouche de remplacement APC 12 V / 9 Ah pour Back-UPS, prête à installer.",
+  "description": "La cartouche APC RBC17 (12 V / 9 Ah) remplace la batterie des onduleurs APC Back-UPS compatibles, notamment les séries BX750MI, BX950MI, BXS750MI, BXS950MI et BE850G2 / BE1050G2 selon les références officielles APC. Installation plug-and-play, sans risque d'erreur de montage.",
+  "image": "images/cartouche-apc-rbc17.jpg",
+  "specs": [
+   {
+    "label": "Tension / capacité",
+    "valeur": "12 V / 9 Ah"
+   },
+   {
+    "label": "Compatibilité",
+    "valeur": "APC Back-UPS BX750MI, BX950MI, BXS750MI, BXS950MI, BE850G2, BE1050G2 (selon références)"
+   },
+   {
+    "label": "Type",
+    "valeur": "Cartouche plug-and-play"
+   }
+  ],
+  "ref": "RBC17",
+  "reference_fabricant": "RBC17",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Prête à installer",
+   "Compatibilité officielle APC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/cartouche-apc-rbc17-2.jpg"
+  ]
+ },
+ {
+  "slug": "cartouche-apc-rbc110",
+  "nom": "Cartouche de batterie APC RBC110",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Cartouche de remplacement APC pour Back-UPS BX500MI, BXS500MI et BE650G2.",
+  "description": "La cartouche APC RBC110 remplace la batterie des onduleurs APC compatibles, notamment les Back-UPS BX500MI, BXS500MI, BR650MI et BE650G2 selon les références officielles APC. Installation plug-and-play, sans risque d'erreur de montage.",
+  "image": "images/cartouche-apc-rbc110.jpg",
+  "specs": [
+   {
+    "label": "Compatibilité",
+    "valeur": "APC Back-UPS BX500MI, BXS500MI, BR650MI, BE650G2 (selon références)"
+   },
+   {
+    "label": "Type",
+    "valeur": "Cartouche plug-and-play"
+   }
+  ],
+  "ref": "RBC110",
+  "reference_fabricant": "RBC110",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Prête à installer",
+   "Compatibilité officielle APC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/cartouche-apc-rbc110-2.jpg",
+   "images/cartouche-apc-rbc110-3.jpg",
+   "images/cartouche-apc-rbc110-4.jpg"
+  ]
+ },
+ {
+  "slug": "cartouche-apc-rbc123",
+  "nom": "Cartouche de batterie APC RBC123",
+  "marque": "APC",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Cartouche de remplacement APC 24 V / 7 Ah pour Smart-UPS BR900G.",
+  "description": "La cartouche APC RBC123 (24 V / 7 Ah) remplace la batterie des onduleurs APC Smart-UPS BR900G selon les références officielles APC. Installation plug-and-play, sans risque d'erreur de montage.",
+  "image": "images/cartouche-apc-rbc123.jpg",
+  "specs": [
+   {
+    "label": "Tension / capacité",
+    "valeur": "24 V / 7 Ah"
+   },
+   {
+    "label": "Compatibilité",
+    "valeur": "APC Smart-UPS BR900G (selon références)"
+   },
+   {
+    "label": "Type",
+    "valeur": "Cartouche plug-and-play"
+   }
+  ],
+  "ref": "RBC123",
+  "reference_fabricant": "RBC123",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Prête à installer",
+   "Compatibilité officielle APC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/cartouche-apc-rbc123-2.jpg",
+   "images/cartouche-apc-rbc123-3.jpg",
+   "images/cartouche-apc-rbc123-4.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr4-udimm",
+  "nom": "Mémoire RAM DDR4 UDIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR4 UDIMM (PC de bureau) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR4 au format UDIMM (PC de bureau) pour PC de bureau. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 2400, 2666, 3200, 3600 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr4-udimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR4"
+   },
+   {
+    "label": "Format",
+    "valeur": "UDIMM (PC de bureau)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "2400, 2666, 3200, 3600 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR4 UDIMM",
+  "reference_fabricant": "DDR4 UDIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr4-udimm-2.jpg",
+   "images/ram-ddr4-udimm-3.jpg",
+   "images/ram-ddr4-udimm-4.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr4-sodimm",
+  "nom": "Mémoire RAM DDR4 SODIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR4 SODIMM (PC portable) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR4 au format SODIMM (PC portable) pour PC portables. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 2400, 2666, 3200 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr4-sodimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR4"
+   },
+   {
+    "label": "Format",
+    "valeur": "SODIMM (PC portable)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "2400, 2666, 3200 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR4 SODIMM",
+  "reference_fabricant": "DDR4 SODIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr4-sodimm-2.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr5-udimm",
+  "nom": "Mémoire RAM DDR5 UDIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR5 UDIMM (PC de bureau) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR5 au format UDIMM (PC de bureau) pour PC de bureau récents. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 4800, 5200, 5600, 6000 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr5-udimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR5"
+   },
+   {
+    "label": "Format",
+    "valeur": "UDIMM (PC de bureau)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "4800, 5200, 5600, 6000 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR5 UDIMM",
+  "reference_fabricant": "DDR5 UDIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr5-udimm-2.jpg",
+   "images/ram-ddr5-udimm-3.jpg",
+   "images/ram-ddr5-udimm-4.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr5-sodimm",
+  "nom": "Mémoire RAM DDR5 SODIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR5 SODIMM (PC portable) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR5 au format SODIMM (PC portable) pour PC portables récents. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 4800, 5200, 5600 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr5-sodimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR5"
+   },
+   {
+    "label": "Format",
+    "valeur": "SODIMM (PC portable)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "4800, 5200, 5600 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR5 SODIMM",
+  "reference_fabricant": "DDR5 SODIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr5-sodimm-2.jpg",
+   "images/ram-ddr5-sodimm-3.jpg",
+   "images/ram-ddr5-sodimm-4.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr4-ecc-rdimm",
+  "nom": "Mémoire RAM serveur DDR4 ECC RDIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR4 ECC RDIMM ECC (serveur) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR4 ECC au format RDIMM ECC (serveur) pour serveurs. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 2400, 2666, 3200 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr4-ecc-rdimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR4 ECC"
+   },
+   {
+    "label": "Format",
+    "valeur": "RDIMM ECC (serveur)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "2400, 2666, 3200 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR4 ECC RDIMM",
+  "reference_fabricant": "DDR4 ECC RDIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr4-ecc-rdimm-2.jpg",
+   "images/ram-ddr4-ecc-rdimm-3.jpg",
+   "images/ram-ddr4-ecc-rdimm-4.jpg"
+  ]
+ },
+ {
+  "slug": "ram-ddr5-ecc-rdimm",
+  "nom": "Mémoire RAM serveur DDR5 ECC RDIMM",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Mémoire RAM",
+  "famille": "Informatique",
+  "accroche": "Mémoire DDR5 ECC RDIMM ECC (serveur) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR5 ECC au format RDIMM ECC (serveur) pour serveurs récents. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 4800, 5200, 5600 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "image": "images/ram-ddr5-ecc-rdimm.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "DDR5 ECC"
+   },
+   {
+    "label": "Format",
+    "valeur": "RDIMM ECC (serveur)"
+   },
+   {
+    "label": "Vitesses",
+    "valeur": "4800, 5200, 5600 MHz"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "8, 16, 32, 64 Go"
+   }
+  ],
+  "ref": "DDR5 ECC RDIMM",
+  "reference_fabricant": "DDR5 ECC RDIMM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plusieurs capacités",
+   "Marques reconnues"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "8 Go",
+    "ref": null
+   },
+   {
+    "nom": "16 Go",
+    "ref": null
+   },
+   {
+    "nom": "32 Go",
+    "ref": null
+   },
+   {
+    "nom": "64 Go (kit 2 × 32 Go)",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ram-ddr5-ecc-rdimm-2.jpg"
+  ]
+ },
+ {
+  "slug": "extender-hdmi-kvm-4k",
+  "nom": "Extender HDMI KVM 4K sur câble réseau",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Déport HDMI 4K et USB (clavier/souris) sur câble réseau Cat6.",
+  "description": "Extender HDMI KVM permettant de déporter un écran HDMI 4K ainsi que le clavier et la souris (USB) sur un câble réseau Cat6/Cat6A, entre un émetteur et un récepteur. La distance maximale en 4K dépend du modèle (en général 40 à 70 m ; les distances de 120 m sont le plus souvent en 1080p ou via HDBaseT/IP) : précisez votre distance et votre résolution pour le choix du modèle.",
+  "image": "images/extender-hdmi-kvm-4k.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Extender HDMI KVM (émetteur + récepteur)"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "Jusqu'à 4K selon modèle et distance"
+   },
+   {
+    "label": "Support",
+    "valeur": "Câble réseau Cat6/Cat6A"
+   },
+   {
+    "label": "USB",
+    "valeur": "Clavier et souris déportés"
+   }
+  ],
+  "ref": "HDMI KVM 4K",
+  "reference_fabricant": "HDMI KVM 4K",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "HDMI + USB sur un câble réseau",
+   "Salles de réunion et affichage déporté"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/extender-hdmi-kvm-4k-2.jpg",
+   "images/extender-hdmi-kvm-4k-3.jpg",
+   "images/extender-hdmi-kvm-4k-4.jpg"
+  ]
+ },
+ {
+  "slug": "convertisseur-fibre-1g",
+  "nom": "Convertisseur fibre optique 1G",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Convertisseur média fibre 1 Gigabit, mono ou multimode, module SFP LC.",
+  "description": "Convertisseur de média fibre optique 1 Gigabit pour relier un équipement cuivre RJ45 à une liaison fibre, en monomode ou multimode selon le module SFP LC installé. Précisez le type de fibre et la distance pour le choix du module.",
+  "image": "images/convertisseur-fibre-1g.jpg",
+  "specs": [
+   {
+    "label": "Débit",
+    "valeur": "1 Gbit/s"
+   },
+   {
+    "label": "Fibre",
+    "valeur": "Monomode ou multimode selon module SFP"
+   },
+   {
+    "label": "Connecteur",
+    "valeur": "LC (module SFP)"
+   }
+  ],
+  "ref": "Convertisseur fibre 1G",
+  "reference_fabricant": "Convertisseur fibre 1G",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Liaison fibre 1G",
+   "Module SFP LC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/convertisseur-fibre-1g-2.jpg",
+   "images/convertisseur-fibre-1g-3.jpg",
+   "images/convertisseur-fibre-1g-4.jpg"
+  ]
+ },
+ {
+  "slug": "convertisseur-fibre-10g",
+  "nom": "Convertisseur fibre optique 10G",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Convertisseur média fibre 10 Gigabit, mono ou multimode, module SFP+ LC.",
+  "description": "Convertisseur de média fibre optique 10 Gigabit pour relier un équipement cuivre à une liaison fibre haut débit, en monomode ou multimode selon le module SFP+ LC installé. Précisez le type de fibre et la distance pour le choix du module.",
+  "image": "images/convertisseur-fibre-10g.jpg",
+  "specs": [
+   {
+    "label": "Débit",
+    "valeur": "10 Gbit/s"
+   },
+   {
+    "label": "Fibre",
+    "valeur": "Monomode ou multimode selon module SFP+"
+   },
+   {
+    "label": "Connecteur",
+    "valeur": "LC (module SFP+)"
+   }
+  ],
+  "ref": "Convertisseur fibre 10G",
+  "reference_fabricant": "Convertisseur fibre 10G",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Liaison fibre 10G",
+   "Module SFP+ LC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/convertisseur-fibre-10g-2.jpg",
+   "images/convertisseur-fibre-10g-3.jpg",
+   "images/convertisseur-fibre-10g-4.jpg"
+  ]
+ },
+ {
+  "slug": "module-sfp-lc-1g-monomode",
+  "nom": "Module SFP LC 1G monomode",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Module SFP 1 Gigabit monomode, connecteur LC duplex.",
+  "description": "Module SFP 1 Gigabit pour fibre monomode, connecteur LC duplex, pour switches et convertisseurs compatibles SFP. Vérifiez la compatibilité avec votre équipement (codage constructeur selon les modèles).",
+  "image": "images/module-sfp-lc-1g-monomode.jpg",
+  "specs": [
+   {
+    "label": "Débit",
+    "valeur": "1 Gbit/s"
+   },
+   {
+    "label": "Fibre",
+    "valeur": "Monomode"
+   },
+   {
+    "label": "Connecteur",
+    "valeur": "LC duplex"
+   },
+   {
+    "label": "Format",
+    "valeur": "SFP"
+   }
+  ],
+  "ref": "SFP LC 1G SM",
+  "reference_fabricant": "SFP LC 1G SM",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Fibre monomode",
+   "Connecteur LC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/module-sfp-lc-1g-monomode-2.jpg",
+   "images/module-sfp-lc-1g-monomode-3.jpg",
+   "images/module-sfp-lc-1g-monomode-4.jpg"
+  ]
+ },
+ {
+  "slug": "module-sfp-plus-lc-10g",
+  "nom": "Module SFP+ LC 10G",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Module SFP+ 10 Gigabit, connecteur LC duplex, mono ou multimode selon version.",
+  "description": "Module SFP+ 10 Gigabit, connecteur LC duplex, en version monomode ou multimode selon la fibre installée, pour switches et convertisseurs compatibles SFP+. Vérifiez la compatibilité avec votre équipement (codage constructeur selon les modèles).",
+  "image": "images/module-sfp-plus-lc-10g.jpg",
+  "specs": [
+   {
+    "label": "Débit",
+    "valeur": "10 Gbit/s"
+   },
+   {
+    "label": "Fibre",
+    "valeur": "Monomode ou multimode selon version"
+   },
+   {
+    "label": "Connecteur",
+    "valeur": "LC duplex"
+   },
+   {
+    "label": "Format",
+    "valeur": "SFP+"
+   }
+  ],
+  "ref": "SFP+ LC 10G",
+  "reference_fabricant": "SFP+ LC 10G",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "10 Gigabit",
+   "Connecteur LC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/module-sfp-plus-lc-10g-2.jpg",
+   "images/module-sfp-plus-lc-10g-3.jpg",
+   "images/module-sfp-plus-lc-10g-4.jpg"
+  ]
+ },
+ {
+  "slug": "rouleau-cable-cat6-305m",
+  "nom": "Rouleau câble réseau Cat6 305 m cuivre",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Câbles RJ45",
+  "famille": "Informatique",
+  "accroche": "Bobine de câble réseau Cat6 305 m en cuivre pur, intérieur ou extérieur.",
+  "description": "Bobine de 305 m de câble réseau Cat6 en cuivre pur (pas d'aluminium cuivré), pour le câblage structuré. Versions intérieur et extérieur selon l'installation. Précisez le type de blindage (UTP/FTP) souhaité.",
+  "image": "images/rouleau-cable-cat6-305m.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Câble réseau Cat6"
+   },
+   {
+    "label": "Longueur",
+    "valeur": "305 m"
+   },
+   {
+    "label": "Conducteur",
+    "valeur": "Cuivre pur"
+   },
+   {
+    "label": "Versions",
+    "valeur": "Intérieur / extérieur, UTP / FTP"
+   }
+  ],
+  "ref": "Cat6 305 m",
+  "reference_fabricant": "Cat6 305 m",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Cuivre pur",
+   "305 m par bobine"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/rouleau-cable-cat6-305m-2.jpg",
+   "images/rouleau-cable-cat6-305m-3.jpg",
+   "images/rouleau-cable-cat6-305m-4.jpg"
+  ]
+ },
+ {
+  "slug": "connecteurs-rj45-cat6-100",
+  "nom": "Connecteurs RJ45 Cat6 (sachet de 100)",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Câbles RJ45",
+  "famille": "Informatique",
+  "accroche": "Fiches RJ45 Cat6 à sertir, sachet de 100, blindées ou non.",
+  "description": "Sachet de 100 fiches RJ45 Cat6 à sertir pour la confection de cordons réseau, en version blindée ou non blindée selon l'installation.",
+  "image": "images/connecteurs-rj45-cat6-100.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Fiches RJ45 à sertir"
+   },
+   {
+    "label": "Catégorie",
+    "valeur": "Cat6"
+   },
+   {
+    "label": "Quantité",
+    "valeur": "100 pièces"
+   },
+   {
+    "label": "Versions",
+    "valeur": "Blindées / non blindées"
+   }
+  ],
+  "ref": "RJ45 Cat6 100",
+  "reference_fabricant": "RJ45 Cat6 100",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Sachet de 100",
+   "Cat6"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/connecteurs-rj45-cat6-100-2.jpg",
+   "images/connecteurs-rj45-cat6-100-3.jpg",
+   "images/connecteurs-rj45-cat6-100-4.jpg"
+  ]
+ },
+ {
+  "slug": "sertisseuse-rj45",
+  "nom": "Sertisseuse RJ45",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Pince à sertir pour fiches RJ45 et RJ11, outil de câblage réseau.",
+  "description": "Pince à sertir pour fiches modulaires RJ45 (et RJ11 selon modèle), pour la confection et la réparation de cordons réseau.",
+  "image": "images/sertisseuse-rj45.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Pince à sertir"
+   },
+   {
+    "label": "Connecteurs",
+    "valeur": "RJ45 (RJ11 selon modèle)"
+   }
+  ],
+  "ref": "Sertisseuse RJ45",
+  "reference_fabricant": "Sertisseuse RJ45",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Outil de câblage",
+   "RJ45"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/sertisseuse-rj45-2.jpg",
+   "images/sertisseuse-rj45-3.jpg",
+   "images/sertisseuse-rj45-4.jpg"
+  ]
+ },
+ {
+  "slug": "testeur-cable-reseau",
+  "nom": "Testeur de câbles réseau RJ45",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Testeur de continuité et de câblage pour cordons et prises RJ45.",
+  "description": "Testeur de câbles réseau pour vérifier la continuité et l'ordre des paires des cordons et prises RJ45, avec émetteur et récepteur séparables pour tester les câbles déjà installés.",
+  "image": "images/testeur-cable-reseau.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Testeur de câblage"
+   },
+   {
+    "label": "Connecteurs",
+    "valeur": "RJ45"
+   },
+   {
+    "label": "Fonction",
+    "valeur": "Continuité et ordre des paires"
+   }
+  ],
+  "ref": "Testeur RJ45",
+  "reference_fabricant": "Testeur RJ45",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Diagnostic rapide",
+   "Émetteur + récepteur"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/testeur-cable-reseau-2.jpg",
+   "images/testeur-cable-reseau-3.jpg",
+   "images/testeur-cable-reseau-4.jpg"
+  ]
+ },
+ {
+  "slug": "keystone-rj45-cat6",
+  "nom": "Prise keystone RJ45 Cat6",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Câbles RJ45",
+  "famille": "Informatique",
+  "accroche": "Module keystone RJ45 Cat6 pour plastrons et panneaux de brassage.",
+  "description": "Module keystone RJ45 Cat6 à raccordement sans outil ou par outil d'insertion selon modèle, pour plastrons muraux et panneaux de brassage. Versions blindée et non blindée.",
+  "image": "images/keystone-rj45-cat6.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Module keystone"
+   },
+   {
+    "label": "Catégorie",
+    "valeur": "Cat6"
+   },
+   {
+    "label": "Versions",
+    "valeur": "Blindé / non blindé"
+   }
+  ],
+  "ref": "Keystone Cat6",
+  "reference_fabricant": "Keystone Cat6",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Plastrons et panneaux",
+   "Cat6"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/keystone-rj45-cat6-2.jpg",
+   "images/keystone-rj45-cat6-3.jpg",
+   "images/keystone-rj45-cat6-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-crucial-mx500",
+  "nom": "SSD Crucial MX500",
+  "marque": "Crucial",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD SATA 2,5 pouces : jusqu'à 560 Mo/s en lecture, pour redonner vie aux PC et portables.",
+  "description": "Le Crucial MX500 est un SSD SATA au format 2,5 pouces (aussi en M.2 2280) pour remplacer un disque dur et accélérer un PC ou un portable. Vitesses séquentielles jusqu'à 560 Mo/s en lecture et 510 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-crucial-mx500.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ SATA (aussi M.2 2280)"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "560 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "510 Mo/s"
+   }
+  ],
+  "ref": "MX500",
+  "reference_fabricant": "MX500",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Remplacement disque dur",
+   "560 Mo/s en lecture"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "500 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-crucial-mx500-2.jpg",
+   "images/ssd-crucial-mx500-3.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-wd-blue-sa510",
+  "nom": "SSD WD Blue SA510",
+  "marque": "WD",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD SATA 2,5 pouces 500 Go à 4 To : 560 Mo/s en lecture pour PC et portables.",
+  "description": "Le WD Blue SA510 est un SSD SATA III 6 Gb/s au format 2,5 pouces, disponible de 500 Go à 4 To. Vitesses séquentielles jusqu'à 560 Mo/s en lecture et 525 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-wd-blue-sa510.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ SATA"
+   },
+   {
+    "label": "Interface",
+    "valeur": "SATA III 6 Gb/s"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "560 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "525 Mo/s"
+   }
+  ],
+  "ref": "SA510",
+  "reference_fabricant": "SA510",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "500 Go à 4 To",
+   "560 Mo/s en lecture"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "500 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-wd-blue-sa510-2.jpg",
+   "images/ssd-wd-blue-sa510-3.jpg",
+   "images/ssd-wd-blue-sa510-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-kingston-a400",
+  "nom": "SSD Kingston A400",
+  "marque": "Kingston",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD SATA d'entrée de gamme 120 à 960 Go : 500 Mo/s en lecture.",
+  "description": "Le Kingston A400 est un SSD SATA Rev. 3.0 6 Gb/s d'entrée de gamme, au format 2,5 pouces ou M.2 2280, de 120 à 960 Go. Vitesses séquentielles jusqu'à 500 Mo/s en lecture et 450 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-kingston-a400.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ ou M.2 2280 SATA"
+   },
+   {
+    "label": "Interface",
+    "valeur": "SATA Rev. 3.0 6 Gb/s"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "500 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "450 Mo/s"
+   }
+  ],
+  "ref": "A400",
+  "reference_fabricant": "A400",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Entrée de gamme",
+   "500 Mo/s en lecture"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "120 Go",
+    "ref": null
+   },
+   {
+    "nom": "240 Go",
+    "ref": null
+   },
+   {
+    "nom": "480 Go",
+    "ref": null
+   },
+   {
+    "nom": "960 Go",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-kingston-a400-2.jpg",
+   "images/ssd-kingston-a400-3.jpg",
+   "images/ssd-kingston-a400-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-samsung-990-pro",
+  "nom": "SSD Samsung 990 PRO",
+  "marque": "Samsung",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 hautes performances : 7 450 Mo/s en lecture, 1 à 4 To.",
+  "description": "Le Samsung 990 PRO est un SSD M.2 2280 NVMe PCIe Gen 4.0 x4 hautes performances, de 1 à 4 To. Vitesses séquentielles jusqu'à 7 450 Mo/s en lecture et 6 900 Mo/s en écriture, pour les stations de travail et les PC exigeants. Choisissez la capacité dans les options.",
+  "image": "images/ssd-samsung-990-pro.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe Gen 4.0 x4, NVMe 2.0"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 450 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "6 900 Mo/s"
+   }
+  ],
+  "ref": "990 PRO",
+  "reference_fabricant": "990 PRO",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "7 450 Mo/s en lecture",
+   "PCIe 4.0"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-samsung-990-pro-2.jpg",
+   "images/ssd-samsung-990-pro-3.jpg",
+   "images/ssd-samsung-990-pro-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-wd-black-sn850x",
+  "nom": "SSD WD Black SN850X",
+  "marque": "WD",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 : 7 300 Mo/s en lecture, 1 à 8 To, pour jeux et création.",
+  "description": "Le WD Black SN850X est un SSD M.2 2280 NVMe PCIe Gen4 x4 de 1 à 8 To, pensé pour les jeux et la création de contenu. Vitesses séquentielles jusqu'à 7 300 Mo/s en lecture et 6 600 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-wd-black-sn850x.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe Gen4 x4 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 300 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "6 600 Mo/s"
+   }
+  ],
+  "ref": "SN850X",
+  "reference_fabricant": "SN850X",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "7 300 Mo/s en lecture",
+   "Jusqu'à 8 To"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   },
+   {
+    "nom": "8 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-wd-black-sn850x-2.jpg",
+   "images/ssd-wd-black-sn850x-3.jpg",
+   "images/ssd-wd-black-sn850x-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-kingston-nv3",
+  "nom": "SSD Kingston NV3",
+  "marque": "Kingston",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 : 6 000 Mo/s en lecture, 500 Go à 4 To.",
+  "description": "Le Kingston NV3 est un SSD M.2 NVMe PCIe 4.0 x4 (formats 2280 et 2230 selon capacité), de 500 Go à 4 To. Vitesses séquentielles jusqu'à 6 000 Mo/s en lecture et 5 000 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-kingston-nv3.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 / 2230 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe 4.0 x4 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "6 000 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "5 000 Mo/s"
+   }
+  ],
+  "ref": "NV3",
+  "reference_fabricant": "NV3",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "6 000 Mo/s en lecture",
+   "PCIe 4.0"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "500 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-kingston-nv3-2.jpg",
+   "images/ssd-kingston-nv3-3.jpg",
+   "images/ssd-kingston-nv3-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-kingston-kc3000",
+  "nom": "SSD Kingston KC3000",
+  "marque": "Kingston",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 : 7 000 Mo/s en lecture et écriture, 512 Go à 4 To.",
+  "description": "Le Kingston KC3000 est un SSD M.2 2280 NVMe PCIe 4.0 x4 hautes performances, de 512 Go à 4 To. Vitesses séquentielles jusqu'à 7 000 Mo/s en lecture et 7 000 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-kingston-kc3000.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe 4.0 x4 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 000 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "7 000 Mo/s"
+   }
+  ],
+  "ref": "KC3000",
+  "reference_fabricant": "KC3000",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "7 000 Mo/s lecture/écriture",
+   "PCIe 4.0"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "512 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-kingston-kc3000-2.jpg",
+   "images/ssd-kingston-kc3000-3.jpg",
+   "images/ssd-kingston-kc3000-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-crucial-t500",
+  "nom": "SSD Crucial T500",
+  "marque": "Crucial",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 : 7 400 Mo/s en lecture, 500 Go à 4 To.",
+  "description": "Le Crucial T500 est un SSD M.2 2280 NVMe PCIe 4.0 de 500 Go à 4 To. Vitesses séquentielles jusqu'à 7 400 Mo/s en lecture et 7 000 Mo/s en écriture, pour les PC et portables exigeants. Choisissez la capacité dans les options.",
+  "image": "images/ssd-crucial-t500.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe 4.0 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 400 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "7 000 Mo/s"
+   }
+  ],
+  "ref": "T500",
+  "reference_fabricant": "T500",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "7 400 Mo/s en lecture",
+   "PCIe 4.0"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "500 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-crucial-t500-2.jpg",
+   "images/ssd-crucial-t500-3.jpg",
+   "images/ssd-crucial-t500-4.jpg"
+  ]
  }
 ]
