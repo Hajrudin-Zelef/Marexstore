@@ -481,7 +481,7 @@ func (a *App) AdminProduitEdit(w http.ResponseWriter, r *http.Request) {
 				a.write(w, 200, a.adminPage("Nouveau produit", "produits", render.MxNotice("", "Nom requis pour créer le slug."), r))
 				return
 			}
-			_, err := a.DB.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,stock,main,sub,live_top,live_sub,facets_json,search_index) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,'{}','')`,
+			_, err := a.DB.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,dispo,accroche,description,image,stock,main,sub,live_top,live_sub,facets_json,search_index) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'{}','')`,
 				nslug, nn("nom"), nn("marque"), ni("prix"), ni("prix_boutique"), ni("prix_avant"), nn("dispo"), nn("accroche"), nn("description"), nn("image"), ni("stock"), nn("main"), nn("sub"), nn("live_top"), nn("live_sub"))
 			if err != nil {
 				a.write(w, 200, a.adminPage("Nouveau produit", "produits", render.MxNotice("", "Création impossible (slug déjà pris ?)."), r))
