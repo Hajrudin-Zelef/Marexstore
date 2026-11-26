@@ -200,6 +200,13 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 	var inner strings.Builder
 	switch vue {
 	case "produits":
+		nbVendus := a.statInt(`SELECT COUNT(DISTINCT product_id) FROM order_items`)
+		qteTotal := a.statInt(`SELECT COALESCE(SUM(qty),0) FROM order_items`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Produits au catalogue", strconv.Itoa(len(a.Store.Products)), "#9b51e0", icStock))
+		inner.WriteString(kpiCard("Références vendues", strconv.FormatInt(nbVendus, 10), "#2271b1", icProd))
+		inner.WriteString(kpiCard("Quantité totale vendue", strconv.FormatInt(qteTotal, 10), "#00a32a", icCmd))
+		inner.WriteString(`</div>`)
 		rows, err := a.DB.Query(`SELECT p.nom, SUM(oi.qty), COALESCE(SUM(oi.qty*oi.prix_unitaire),0) FROM order_items oi JOIN products p ON p.id=oi.product_id GROUP BY oi.product_id ORDER BY SUM(oi.qty) DESC LIMIT 20`)
 		var tr [][]string
 		if err == nil {
@@ -214,6 +221,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune vente pour le moment."))
 		} else {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Top produits vendus</h3>`)
 			inner.WriteString(mxTable([]string{"Produit", "Quantité vendue", "Revenu"}, tr))
 		}
 	case "revenu":
@@ -243,6 +251,12 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxTable([]string{"Mois", "Commandes", "Revenu"}, tr))
 		}
 	case "commandes":
+		cmdsTotal := a.statInt(`SELECT COUNT(*) FROM orders`)
+		cmds7j := a.statInt(`SELECT COUNT(*) FROM orders WHERE created_at >= datetime('now','-7 days')`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Commandes totales", strconv.FormatInt(cmdsTotal, 10), "#2271b1", icCmd))
+		inner.WriteString(kpiCard("Commandes 7 derniers jours", strconv.FormatInt(cmds7j, 10), "#00a32a", icCmd))
+		inner.WriteString(`</div>`)
 		rows, err := a.DB.Query(`SELECT statut, COUNT(*), COALESCE(SUM(total),0) FROM orders GROUP BY statut ORDER BY COUNT(*) DESC`)
 		var tr [][]string
 		if err == nil {
@@ -257,6 +271,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune commande pour le moment."))
 		} else {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Par statut</h3>`)
 			inner.WriteString(mxTable([]string{"Statut", "Commandes", "Montant"}, tr))
 		}
 	case "categories":

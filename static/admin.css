@@ -104,7 +104,7 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-kpi-ic svg{width:24px;height:24px}
 .mx-kpi-tx{min-width:0}
 .mx-kpi-tx h3{margin:0 0 2px}
-.mx-kpi .big{font-size:30px}
+.mx-kpi .big{font-size:clamp(18px,2vw,24px);white-space:nowrap}
 .mx-kpi .sub{margin-top:2px}
 /* Cartes graphiques */
 .mx-chart{padding:20px}
