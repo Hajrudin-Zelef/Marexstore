@@ -10008,5 +10008,947 @@
    "images/nas-synology-rs2423-plus-3.jpg",
    "images/nas-synology-rs2423-plus-4.jpg"
   ]
+ },
+ {
+  "slug": "nvidia-rtx-5060-ti-16go",
+  "nom": "Carte graphique NVIDIA GeForce RTX 5060 Ti 16 Go",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR7 pour le jeu et l'IA d'entrée de gamme.",
+  "description": "La Carte graphique NVIDIA GeForce RTX 5060 Ti 16 Go embarque 16 Go GDDR7 de mémoire vidéo, pour le jeu et l'IA d'entrée de gamme. Consommation maximale de 180 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-5060-ti-16go.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR7"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "180 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu et l'IA d'entrée de gamme"
+   }
+  ],
+  "ref": "RTX 5060 Ti 16 Go",
+  "reference_fabricant": "RTX 5060 Ti 16 Go",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR7",
+   "le jeu et l'IA d'entrée de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-5060-ti-16go-2.jpg",
+   "images/nvidia-rtx-5060-ti-16go-3.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-rtx-5070-ti",
+  "nom": "Carte graphique NVIDIA GeForce RTX 5070 Ti",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR7 pour le jeu haut de gamme.",
+  "description": "La Carte graphique NVIDIA GeForce RTX 5070 Ti embarque 16 Go GDDR7 de mémoire vidéo, pour le jeu haut de gamme. Consommation maximale de 300 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-5070-ti.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR7"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "300 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu haut de gamme"
+   }
+  ],
+  "ref": "RTX 5070 Ti",
+  "reference_fabricant": "RTX 5070 Ti",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR7",
+   "le jeu haut de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-5070-ti-2.jpg",
+   "images/nvidia-rtx-5070-ti-3.jpg",
+   "images/nvidia-rtx-5070-ti-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-rtx-5080",
+  "nom": "Carte graphique NVIDIA GeForce RTX 5080",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR7 pour le jeu très haut de gamme.",
+  "description": "La Carte graphique NVIDIA GeForce RTX 5080 embarque 16 Go GDDR7 de mémoire vidéo, pour le jeu très haut de gamme. Consommation maximale de 360 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-5080.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR7"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "360 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu très haut de gamme"
+   }
+  ],
+  "ref": "RTX 5080",
+  "reference_fabricant": "RTX 5080",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR7",
+   "le jeu très haut de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-5080-2.jpg",
+   "images/nvidia-rtx-5080-3.jpg",
+   "images/nvidia-rtx-5080-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-rtx-5090",
+  "nom": "Carte graphique NVIDIA GeForce RTX 5090",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 32 Go GDDR7 pour le jeu extrême et l'IA locale.",
+  "description": "La Carte graphique NVIDIA GeForce RTX 5090 embarque 32 Go GDDR7 de mémoire vidéo, pour le jeu extrême et l'IA locale. Consommation maximale de 575 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-5090.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "32 Go GDDR7"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "575 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu extrême et l'IA locale"
+   }
+  ],
+  "ref": "RTX 5090",
+  "reference_fabricant": "RTX 5090",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "32 Go GDDR7",
+   "le jeu extrême et l'IA locale"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-5090-2.jpg",
+   "images/nvidia-rtx-5090-3.jpg",
+   "images/nvidia-rtx-5090-4.jpg"
+  ]
+ },
+ {
+  "slug": "amd-radeon-rx-9060-xt-16go",
+  "nom": "Carte graphique AMD Radeon RX 9060 XT 16 Go",
+  "marque": "AMD",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR6 pour le jeu et l'IA d'entrée de gamme.",
+  "description": "La Carte graphique AMD Radeon RX 9060 XT 16 Go embarque 16 Go GDDR6 de mémoire vidéo, pour le jeu et l'IA d'entrée de gamme. Consommation maximale de 160 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/amd-radeon-rx-9060-xt-16go.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR6"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "160 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu et l'IA d'entrée de gamme"
+   }
+  ],
+  "ref": "RX 9060 XT 16 Go",
+  "reference_fabricant": "RX 9060 XT 16 Go",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR6",
+   "le jeu et l'IA d'entrée de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/amd-radeon-rx-9060-xt-16go-2.jpg",
+   "images/amd-radeon-rx-9060-xt-16go-3.jpg",
+   "images/amd-radeon-rx-9060-xt-16go-4.jpg"
+  ]
+ },
+ {
+  "slug": "amd-radeon-rx-9070-xt",
+  "nom": "Carte graphique AMD Radeon RX 9070 XT",
+  "marque": "AMD",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR6 pour le jeu haut de gamme.",
+  "description": "La Carte graphique AMD Radeon RX 9070 XT embarque 16 Go GDDR6 de mémoire vidéo, pour le jeu haut de gamme. Consommation maximale de 304 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/amd-radeon-rx-9070-xt.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR6"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "304 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "le jeu haut de gamme"
+   }
+  ],
+  "ref": "RX 9070 XT",
+  "reference_fabricant": "RX 9070 XT",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR6",
+   "le jeu haut de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/amd-radeon-rx-9070-xt-2.jpg",
+   "images/amd-radeon-rx-9070-xt-3.jpg",
+   "images/amd-radeon-rx-9070-xt-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-rtx-pro-4000-blackwell",
+  "nom": "Carte graphique NVIDIA RTX PRO 4000 Blackwell",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 24 Go GDDR7 ECC pour les stations de travail professionnelles.",
+  "description": "La Carte graphique NVIDIA RTX PRO 4000 Blackwell embarque 24 Go GDDR7 ECC de mémoire vidéo, pour les stations de travail professionnelles. Consommation maximale de 145 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-pro-4000-blackwell.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "24 Go GDDR7 ECC"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "145 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "les stations de travail professionnelles"
+   }
+  ],
+  "ref": "RTX PRO 4000 Blackwell",
+  "reference_fabricant": "RTX PRO 4000 Blackwell",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "24 Go GDDR7 ECC",
+   "les stations de travail professionnelles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-pro-4000-blackwell-2.jpg",
+   "images/nvidia-rtx-pro-4000-blackwell-3.jpg",
+   "images/nvidia-rtx-pro-4000-blackwell-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-rtx-pro-6000-blackwell",
+  "nom": "Carte graphique NVIDIA RTX PRO 6000 Blackwell",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 96 Go GDDR7 ECC pour l'IA et le rendu professionnel intensif.",
+  "description": "La Carte graphique NVIDIA RTX PRO 6000 Blackwell embarque 96 Go GDDR7 ECC de mémoire vidéo, pour l'IA et le rendu professionnel intensif. Consommation maximale de 600 W (Workstation) / 300 W (Max-Q) / 400-600 W (Server).  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-rtx-pro-6000-blackwell.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "96 Go GDDR7 ECC"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "600 W (Workstation) / 300 W (Max-Q) / 400-600 W (Server)"
+   },
+   {
+    "label": "Usage",
+    "valeur": "l'IA et le rendu professionnel intensif"
+   }
+  ],
+  "ref": "RTX PRO 6000 Blackwell",
+  "reference_fabricant": "RTX PRO 6000 Blackwell",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "96 Go GDDR7 ECC",
+   "l'IA et le rendu professionnel intensif"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-rtx-pro-6000-blackwell-2.jpg",
+   "images/nvidia-rtx-pro-6000-blackwell-3.jpg",
+   "images/nvidia-rtx-pro-6000-blackwell-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-l4",
+  "nom": "Carte graphique NVIDIA L4",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 24 Go GDDR6 ECC pour l'inférence IA et la vidéo en serveur.",
+  "description": "La Carte graphique NVIDIA L4 embarque 24 Go GDDR6 ECC de mémoire vidéo, pour l'inférence IA et la vidéo en serveur. Consommation maximale de 72 W. Carte passive basse consommation, sans alimentation externe, pour serveurs compatibles. Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-l4.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "24 Go GDDR6 ECC"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "72 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "l'inférence IA et la vidéo en serveur"
+   }
+  ],
+  "ref": "L4",
+  "reference_fabricant": "L4",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "24 Go GDDR6 ECC",
+   "l'inférence IA et la vidéo en serveur"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-l4-2.jpg",
+   "images/nvidia-l4-3.jpg",
+   "images/nvidia-l4-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-l40s",
+  "nom": "Carte graphique NVIDIA L40S",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 48 Go GDDR6 ECC pour l'IA et le rendu en datacenter.",
+  "description": "La Carte graphique NVIDIA L40S embarque 48 Go GDDR6 ECC de mémoire vidéo, pour l'IA et le rendu en datacenter. Consommation maximale de 350 W. Carte passive : nécessite un serveur conçu pour son refroidissement. Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-l40s.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "48 Go GDDR6 ECC"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "350 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "l'IA et le rendu en datacenter"
+   }
+  ],
+  "ref": "L40S",
+  "reference_fabricant": "L40S",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "48 Go GDDR6 ECC",
+   "l'IA et le rendu en datacenter"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-l40s-2.jpg",
+   "images/nvidia-l40s-3.jpg",
+   "images/nvidia-l40s-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-h200-nvl",
+  "nom": "Carte graphique NVIDIA H200 NVL",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 141 Go HBM3e pour les gros modèles d'IA en datacenter.",
+  "description": "La Carte graphique NVIDIA H200 NVL embarque 141 Go HBM3e de mémoire vidéo, pour les gros modèles d'IA en datacenter. Consommation maximale de 600 W max. Carte passive pour serveurs compatibles, sur devis. Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/nvidia-h200-nvl.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "141 Go HBM3e"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "600 W max"
+   },
+   {
+    "label": "Usage",
+    "valeur": "les gros modèles d'IA en datacenter"
+   }
+  ],
+  "ref": "H200 NVL",
+  "reference_fabricant": "H200 NVL",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "141 Go HBM3e",
+   "les gros modèles d'IA en datacenter"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-h200-nvl-2.jpg",
+   "images/nvidia-h200-nvl-3.jpg",
+   "images/nvidia-h200-nvl-4.jpg"
+  ]
+ },
+ {
+  "slug": "intel-arc-pro-b50",
+  "nom": "Carte graphique Intel Arc Pro B50",
+  "marque": "Intel",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Cartes graphiques",
+  "famille": "Informatique",
+  "accroche": "Carte graphique 16 Go GDDR6 pour les stations de travail d'entrée de gamme.",
+  "description": "La Carte graphique Intel Arc Pro B50 embarque 16 Go GDDR6 de mémoire vidéo, pour les stations de travail d'entrée de gamme. Consommation maximale de 70 W.  Vérifiez la compatibilité avec votre boîtier et votre alimentation avant commande.",
+  "image": "images/intel-arc-pro-b50.jpg",
+  "specs": [
+   {
+    "label": "Mémoire vidéo",
+    "valeur": "16 Go GDDR6"
+   },
+   {
+    "label": "Consommation max",
+    "valeur": "70 W"
+   },
+   {
+    "label": "Usage",
+    "valeur": "les stations de travail d'entrée de gamme"
+   }
+  ],
+  "ref": "Arc Pro B50",
+  "reference_fabricant": "Arc Pro B50",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "16 Go GDDR6",
+   "les stations de travail d'entrée de gamme"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/intel-arc-pro-b50-2.jpg",
+   "images/intel-arc-pro-b50-3.jpg",
+   "images/intel-arc-pro-b50-4.jpg"
+  ]
+ },
+ {
+  "slug": "nvidia-dgx-spark",
+  "nom": "Mini-serveur IA NVIDIA DGX Spark",
+  "marque": "NVIDIA",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Superordinateur IA de bureau : puce GB10, 128 Go de mémoire unifiée.",
+  "description": "Le NVIDIA DGX Spark est un mini-serveur IA de bureau basé sur la puce GB10 Grace Blackwell (processeur Arm 20 cœurs et GPU Blackwell), avec 64 ou 128 Go de mémoire LPDDR5x unifiée. Format compact de 150 × 150 × 50,5 mm, pour le développement et l'inférence de modèles d'IA en local.",
+  "image": "images/nvidia-dgx-spark.jpg",
+  "specs": [
+   {
+    "label": "Puce",
+    "valeur": "NVIDIA GB10 Grace Blackwell"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "64 ou 128 Go LPDDR5x unifiée"
+   },
+   {
+    "label": "Format",
+    "valeur": "Desktop compact 150 × 150 × 50,5 mm"
+   }
+  ],
+  "ref": "DGX Spark",
+  "reference_fabricant": "DGX Spark",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "IA locale",
+   "128 Go unifiés",
+   "Format compact"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nvidia-dgx-spark-2.jpg",
+   "images/nvidia-dgx-spark-3.jpg",
+   "images/nvidia-dgx-spark-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-ascent-gx10",
+  "nom": "Mini-serveur IA ASUS Ascent GX10",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Mini-serveur IA GB10 : 128 Go de mémoire unifiée, format desktop compact.",
+  "description": "Le ASUS Ascent GX10 est un mini-serveur IA de bureau basé sur la puce NVIDIA GB10 (processeur Arm 20 cœurs et GPU Blackwell intégré), avec 64 ou 128 Go de mémoire LPDDR5X unifiée. Format compact de 150 × 150 × 51 mm, pour le développement IA en local.",
+  "image": "images/asus-ascent-gx10.jpg",
+  "specs": [
+   {
+    "label": "Puce",
+    "valeur": "NVIDIA GB10"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "64 ou 128 Go LPDDR5X unifiée"
+   },
+   {
+    "label": "Format",
+    "valeur": "Desktop compact 150 × 150 × 51 mm"
+   }
+  ],
+  "ref": "Ascent GX10",
+  "reference_fabricant": "Ascent GX10",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "IA locale",
+   "GB10",
+   "Format compact"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-ascent-gx10-2.jpg",
+   "images/asus-ascent-gx10-3.jpg",
+   "images/asus-ascent-gx10-4.jpg"
+  ]
+ },
+ {
+  "slug": "dell-poweredge-r760xa",
+  "nom": "Serveur IA Dell PowerEdge R760xa",
+  "marque": "Dell",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 2U GPU : jusqu'à 4 GPU double largeur, DDR5 jusqu'à 8 To.",
+  "description": "Le Dell PowerEdge R760xa est un serveur rack 2U optimisé GPU, à deux processeurs Intel Xeon Scalable de 5e génération. Mémoire DDR5 jusqu'à 8 To et jusqu'à 4 GPU double largeur PCIe Gen5 (ou 12 simple largeur), pour l'inférence et l'entraînement IA.",
+  "image": "images/dell-poweredge-r760xa.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "Jusqu'à 4 double largeur PCIe Gen5"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   }
+  ],
+  "ref": "PowerEdge R760xa",
+  "reference_fabricant": "PowerEdge R760xa",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4 GPU double largeur",
+   "DDR5 8 To"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/dell-poweredge-r760xa-2.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-proliant-dl380a-gen12",
+  "nom": "Serveur IA HPE ProLiant DL380a Gen12",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 4U GPU : Xeon 6, jusqu'à 8 RTX PRO 6000 Blackwell.",
+  "description": "Le HPE ProLiant DL380a Gen12 est un serveur rack 4U optimisé GPU, à deux processeurs Intel Xeon 6. Mémoire DDR5 jusqu'à 8 To et configurations GPU variées : jusqu'à 16 cartes simple largeur (L4), 10 double largeur (L40S, H200) ou 8 RTX PRO 6000 Blackwell.",
+  "image": "images/hpe-proliant-dl380a-gen12.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon 6"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "Jusqu'à 8 RTX PRO 6000 Blackwell"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 4U"
+   }
+  ],
+  "ref": "ProLiant DL380a Gen12",
+  "reference_fabricant": "ProLiant DL380a Gen12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "GPU dense",
+   "Xeon 6"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-proliant-dl380a-gen12-2.jpg",
+   "images/hpe-proliant-dl380a-gen12-3.jpg",
+   "images/hpe-proliant-dl380a-gen12-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksystem-sr675-v3",
+  "nom": "Serveur IA Lenovo ThinkSystem SR675 V3",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 3U GPU AMD EPYC : jusqu'à 8 GPU double largeur.",
+  "description": "Le Lenovo ThinkSystem SR675 V3 est un serveur rack 3U optimisé GPU, à un ou deux processeurs AMD EPYC de 4e ou 5e génération. Mémoire DDR5 jusqu'à 6 To et jusqu'à 8 GPU double largeur en module dense, pour l'IA et le calcul haute performance.",
+  "image": "images/lenovo-thinksystem-sr675-v3.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "1 ou 2 × AMD EPYC 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "6 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "Jusqu'à 8 double largeur"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 3U"
+   }
+  ],
+  "ref": "ThinkSystem SR675 V3",
+  "reference_fabricant": "ThinkSystem SR675 V3",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "8 GPU",
+   "AMD EPYC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksystem-sr675-v3-2.jpg",
+   "images/lenovo-thinksystem-sr675-v3-3.jpg",
+   "images/lenovo-thinksystem-sr675-v3-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-esc4000-e11",
+  "nom": "Serveur IA ASUS ESC4000-E11",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 2U GPU : Xeon Scalable, jusqu'à 4 GPU double slot PCIe Gen5.",
+  "description": "Le ASUS ESC4000-E11 est un serveur rack 2U optimisé GPU, à deux processeurs Intel Xeon Scalable de 4e ou 5e génération. Mémoire DDR5 jusqu'à 4 To et jusqu'à 4 GPU double slot ou 8 simple slot PCIe Gen5.",
+  "image": "images/asus-esc4000-e11.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "Jusqu'à 4 double slot PCIe Gen5"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   }
+  ],
+  "ref": "ESC4000-E11",
+  "reference_fabricant": "ESC4000-E11",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4 GPU double slot",
+   "PCIe Gen5"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-esc4000-e11-2.jpg",
+   "images/asus-esc4000-e11-3.jpg",
+   "images/asus-esc4000-e11-4.jpg"
+  ]
+ },
+ {
+  "slug": "hpe-cray-xd670",
+  "nom": "Serveur IA HPE Cray XD670",
+  "marque": "HPE",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur 8 GPU H100/H200 sur devis, pour l'entraînement de gros modèles.",
+  "description": "Le HPE Cray XD670 est un serveur rack 5U à 8 GPU NVIDIA H100 80 Go ou H200 141 Go SXM5, à deux processeurs Intel Xeon Scalable. Mémoire DDR5 jusqu'à 4 To. Équipement sur devis uniquement : alimentation et climatisation à dimensionner (plusieurs kilowatts).",
+  "image": "images/hpe-cray-xd670.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "8 × NVIDIA H100 ou H200 SXM5"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 5U"
+   },
+   {
+    "label": "Disponibilité",
+    "valeur": "Sur devis"
+   }
+  ],
+  "ref": "Cray XD670",
+  "reference_fabricant": "Cray XD670",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "8 GPU H100/H200",
+   "Sur devis"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/hpe-cray-xd670-2.jpg",
+   "images/hpe-cray-xd670-3.jpg",
+   "images/hpe-cray-xd670-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksystem-sr680a-v3",
+  "nom": "Serveur IA Lenovo ThinkSystem SR680a V3",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur 8 GPU HGX H100/H200/B200 sur devis, rack 8U.",
+  "description": "Le Lenovo ThinkSystem SR680a V3 est un serveur rack 8U à 8 GPU NVIDIA HGX (H100, H200 ou B200), à deux processeurs Intel Xeon Scalable de 5e génération. Mémoire DDR5 jusqu'à 4 To. Équipement sur devis uniquement : alimentation et climatisation à dimensionner.",
+  "image": "images/lenovo-thinksystem-sr680a-v3.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "8 × NVIDIA HGX H100/H200/B200"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 8U"
+   },
+   {
+    "label": "Disponibilité",
+    "valeur": "Sur devis"
+   }
+  ],
+  "ref": "ThinkSystem SR680a V3",
+  "reference_fabricant": "ThinkSystem SR680a V3",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "8 GPU HGX",
+   "Sur devis"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksystem-sr680a-v3-2.jpg",
+   "images/lenovo-thinksystem-sr680a-v3-3.jpg",
+   "images/lenovo-thinksystem-sr680a-v3-4.jpg"
+  ]
+ },
+ {
+  "slug": "asus-esc8000-e11",
+  "nom": "Serveur IA ASUS ESC8000-E11",
+  "marque": "ASUS",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Serveurs",
+  "famille": "Informatique",
+  "accroche": "Serveur rack 4U 8 GPU PCIe Gen5 sur devis.",
+  "description": "Le ASUS ESC8000-E11 est un serveur rack 4U à deux processeurs Intel Xeon Scalable de 4e ou 5e génération, accueillant jusqu'à 8 GPU double slot PCIe Gen5. Mémoire DDR5 jusqu'à 4 To. Équipement sur devis uniquement : alimentation et climatisation à dimensionner.",
+  "image": "images/asus-esc8000-e11.jpg",
+  "specs": [
+   {
+    "label": "Processeur",
+    "valeur": "2 × Intel Xeon Scalable 4e/5e génération"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 To DDR5 max"
+   },
+   {
+    "label": "GPU",
+    "valeur": "Jusqu'à 8 double slot PCIe Gen5"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 4U"
+   },
+   {
+    "label": "Disponibilité",
+    "valeur": "Sur devis"
+   }
+  ],
+  "ref": "ESC8000-E11",
+  "reference_fabricant": "ESC8000-E11",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "8 GPU",
+   "Sur devis"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/asus-esc8000-e11-2.jpg",
+   "images/asus-esc8000-e11-3.jpg",
+   "images/asus-esc8000-e11-4.jpg"
+  ]
  }
 ]
