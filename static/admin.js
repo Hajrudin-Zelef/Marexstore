@@ -324,3 +324,49 @@
     if (t.clientX - sx < -50 && Math.abs(t.clientY - sy) < 60) close();
   }, { passive: true });
 })();
+
+/* Pagination locale des tableaux de groupe : 10 lignes par page, flèches
+   première / précédente / suivante / dernière. Aucune requête serveur. */
+(function () {
+  function build(root) {
+    var per = parseInt(root.getAttribute('data-per'), 10) || 10;
+    var tbody = root.querySelector('tbody');
+    if (!tbody) return;
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    if (rows.length <= per) return;
+    var pages = Math.ceil(rows.length / per), page = 1;
+    var pager = document.createElement('div');
+    pager.className = 'mx-pager mx-pager-inline';
+    function mk(label, title, fn) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'mx-page-btn';
+      b.textContent = label; b.title = title; b.setAttribute('aria-label', title);
+      b.addEventListener('click', fn);
+      return b;
+    }
+    var first = mk('«', 'Première page', function () { go(1); });
+    var prev = mk('‹', 'Page précédente', function () { go(page - 1); });
+    var info = document.createElement('span');
+    info.className = 'mx-page-info';
+    var next = mk('›', 'Page suivante', function () { go(page + 1); });
+    var last = mk('»', 'Dernière page', function () { go(pages); });
+    pager.appendChild(first); pager.appendChild(prev); pager.appendChild(info);
+    pager.appendChild(next); pager.appendChild(last);
+    root.appendChild(pager);
+    function go(p) {
+      page = Math.min(pages, Math.max(1, p));
+      rows.forEach(function (tr, i) {
+        tr.style.display = (i >= (page - 1) * per && i < page * per) ? '' : 'none';
+      });
+      info.textContent = 'Page ' + page + ' / ' + pages + ' · ' + rows.length + ' lignes';
+      first.disabled = prev.disabled = (page === 1);
+      next.disabled = last.disabled = (page === pages);
+    }
+    go(1);
+  }
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.mx-paged[data-per]'), build);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

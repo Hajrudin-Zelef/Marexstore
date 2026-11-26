@@ -565,7 +565,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				for _, rr := range rws {
 					tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(rr.slug) + `">` + render.Esc(rr.nom) + `</a>`, mxDispoBadge(rr.dispo), mxStockCell(rr.stock)})
 				}
-				b.WriteString(mxTableAlign([]string{"Produit", "Disponibilité", "Stock"}, tr, "lrl"))
+				b.WriteString(`<div class="mx-paged" data-per="10">` + mxTableAlign([]string{"Produit", "Disponibilité", "Stock"}, tr, "lrl") + `</div>`)
 				b.WriteString(`</details>`)
 			}
 			b.WriteString(`</div>`)
