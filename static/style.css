@@ -146,8 +146,11 @@ nav.main a:hover{background:rgba(0,0,0,.12);text-decoration:none}
 .banner{background:#1d1d1d;color:#fff;border-radius:10px;padding:28px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .banner h3{margin:0 0 6px;font-size:22px}
 .banner p{margin:0;color:var(--muted)}
-.brands{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;align-items:center;padding:18px 0}
-.brands span{font-size:20px;font-weight:800;color:var(--muted);letter-spacing:.06em}
+.brands{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;padding:6px 0 18px}
+.brand-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid var(--border,#e5e5e5);border-radius:12px;padding:18px 10px;text-decoration:none;transition:box-shadow .15s,transform .15s}
+.brand-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-2px)}
+.brand-card img{height:34px;width:auto;max-width:90%;object-fit:contain}
+.brand-card span{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em}
 .widgets{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 @media(max-width:860px){.widgets{grid-template-columns:1fr}}
 .widgets h3{font-size:16px;border-bottom:2px solid var(--brand);padding-bottom:8px}

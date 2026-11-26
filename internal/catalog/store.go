@@ -1,16 +1,10 @@
 package catalog
 
 import (
-	_ "embed"
 	"encoding/json"
-	"encoding/xml"
-	"os"
 	"sort"
 	"strings"
 )
-
-//go:embed sitemap.xml
-var embeddedSitemap []byte
 
 // ---------- Compteurs ----------
 
@@ -191,53 +185,21 @@ func (s *Store) HubPhoto(top string) *RawProduct {
 	return cands[0]
 }
 
-// Recents reproduit la logique "Ajouté récemment" : les 8 fiches dont
-// le store_url apparaît en premier dans store-sitemap.xml (trié desc).
-func (s *Store) Recents(sitemapPath string) []*RawProduct {
-	type urlentry struct {
-		Loc     string `xml:"loc"`
-		Lastmod string `xml:"lastmod"`
+// Recents : les derniers produits ajoutés au catalogue (ordre d'import,
+// les produits sont chargés ORDER BY rowid : la fin = les plus récents).
+func (s *Store) Recents(_ string) []*RawProduct {
+	const maxRecents = 12
+	n := len(s.Products)
+	if n == 0 {
+		return nil
 	}
-	type urlset struct {
-		URLs []urlentry `xml:"url"`
+	start := n - maxRecents
+	if start < 0 {
+		start = 0
 	}
-	b := embeddedSitemap
-	if sitemapPath != "" {
-		if fb, err := os.ReadFile(sitemapPath); err == nil {
-			b = fb
-		}
-	}
-	if len(b) == 0 {
-		if len(s.Products) > 8 {
-			return s.Products[:8]
-		}
-		return s.Products
-	}
-	var us urlset
-	if err := xml.Unmarshal(b, &us); err != nil {
-		if len(s.Products) > 8 {
-			return s.Products[:8]
-		}
-		return s.Products
-	}
-	sort.Slice(us.URLs, func(i, j int) bool { return us.URLs[i].Lastmod > us.URLs[j].Lastmod })
-	byURL := map[string]*RawProduct{}
-	for _, p := range s.Products {
-		if p.StoreURL != "" {
-			byURL[p.StoreURL] = p
-		}
-	}
-	var out []*RawProduct
-	seen := map[string]bool{}
-	for _, u := range us.URLs {
-		loc := strings.TrimSpace(u.Loc)
-		if p, ok := byURL[loc]; ok && !seen[p.Slug] {
-			seen[p.Slug] = true
-			out = append(out, p)
-		}
-		if len(out) >= 8 {
-			break
-		}
+	out := make([]*RawProduct, 0, n-start)
+	for i := n - 1; i >= start; i-- {
+		out = append(out, s.Products[i])
 	}
 	return out
 }

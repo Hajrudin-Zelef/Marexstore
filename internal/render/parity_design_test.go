@@ -24,7 +24,7 @@ import (
 // go test ./internal/render/ -run TestPariteSansDesign -v (les valeurs
 // calculées sont journalisées), puis les recopier ici.
 var empreintesSansDesign = map[string]string{
-	"index":     "6708f70ed5ea98fcb3b78c7695b5f11f430f08780b8399aa86aaf67801665851",
+	"index":     "a9f940a99215fd95af93dced1e5b446ab8dd2042f80edc245db061f71568f182",
 	"boutique":  "5d65784bf653f87ab6fd73a4fa6ee4e01b16e90408617094bb180710af2772bd",
 	"fiche":     "0edbf64bff08001ccd0193fe7b9a03c56ce4b1380c3ad6dc0c0bad418e95a1d1",
 	"categorie": "cc340501490b8ccf8df48344a2537178991fc9788d683132182bf6c5c353b914",

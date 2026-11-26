@@ -240,12 +240,13 @@ func IndexBodyThemeDoc(d *design.Document, s *catalog.Store, recents []*catalog.
 <div><a class="btn" href="boutique.html">` + esc(DarkBannerData.Btn1) + `</a>
 <a class="btn dark" href="mailto:` + catalog.Email + `">` + esc(DarkBannerData.Btn2) + `</a>
 <a class="btn wa" href="https://wa.me/` + catalog.WA + `">DEMO</a></div></div></div>`
-	recentsSec := `<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits du stock</div>
+	recentsSec := `<div class="sec"><h2>Ajouté récemment</h2><div class="sub">Les derniers produits ajoutés au catalogue</div>
 <div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button><div class="catalog view-grid hrow">` + recentsHTML.String() + `</div><button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div></div>`
 	var marquesB strings.Builder
-	marquesB.WriteString(`<div class="sec"><div class="brands">`)
+	marquesB.WriteString(`<div class="sec"><h2>Nos marques</h2><div class="brands">`)
 	for _, m := range Marques {
-		marquesB.WriteString(`<span>` + m + `</span>`)
+		slug := catalog.Slugify(m)
+		fmt.Fprintf(&marquesB, `<a class="brand-card" href="boutique.html?marque=%s"><img src="static/logos/%s.svg" alt="%s" loading="lazy"><span>%s</span></a>`, esc(catalog.NormName(m)), slug, esc(m), esc(m))
 	}
 	marquesB.WriteString(`</div></div>`)
 	marques := marquesB.String()

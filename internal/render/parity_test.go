@@ -234,11 +234,46 @@ func TestBoutiqueParity(t *testing.T) {
 func TestIndexParity(t *testing.T) {
 	s := testStore(t)
 	recents := s.Recents(rel("../../catalogdata/store-sitemap.xml"))
-	got := normPageV325(render.Doc("Accueil", render.IndexBody(s, recents), "", ""))
-	want := readOrigNorm(t, "index.html")
+	got := dropHomeLiveBlocks(normPageV325(render.Doc("Accueil", render.IndexBody(s, recents), "", "")))
+	want := dropHomeLiveBlocks(readOrigNorm(t, "index.html"))
 	if got != want {
 		diffFirst(t, got, want)
 	}
+}
+
+// dropHomeLiveBlocks retire les sections d'accueil dont le contenu est vivant
+// (« Ajouté récemment » = derniers produits importés) ou refondu (cartes de
+// marques avec logos), qui ne peuvent plus être comparées à la v3.25 : les
+// produits changent à chaque import, et les marques sont passées de simples
+// libellés à des cartes cliquables. Ces deux blocs sont couverts par
+// TestAccueilRecents / TestAccueilMarques et par l'empreinte sans design.
+func dropHomeLiveBlocks(s string) string {
+	starts := []string{
+		`<div class="sec"><h2>Ajouté récemment</h2>`,
+		`<div class="sec"><h2>Nos marques</h2>`,
+		`<div class="sec"><div class="brands">`,
+	}
+	for {
+		idx := -1
+		for _, st := range starts {
+			if i := strings.Index(s, st); i >= 0 && (idx < 0 || i < idx) {
+				idx = i
+			}
+		}
+		if idx < 0 {
+			break
+		}
+		// Fin du bloc : prochaine section de premier niveau (les blocs sont
+		// concaténés avec un saut de ligne).
+		end := len(s)
+		for _, st := range []string{"\n<div class=\"sec\">", "\n<div class=\"widgets\">", "\n<div class=\"banner\""} {
+			if i := strings.Index(s[idx:], st); i >= 0 && idx+i < end {
+				end = idx + i
+			}
+		}
+		s = s[:idx] + s[end:]
+	}
+	return s
 }
 
 func TestCategoriesParity(t *testing.T) {
