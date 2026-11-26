@@ -26,7 +26,7 @@ func (a *App) writeAdmin(w http.ResponseWriter, r *http.Request, title, active, 
 
 func mxTable(headers []string, rows [][]string) string {
 	var b strings.Builder
-	b.WriteString(`<table class="mx-table"><thead><tr>`)
+	b.WriteString(`<div class="mx-tablewrap mx-table-scroll"><table class="mx-table"><thead><tr>`)
 	for _, h := range headers {
 		b.WriteString(`<th>` + render.Esc(h) + `</th>`)
 	}
@@ -38,7 +38,7 @@ func mxTable(headers []string, rows [][]string) string {
 		}
 		b.WriteString(`</tr>`)
 	}
-	b.WriteString(`</tbody></table>`)
+	b.WriteString(`</tbody></table></div>`)
 	return b.String()
 }
 
@@ -188,10 +188,20 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 	vue := r.URL.Query().Get("vue")
 	fcfa := func(v int64) string { return catalog.FmtPrix(&v) }
 	kpiCard := func(label, value, color, icon string) string {
+		// Montants : le « F CFA » passe à la ligne dans une taille réduite,
+		// sinon les gros montants sont rognés dans une carte étroite.
+		main, unit := value, ""
+		if strings.HasSuffix(value, " F CFA") {
+			main, unit = strings.TrimSuffix(value, " F CFA"), "F CFA"
+		}
+		unitHTML := ""
+		if unit != "" {
+			unitHTML = `<span class="unit">` + unit + `</span>`
+		}
 		return `<div class="mx-kpi" style="--mx-kpi:` + color + `">` +
 			`<div class="mx-kpi-ic">` + icon + `</div>` +
 			`<div class="mx-kpi-tx"><h3 class="lb">` + render.Esc(label) + `</h3>` +
-			`<div class="vl big">` + render.Esc(value) + `</div></div></div>`
+			`<div class="vl big">` + render.Esc(main) + unitHTML + `</div></div></div>`
 	}
 	icCaisse := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v2"/></svg>`
 	icRevenu := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
@@ -317,21 +327,47 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxTable([]string{"Commande", "Date", "Statut", "Montant", "Paiement"}, otr))
 		}
 	case "categories":
-		rows, err := a.DB.Query(`SELECT p.main, SUM(oi.qty), COALESCE(SUM(oi.qty*oi.prix_unitaire),0) FROM order_items oi JOIN products p ON p.id=oi.product_id GROUP BY p.main ORDER BY SUM(oi.qty) DESC`)
+		nbCats := a.statInt(`SELECT COUNT(DISTINCT main) FROM products`)
+		nbTypes := a.statInt(`SELECT COUNT(DISTINCT sub) FROM products`)
+		qteVendue := a.statInt(`SELECT COALESCE(SUM(qty),0) FROM order_items`)
+		revCat := a.statInt(`SELECT COALESCE(SUM(qty*prix_unitaire),0) FROM order_items`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Catégories", strconv.FormatInt(nbCats, 10), "#2271b1", icProd))
+		inner.WriteString(kpiCard("Types d'équipement", strconv.FormatInt(nbTypes, 10), "#9b51e0", icTag))
+		inner.WriteString(kpiCard("Quantité vendue", strconv.FormatInt(qteVendue, 10), "#00a32a", icCmd))
+		inner.WriteString(kpiCard("Revenu des ventes", fcfa(revCat), "#dba617", icCaisse))
+		inner.WriteString(`</div>`)
+		rows, err := a.DB.Query(`SELECT p.main, COUNT(DISTINCT p.id), COUNT(DISTINCT CASE WHEN p.dispo='en stock' THEN p.id END), COALESCE(SUM(oi.qty),0), COALESCE(SUM(oi.qty*oi.prix_unitaire),0) FROM products p LEFT JOIN order_items oi ON oi.product_id=p.id GROUP BY p.main ORDER BY COUNT(DISTINCT p.id) DESC`)
 		var tr [][]string
 		if err == nil {
 			defer rows.Close()
 			for rows.Next() {
 				var cat string
-				var q, rev int64
-				_ = rows.Scan(&cat, &q, &rev)
-				tr = append(tr, []string{render.Esc(cat), strconv.FormatInt(q, 10), fcfa(rev)})
+				var n, dispo, q, rev int64
+				_ = rows.Scan(&cat, &n, &dispo, &q, &rev)
+				tr = append(tr, []string{render.Esc(cat), strconv.FormatInt(n, 10), strconv.FormatInt(dispo, 10), strconv.FormatInt(q, 10), fcfa(rev)})
 			}
 		}
 		if len(tr) == 0 {
-			inner.WriteString(mxEmpty("Aucune vente pour le moment."))
+			inner.WriteString(mxEmpty("Aucune catégorie dans le catalogue."))
 		} else {
-			inner.WriteString(mxTable([]string{"Catégorie", "Quantité vendue", "Revenu"}, tr))
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Catalogue et ventes par catégorie</h3>`)
+			inner.WriteString(mxTable([]string{"Catégorie", "Produits", "En stock", "Quantité vendue", "Revenu"}, tr))
+		}
+		srows, serr := a.DB.Query(`SELECT main, sub, COUNT(*) FROM products GROUP BY main, sub ORDER BY main, COUNT(*) DESC`)
+		var str [][]string
+		if serr == nil {
+			defer srows.Close()
+			for srows.Next() {
+				var main, sub string
+				var n int64
+				_ = srows.Scan(&main, &sub, &n)
+				str = append(str, []string{render.Esc(main), render.Esc(sub), strconv.FormatInt(n, 10)})
+			}
+		}
+		if len(str) > 0 {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Répartition par type</h3>`)
+			inner.WriteString(mxTable([]string{"Catégorie", "Type", "Produits"}, str))
 		}
 	case "stock":
 		enStock := a.statInt(`SELECT COUNT(*) FROM products WHERE dispo='en stock'`)
