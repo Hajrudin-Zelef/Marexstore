@@ -444,3 +444,9 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-opt-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#eef2f6;color:#2271b1;font-weight:700;font-size:12.5px}
 .mx-chips{display:flex;flex-wrap:wrap;gap:5px}
 .mx-chip{background:#f3f4f6;border:1px solid var(--mx-border);border-radius:6px;padding:2px 8px;font-size:12px;color:#3c434a;white-space:nowrap}
+
+/* troncature chips avec bouton + */
+.mx-chips-extra{display:none}
+.mx-chips.open .mx-chips-extra{display:contents}
+.mx-chip-more{background:#eef2f6;border:1px solid var(--mx-border);border-radius:6px;padding:2px 8px;font-size:12px;color:#2271b1;font-weight:600;cursor:pointer}
+.mx-chip-more:hover{background:#e2e8ee}

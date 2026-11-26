@@ -977,10 +977,21 @@ func mxOptCount(n int) string {
 }
 
 func mxChips(vals []string) string {
+	const limit = 3
 	var b strings.Builder
 	b.WriteString(`<div class="mx-chips">`)
-	for _, v := range vals {
-		b.WriteString(`<span class="mx-chip">` + render.Esc(v) + `</span>`)
+	for i, v := range vals {
+		if i < limit {
+			b.WriteString(`<span class="mx-chip">` + render.Esc(v) + `</span>`)
+		}
+	}
+	if len(vals) > limit {
+		b.WriteString(`<span class="mx-chips-extra">`)
+		for _, v := range vals[limit:] {
+			b.WriteString(`<span class="mx-chip">` + render.Esc(v) + `</span>`)
+		}
+		b.WriteString(`</span>`)
+		b.WriteString(`<button type="button" class="mx-chip-more" onclick="this.parentElement.classList.toggle('open');this.textContent=this.parentElement.classList.contains('open')?'− réduire':'+` + strconv.Itoa(len(vals)-limit) + `'">+` + strconv.Itoa(len(vals)-limit) + `</button>`)
 	}
 	b.WriteString(`</div>`)
 	return b.String()
