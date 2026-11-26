@@ -456,7 +456,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				var cat string
 				var n, dispo, q, rev int64
 				_ = rows.Scan(&cat, &n, &dispo, &q, &rev)
-				tr = append(tr, []string{render.Esc(cat), strconv.FormatInt(n, 10), strconv.FormatInt(dispo, 10), strconv.FormatInt(q, 10), fcfa(rev)})
+				tr = append(tr, []string{mxCatBadge(cat), strconv.FormatInt(n, 10), mxStockBar(dispo, n), mxNumCell(q), mxMoneyCell(rev, fcfa(rev))})
 			}
 		}
 		if len(tr) == 0 {
@@ -472,7 +472,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				var main, sub string
 				var n int64
 				_ = srows.Scan(&main, &sub, &n)
-				str = append(str, []string{render.Esc(main), render.Esc(sub), strconv.FormatInt(n, 10)})
+				str = append(str, []string{mxCatBadge(main), render.Esc(sub), strconv.FormatInt(n, 10)})
 			}
 		}
 		if len(str) > 0 {
@@ -909,4 +909,40 @@ func (a *App) customRedirects() map[string]string {
 		_ = json.Unmarshal([]byte(v), &out)
 	}
 	return out
+}
+
+var mxPalette = []string{"#2271b1", "#9b51e0", "#00a32a", "#dba617", "#d63638", "#00a3a3", "#e0519b", "#6b7280"}
+
+func mxBadgeColor(s string) string {
+	h := 0
+	for _, c := range s {
+		h += int(c)
+	}
+	return mxPalette[h%len(mxPalette)]
+}
+
+func mxCatBadge(s string) string {
+	return `<span class="mx-catbadge" style="--bc:` + mxBadgeColor(s) + `">` + render.Esc(s) + `</span>`
+}
+
+func mxStockBar(dispo, total int64) string {
+	var pct int64
+	if total > 0 {
+		pct = dispo * 100 / total
+	}
+	return fmt.Sprintf(`<span class="mx-stockbar"><span class="mx-stockbar-fill" style="width:%d%%"></span></span><span class="mx-stockbar-txt">%d/%d</span>`, pct, dispo, total)
+}
+
+func mxNumCell(n int64) string {
+	if n == 0 {
+		return `<span class="mx-zero">0</span>`
+	}
+	return strconv.FormatInt(n, 10)
+}
+
+func mxMoneyCell(n int64, formatted string) string {
+	if n == 0 {
+		return `<span class="mx-zero">` + formatted + `</span>`
+	}
+	return formatted
 }

@@ -416,3 +416,14 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-section-head h3{position:relative;padding-left:12px}
 .mx-section-head h3::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:3px;border-radius:2px;background:#2271b1}
 .mx-section + .mx-section{margin-top:4px}
+
+/* badges catégorie colorés */
+.mx-catbadge{display:inline-block;padding:2px 9px;border-radius:999px;font-weight:600;font-size:12.5px;color:var(--bc,#3c434a);background:#f0f2f5;background:color-mix(in srgb,var(--bc,#3c434a) 14%,#fff)}
+
+/* barre de stock */
+.mx-stockbar{display:inline-block;width:70px;height:6px;border-radius:4px;background:#eceef0;vertical-align:middle;overflow:hidden;margin-right:6px}
+.mx-stockbar-fill{display:block;height:100%;background:#00a32a;border-radius:4px}
+.mx-stockbar-txt{font-size:12px;color:#646970;font-variant-numeric:tabular-nums}
+
+/* valeurs à zero grisées */
+.mx-zero{color:#9ca0a6;font-weight:400}
