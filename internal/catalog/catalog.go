@@ -233,6 +233,9 @@ var LiveCats = []LiveTop{
 		{"Supports & Stations d'accueil", "supports-stations-daccueil"},
 		{"Tapis de souris", "tapis-de-souris"},
 		{"Webcams", "webcams"},
+		{"Cartes graphiques", "cartes-graphiques"},
+		{"Sécurité réseau", "securite-reseau"},
+		{"Wi-Fi & Mesh", "wi-fi-mesh"},
 	}},
 	{"Accessoires Téléphones & Tablettes", "accessoires-telephones-tablettes", []LiveSub{
 		{"Autres accessoires de telephones", "autres-accessoires-de-telephones"},
@@ -250,7 +253,7 @@ var LiveCats = []LiveTop{
 		{"Caméra IP", "camera-ip"}, {"Caméra Wi-Fi", "camera-wi-fi"},
 		{"Caméra analogique (CVI/AHD)", "camera-analogique-cvi-ahd"},
 		{"Caméra solaire/autonome", "camera-solaire-autonome"},
-		{"Dahua", "dahua"}, {"Ezviz", "ezviz"}, {"Hikvision", "hikvision"},
+		{"Axis", "axis"}, {"Dahua", "dahua"}, {"Ezviz", "ezviz"}, {"Hikvision", "hikvision"},
 		{"Kit vidéosurveillance complet (caméras + DVR/NVR)", "kit-videosurveillance-complet-cameras-dvr-nvr"},
 		{"TP-Link", "tp-link"}, {"Xiaomi", "xiaomi"},
 	}},
@@ -313,6 +316,7 @@ var MegaGroups = map[string][]MegaGroup{
 		{"Cartouches & encres", []string{"cartouche-dencre"}},
 		{"Stockage", []string{"disques-durs-ssd-externes", "cles-usb-cartes-memoire"}},
 		{"Périphériques", []string{"souris", "claviers", "casques-ecouteurs", "webcams", "tapis-de-souris"}},
+		{"Composants & réseau", []string{"cartes-graphiques", "securite-reseau", "wi-fi-mesh"}},
 		{"Câbles & alimentation", []string{"cables-adaptateurs", "chargeurs-batteries"}},
 		{"Transport & supports", []string{"sacs-housses-pour-laptop", "supports-stations-daccueil"}},
 		{"Autres", []string{"autres-accessoires-informatiques"}},
@@ -325,7 +329,7 @@ var MegaGroups = map[string][]MegaGroup{
 	},
 	"cameras-videosurveillances": {
 		{"Caméras", []string{"camera-ip", "camera-wi-fi", "camera-analogique-cvi-ahd", "camera-solaire-autonome", "kit-videosurveillance-complet-cameras-dvr-nvr"}},
-		{"Marques", []string{"dahua", "ezviz", "hikvision", "tp-link", "xiaomi"}},
+		{"Marques", []string{"axis", "dahua", "ezviz", "hikvision", "tp-link", "xiaomi"}},
 	},
 	"imprimantes": {
 		{"Technologies", []string{"laser", "jet-dencre", "multifonction"}},
@@ -474,6 +478,14 @@ func LiveMap(p *RawProduct) (string, string) {
 			return "imprimantes", ""
 		}
 		return "accessoires-informatiques", "autres-accessoires-informatiques"
+	case marque == "axis":
+		return "cameras-videosurveillances", "camera-ip"
+	case p.Categorie == "Cartes graphiques":
+		return "accessoires-informatiques", "cartes-graphiques"
+	case p.Categorie == "Sécurité réseau":
+		return "accessoires-informatiques", "securite-reseau"
+	case p.Categorie == "Wi-Fi & Mesh":
+		return "accessoires-informatiques", "wi-fi-mesh"
 	case main == "Réseaux":
 		return "materiels-reseaux", ""
 	case sub == "Disques & stockage" || sub == "NAS":
@@ -493,6 +505,25 @@ func LiveMap(p *RawProduct) (string, string) {
 	default:
 		return "accessoires-informatiques", "autres-accessoires-informatiques"
 	}
+}
+
+// OptionNames extrait les noms des options du produit (capacités,
+// variantes) depuis le champ Options (objets {nom, ref} ou chaînes).
+func OptionNames(p *RawProduct) []string {
+	var out []string
+	for _, o := range p.Options {
+		switch v := o.(type) {
+		case string:
+			if v != "" {
+				out = append(out, v)
+			}
+		case map[string]any:
+			if nom, ok := v["nom"].(string); ok && nom != "" {
+				out = append(out, nom)
+			}
+		}
+	}
+	return out
 }
 
 func ApplyTaxonomy(list []*RawProduct) {

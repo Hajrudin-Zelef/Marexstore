@@ -10595,7 +10595,7 @@
   "categorie": "Serveurs",
   "famille": "Informatique",
   "accroche": "Superordinateur IA de bureau : puce GB10, 128 Go de mémoire unifiée.",
-  "description": "Le NVIDIA DGX Spark est un mini-serveur IA de bureau basé sur la puce GB10 Grace Blackwell (processeur Arm 20 cœurs et GPU Blackwell), avec 64 ou 128 Go de mémoire LPDDR5x unifiée. Format compact de 150 × 150 × 50,5 mm, pour le développement et l'inférence de modèles d'IA en local.",
+  "description": "Le NVIDIA DGX Spark est un mini-serveur IA de bureau basé sur la puce GB10 Grace Blackwell (processeur Arm 20 cœurs et GPU Blackwell), avec 128 Go de mémoire LPDDR5x unifiée. Format compact de 150 × 150 × 50,5 mm, pour le développement et l'inférence de modèles d'IA en local.",
   "image": "images/nvidia-dgx-spark.jpg",
   "specs": [
    {
@@ -10604,7 +10604,7 @@
    },
    {
     "label": "Mémoire",
-    "valeur": "64 ou 128 Go LPDDR5x unifiée"
+    "valeur": "128 Go LPDDR5x unifiée"
    },
    {
     "label": "Format",

@@ -91,6 +91,7 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 		"prix_boutique": "INTEGER NULL", "prix_avant": "INTEGER NULL",
 		"pointsforts_json":  "TEXT NOT NULL DEFAULT '[]'",
 		"consommables_json": "TEXT NOT NULL DEFAULT '[]'",
+		"options_json":      "TEXT NOT NULL DEFAULT '[]'",
 		"store_url":         "TEXT NOT NULL DEFAULT ''",
 		"ref":               "TEXT NOT NULL DEFAULT ''",
 		"ref_fabricant":     "TEXT NOT NULL DEFAULT ''",

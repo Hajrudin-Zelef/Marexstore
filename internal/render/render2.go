@@ -688,6 +688,15 @@ func FicheBodyOptsDoc(d *design.Document, s *catalog.Store, p *catalog.RawProduc
 	if o.Specs {
 		specsHTML = `<h2>` + escTx(d.Text("specs", "Caractéristiques")) + `</h2><table class="specs">` + specs.String() + `</table>`
 	}
+	// Options du produit (capacités, variantes) : pastilles sous le prix.
+	optsHTML := ""
+	if names := catalog.OptionNames(p); len(names) > 0 {
+		var chips strings.Builder
+		for _, n := range names {
+			chips.WriteString(`<span class="gchip">` + esc(n) + `</span>`)
+		}
+		optsHTML = `<div class="gamme"><div class="gamme-t">` + escTx(d.Text("options", "Options disponibles")) + `</div><div class="gamme-chips">` + chips.String() + `</div></div>`
+	}
 	avisBtn, avisPane := "", ""
 	if o.Avis {
 		avisBtn = `<button type="button" data-tab="3">` + escTx(d.Text("tab_avis", "Avis (0)")) + `</button>`
@@ -705,7 +714,7 @@ func FicheBodyOptsDoc(d *design.Document, s *catalog.Store, p *catalog.RawProduc
 <div class="qty">Quantité <input id="qty" type="number" value="1" min="1"> <span style="color:#666">` + esc(stock) + `</span></div>
 ` + addBtn + `
 ` + devisBtn + `
-` + waBtn + gammeHTML + `
+` + waBtn + optsHTML + gammeHTML + `
 <div style="margin-top:12px;color:#666;font-size:13px">` + escTx(d.Text("fiche_ref", "Réf.")) + ` ` + esc(nonVide(p.RefFabricant, p.Ref)) + ` · Marque : ` + esc(marque) + `</div>
 </div></div>
 <div class="ptabs" data-reveal data-tabs>

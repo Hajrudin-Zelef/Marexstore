@@ -78,8 +78,21 @@ func (a *App) CategorieType(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
+// slugRedirects : anciennes fiches fusionnées (doublons) → fiche conservée.
+var slugRedirects = map[string]string{
+	"r470":            "dell-r470",
+	"7821":            "telephone-cisco-cp7821",
+	"hp-305xl-toners": "hp-305xl",
+	"s380-s8t2t":      "ekit-s380-s8t2t",
+	"s380-s8p2t":      "ekit-s380-s8p2t",
+}
+
 func (a *App) Produit(w http.ResponseWriter, r *http.Request) {
 	slug := strings.TrimSuffix(chi.URLParam(r, "slug"), ".html")
+	if target, ok := slugRedirects[slug]; ok {
+		http.Redirect(w, r, "/produits/"+target+".html", http.StatusMovedPermanently)
+		return
+	}
 	p, ok := a.Store.BySlug[slug]
 	if !ok {
 		http.NotFound(w, r)

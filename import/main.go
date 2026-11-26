@@ -86,7 +86,7 @@ func main() {
 		if specs == "null" {
 			specs = "[]"
 		}
-		// Galerie : extras du JSON (max 4). À l'upsert, un JSON sans extras
+		// Galerie : extras du JSON (max 8). À l'upsert, un JSON sans extras
 		// ne doit pas effacer les photos ajoutées depuis l'admin.
 		extras := []string{}
 		seen := map[string]bool{}
@@ -96,26 +96,26 @@ func main() {
 			}
 			seen[e] = true
 			extras = append(extras, e)
-			if len(extras) >= 4 {
+			if len(extras) >= 8 {
 				break
 			}
 		}
 		_, err := tx.Exec(`INSERT INTO products(slug,nom,marque,prix,prix_boutique,prix_avant,devise,dispo,
-			categorie,accroche,description,image,specs_json,pointsforts_json,consommables_json,store_url,ref,ref_fabricant,stock,
+			categorie,accroche,description,image,specs_json,pointsforts_json,consommables_json,options_json,store_url,ref,ref_fabricant,stock,
 			main,main_slug,sub,sub_slug,live_top,live_sub,facets_json,search_index,images_json)
-			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+			VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 			ON CONFLICT(slug) DO UPDATE SET nom=excluded.nom, marque=excluded.marque,
 			prix=excluded.prix, prix_boutique=excluded.prix_boutique, prix_avant=excluded.prix_avant,
 			devise=excluded.devise, dispo=excluded.dispo, categorie=excluded.categorie,
 			accroche=excluded.accroche, description=excluded.description, image=excluded.image,
-			specs_json=excluded.specs_json, pointsforts_json=excluded.pointsforts_json, consommables_json=excluded.consommables_json, store_url=excluded.store_url,
+			specs_json=excluded.specs_json, pointsforts_json=excluded.pointsforts_json, consommables_json=excluded.consommables_json, options_json=excluded.options_json, store_url=excluded.store_url,
 			ref=excluded.ref, ref_fabricant=excluded.ref_fabricant, stock=excluded.stock,
 			main=excluded.main, main_slug=excluded.main_slug, sub=excluded.sub, sub_slug=excluded.sub_slug,
 			live_top=excluded.live_top, live_sub=excluded.live_sub,
 			facets_json=excluded.facets_json, search_index=excluded.search_index,
 			images_json=CASE WHEN excluded.images_json<>'[]' THEN excluded.images_json ELSE products.images_json END`,
 			p.Slug, p.Nom, p.Marque, prix, pb, pa, devise, dispo, p.Categorie,
-			p.Accroche, p.Description, p.Image, specs, mustJSON(p.PointsForts), mustJSON(p.Consommables), p.StoreURL,
+			p.Accroche, p.Description, p.Image, specs, mustJSON(p.PointsForts), mustJSON(p.Consommables), mustJSON(p.Options), p.StoreURL,
 			p.Ref, p.RefFabricant, stock, p.Main, p.MainSlug, p.Sub, p.SubSlug,
 			p.LiveTop, p.LiveSub, mustJSON(facets), si, mustJSON(extras))
 		if err != nil {
