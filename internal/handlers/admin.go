@@ -70,7 +70,12 @@ func (a *App) adminPage(title, active, inner string, r *http.Request) string {
 		msg = render.MxNotice(r.URL.Query().Get("msg"), r.URL.Query().Get("err"))
 		back = render.MxBackHTML(r.URL.Path)
 	}
-	return render.MxDoc(title, active, a.counts(), back, msg+inner)
+	// Sous-module actif : chemin + vue (les pages Stats/Outils vivent sur ?vue=).
+	cur := r.URL.Path
+	if v := r.URL.Query().Get("vue"); v != "" {
+		cur += "?vue=" + v
+	}
+	return render.MxDoc(title, active, cur, a.counts(), back, msg+inner)
 }
 
 func (a *App) Admin(w http.ResponseWriter, r *http.Request) {

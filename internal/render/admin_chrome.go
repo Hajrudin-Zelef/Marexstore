@@ -20,7 +20,7 @@ type MxItem struct {
 }
 
 // MxSidebar : menu latéral avec compteurs et sous-menus (style WP).
-func MxSidebar(active string, counts map[string]int) string {
+func MxSidebar(active, current string, counts map[string]int) string {
 	items := []MxItem{
 		{Slug: "", Label: "Tableau de bord", Icon: "dashboard"},
 		{Slug: "produits", Label: "Produits", Icon: "archive", Count: counts["produits"], ShowCount: true, Subs: []MxSub{
@@ -81,7 +81,11 @@ func MxSidebar(active string, counts map[string]int) string {
 		if open && len(it.Subs) > 0 {
 			b.WriteString(`<div class="mx-subnav">`)
 			for _, s := range it.Subs {
-				fmt.Fprintf(&b, `<a href="%s">%s</a>`, s.Href, Esc(s.Label))
+				cls := ""
+				if s.Href == current {
+					cls = ` class="on"`
+				}
+				fmt.Fprintf(&b, `<a href="%s"%s>%s</a>`, s.Href, cls, Esc(s.Label))
 			}
 			b.WriteString(`</div>`)
 		}
@@ -166,15 +170,15 @@ func MxBackHTML(path string) string {
 		`" aria-label="Retour à ` + Esc(b.Label) + `">← <span class="lb">Retour</span></a>`
 }
 
-func MxDoc(title, active string, counts map[string]int, back, body string) string {
+func MxDoc(title, active, current string, counts map[string]int, back, body string) string {
 	return `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>` + Esc(title) + ` — Marexstore Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/admin.css?v=9">
+<link rel="stylesheet" href="/static/admin.css?v=10">
 <script src="/static/theme.js?v=2"></script>
 </head><body class="mx"><div class="mx-shell">` +
-		MxSidebar(active, counts) +
+		MxSidebar(active, current, counts) +
 		`<div class="mx-scrim" data-side-close></div>` +
 		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button>` + back + `<h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
 		body + `</div></div></div><script src="/static/admin.js?v=9"></script></body></html>`
