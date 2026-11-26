@@ -82,8 +82,8 @@ func TestAdminSnapshot(t *testing.T) {
 
 	// Marques : les 9 du site (pas les 6 du prototype).
 	marques, _ := snap["marques"].([]any)
-	if len(marques) != 9 {
-		t.Fatalf("marques : %d, attendu 9", len(marques))
+	if len(marques) != 8 {
+		t.Fatalf("marques : %d, attendu 8", len(marques))
 	}
 	var hasHP, hasKyocera bool
 	for _, m := range marques {

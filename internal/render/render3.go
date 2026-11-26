@@ -48,7 +48,7 @@ var Minis = []MiniCard{
 }
 
 // Marques : les marques affichées sur l'accueil (section marques).
-var Marques = []string{"ACER", "APPLE", "ASUS", "CISCO", "DELL", "EPSON", "HP", "KYOCERA", "LENOVO"}
+var Marques = []string{"APPLE", "ASUS", "CISCO", "DELL", "EPSON", "HP", "KYOCERA", "LENOVO"}
 
 // Top8Slugs : les 8 produits « Les plus vendus » (accueil).
 var Top8Slugs = []string{"toner-650a-yellow", "toner-205a-yellow", "toner-711a-black",
