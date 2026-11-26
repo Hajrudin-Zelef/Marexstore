@@ -8467,5 +8467,1546 @@
    "images/ssd-crucial-t500-3.jpg",
    "images/ssd-crucial-t500-4.jpg"
   ]
+ },
+ {
+  "slug": "logitech-rally-bar-mini",
+  "nom": "Barre vidéo Logitech Rally Bar Mini",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo tout-en-un 4K pour petites et moyennes salles, certifiée Teams, Zoom et Google Meet.",
+  "description": "La Logitech Rally Bar Mini est une barre vidéo tout-en-un pour les petites et moyennes salles de réunion. Caméra 4K avec champ de vision diagonal de 120°, audio et micros intégrés, certifiée Microsoft Teams, Zoom et Google Meet.",
+  "image": "images/logitech-rally-bar-mini.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Petites à moyennes"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "120° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom, Google Meet"
+   }
+  ],
+  "ref": "Rally Bar Mini",
+  "reference_fabricant": "Rally Bar Mini",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tout-en-un",
+   "Caméra 4K",
+   "Certifiée Teams/Zoom"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-rally-bar-mini-2.jpg",
+   "images/logitech-rally-bar-mini-3.jpg",
+   "images/logitech-rally-bar-mini-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-rally-bar",
+  "nom": "Barre vidéo Logitech Rally Bar",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo tout-en-un 4K pour moyennes et grandes salles, certifiée Teams, Zoom et Google Meet.",
+  "description": "La Logitech Rally Bar est une barre vidéo tout-en-un pour les moyennes et grandes salles de réunion. Caméra 4K avec champ de vision diagonal de 90°, audio et micros intégrés, certifiée Microsoft Teams, Zoom et Google Meet.",
+  "image": "images/logitech-rally-bar.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Moyennes à grandes"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "90° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom, Google Meet"
+   }
+  ],
+  "ref": "Rally Bar",
+  "reference_fabricant": "Rally Bar",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tout-en-un",
+   "Caméra 4K",
+   "Grandes salles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-rally-bar-2.jpg",
+   "images/logitech-rally-bar-3.jpg",
+   "images/logitech-rally-bar-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-rally-bar-huddle",
+  "nom": "Barre vidéo Logitech Rally Bar Huddle",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo 4K pour huddle et petites salles jusqu'à 6 personnes.",
+  "description": "La Logitech Rally Bar Huddle est une barre vidéo tout-en-un pour les espaces huddle et les petites salles jusqu'à 6 personnes. Caméra 4K avec champ de vision diagonal de 120°, compatible Microsoft Teams Rooms, Zoom Rooms et Google Meet.",
+  "image": "images/logitech-rally-bar-huddle.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Huddle, jusqu'à 6 personnes"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "120° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms, Google Meet"
+   }
+  ],
+  "ref": "Rally Bar Huddle",
+  "reference_fabricant": "Rally Bar Huddle",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Petites salles",
+   "Caméra 4K 120°"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-rally-bar-huddle-2.jpg",
+   "images/logitech-rally-bar-huddle-3.jpg",
+   "images/logitech-rally-bar-huddle-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-meetup-2",
+  "nom": "Caméra de conférence Logitech MeetUp 2",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Caméra de conférence USB 4K tout-en-un pour huddle rooms.",
+  "description": "La Logitech MeetUp 2 est une caméra de conférence USB tout-en-un pour les huddle rooms. Caméra 4K avec champ de vision diagonal de 120°, micro et haut-parleur intégrés, compatible Microsoft Teams, Zoom et Google Meet en mode USB.",
+  "image": "images/logitech-meetup-2.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra de conférence USB"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Huddle"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "120° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom, Google Meet (USB)"
+   }
+  ],
+  "ref": "MeetUp 2",
+  "reference_fabricant": "MeetUp 2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "USB tout-en-un",
+   "4K 120°"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-meetup-2-2.jpg",
+   "images/logitech-meetup-2-3.jpg",
+   "images/logitech-meetup-2-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-tap-ip",
+  "nom": "Contrôleur tactile Logitech Tap IP",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Contrôleur tactile de salle pour Teams Rooms, Zoom Rooms et Google Meet.",
+  "description": "Le Logitech Tap IP est un contrôleur tactile de salle de réunion (écran 1280 × 800) pour piloter les réunions Microsoft Teams Rooms, Zoom Rooms et Google Meet, connecté en réseau PoE.",
+  "image": "images/logitech-tap-ip.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Contrôleur tactile"
+   },
+   {
+    "label": "Écran",
+    "valeur": "1280 × 800"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms, Google Meet"
+   }
+  ],
+  "ref": "Tap IP",
+  "reference_fabricant": "Tap IP",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Pilotage de salle",
+   "Écran tactile"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-tap-ip-2.jpg",
+   "images/logitech-tap-ip-3.jpg",
+   "images/logitech-tap-ip-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-rally-camera",
+  "nom": "Caméra PTZ Logitech Rally Camera",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Caméra PTZ 4K autonome pour salles de réunion de toutes tailles.",
+  "description": "La Logitech Rally Camera est une caméra PTZ 4K autonome pour les salles de réunion, avec champ de vision diagonal de 90° et zoom optique. Compatible Microsoft Teams, Zoom, Google Meet et les applications acceptant les caméras USB.",
+  "image": "images/logitech-rally-camera.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra PTZ"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "90° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom, Google Meet, USB"
+   }
+  ],
+  "ref": "Rally Camera",
+  "reference_fabricant": "Rally Camera",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "PTZ 4K",
+   "Zoom optique"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-rally-camera-2.jpg",
+   "images/logitech-rally-camera-3.jpg",
+   "images/logitech-rally-camera-4.jpg"
+  ]
+ },
+ {
+  "slug": "logitech-mx-brio",
+  "nom": "Webcam Logitech MX Brio",
+  "marque": "Logitech",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Webcam 4K pour poste individuel : 4K/30 fps et 1080p/60 fps.",
+  "description": "La Logitech MX Brio est une webcam 4K pour poste individuel et télétravail. Vidéo 4K à 30 fps ou 1080p à 60 fps, champ de vision diagonal réglable de 65° à 90°.",
+  "image": "images/logitech-mx-brio.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Webcam"
+   },
+   {
+    "label": "Vidéo",
+    "valeur": "4K/30 fps, 1080p/60 fps"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "65° à 90° diagonal"
+   }
+  ],
+  "ref": "MX Brio",
+  "reference_fabricant": "MX Brio",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4K",
+   "Poste individuel"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/logitech-mx-brio-2.jpg",
+   "images/logitech-mx-brio-3.jpg",
+   "images/logitech-mx-brio-4.jpg"
+  ]
+ },
+ {
+  "slug": "poly-studio-x30",
+  "nom": "Barre vidéo Poly Studio X30",
+  "marque": "Poly",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo tout-en-un 4K pour huddle et petites salles, Teams, Zoom et Google Meet.",
+  "description": "La Poly Studio X30 est une barre vidéo tout-en-un pour les huddle et petites salles. Caméra 4K UHD avec champ de vision diagonal de 121°, compatible Microsoft Teams, Zoom Rooms et Google Meet.",
+  "image": "images/poly-studio-x30.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Huddle et petites"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K UHD"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "121° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom Rooms, Google Meet"
+   }
+  ],
+  "ref": "Studio X30",
+  "reference_fabricant": "Studio X30",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tout-en-un",
+   "4K 121°"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/poly-studio-x30-2.jpg",
+   "images/poly-studio-x30-3.jpg",
+   "images/poly-studio-x30-4.jpg"
+  ]
+ },
+ {
+  "slug": "poly-studio-x50",
+  "nom": "Barre vidéo Poly Studio X50",
+  "marque": "Poly",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo tout-en-un 4K pour petites et moyennes salles.",
+  "description": "La Poly Studio X50 est une barre vidéo tout-en-un pour les petites et moyennes salles de réunion. Caméra 4K avec champ de vision diagonal de 121°, compatible Microsoft Teams, Zoom Rooms et Google Meet.",
+  "image": "images/poly-studio-x50.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Petites à moyennes"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "121° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams, Zoom Rooms, Google Meet"
+   }
+  ],
+  "ref": "Studio X50",
+  "reference_fabricant": "Studio X50",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tout-en-un",
+   "4K 121°"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/poly-studio-x50-2.jpg",
+   "images/poly-studio-x50-3.jpg",
+   "images/poly-studio-x50-4.jpg"
+  ]
+ },
+ {
+  "slug": "yealink-meetingbar-a20",
+  "nom": "Barre vidéo Yealink MeetingBar A20",
+  "marque": "Yealink",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo tout-en-un pour petites salles jusqu'à 7 utilisateurs, Teams et Zoom Rooms.",
+  "description": "La Yealink MeetingBar A20 est une barre vidéo tout-en-un pour les petites salles premium jusqu'à 7 utilisateurs. Caméra 20 MP avec champ de vision diagonal de 120°, compatible Microsoft Teams Rooms et Zoom Rooms.",
+  "image": "images/yealink-meetingbar-a20.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo tout-en-un"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Petites, jusqu'à 7 utilisateurs"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "20 MP"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "120° diagonal"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms"
+   }
+  ],
+  "ref": "MeetingBar A20",
+  "reference_fabricant": "MeetingBar A20",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Tout-en-un",
+   "Caméra 20 MP"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/yealink-meetingbar-a20-2.jpg",
+   "images/yealink-meetingbar-a20-3.jpg",
+   "images/yealink-meetingbar-a20-4.jpg"
+  ]
+ },
+ {
+  "slug": "yealink-meetingbar-a30",
+  "nom": "Barre vidéo Yealink MeetingBar A30",
+  "marque": "Yealink",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo double caméra 4K pour salles moyennes jusqu'à 15 utilisateurs.",
+  "description": "La Yealink MeetingBar A30 est une barre vidéo tout-en-un à double caméra 4K (grand-angle et téléobjectif) pour les salles moyennes jusqu'à 15 utilisateurs, compatible Microsoft Teams Rooms et Zoom Rooms.",
+  "image": "images/yealink-meetingbar-a30.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo double caméra"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Moyennes, jusqu'à 15 utilisateurs"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "4K double (grand-angle + téléobjectif)"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms"
+   }
+  ],
+  "ref": "MeetingBar A30",
+  "reference_fabricant": "MeetingBar A30",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Double caméra 4K",
+   "Salles moyennes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/yealink-meetingbar-a30-2.jpg",
+   "images/yealink-meetingbar-a30-3.jpg",
+   "images/yealink-meetingbar-a30-4.jpg"
+  ]
+ },
+ {
+  "slug": "jabra-panacast-50",
+  "nom": "Barre vidéo Jabra PanaCast 50",
+  "marque": "Jabra",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre vidéo panoramique 180° pour petites et moyennes salles, Teams et Zoom Rooms.",
+  "description": "La Jabra PanaCast 50 est une barre vidéo panoramique tout-en-un pour les petites et moyennes salles. Vue panoramique 180° en 3840 × 1080, compatible Microsoft Teams Rooms et Zoom Rooms.",
+  "image": "images/jabra-panacast-50.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre vidéo panoramique"
+   },
+   {
+    "label": "Salle",
+    "valeur": "Petites à moyennes"
+   },
+   {
+    "label": "Caméra",
+    "valeur": "Panoramique 180°, 3840 × 1080"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms"
+   }
+  ],
+  "ref": "PanaCast 50",
+  "reference_fabricant": "PanaCast 50",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Panoramique 180°",
+   "Tout-en-un"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/jabra-panacast-50-2.jpg",
+   "images/jabra-panacast-50-3.jpg",
+   "images/jabra-panacast-50-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-wd-blue-sn580",
+  "nom": "SSD WD Blue SN580",
+  "marque": "WD",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe Gen4 : jusqu'à 4 150 Mo/s en lecture, 250 Go à 2 To.",
+  "description": "Le WD Blue SN580 est un SSD M.2 2280 NVMe PCIe Gen4 pour PC et portables, de 250 Go à 2 To. Vitesses séquentielles jusqu'à 4 150 Mo/s en lecture (1 To et 2 To). Choisissez la capacité dans les options.",
+  "image": "images/ssd-wd-blue-sn580.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe Gen4 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "4 150 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "250 Go, 500 Go, 1 To, 2 To"
+   }
+  ],
+  "ref": "SN580",
+  "reference_fabricant": "SN580",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "PCIe Gen4",
+   "4 150 Mo/s en lecture"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "250 Go",
+    "ref": null
+   },
+   {
+    "nom": "500 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-wd-blue-sn580-2.jpg",
+   "images/ssd-wd-blue-sn580-3.jpg",
+   "images/ssd-wd-blue-sn580-4.jpg"
+  ]
+ },
+ {
+  "slug": "huawei-ideahub-s2",
+  "nom": "Écran collaboratif Huawei IdeaHub S2",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Écrans",
+  "famille": "Informatique",
+  "accroche": "Écran interactif 4K tout-en-un 65, 75 ou 86 pouces pour salles de réunion.",
+  "description": "Le Huawei IdeaHub S2 est un écran interactif tout-en-un 4K (3840 × 2160) pour les salles de réunion, disponible en 65, 75 et 86 pouces. Il intègre la visioconférence et le tableau blanc collaboratif, avec les applications Huawei Cloud Meeting et WeLink et le mode BYOM (apportez votre réunion).",
+  "image": "images/huawei-ideahub-s2.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Écran interactif tout-en-un"
+   },
+   {
+    "label": "Tailles",
+    "valeur": "65″, 75″, 86″"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "4K 3840 × 2160"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Huawei Cloud Meeting, WeLink, BYOM"
+   }
+  ],
+  "ref": "IdeaHub S2",
+  "reference_fabricant": "IdeaHub S2",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4K interactif",
+   "3 tailles",
+   "Visioconférence intégrée"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/huawei-ideahub-s2-2.jpg",
+   "images/huawei-ideahub-s2-3.jpg",
+   "images/huawei-ideahub-s2-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksmart-core",
+  "nom": "Unité de salle Lenovo ThinkSmart Core",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Unité de calcul Teams Rooms avec contrôleur tactile 10,1 pouces.",
+  "description": "Le Lenovo ThinkSmart Core est l'unité de calcul pour salle de réunion Microsoft Teams Rooms, livrée avec un contrôleur tactile de 10,1 pouces (1280 × 800). Il se combine avec des barres vidéo et caméras compatibles pour équiper une salle Teams complète.",
+  "image": "images/lenovo-thinksmart-core.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Unité de calcul salle de réunion"
+   },
+   {
+    "label": "Contrôleur",
+    "valeur": "Tactile 10,1″ 1280 × 800"
+   },
+   {
+    "label": "Plateforme",
+    "valeur": "Microsoft Teams Rooms"
+   }
+  ],
+  "ref": "ThinkSmart Core",
+  "reference_fabricant": "ThinkSmart Core",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Teams Rooms certifié",
+   "Contrôleur tactile inclus"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksmart-core-2.jpg",
+   "images/lenovo-thinksmart-core-3.jpg",
+   "images/lenovo-thinksmart-core-4.jpg"
+  ]
+ },
+ {
+  "slug": "lenovo-thinksmart-bar",
+  "nom": "Barre de son Lenovo ThinkSmart Bar",
+  "marque": "Lenovo",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Barre de son de conférence certifiée Teams Rooms et Zoom Rooms.",
+  "description": "La Lenovo ThinkSmart Bar est une barre de son de conférence pour salles de réunion, certifiée Microsoft Teams Rooms et Zoom Rooms. Elle assure la capture et la restitution audio de la salle et se combine avec une caméra et une unité de salle compatibles.",
+  "image": "images/lenovo-thinksmart-bar.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Barre de son de conférence"
+   },
+   {
+    "label": "Plateformes",
+    "valeur": "Teams Rooms, Zoom Rooms"
+   }
+  ],
+  "ref": "ThinkSmart Bar",
+  "reference_fabricant": "ThinkSmart Bar",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Audio de salle",
+   "Certifiée Teams/Zoom"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/lenovo-thinksmart-bar-2.jpg",
+   "images/lenovo-thinksmart-bar-3.jpg",
+   "images/lenovo-thinksmart-bar-4.jpg"
+  ]
+ },
+ {
+  "slug": "axis-m1075-l",
+  "nom": "Caméra Axis M1075-L",
+  "marque": "Axis",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Caméra boîtier Full HD intérieure, champ de vision horizontal 103°.",
+  "description": "L'Axis M1075-L est une caméra réseau boîtier Full HD (1920 × 1080) pour l'intérieur, avec un champ de vision horizontal de 103°. Elle convient à la surveillance de bureaux, commerces et locaux techniques.",
+  "image": "images/axis-m1075-l.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra boîtier"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "1920 × 1080"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Intérieur"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "103° horizontal"
+   }
+  ],
+  "ref": "M1075-L",
+  "reference_fabricant": "M1075-L",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Full HD",
+   "Grand angle 103°"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/axis-m1075-l-2.jpg",
+   "images/axis-m1075-l-3.jpg"
+  ]
+ },
+ {
+  "slug": "axis-p3265-lve",
+  "nom": "Caméra dôme Axis P3265-LVE",
+  "marque": "Axis",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Caméra dôme Full HD extérieure, optique varifocale 9 mm ou 22 mm.",
+  "description": "L'Axis P3265-LVE est une caméra dôme réseau Full HD (1920 × 1080) pour l'extérieur, avec optique varifocale (versions 9 mm et 22 mm) pour ajuster le champ de vision à la zone surveillée.",
+  "image": "images/axis-p3265-lve.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra dôme"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "1920 × 1080"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Extérieur"
+   },
+   {
+    "label": "Optique",
+    "valeur": "Varifocale 9 mm ou 22 mm"
+   }
+  ],
+  "ref": "P3265-LVE",
+  "reference_fabricant": "P3265-LVE",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Extérieur",
+   "Varifocale"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/axis-p3265-lve-2.jpg",
+   "images/axis-p3265-lve-3.jpg",
+   "images/axis-p3265-lve-4.jpg"
+  ]
+ },
+ {
+  "slug": "axis-p3245-v",
+  "nom": "Caméra dôme Axis P3245-V",
+  "marque": "Axis",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Caméra dôme fixe Full HD intérieure, champ de vision ajustable.",
+  "description": "L'Axis P3245-V est une caméra dôme fixe Full HD (1920 × 1080) pour l'intérieur, avec un champ de vision horizontal ajustable de 100° à 36° selon le réglage optique.",
+  "image": "images/axis-p3245-v.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra dôme fixe"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "1920 × 1080"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Intérieur"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "100° à 36° horizontal"
+   }
+  ],
+  "ref": "P3245-V",
+  "reference_fabricant": "P3245-V",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Full HD",
+   "Dôme intérieur"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/axis-p3245-v-2.jpg",
+   "images/axis-p3245-v-3.jpg",
+   "images/axis-p3245-v-4.jpg"
+  ]
+ },
+ {
+  "slug": "axis-q1656",
+  "nom": "Caméra Axis Q1656",
+  "marque": "Axis",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Réseau & câbles",
+  "accroche": "Caméra boîtier 2688 × 1512, champ de vision horizontal jusqu'à 120°.",
+  "description": "L'Axis Q1656 est une caméra réseau boîtier haute résolution (2688 × 1512) avec un champ de vision horizontal de 120° à 47° selon le réglage optique, pour la surveillance détaillée de grandes zones.",
+  "image": "images/axis-q1656.jpg",
+  "specs": [
+   {
+    "label": "Type",
+    "valeur": "Caméra boîtier"
+   },
+   {
+    "label": "Résolution",
+    "valeur": "2688 × 1512"
+   },
+   {
+    "label": "Champ de vision",
+    "valeur": "120° à 47° horizontal"
+   }
+  ],
+  "ref": "Q1656",
+  "reference_fabricant": "Q1656",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Haute résolution",
+   "Grand angle"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/axis-q1656-2.jpg",
+   "images/axis-q1656-3.jpg",
+   "images/axis-q1656-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-samsung-pm893",
+  "nom": "SSD serveur Samsung PM893",
+  "marque": "Samsung",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD SATA datacenter 2,5 pouces : 240 Go à 7,68 To, 550 Mo/s en lecture.",
+  "description": "Le Samsung PM893 est un SSD SATA 6 Gbps au format 2,5 pouces pour serveurs et datacenters, de 240 Go à 7,68 To. Vitesses séquentielles jusqu'à 550 Mo/s en lecture et 520 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-samsung-pm893.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ SATA"
+   },
+   {
+    "label": "Interface",
+    "valeur": "SATA 6 Gbps"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "550 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "520 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "240 Go à 7,68 To"
+   }
+  ],
+  "ref": "PM893",
+  "reference_fabricant": "PM893",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Datacenter",
+   "Jusqu'à 7,68 To"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "240 Go",
+    "ref": null
+   },
+   {
+    "nom": "480 Go",
+    "ref": null
+   },
+   {
+    "nom": "960 Go",
+    "ref": null
+   },
+   {
+    "nom": "1,92 To",
+    "ref": null
+   },
+   {
+    "nom": "3,84 To",
+    "ref": null
+   },
+   {
+    "nom": "7,68 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-samsung-pm893-2.jpg",
+   "images/ssd-samsung-pm893-3.jpg",
+   "images/ssd-samsung-pm893-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-samsung-pm9a3",
+  "nom": "SSD serveur Samsung PM9A3",
+  "marque": "Samsung",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe Gen4 U.2 : 6 900 Mo/s en lecture, 960 Go à 7,68 To.",
+  "description": "Le Samsung PM9A3 est un SSD NVMe PCIe Gen4 x4 au format 2,5 pouces U.2 pour serveurs, de 960 Go à 7,68 To. Vitesses séquentielles jusqu'à 6 900 Mo/s en lecture et 4 100 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-samsung-pm9a3.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ U.2 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe Gen4 x4"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "6 900 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "4 100 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "960 Go à 7,68 To"
+   }
+  ],
+  "ref": "PM9A3",
+  "reference_fabricant": "PM9A3",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "NVMe Gen4",
+   "Serveurs"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "960 Go",
+    "ref": null
+   },
+   {
+    "nom": "1,92 To",
+    "ref": null
+   },
+   {
+    "nom": "3,84 To",
+    "ref": null
+   },
+   {
+    "nom": "7,68 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-samsung-pm9a3-2.jpg",
+   "images/ssd-samsung-pm9a3-3.jpg",
+   "images/ssd-samsung-pm9a3-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-micron-5400-pro",
+  "nom": "SSD serveur Micron 5400 PRO",
+  "marque": "Micron",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD SATA datacenter : 240 Go à 7,68 To pour serveurs.",
+  "description": "Le Micron 5400 PRO est un SSD SATA pour datacenters et serveurs, de 240 Go à 7,68 To, conçu pour les charges de lecture intensive. Choisissez la capacité dans les options.",
+  "image": "images/ssd-micron-5400-pro.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "SATA"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "240 Go à 7,68 To"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Datacenter, lecture intensive"
+   }
+  ],
+  "ref": "5400 PRO",
+  "reference_fabricant": "5400 PRO",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Datacenter",
+   "Jusqu'à 7,68 To"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "240 Go",
+    "ref": null
+   },
+   {
+    "nom": "480 Go",
+    "ref": null
+   },
+   {
+    "nom": "960 Go",
+    "ref": null
+   },
+   {
+    "nom": "1,92 To",
+    "ref": null
+   },
+   {
+    "nom": "3,84 To",
+    "ref": null
+   },
+   {
+    "nom": "7,68 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-micron-5400-pro-2.jpg",
+   "images/ssd-micron-5400-pro-3.jpg",
+   "images/ssd-micron-5400-pro-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-micron-7450-pro",
+  "nom": "SSD serveur Micron 7450 PRO",
+  "marque": "Micron",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe Gen4 datacenter, formats E1.S et M.2.",
+  "description": "Le Micron 7450 PRO est un SSD NVMe PCIe Gen4 pour datacenters, disponible en formats E1.S et M.2 selon les configurations serveur. Précisez le format et la capacité souhaités.",
+  "image": "images/ssd-micron-7450-pro.jpg",
+  "specs": [
+   {
+    "label": "Interface",
+    "valeur": "PCIe Gen4 NVMe"
+   },
+   {
+    "label": "Formats",
+    "valeur": "E1.S, M.2"
+   },
+   {
+    "label": "Usage",
+    "valeur": "Datacenter"
+   }
+  ],
+  "ref": "7450 PRO",
+  "reference_fabricant": "7450 PRO",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "NVMe Gen4",
+   "Datacenter"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/ssd-micron-7450-pro-2.jpg",
+   "images/ssd-micron-7450-pro-3.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-kioxia-cd8",
+  "nom": "SSD serveur Kioxia CD8",
+  "marque": "Kioxia",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 2,5 pouces : 7 200 Mo/s en lecture, jusqu'à 15,36 To.",
+  "description": "Le Kioxia CD8 est un SSD NVMe PCIe 4.0 au format 2,5 pouces 15 mm pour serveurs, en versions lecture intensive (CD8-R, 960 Go à 15,36 To) et mixte (CD8-V, 800 Go à 12,8 To). Vitesses séquentielles jusqu'à 7 200 Mo/s en lecture et 6 000 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-kioxia-cd8.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "2,5″ 15 mm NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe 4.0 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 200 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "6 000 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "960 Go à 15,36 To"
+   }
+  ],
+  "ref": "CD8",
+  "reference_fabricant": "CD8",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "NVMe Gen4",
+   "Jusqu'à 15,36 To"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "960 Go",
+    "ref": null
+   },
+   {
+    "nom": "1,92 To",
+    "ref": null
+   },
+   {
+    "nom": "3,84 To",
+    "ref": null
+   },
+   {
+    "nom": "7,68 To",
+    "ref": null
+   },
+   {
+    "nom": "15,36 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-kioxia-cd8-2.jpg",
+   "images/ssd-kioxia-cd8-3.jpg",
+   "images/ssd-kioxia-cd8-4.jpg"
+  ]
+ },
+ {
+  "slug": "ssd-kioxia-xg8",
+  "nom": "SSD Kioxia XG8",
+  "marque": "Kioxia",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage",
+  "famille": "Informatique",
+  "accroche": "SSD NVMe PCIe 4.0 M.2 : 7 000 Mo/s en lecture, 512 Go à 4 To.",
+  "description": "Le Kioxia XG8 est un SSD M.2 2280 NVMe PCIe 4.0 de 512 Go à 4 To. Vitesses séquentielles jusqu'à 7 000 Mo/s en lecture et 5 800 Mo/s en écriture. Choisissez la capacité dans les options.",
+  "image": "images/ssd-kioxia-xg8.jpg",
+  "specs": [
+   {
+    "label": "Format",
+    "valeur": "M.2 2280 NVMe"
+   },
+   {
+    "label": "Interface",
+    "valeur": "PCIe 4.0 NVMe"
+   },
+   {
+    "label": "Lecture max",
+    "valeur": "7 000 Mo/s"
+   },
+   {
+    "label": "Écriture max",
+    "valeur": "5 800 Mo/s"
+   }
+  ],
+  "ref": "XG8",
+  "reference_fabricant": "XG8",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "NVMe Gen4",
+   "7 000 Mo/s"
+  ],
+  "consommables": [],
+  "options": [
+   {
+    "nom": "512 Go",
+    "ref": null
+   },
+   {
+    "nom": "1 To",
+    "ref": null
+   },
+   {
+    "nom": "2 To",
+    "ref": null
+   },
+   {
+    "nom": "4 To",
+    "ref": null
+   }
+  ],
+  "ean": null,
+  "extras": [
+   "images/ssd-kioxia-xg8-2.jpg",
+   "images/ssd-kioxia-xg8-3.jpg",
+   "images/ssd-kioxia-xg8-4.jpg"
+  ]
+ },
+ {
+  "slug": "nas-synology-ds224-plus",
+  "nom": "NAS Synology DS224+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "NAS 2 baies pour sauvegarde et partage de fichiers des petites structures.",
+  "description": "Le Synology DS224+ est un NAS de bureau à 2 baies pour la sauvegarde, le partage de fichiers et les services multimédias des petites structures. Processeur Intel Celeron J4125 et 2 Go de mémoire DDR4 extensible à 6 Go.",
+  "image": "images/nas-synology-ds224-plus.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "2"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "Intel Celeron J4125"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "2 Go DDR4 (max 6 Go)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Bureau"
+   }
+  ],
+  "ref": "DS224+",
+  "reference_fabricant": "DS224+",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "2 baies",
+   "Sauvegarde et partage"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nas-synology-ds224-plus-2.jpg",
+   "images/nas-synology-ds224-plus-3.jpg",
+   "images/nas-synology-ds224-plus-4.jpg"
+  ]
+ },
+ {
+  "slug": "nas-synology-ds423-plus",
+  "nom": "NAS Synology DS423+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "NAS 4 baies + 2 emplacements M.2 NVMe pour PME et créateurs.",
+  "description": "Le Synology DS423+ est un NAS de bureau à 4 baies avec 2 emplacements M.2 NVMe pour le cache ou les pools de stockage. Processeur Intel Celeron J4125 et 2 Go de mémoire DDR4 extensible à 6 Go.",
+  "image": "images/nas-synology-ds423-plus.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "4 + 2 × M.2 NVMe"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "Intel Celeron J4125"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "2 Go DDR4 (max 6 Go)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Bureau"
+   }
+  ],
+  "ref": "DS423+",
+  "reference_fabricant": "DS423+",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4 baies + M.2",
+   "Cache NVMe"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nas-synology-ds423-plus-2.jpg",
+   "images/nas-synology-ds423-plus-3.jpg",
+   "images/nas-synology-ds423-plus-4.jpg"
+  ]
+ },
+ {
+  "slug": "nas-synology-rs1221-plus",
+  "nom": "NAS rack Synology RS1221+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "NAS rack 2U 8 baies, processeur AMD Ryzen, mémoire ECC jusqu'à 32 Go.",
+  "description": "Le Synology RS1221+ est un NAS rack 2U à 8 baies pour les PME. Processeur AMD Ryzen V1500B et 4 Go de mémoire DDR4 ECC extensible à 32 Go, pour la sauvegarde centralisée et la virtualisation légère.",
+  "image": "images/nas-synology-rs1221-plus.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "8"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen V1500B"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "4 Go DDR4 ECC (max 32 Go)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   }
+  ],
+  "ref": "RS1221+",
+  "reference_fabricant": "RS1221+",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "8 baies rack",
+   "Mémoire ECC"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nas-synology-rs1221-plus-2.jpg",
+   "images/nas-synology-rs1221-plus-3.jpg",
+   "images/nas-synology-rs1221-plus-4.jpg"
+  ]
+ },
+ {
+  "slug": "nas-synology-rs2423-plus",
+  "nom": "NAS rack Synology RS2423+",
+  "marque": "Synology",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Stockage / NAS",
+  "famille": "Informatique",
+  "accroche": "NAS rack 2U 12 baies, AMD Ryzen, mémoire ECC jusqu'à 32 Go.",
+  "description": "Le Synology RS2423+ est un NAS rack 2U à 12 baies pour les entreprises ayant de gros volumes de données. Processeur AMD Ryzen V1780B et 8 Go de mémoire DDR4 ECC extensible à 32 Go.",
+  "image": "images/nas-synology-rs2423-plus.jpg",
+  "specs": [
+   {
+    "label": "Baies",
+    "valeur": "12"
+   },
+   {
+    "label": "Processeur",
+    "valeur": "AMD Ryzen V1780B"
+   },
+   {
+    "label": "Mémoire",
+    "valeur": "8 Go DDR4 ECC (max 32 Go)"
+   },
+   {
+    "label": "Format",
+    "valeur": "Rack 2U"
+   }
+  ],
+  "ref": "RS2423+",
+  "reference_fabricant": "RS2423+",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "12 baies rack",
+   "Gros volumes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/nas-synology-rs2423-plus-2.jpg",
+   "images/nas-synology-rs2423-plus-3.jpg",
+   "images/nas-synology-rs2423-plus-4.jpg"
+  ]
  }
 ]
