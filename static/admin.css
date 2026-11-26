@@ -41,6 +41,40 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-kpi .lb{font-size:12px;color:#646970;text-transform:uppercase;letter-spacing:.04em}
 .mx-kpi .vl{font-size:24px;font-weight:800;margin-top:6px}
 .mx-empty{background:#fff;border:1px dashed #c3c4c7;border-radius:10px;padding:22px;color:#646970;text-align:center}
+/* ---------- Modules : en-tête, onglets, sections ---------- */
+.mx-pagehead{margin:2px 0 16px}
+.mx-pagehead h2{margin:0;font-size:20px;line-height:1.25;letter-spacing:-.01em}
+.mx-pagehead p{margin:4px 0 0;color:var(--mx-muted);font-size:13px;max-width:74ch}
+.mx-modtabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--mx-border);margin:0 0 20px;scrollbar-width:thin}
+.mx-main a.mx-modtab{flex:none;padding:9px 13px;font-size:13px;color:var(--mx-muted);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.mx-main a.mx-modtab:hover{color:var(--mx-ink)}
+.mx-main a.mx-modtab.on{color:var(--mx-ink);font-weight:600;border-bottom-color:var(--mx-lime-dark)}
+.mx-section{margin:0 0 24px}
+.mx-section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
+.mx-section-head h3{margin:0;font-size:14px;font-weight:700;letter-spacing:.01em}
+.mx-section-head .sub{margin:0;color:var(--mx-muted);font-size:12.5px;text-align:right}
+.mx-card{background:var(--mx-surface);border:1px solid var(--mx-border);border-radius:12px;overflow:hidden}
+.mx-card .mx-tablewrap{border:0;border-radius:0;box-shadow:none;background:transparent}
+.mx-card .mx-form{padding:16px}
+.mx-card-pad{padding:16px}
+/* Formulaires des modules : grille 2 colonnes, champs homogènes */
+.mx-card .mx-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;padding:18px}
+.mx-card .mx-form label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:600;color:#3c434a}
+.mx-card .mx-form label.full{grid-column:1/-1}
+.mx-card .mx-form input,.mx-card .mx-form select{width:100%;padding:8px 10px;border:1px solid var(--mx-border);border-radius:7px;font:inherit;background:#fff;color:var(--mx-ink)}
+.mx-card .mx-form input[type=file]{padding:6px}
+.mx-card .mx-form button{justify-self:start;align-self:end}
+@media(max-width:700px){
+  .mx-card .mx-form{grid-template-columns:1fr}
+  .mx-section-head{flex-direction:column;align-items:flex-start;gap:2px}
+  .mx-section-head .sub{text-align:left}
+}
+
+.mx-card .mx-empty{border:0;background:transparent;padding:36px 22px}
+.mx-table th{font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.mx-table th.num,.mx-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+.mx-empty-ic{width:44px;height:44px;border-radius:12px;background:#f0f2f5;color:var(--mx-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.mx-empty strong{display:block;color:var(--mx-ink);font-size:14px;margin-bottom:2px}
 /* ---------- Main + topbar ---------- */
 .mx-main{flex:1;min-width:0;display:flex;flex-direction:column}
 .mx-top{background:var(--mx-surface);border-bottom:1px solid var(--mx-border);padding:0 22px;height:56px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:40}

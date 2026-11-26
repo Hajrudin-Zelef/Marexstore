@@ -25,16 +25,27 @@ func (a *App) writeAdmin(w http.ResponseWriter, r *http.Request, title, active, 
 }
 
 func mxTable(headers []string, rows [][]string) string {
+	return mxTableAlign(headers, rows, "")
+}
+
+// mxTableAlign : align vaut "lrr" pour aligner les colonnes numériques à droite.
+func mxTableAlign(headers []string, rows [][]string, align string) string {
+	cell := func(i int) string {
+		if i < len(align) && align[i] == 'r' {
+			return ` class="num"`
+		}
+		return ""
+	}
 	var b strings.Builder
 	b.WriteString(`<div class="mx-tablewrap mx-table-scroll"><table class="mx-table"><thead><tr>`)
-	for _, h := range headers {
-		b.WriteString(`<th>` + render.Esc(h) + `</th>`)
+	for i, h := range headers {
+		b.WriteString(`<th` + cell(i) + `>` + render.Esc(h) + `</th>`)
 	}
 	b.WriteString(`</tr></thead><tbody>`)
 	for _, row := range rows {
 		b.WriteString(`<tr>`)
-		for _, c := range row {
-			b.WriteString(`<td>` + c + `</td>`)
+		for i, c := range row {
+			b.WriteString(`<td` + cell(i) + `>` + c + `</td>`)
 		}
 		b.WriteString(`</tr>`)
 	}
@@ -44,6 +55,125 @@ func mxTable(headers []string, rows [][]string) string {
 
 func mxEmpty(msg string) string {
 	return `<div class="mx-empty">` + render.Esc(msg) + `</div>`
+}
+
+// ---------- Structure des modules (en-tête, onglets, sections) ----------
+
+type mxTab struct{ Href, Label string }
+
+// mxTabs : barre d'onglets des sous-modules ; l'onglet courant est souligné.
+func mxTabs(tabs []mxTab, current string) string {
+	var b strings.Builder
+	b.WriteString(`<nav class="mx-modtabs" aria-label="Sous-modules">`)
+	for _, t := range tabs {
+		cls := "mx-modtab"
+		if t.Href == current {
+			cls += " on"
+		}
+		fmt.Fprintf(&b, `<a class="%s" href="%s">%s</a>`, cls, t.Href, render.Esc(t.Label))
+	}
+	b.WriteString(`</nav>`)
+	return b.String()
+}
+
+func mxPageHead(title, lead string) string {
+	h := `<div class="mx-pagehead"><h2>` + render.Esc(title) + `</h2>`
+	if lead != "" {
+		h += `<p>` + render.Esc(lead) + `</p>`
+	}
+	return h + `</div>`
+}
+
+func mxSection(head, sub, body string) string {
+	h := `<section class="mx-section"><div class="mx-section-head"><h3>` + render.Esc(head) + `</h3>`
+	if sub != "" {
+		h += `<p class="sub">` + render.Esc(sub) + `</p>`
+	}
+	return h + `</div>` + body + `</section>`
+}
+
+func mxCard(body string) string {
+	return `<div class="mx-card">` + body + `</div>`
+}
+
+const mxIcoInfo = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>`
+
+func mxEmptyState(title, text string) string {
+	return `<div class="mx-empty"><div class="mx-empty-ic">` + mxIcoInfo + `</div><strong>` + render.Esc(title) + `</strong>` + render.Esc(text) + `</div>`
+}
+
+// Onglets par module.
+func tabsProduits() []mxTab {
+	return []mxTab{
+		{"/admin/produits", "Tous les produits"},
+		{"/admin/produits/nouveau", "Ajouter"},
+		{"/admin/produits/marques", "Marques"},
+		{"/admin/types", "Catégories"},
+		{"/admin/produits/etiquettes", "Étiquettes"},
+		{"/admin/produits/attributs", "Attributs"},
+		{"/admin/produits/avis", "Avis"},
+	}
+}
+
+func tabsStats() []mxTab {
+	return []mxTab{
+		{"/admin/stats", "Vue d'ensemble"},
+		{"/admin/stats?vue=produits", "Produits"},
+		{"/admin/stats?vue=revenu", "Revenu"},
+		{"/admin/stats?vue=commandes", "Commandes"},
+		{"/admin/stats?vue=variations", "Variations"},
+		{"/admin/stats?vue=categories", "Catégories"},
+		{"/admin/stats?vue=promos", "Codes promo"},
+		{"/admin/stats?vue=taxes", "Taxes"},
+		{"/admin/stats?vue=telechargements", "Téléchargements"},
+		{"/admin/stats?vue=stock", "Stock"},
+	}
+}
+
+func tabsMarketing() []mxTab {
+	return []mxTab{
+		{"/admin/marketing", "Vue d'ensemble"},
+		{"/admin/marketing/promos", "Codes promo"},
+	}
+}
+
+func tabsOutils() []mxTab {
+	return []mxTab{
+		{"/admin/outils", "Outils disponibles"},
+		{"/admin/outils?vue=importer", "Importer"},
+		{"/admin/outils?vue=exporter", "Exporter"},
+		{"/admin/outils?vue=redirections", "Redirections"},
+	}
+}
+
+// Libellés lisibles pour les valeurs techniques des commandes.
+var mxStatutLabels = map[string]string{
+	"devis": "Devis", "whatsapp_recu": "WhatsApp reçu", "attente_momo": "Attente MoMo",
+	"paye": "Payé", "prepare": "Préparé", "livre": "Livré", "annule": "Annulé",
+}
+var mxPaiementLabels = map[string]string{
+	"whatsapp": "WhatsApp", "momo": "Mobile Money", "cash": "Espèces",
+	"wave": "Wave", "virement": "Virement", "carte": "Carte bancaire",
+}
+
+func mxLabel(m map[string]string, v string) string {
+	if lb, ok := m[v]; ok {
+		return lb
+	}
+	return v
+}
+
+// mxDate : "2026-11-16 18:10:52" -> "16/11/2026 18:10" ; "2026-12-31" -> "31/12/2026".
+func mxDate(s string) string {
+	s = strings.TrimSpace(s)
+	if len(s) >= 10 && s[4] == '-' && s[7] == '-' {
+		out := s[8:10] + "/" + s[5:7] + "/" + s[0:4]
+		if len(s) >= 16 && s[10] == ' ' {
+			out += " " + s[11:16]
+		}
+		return out
+	}
+	return s
 }
 
 // ---------- Produits > Marques ----------
@@ -80,8 +210,11 @@ func (a *App) AdminMarques(w http.ResponseWriter, r *http.Request) {
 			strconv.Itoa(b.n),
 		})
 	}
-	inner := `<p>` + strconv.Itoa(len(brands)) + ` marques dans le catalogue.</p>` + mxTable([]string{"Logo", "Marque", "Produits"}, rows)
-	a.writeAdmin(w, r, "Marques", "produits/marques", inner)
+	lead := fmt.Sprintf("%d marques référencées dans le catalogue.", len(brands))
+	inner := mxPageHead("Marques", lead) +
+		mxTabs(tabsProduits(), "/admin/produits/marques") +
+		mxSection("Répartition par marque", "Produits publiés par marque", mxCard(mxTableAlign([]string{"Logo", "Marque", "Produits"}, rows, "llr")))
+	a.writeAdmin(w, r, "Produits", "produits/marques", inner)
 }
 
 // ---------- Produits > Étiquettes ----------
@@ -117,8 +250,10 @@ func (a *App) AdminEtiquettes(w http.ResponseWriter, r *http.Request) {
 			strconv.Itoa(t.n),
 		})
 	}
-	inner := `<p>Les étiquettes correspondent aux types d'équipement du catalogue.</p>` + mxTable([]string{"Étiquette", "Produits"}, rows)
-	a.writeAdmin(w, r, "Étiquettes", "produits/etiquettes", inner)
+	inner := mxPageHead("Étiquettes", "Les étiquettes correspondent aux types d'équipement du catalogue.") +
+		mxTabs(tabsProduits(), "/admin/produits/etiquettes") +
+		mxSection("Types d'équipement", fmt.Sprintf("%d étiquettes", len(tags)), mxCard(mxTableAlign([]string{"Étiquette", "Produits"}, rows, "lr")))
+	a.writeAdmin(w, r, "Produits", "produits/etiquettes", inner)
 }
 
 // ---------- Produits > Attributs ----------
@@ -159,8 +294,10 @@ func (a *App) AdminAttributs(w http.ResponseWriter, r *http.Request) {
 	for _, at := range attrs {
 		rows = append(rows, []string{render.Esc(at.k), strconv.Itoa(at.n), strconv.Itoa(len(vals[at.k]))})
 	}
-	inner := `<p>Les attributs sont les caractéristiques présentes sur les fiches produits.</p>` + mxTable([]string{"Attribut", "Produits", "Valeurs distinctes"}, rows)
-	a.writeAdmin(w, r, "Attributs", "produits/attributs", inner)
+	inner := mxPageHead("Attributs", "Les attributs sont les caractéristiques présentes sur les fiches produits.") +
+		mxTabs(tabsProduits(), "/admin/produits/attributs") +
+		mxSection("Caractéristiques produit", fmt.Sprintf("%d attributs", len(attrs)), mxCard(mxTableAlign([]string{"Attribut", "Produits", "Valeurs distinctes"}, rows, "lrr")))
+	a.writeAdmin(w, r, "Produits", "produits/attributs", inner)
 }
 
 // ---------- Produits > Avis ----------
@@ -169,8 +306,10 @@ func (a *App) AdminAvis(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
 		return
 	}
-	inner := mxEmpty("Aucun avis pour le moment. Les avis clients ne sont pas encore activés sur la boutique.")
-	a.writeAdmin(w, r, "Avis", "produits/avis", inner)
+	inner := mxPageHead("Avis", "Les avis clients seront affichés ici une fois activés.") +
+		mxTabs(tabsProduits(), "/admin/produits/avis") +
+		mxCard(mxEmptyState("Aucun avis pour le moment", "Les avis clients ne sont pas encore activés sur la boutique."))
+	a.writeAdmin(w, r, "Produits", "produits/avis", inner)
 }
 
 // ---------- Statistiques ----------
@@ -236,8 +375,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune vente pour le moment."))
 		} else {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Top produits vendus</h3>`)
-			inner.WriteString(mxTable([]string{"Produit", "Quantité vendue", "Revenu"}, tr))
+			inner.WriteString(mxSection("Top produits vendus", "20 premiers par quantité", mxCard(mxTableAlign([]string{"Produit", "Quantité vendue", "Revenu"}, tr, "lrr"))))
 		}
 	case "revenu":
 		revTotal := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut<>'annule'`)
@@ -262,8 +400,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune commande pour le moment."))
 		} else {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Revenu par mois</h3>`)
-			inner.WriteString(mxTable([]string{"Mois", "Commandes", "Revenu"}, tr))
+			inner.WriteString(mxSection("Revenu par mois", "24 derniers mois", mxCard(mxTableAlign([]string{"Mois", "Commandes", "Revenu"}, tr, "lrr"))))
 		}
 	case "commandes":
 		cmdsTotal := a.statInt(`SELECT COUNT(*) FROM orders`)
@@ -284,14 +421,13 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				var st string
 				var n, rev int64
 				_ = rows.Scan(&st, &n, &rev)
-				tr = append(tr, []string{render.Esc(st), strconv.FormatInt(n, 10), fcfa(rev)})
+				tr = append(tr, []string{render.Esc(mxLabel(mxStatutLabels, st)), strconv.FormatInt(n, 10), fcfa(rev)})
 			}
 		}
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune commande pour le moment."))
 		} else {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Par statut</h3>`)
-			inner.WriteString(mxTable([]string{"Statut", "Commandes", "Montant"}, tr))
+			inner.WriteString(mxSection("Par statut", "Répartition des commandes", mxCard(mxTableAlign([]string{"Statut", "Commandes", "Montant"}, tr, "lrr"))))
 		}
 		prows, perr := a.DB.Query(`SELECT moyen_paiement, COUNT(*), COALESCE(SUM(total),0) FROM orders GROUP BY moyen_paiement ORDER BY COUNT(*) DESC`)
 		var ptr [][]string
@@ -301,12 +437,11 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				var moy string
 				var n, rev int64
 				_ = prows.Scan(&moy, &n, &rev)
-				ptr = append(ptr, []string{render.Esc(moy), strconv.FormatInt(n, 10), fcfa(rev)})
+				ptr = append(ptr, []string{render.Esc(mxLabel(mxPaiementLabels, moy)), strconv.FormatInt(n, 10), fcfa(rev)})
 			}
 		}
 		if len(ptr) > 0 {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Par moyen de paiement</h3>`)
-			inner.WriteString(mxTable([]string{"Moyen de paiement", "Commandes", "Montant"}, ptr))
+			inner.WriteString(mxSection("Par moyen de paiement", "Volume et montant par canal", mxCard(mxTableAlign([]string{"Moyen de paiement", "Commandes", "Montant"}, ptr, "lrr"))))
 		}
 		orows, oerr := a.DB.Query(`SELECT id, created_at, statut, COALESCE(total,0), moyen_paiement FROM orders ORDER BY id DESC LIMIT 8`)
 		var otr [][]string
@@ -318,13 +453,12 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				_ = orows.Scan(&id, &date, &st, &total, &moy)
 				otr = append(otr, []string{
 					`<a href="/admin/commandes/` + strconv.FormatInt(id, 10) + `">#` + strconv.FormatInt(id, 10) + `</a>`,
-					render.Esc(date), render.Esc(st), fcfa(total), render.Esc(moy),
+					render.Esc(mxDate(date)), render.Esc(mxLabel(mxStatutLabels, st)), fcfa(total), render.Esc(mxLabel(mxPaiementLabels, moy)),
 				})
 			}
 		}
 		if len(otr) > 0 {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Dernières commandes</h3>`)
-			inner.WriteString(mxTable([]string{"Commande", "Date", "Statut", "Montant", "Paiement"}, otr))
+			inner.WriteString(mxSection("Dernières commandes", "8 commandes les plus récentes", mxCard(mxTableAlign([]string{"Commande", "Date", "Statut", "Montant", "Paiement"}, otr, "lllrl"))))
 		}
 	case "categories":
 		nbCats := a.statInt(`SELECT COUNT(DISTINCT main) FROM products`)
@@ -351,8 +485,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune catégorie dans le catalogue."))
 		} else {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Catalogue et ventes par catégorie</h3>`)
-			inner.WriteString(mxTable([]string{"Catégorie", "Produits", "En stock", "Quantité vendue", "Revenu"}, tr))
+			inner.WriteString(mxSection("Catalogue et ventes par catégorie", "Produits publiés et volumes vendus", mxCard(mxTableAlign([]string{"Catégorie", "Produits", "En stock", "Quantité vendue", "Revenu"}, tr, "lrrrr"))))
 		}
 		srows, serr := a.DB.Query(`SELECT main, sub, COUNT(*) FROM products GROUP BY main, sub ORDER BY main, COUNT(*) DESC`)
 		var str [][]string
@@ -366,8 +499,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		if len(str) > 0 {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Répartition par type</h3>`)
-			inner.WriteString(mxTable([]string{"Catégorie", "Type", "Produits"}, str))
+			inner.WriteString(mxSection("Répartition par type", "Sous-catégories du catalogue", mxCard(mxTableAlign([]string{"Catégorie", "Type", "Produits"}, str, "llr"))))
 		}
 	case "stock":
 		enStock := a.statInt(`SELECT COUNT(*) FROM products WHERE dispo='en stock'`)
@@ -398,8 +530,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucun produit en rupture ni en stock faible."))
 		} else {
-			inner.WriteString(`<h3 style="margin:22px 0 10px">Produits à surveiller</h3>`)
-			inner.WriteString(mxTable([]string{"Produit", "Disponibilité", "Stock"}, tr))
+			inner.WriteString(mxSection("Produits à surveiller", "Ruptures et stocks faibles", mxCard(mxTableAlign([]string{"Produit", "Disponibilité", "Stock"}, tr, "lrl"))))
 		}
 	case "variations":
 		nbOpts, nbProds := 0, 0
@@ -426,7 +557,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(vtr) == 0 {
 			inner.WriteString(mxEmpty("Aucun produit avec options."))
 		} else {
-			inner.WriteString(mxTable([]string{"Produit", "Options", "Valeurs"}, vtr))
+			inner.WriteString(mxSection("Options par produit", "Capacités et variantes affichées sur les fiches", mxCard(mxTableAlign([]string{"Produit", "Options", "Valeurs"}, vtr, "lrl"))))
 		}
 	case "promos":
 		a.ensurePromos()
@@ -460,6 +591,8 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				}
 				if exp == "" {
 					exp = "—"
+				} else {
+					exp = mxDate(exp)
 				}
 				etat := "Actif"
 				if actif == 0 {
@@ -474,7 +607,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(ptr) == 0 {
 			inner.WriteString(mxEmpty("Aucun code promo créé."))
 		} else {
-			inner.WriteString(mxTable([]string{"Code", "Valeur", "Usage / Limite", "Expiration", "État"}, ptr))
+			inner.WriteString(mxSection("Codes promo", "État et utilisation", mxCard(mxTableAlign([]string{"Code", "Valeur", "Usage / Limite", "Expiration", "État"}, ptr, "lrlll"))))
 		}
 	case "taxes":
 		inner.WriteString(`<div class="mx-kpis">`)
@@ -505,7 +638,33 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxEmpty("Aucune donnée pour la période : aucune commande enregistrée."))
 		}
 	}
-	a.writeAdmin(w, r, "Statistiques", "stats", inner.String())
+	labels := map[string]string{
+		"": "Vue d'ensemble", "produits": "Produits", "revenu": "Revenu",
+		"commandes": "Commandes", "variations": "Variations", "categories": "Catégories",
+		"promos": "Codes promo", "taxes": "Taxes", "telechargements": "Téléchargements", "stock": "Stock",
+	}
+	leads := map[string]string{
+		"":                "Chiffre d'affaires, commandes et volume de produits en un coup d'œil.",
+		"produits":        "Classement des produits les plus vendus.",
+		"revenu":          "Revenu total, revenu du mois et panier moyen, puis détail par mois.",
+		"commandes":       "Volume, montant et suivi des commandes par statut et par paiement.",
+		"variations":      "Options proposées sur les fiches produits.",
+		"categories":      "Catalogue et ventes par catégorie, puis répartition par type.",
+		"promos":          "Codes promo créés et leur état d'utilisation.",
+		"taxes":           "Configuration fiscale appliquée à la boutique.",
+		"telechargements": "Produits numériques et téléchargements.",
+		"stock":           "Disponibilité et niveaux de stock à surveiller.",
+	}
+	label, lead := labels[vue], leads[vue]
+	if label == "" {
+		label, lead = "Vue d'ensemble", leads[""]
+	}
+	cur := "/admin/stats"
+	if vue != "" {
+		cur += "?vue=" + vue
+	}
+	full := mxPageHead(label, lead) + mxTabs(tabsStats(), cur) + inner.String()
+	a.writeAdmin(w, r, "Statistiques", "stats", full)
 }
 
 // ---------- Marketing ----------
@@ -520,8 +679,10 @@ func (a *App) AdminMarketing(w http.ResponseWriter, r *http.Request) {
 	}
 	a.ensurePromos()
 	n := a.statInt(`SELECT COUNT(*) FROM promos WHERE actif=1`)
-	inner := `<div class="mx-kpis"><div class="mx-kpi"><div class="lb">Codes promo actifs</div><div class="vl">` + strconv.FormatInt(n, 10) + `</div></div></div>` +
-		`<p><a class="mx-btn" href="/admin/marketing/promos">Gérer les codes promo</a></p>`
+	inner := mxPageHead("Vue d'ensemble", "Codes promo et opérations marketing de la boutique.") +
+		mxTabs(tabsMarketing(), "/admin/marketing") +
+		`<div class="mx-kpis"><div class="mx-kpi" style="--mx-kpi:#00a32a"><div class="mx-kpi-ic">` + mxIcoInfo + `</div><div class="mx-kpi-tx"><h3 class="lb">Codes promo actifs</h3><div class="vl big">` + strconv.FormatInt(n, 10) + `</div></div></div></div>` +
+		mxSection("Codes promo", "Créer, suivre et supprimer les codes", mxCard(`<div class="mx-card-pad"><a class="mx-btn" href="/admin/marketing/promos">Gérer les codes promo</a><p style="color:#646970;margin:10px 0 0">Les codes ne sont pas encore appliqués au panier.</p></div>`))
 	a.writeAdmin(w, r, "Marketing", "marketing", inner)
 }
 
@@ -590,20 +751,22 @@ func (a *App) AdminPromos(w http.ResponseWriter, r *http.Request) {
 	}
 	csrf := a.adminCSRF()
 	var inner strings.Builder
-	inner.WriteString(`<form method="post" class="mx-form"><input type="hidden" name="csrf" value="` + render.Esc(csrf) + `"><input type="hidden" name="action" value="ajouter">
+	inner.WriteString(mxPageHead("Codes promo", "Créer une remise fixe ou en pourcentage, avec limite d'usage et date d'expiration."))
+	inner.WriteString(mxTabs(tabsMarketing(), "/admin/marketing/promos"))
+	inner.WriteString(mxSection("Nouveau code", "Un code existant est mis à jour s'il porte le même nom", mxCard(`<form method="post" class="mx-form"><input type="hidden" name="csrf" value="`+render.Esc(csrf)+`"><input type="hidden" name="action" value="ajouter">
 <label>Code <input name="code" required></label>
 <label>Type <select name="type"><option value="fixe">Remise panier fixe (F CFA)</option><option value="pourcentage">Remise en pourcentage (%)</option></select></label>
 <label>Valeur <input name="valeur" type="number" min="1" required></label>
-<label>Description <input name="description"></label>
 <label>Limite d'usage <input name="limite" type="number" min="0" placeholder="∞"></label>
+<label class="full">Description <input name="description"></label>
 <label>Date d'expiration <input name="expire" type="date"></label>
-<button class="mx-btn" type="submit">Ajouter le code</button></form>`)
+<button class="mx-btn" type="submit">Ajouter le code</button></form>`)))
 	if len(tr) == 0 {
-		inner.WriteString(mxEmpty("Aucun code promo."))
+		inner.WriteString(mxSection("Codes existants", "", mxCard(mxEmptyState("Aucun code promo", "Créez votre premier code avec le formulaire ci-dessus."))))
 	} else {
-		inner.WriteString(mxTable([]string{"Code", "Type de code promo", "Valeur du code promo", "Description", "Usage / Limite", "Date d'expiration", ""}, tr))
+		inner.WriteString(mxSection("Codes existants", fmt.Sprintf("%d codes", len(tr)), mxCard(mxTable([]string{"Code", "Type", "Valeur", "Description", "Usage / Limite", "Expiration", ""}, tr))))
 	}
-	a.writeAdmin(w, r, "Codes promo", "marketing/promos", inner.String())
+	a.writeAdmin(w, r, "Marketing", "marketing/promos", inner.String())
 }
 
 // ---------- Outils ----------
@@ -674,7 +837,8 @@ func (a *App) AdminOutils(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/admin/outils?vue=importer&msg="+strconv.Itoa(n)+"+produits+import%C3%A9s", http.StatusSeeOther)
 			return
 		}
-		inner.WriteString(`<form method="post" enctype="multipart/form-data" class="mx-form"><input type="hidden" name="csrf" value="` + render.Esc(a.adminCSRF()) + `"><label>Fichier JSON de produits <input type="file" name="fichier" accept=".json" required></label><button class="mx-btn" type="submit">Importer</button></form><p>Même format que les fichiers catalogue (liste de produits). Les produits existants sont mis à jour par slug.</p>`)
+		form := `<form method="post" enctype="multipart/form-data" class="mx-form"><input type="hidden" name="csrf" value="` + render.Esc(a.adminCSRF()) + `"><label>Fichier JSON de produits <input type="file" name="fichier" accept=".json" required></label><button class="mx-btn" type="submit">Importer</button></form>`
+		inner.WriteString(mxSection("Fichier JSON", "Même format que les fichiers catalogue (liste de produits)", mxCard(form+`<p style="padding:0 16px 16px;margin:0;color:#646970">Les produits existants sont mis à jour par slug ; les galeries gérées dans l'admin sont conservées.</p>`)))
 	case "exporter":
 		switch r.URL.Query().Get("format") {
 		case "produits-csv":
@@ -714,7 +878,8 @@ func (a *App) AdminOutils(w http.ResponseWriter, r *http.Request) {
 			_ = json.NewEncoder(w).Encode(a.Store.Products)
 			return
 		}
-		inner.WriteString(`<p><a class="mx-btn" href="/admin/outils?vue=exporter&format=produits-csv">Produits (CSV)</a> <a class="mx-btn" href="/admin/outils?vue=exporter&format=commandes-csv">Commandes (CSV)</a> <a class="mx-btn" href="/admin/outils?vue=exporter&format=catalogue-json">Catalogue (JSON)</a></p>`)
+		exp := `<div class="mx-card-pad"><a class="mx-btn" href="/admin/outils?vue=exporter&format=produits-csv">Produits (CSV)</a> <a class="mx-btn" href="/admin/outils?vue=exporter&format=commandes-csv">Commandes (CSV)</a> <a class="mx-btn" href="/admin/outils?vue=exporter&format=catalogue-json">Catalogue (JSON)</a><p style="margin:10px 0 0;color:#646970">Le CSV produits contient slug, nom, marque, catégorie, prix, disponibilité et référence. Le JSON reprend le catalogue complet.</p></div>`
+		inner.WriteString(mxSection("Exports disponibles", "Téléchargements immédiats", mxCard(exp)))
 	case "redirections":
 		if r.Method == http.MethodPost {
 			if !a.checkAdminCSRF(r) {
@@ -741,16 +906,33 @@ func (a *App) AdminOutils(w http.ResponseWriter, r *http.Request) {
 			tr = append(tr, []string{render.Esc(src), render.Esc(dst), "Personnalisée"})
 		}
 		sort.Slice(tr, func(i, j int) bool { return tr[i][0] < tr[j][0] })
-		inner.WriteString(`<form method="post" class="mx-form"><input type="hidden" name="csrf" value="` + render.Esc(a.adminCSRF()) + `"><label>Ancien slug <input name="source" required></label><label>Slug cible <input name="cible" required></label><button class="mx-btn" type="submit">Ajouter la redirection 301</button></form>`)
-		inner.WriteString(mxTable([]string{"Source", "Cible", "Origine"}, tr))
+		form := `<form method="post" class="mx-form"><input type="hidden" name="csrf" value="` + render.Esc(a.adminCSRF()) + `"><label>Ancien slug <input name="source" required></label><label>Slug cible <input name="cible" required></label><button class="mx-btn" type="submit">Ajouter la redirection 301</button></form>`
+		inner.WriteString(mxSection("Ajouter une redirection", "Les deux slugs sont normalisés automatiquement", mxCard(form)))
+		inner.WriteString(mxSection("Redirections actives", fmt.Sprintf("%d règles", len(tr)), mxCard(mxTable([]string{"Source", "Cible", "Origine"}, tr))))
 	default:
-		inner.WriteString(`<div class="mx-kpis">
-<div class="mx-kpi"><div class="lb">Importer</div><p>Ajouter ou mettre à jour des produits depuis un fichier JSON.</p><a class="mx-btn" href="/admin/outils?vue=importer">Ouvrir</a></div>
-<div class="mx-kpi"><div class="lb">Exporter</div><p>Produits et commandes en CSV, catalogue en JSON.</p><a class="mx-btn" href="/admin/outils?vue=exporter">Ouvrir</a></div>
-<div class="mx-kpi"><div class="lb">Redirections</div><p>Redirections 301 des anciennes fiches fusionnées.</p><a class="mx-btn" href="/admin/outils?vue=redirections">Ouvrir</a></div>
-</div>`)
+		inner.WriteString(mxSection("Modules", "Trois outils pour administrer le catalogue", `<div class="mx-kpis">
+<div class="mx-kpi"><div class="mx-kpi-tx"><h3 class="lb">Importer</h3><p style="margin:6px 0 12px;color:#646970">Ajouter ou mettre à jour des produits depuis un fichier JSON.</p><a class="mx-btn" href="/admin/outils?vue=importer">Ouvrir</a></div></div>
+<div class="mx-kpi"><div class="mx-kpi-tx"><h3 class="lb">Exporter</h3><p style="margin:6px 0 12px;color:#646970">Produits et commandes en CSV, catalogue en JSON.</p><a class="mx-btn" href="/admin/outils?vue=exporter">Ouvrir</a></div></div>
+<div class="mx-kpi"><div class="mx-kpi-tx"><h3 class="lb">Redirections</h3><p style="margin:6px 0 12px;color:#646970">Redirections 301 des anciennes fiches fusionnées.</p><a class="mx-btn" href="/admin/outils?vue=redirections">Ouvrir</a></div></div>
+</div>`))
 	}
-	a.writeAdmin(w, r, "Outils", "outils", inner.String())
+	labels := map[string]string{"": "Outils disponibles", "importer": "Importer", "exporter": "Exporter", "redirections": "Redirections"}
+	leads := map[string]string{
+		"":             "Importer, exporter et gérer les redirections du catalogue.",
+		"importer":     "Ajouter ou mettre à jour des produits depuis un fichier JSON.",
+		"exporter":     "Télécharger les produits, les commandes ou le catalogue complet.",
+		"redirections": "Rediriger les anciennes adresses vers les fiches actuelles.",
+	}
+	label, lead := labels[vue], leads[vue]
+	if label == "" {
+		label, lead = "Outils disponibles", leads[""]
+	}
+	cur := "/admin/outils"
+	if vue != "" {
+		cur += "?vue=" + vue
+	}
+	full := mxPageHead(label, lead) + mxTabs(tabsOutils(), cur) + inner.String()
+	a.writeAdmin(w, r, "Outils", "outils", full)
 }
 
 func (a *App) customRedirects() map[string]string {
