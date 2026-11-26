@@ -566,7 +566,12 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 					openAttr = " open"
 					opened = true
 				}
-				b.WriteString(`<details class="mx-acc-item"` + openAttr + `><summary><strong>` + render.Esc(k) + `</strong><span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` produits</span></summary>`)
+				prodLbl := "produits"
+				if len(rws) == 1 {
+					prodLbl = "produit"
+				}
+				col := mxStockGroupColor(k)
+				b.WriteString(`<details class="mx-acc-item"` + openAttr + `><summary>` + mxGroupTitle(k, col) + mxGroupCount(len(rws), col) + `<span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` ` + prodLbl + `</span></summary>`)
 				var tr [][]string
 				for _, rr := range rws {
 					tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(rr.slug) + `">` + render.Esc(rr.nom) + `</a>`, mxDispoBadge(rr.dispo), mxStockCell(rr.stock)})
@@ -995,7 +1000,27 @@ func mxCatBadge(s string) string {
 
 // mxCatTitle : titre de catégorie en grand, coloré (même couleur que la pastille).
 func mxCatTitle(s string) string {
-	return `<span class="mx-acc-cat" style="--bc:` + mxBadgeColor(s) + `">` + render.Esc(s) + `</span>`
+	return mxGroupTitle(s, mxBadgeColor(s))
+}
+
+// mxGroupTitle : titre de groupe en grand avec une couleur imposée.
+func mxGroupTitle(s, color string) string {
+	return `<span class="mx-acc-cat" style="--bc:` + color + `">` + render.Esc(s) + `</span>`
+}
+
+// mxGroupCount : badge compteur coloré d'un groupe.
+func mxGroupCount(n int, color string) string {
+	return `<span class="mx-cat-count" style="--bc:` + color + `">` + strconv.Itoa(n) + `</span>`
+}
+
+func mxStockGroupColor(k string) string {
+	switch k {
+	case "Rupture de stock":
+		return "#d63638"
+	case "Stock faible (≤ 2)":
+		return "#dba617"
+	}
+	return "#6b7280"
 }
 
 func mxStockBar(dispo, total int64) string {
