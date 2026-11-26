@@ -6060,7 +6060,7 @@
    },
    {
     "label": "Stockage",
-    "valeur": "4 × 2,5″ hot-swap + 2 × M.2"
+    "valeur": "4 × 3,5″ hot-swap + 2 × M.2"
    },
    {
     "label": "Format",
@@ -6071,8 +6071,8 @@
     "valeur": "1+1 redondante Titanium/Platinum"
    }
   ],
-  "ref": "RS500A-E12",
-  "reference_fabricant": "RS500A-E12",
+  "ref": "RS500A-E12-RS4U",
+  "reference_fabricant": "RS500A-E12-RS4U",
   "stock": null,
   "store_url": null,
   "points_forts": [
@@ -6123,8 +6123,8 @@
     "valeur": "1+1 redondante Titanium/Platinum"
    }
   ],
-  "ref": "RS720-E11",
-  "reference_fabricant": "RS720-E11",
+  "ref": "RS720-E11-RS24U",
+  "reference_fabricant": "RS720-E11-RS24U",
   "stock": null,
   "store_url": null,
   "points_forts": [
@@ -7402,8 +7402,8 @@
   "disponibilite": "en stock",
   "categorie": "Mémoire RAM",
   "famille": "Informatique",
-  "accroche": "Mémoire DDR4 ECC RDIMM ECC (serveur) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
-  "description": "Barrette mémoire DDR4 ECC au format RDIMM ECC (serveur) pour serveurs. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 2400, 2666, 3200 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "accroche": "Mémoire DDR4 ECC RDIMM (serveur) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR4 ECC au format RDIMM (serveur) pour serveurs. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 2400, 2666, 3200 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
   "image": "images/ram-ddr4-ecc-rdimm.jpg",
   "specs": [
    {
@@ -7412,7 +7412,7 @@
    },
    {
     "label": "Format",
-    "valeur": "RDIMM ECC (serveur)"
+    "valeur": "RDIMM (serveur)"
    },
    {
     "label": "Vitesses",
@@ -7466,8 +7466,8 @@
   "disponibilite": "en stock",
   "categorie": "Mémoire RAM",
   "famille": "Informatique",
-  "accroche": "Mémoire DDR5 ECC RDIMM ECC (serveur) : capacités de 8 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
-  "description": "Barrette mémoire DDR5 ECC au format RDIMM ECC (serveur) pour serveurs récents. Capacités disponibles : 8, 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 4800, 5200, 5600 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
+  "accroche": "Mémoire DDR5 ECC RDIMM (serveur) : capacités de 16 à 64 Go, marques Kingston, Crucial, Corsair et Samsung.",
+  "description": "Barrette mémoire DDR5 ECC au format RDIMM (serveur) pour serveurs récents. Capacités disponibles : 16, 32 et 64 Go (kit 2 × 32 Go), vitesses 4800, 5200, 5600 MHz. Marques disponibles selon stock : Kingston, Crucial, Corsair, Samsung. Vérifiez la compatibilité avec votre machine (type, vitesse et format) avant commande.",
   "image": "images/ram-ddr5-ecc-rdimm.jpg",
   "specs": [
    {
@@ -7476,7 +7476,7 @@
    },
    {
     "label": "Format",
-    "valeur": "RDIMM ECC (serveur)"
+    "valeur": "RDIMM (serveur)"
    },
    {
     "label": "Vitesses",
@@ -7484,7 +7484,7 @@
    },
    {
     "label": "Capacités",
-    "valeur": "8, 16, 32, 64 Go"
+    "valeur": "16, 32, 64 Go"
    }
   ],
   "ref": "DDR5 ECC RDIMM",
@@ -7497,10 +7497,6 @@
   ],
   "consommables": [],
   "options": [
-   {
-    "nom": "8 Go",
-    "ref": null
-   },
    {
     "nom": "16 Go",
     "ref": null
@@ -7989,6 +7985,10 @@
    {
     "label": "Écriture max",
     "valeur": "510 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "500 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "MX500",
@@ -8052,6 +8052,10 @@
    {
     "label": "Écriture max",
     "valeur": "525 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "500 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "SA510",
@@ -8116,6 +8120,10 @@
    {
     "label": "Écriture max",
     "valeur": "450 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "120 Go, 240 Go, 480 Go, 960 Go"
    }
   ],
   "ref": "A400",
@@ -8180,6 +8188,10 @@
    {
     "label": "Écriture max",
     "valeur": "6 900 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "1 To, 2 To, 4 To"
    }
   ],
   "ref": "990 PRO",
@@ -8240,6 +8252,10 @@
    {
     "label": "Écriture max",
     "valeur": "6 600 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "1 To, 2 To, 4 To, 8 To"
    }
   ],
   "ref": "SN850X",
@@ -8304,6 +8320,10 @@
    {
     "label": "Écriture max",
     "valeur": "5 000 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "500 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "NV3",
@@ -8368,6 +8388,10 @@
    {
     "label": "Écriture max",
     "valeur": "7 000 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "512 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "KC3000",
@@ -8432,6 +8456,10 @@
    {
     "label": "Écriture max",
     "valeur": "7 000 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "500 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "T500",
@@ -9662,11 +9690,15 @@
    },
    {
     "label": "Formats",
-    "valeur": "E1.S, M.2"
+    "valeur": "U.3, E1.S, M.2"
    },
    {
     "label": "Usage",
     "valeur": "Datacenter"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "480 Go à 15,36 To selon format"
    }
   ],
   "ref": "7450 PRO",
@@ -9678,7 +9710,32 @@
    "Datacenter"
   ],
   "consommables": [],
-  "options": [],
+  "options": [
+   {
+    "nom": "480 Go",
+    "ref": null
+   },
+   {
+    "nom": "960 Go",
+    "ref": null
+   },
+   {
+    "nom": "1,92 To",
+    "ref": null
+   },
+   {
+    "nom": "3,84 To",
+    "ref": null
+   },
+   {
+    "nom": "7,68 To",
+    "ref": null
+   },
+   {
+    "nom": "15,36 To",
+    "ref": null
+   }
+  ],
   "ean": null,
   "extras": [
    "images/ssd-micron-7450-pro-2.jpg",
@@ -9785,6 +9842,10 @@
    {
     "label": "Écriture max",
     "valeur": "5 800 Mo/s"
+   },
+   {
+    "label": "Capacités",
+    "valeur": "512 Go, 1 To, 2 To, 4 To"
    }
   ],
   "ref": "XG8",
