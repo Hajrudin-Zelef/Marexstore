@@ -11011,5 +11011,812 @@
    "images/asus-esc8000-e11-3.jpg",
    "images/asus-esc8000-e11-4.jpg"
   ]
+ },
+ {
+  "slug": "groupe-kohler-perform-4500",
+  "nom": "Groupe électrogène Kohler PERFORM 4500 AVR C5 RCD",
+  "marque": "Kohler",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Groupe essence 4 kW monophasé, démarrage lanceur, pour secours domestique et chantier.",
+  "description": "Le Kohler PERFORM 4500 AVR C5 RCD est un groupe électrogène essence monophasé 230 V de 4 kW maximum, à démarrage par lanceur. Il convient au secours domestique, aux chantiers et aux petits équipements.",
+  "image": "images/groupe-kohler-perform-4500.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "4 kW max"
+   },
+   {
+    "label": "Carburant",
+    "valeur": "Essence"
+   },
+   {
+    "label": "Phases",
+    "valeur": "Monophasé 230 V"
+   },
+   {
+    "label": "Démarrage",
+    "valeur": "Lanceur"
+   }
+  ],
+  "ref": "PERFORM 4500 AVR C5 RCD",
+  "reference_fabricant": "PERFORM 4500 AVR C5 RCD",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4 kW essence",
+   "Monophasé"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/groupe-kohler-perform-4500-2.jpg",
+   "images/groupe-kohler-perform-4500-3.jpg",
+   "images/groupe-kohler-perform-4500-4.jpg"
+  ]
+ },
+ {
+  "slug": "groupe-sdmo-diesel-20000-te",
+  "nom": "Groupe électrogène SDMO DIESEL 20000 TE XL AVR C",
+  "marque": "SDMO",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Groupe diesel triphasé 19 kVA, démarrage électrique, pour sites professionnels.",
+  "description": "Le SDMO DIESEL 20000 TE XL AVR C est un groupe électrogène diesel triphasé 400 V de 19 kVA (15,2 kW max), à démarrage électrique, pour l'alimentation de secours de sites professionnels et de petites installations triphasées.",
+  "image": "images/groupe-sdmo-diesel-20000-te.jpg",
+  "specs": [
+   {
+    "label": "Puissance",
+    "valeur": "19 kVA / 15,2 kW max"
+   },
+   {
+    "label": "Carburant",
+    "valeur": "Diesel"
+   },
+   {
+    "label": "Phases",
+    "valeur": "Triphasé 400 V"
+   },
+   {
+    "label": "Démarrage",
+    "valeur": "Électrique"
+   }
+  ],
+  "ref": "DIESEL 20000 TE XL AVR C",
+  "reference_fabricant": "DIESEL 20000 TE XL AVR C",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "19 kVA triphasé",
+   "Diesel"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/groupe-sdmo-diesel-20000-te-2.jpg"
+  ]
+ },
+ {
+  "slug": "kit-solaire-300w",
+  "nom": "Kit solaire complet 300 W",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Kit solaire 300 W : panneau, régulateur MPPT, batterie AGM 100 Ah et onduleur 600 W.",
+  "description": "Kit solaire complet 300 W pour l'éclairage, la TV et la charge des appareils : 1 panneau solaire 300 W, régulateur de charge MPPT 20 A, batterie AGM 100 Ah 12 V, onduleur 600 W pur sinus, câbles et protections. Composition indicative, ajustable selon vos besoins : demandez un devis.",
+  "image": "images/kit-solaire-300w.jpg",
+  "specs": [
+   {
+    "label": "Puissance panneaux",
+    "valeur": "300 W"
+   },
+   {
+    "label": "Régulateur",
+    "valeur": "MPPT 20 A"
+   },
+   {
+    "label": "Batterie",
+    "valeur": "AGM 100 Ah 12 V"
+   },
+   {
+    "label": "Onduleur",
+    "valeur": "600 W pur sinus"
+   }
+  ],
+  "ref": "Kit solaire 300 W",
+  "reference_fabricant": "Kit solaire 300 W",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Kit complet",
+   "Éclairage et TV"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/kit-solaire-300w-2.jpg",
+   "images/kit-solaire-300w-3.jpg",
+   "images/kit-solaire-300w-4.jpg"
+  ]
+ },
+ {
+  "slug": "kit-solaire-1kw",
+  "nom": "Kit solaire complet 1 kW",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Kit solaire 1 kW : 2 panneaux 550 W, hybride 2 kVA et batterie LiFePO4 100 Ah.",
+  "description": "Kit solaire complet 1 kW pour une maison moyenne : 2 panneaux solaires 550 W, onduleur hybride 2 kVA avec MPPT intégré, batterie LiFePO4 100 Ah et coffret de protection. Composition indicative, ajustable selon vos besoins : demandez un devis.",
+  "image": "images/kit-solaire-1kw.jpg",
+  "specs": [
+   {
+    "label": "Puissance panneaux",
+    "valeur": "2 × 550 W"
+   },
+   {
+    "label": "Onduleur",
+    "valeur": "Hybride 2 kVA MPPT"
+   },
+   {
+    "label": "Batterie",
+    "valeur": "LiFePO4 100 Ah"
+   }
+  ],
+  "ref": "Kit solaire 1 kW",
+  "reference_fabricant": "Kit solaire 1 kW",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Kit complet",
+   "Maison moyenne"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/kit-solaire-1kw-2.jpg",
+   "images/kit-solaire-1kw-3.jpg",
+   "images/kit-solaire-1kw-4.jpg"
+  ]
+ },
+ {
+  "slug": "kit-solaire-3kw",
+  "nom": "Kit solaire complet 3 kW",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Kit solaire 3 kW : 6 panneaux 550 W, hybride 3,5 kVA et batterie LiFePO4 5 kWh.",
+  "description": "Kit solaire complet 3 kW pour une maison avec réfrigérateur et équipements de confort : 6 panneaux solaires 550 W, onduleur hybride 3,5 kVA, batterie LiFePO4 5 kWh, protections et parafoudre. Composition indicative, ajustable selon vos besoins : demandez un devis.",
+  "image": "images/kit-solaire-3kw.jpg",
+  "specs": [
+   {
+    "label": "Puissance panneaux",
+    "valeur": "6 × 550 W"
+   },
+   {
+    "label": "Onduleur",
+    "valeur": "Hybride 3,5 kVA"
+   },
+   {
+    "label": "Batterie",
+    "valeur": "LiFePO4 5 kWh"
+   },
+   {
+    "label": "Protection",
+    "valeur": "Coffret + parafoudre"
+   }
+  ],
+  "ref": "Kit solaire 3 kW",
+  "reference_fabricant": "Kit solaire 3 kW",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Kit complet",
+   "Réfrigérateur et confort"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/kit-solaire-3kw-2.jpg",
+   "images/kit-solaire-3kw-3.jpg",
+   "images/kit-solaire-3kw-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-agm-100ah",
+  "nom": "Batterie AGM 12 V 100 Ah",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie plomb scellé 12 V 100 Ah pour kits solaires et secours.",
+  "description": "Batterie AGM 12 V 100 Ah pour kits solaires, onduleurs et alimentations de secours. Vérifiez les dimensions et le type de cosses selon votre installation.",
+  "image": "images/batterie-agm-100ah.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12 V"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "100 Ah"
+   },
+   {
+    "label": "Type",
+    "valeur": "Plomb scellé AGM"
+   }
+  ],
+  "ref": "AGM 12 V 100 Ah",
+  "reference_fabricant": "AGM 12 V 100 Ah",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Kits solaires",
+   "Secours"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-agm-100ah-2.jpg",
+   "images/batterie-agm-100ah-3.jpg",
+   "images/batterie-agm-100ah-4.jpg"
+  ]
+ },
+ {
+  "slug": "batterie-lifepo4-100ah",
+  "nom": "Batterie LiFePO4 12,8 V 100 Ah",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Batterie lithium LiFePO4 12,8 V 100 Ah pour kits solaires.",
+  "description": "Batterie lithium fer phosphate (LiFePO4) 12,8 V 100 Ah pour kits solaires, avec une durée de vie très supérieure au plomb. Vérifiez la compatibilité avec votre régulateur ou onduleur hybride.",
+  "image": "images/batterie-lifepo4-100ah.jpg",
+  "specs": [
+   {
+    "label": "Tension",
+    "valeur": "12,8 V"
+   },
+   {
+    "label": "Capacité",
+    "valeur": "100 Ah"
+   },
+   {
+    "label": "Type",
+    "valeur": "LiFePO4"
+   }
+  ],
+  "ref": "LiFePO4 12,8 V 100 Ah",
+  "reference_fabricant": "LiFePO4 12,8 V 100 Ah",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Longue durée de vie",
+   "Kits solaires"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/batterie-lifepo4-100ah-2.jpg",
+   "images/batterie-lifepo4-100ah-3.jpg",
+   "images/batterie-lifepo4-100ah-4.jpg"
+  ]
+ },
+ {
+  "slug": "pack-visio-huddle",
+  "nom": "Pack visioconférence Huddle",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Pack salle huddle jusqu'à 6 personnes : barre vidéo, écran 55 pouces, support et câbles.",
+  "description": "Pack visioconférence prêt à installer pour huddle et petites salles jusqu'à 6 personnes : barre vidéo tout-en-un (type Logitech Rally Bar Huddle), écran 55 pouces, support mural et câbles de raccordement. Composition ajustable selon votre salle : demandez un devis.",
+  "image": "images/pack-visio-huddle-2.jpg",
+  "specs": [
+   {
+    "label": "Salle",
+    "valeur": "Jusqu'à 6 personnes"
+   },
+   {
+    "label": "Contenu",
+    "valeur": "Barre vidéo + écran 55″ + support + câbles"
+   }
+  ],
+  "ref": "Pack Visio Huddle",
+  "reference_fabricant": "Pack Visio Huddle",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Prêt à installer",
+   "Petites salles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pack-visio-huddle-3.jpg",
+   "images/pack-visio-huddle-4.jpg"
+  ]
+ },
+ {
+  "slug": "pack-visio-reunion",
+  "nom": "Pack visioconférence Réunion",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Pack salle de réunion jusqu'à 12 personnes : barre vidéo, Tap IP, écran 65-75 pouces et switch PoE.",
+  "description": "Pack visioconférence pour salles de réunion jusqu'à 12 personnes : barre vidéo (type Logitech Rally Bar Mini ou Rally Bar), contrôleur Tap IP, écran 65 à 75 pouces et switch PoE. Composition ajustable selon votre salle : demandez un devis.",
+  "image": "images/pack-visio-reunion-2.jpg",
+  "specs": [
+   {
+    "label": "Salle",
+    "valeur": "Jusqu'à 12 personnes"
+   },
+   {
+    "label": "Contenu",
+    "valeur": "Barre vidéo + Tap IP + écran 65-75″ + switch PoE"
+   }
+  ],
+  "ref": "Pack Visio Réunion",
+  "reference_fabricant": "Pack Visio Réunion",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Prêt à installer",
+   "Salles moyennes"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pack-visio-reunion-3.jpg",
+   "images/pack-visio-reunion-4.jpg"
+  ]
+ },
+ {
+  "slug": "pack-visio-grande-salle",
+  "nom": "Pack visioconférence Grande salle",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Pack grande salle sur devis : système modulaire, Tap IP et 2 écrans.",
+  "description": "Pack visioconférence pour grandes salles, sur devis : système modulaire (type Logitech Rally Plus), contrôleur Tap IP et 2 écrans. Étude de votre salle et composition sur mesure : demandez un devis.",
+  "image": "images/pack-visio-grande-salle.jpg",
+  "specs": [
+   {
+    "label": "Salle",
+    "valeur": "Grandes salles"
+   },
+   {
+    "label": "Contenu",
+    "valeur": "Système modulaire + Tap IP + 2 écrans"
+   },
+   {
+    "label": "Disponibilité",
+    "valeur": "Sur devis"
+   }
+  ],
+  "ref": "Pack Visio Grande salle",
+  "reference_fabricant": "Pack Visio Grande salle",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Sur mesure",
+   "Grandes salles"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pack-visio-grande-salle-2.jpg",
+   "images/pack-visio-grande-salle-3.jpg",
+   "images/pack-visio-grande-salle-4.jpg"
+  ]
+ },
+ {
+  "slug": "pack-teams-rooms",
+  "nom": "Pack Teams Rooms",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Pack Microsoft Teams Rooms : ThinkSmart Core, barre vidéo et contrôleur tactile.",
+  "description": "Pack Microsoft Teams Rooms prêt à installer : unité Lenovo ThinkSmart Core, barre vidéo compatible et contrôleur tactile. Composition ajustable selon la taille de votre salle : demandez un devis.",
+  "image": "images/pack-teams-rooms.jpg",
+  "specs": [
+   {
+    "label": "Plateforme",
+    "valeur": "Microsoft Teams Rooms"
+   },
+   {
+    "label": "Contenu",
+    "valeur": "ThinkSmart Core + barre vidéo + contrôleur"
+   }
+  ],
+  "ref": "Pack Teams Rooms",
+  "reference_fabricant": "Pack Teams Rooms",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Teams Rooms",
+   "Prêt à installer"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pack-teams-rooms-2.jpg",
+   "images/pack-teams-rooms-3.jpg",
+   "images/pack-teams-rooms-4.jpg"
+  ]
+ },
+ {
+  "slug": "pack-onduleur-batterie",
+  "nom": "Pack onduleur et batterie de rechange",
+  "marque": null,
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Énergie & protection",
+  "famille": "Informatique",
+  "accroche": "Pack onduleur bureautique avec batterie de rechange (lot de 2 pour les 1500 VA).",
+  "description": "Pack onduleur bureautique avec batterie de rechange incluse, pour repartir immédiatement en cas de fin de vie de la batterie d'origine. Pour les onduleurs 1500 VA, le pack comprend un lot de 2 batteries. Précisez votre modèle d'onduleur pour la compatibilité.",
+  "image": "images/pack-onduleur-batterie.jpg",
+  "specs": [
+   {
+    "label": "Contenu",
+    "valeur": "Onduleur + batterie de rechange"
+   },
+   {
+    "label": "1500 VA",
+    "valeur": "Lot de 2 batteries"
+   }
+  ],
+  "ref": "Pack Onduleur + batterie",
+  "reference_fabricant": "Pack Onduleur + batterie",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Batterie de rechange incluse",
+   "Continuité de service"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pack-onduleur-batterie-2.jpg",
+   "images/pack-onduleur-batterie-3.jpg",
+   "images/pack-onduleur-batterie-4.jpg"
+  ]
+ },
+ {
+  "slug": "pare-feu-sophos-xgs-87",
+  "nom": "Pare-feu Sophos XGS 87",
+  "marque": "Sophos",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Sécurité réseau",
+  "famille": "Informatique",
+  "accroche": "Pare-feu de bureau Sophos XGS pour petites structures, protection unifiée.",
+  "description": "Le Sophos XGS 87 est un pare-feu de bureau de la gamme XGS, pour la protection réseau des petites structures : pare-feu, filtrage web et protection contre les menaces. Les licences et services associés ne sont pas vendus sur cette fiche : contactez-nous pour une offre complète.",
+  "image": "images/pare-feu-sophos-xgs-87.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "Sophos XGS"
+   },
+   {
+    "label": "Format",
+    "valeur": "Bureau"
+   }
+  ],
+  "ref": "XGS 87",
+  "reference_fabricant": "XGS 87",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Protection unifiée",
+   "Petites structures"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pare-feu-sophos-xgs-87-2.jpg",
+   "images/pare-feu-sophos-xgs-87-3.jpg",
+   "images/pare-feu-sophos-xgs-87-4.jpg"
+  ]
+ },
+ {
+  "slug": "pare-feu-sophos-xgs-107",
+  "nom": "Pare-feu Sophos XGS 107",
+  "marque": "Sophos",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Sécurité réseau",
+  "famille": "Informatique",
+  "accroche": "Pare-feu de bureau Sophos XGS pour PME, protection unifiée.",
+  "description": "Le Sophos XGS 107 est un pare-feu de bureau de la gamme XGS, pour la protection réseau des PME : pare-feu, filtrage web et protection contre les menaces. Les licences et services associés ne sont pas vendus sur cette fiche : contactez-nous pour une offre complète.",
+  "image": "images/pare-feu-sophos-xgs-107.jpg",
+  "specs": [
+   {
+    "label": "Gamme",
+    "valeur": "Sophos XGS"
+   },
+   {
+    "label": "Format",
+    "valeur": "Bureau"
+   }
+  ],
+  "ref": "XGS 107",
+  "reference_fabricant": "XGS 107",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Protection unifiée",
+   "PME"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pare-feu-sophos-xgs-107-2.jpg",
+   "images/pare-feu-sophos-xgs-107-3.jpg",
+   "images/pare-feu-sophos-xgs-107-4.jpg"
+  ]
+ },
+ {
+  "slug": "pare-feu-stormshield-sn160",
+  "nom": "Pare-feu Stormshield SN160",
+  "marque": "Stormshield",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Sécurité réseau",
+  "famille": "Informatique",
+  "accroche": "Pare-feu Stormshield SN160 : 1 Gbit/s, IPS 800 Mbit/s, pour PME et sites distants.",
+  "description": "Le Stormshield SN160 est un pare-feu de la gamme SN pour PME et sites distants : débit pare-feu de 1 Gbit/s et prévention d'intrusion (IPS) à 800 Mbit/s. Les licences et services associés ne sont pas vendus sur cette fiche : contactez-nous pour une offre complète.",
+  "image": "images/pare-feu-stormshield-sn160.jpg",
+  "specs": [
+   {
+    "label": "Débit pare-feu",
+    "valeur": "1 Gbit/s"
+   },
+   {
+    "label": "IPS",
+    "valeur": "800 Mbit/s"
+   }
+  ],
+  "ref": "SN160",
+  "reference_fabricant": "SN160",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "1 Gbit/s",
+   "IPS intégré"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/pare-feu-stormshield-sn160-2.jpg",
+   "images/pare-feu-stormshield-sn160-3.jpg",
+   "images/pare-feu-stormshield-sn160-4.jpg"
+  ]
+ },
+ {
+  "slug": "point-acces-huawei-airengine-5762-12",
+  "nom": "Point d'accès Wi-Fi Huawei AirEngine 5762-12",
+  "marque": "Huawei",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Wi-Fi & Mesh",
+  "famille": "Informatique",
+  "accroche": "Point d'accès Wi-Fi 6 intérieur, 2,975 Gbit/s, jusqu'à 256 utilisateurs.",
+  "description": "Le Huawei AirEngine 5762-12 est un point d'accès Wi-Fi 6 (802.11ax) d'intérieur : débit maximal de 2,975 Gbit/s en 2×2 MIMO bi-bande et jusqu'à 256 utilisateurs, pour bureaux et espaces denses.",
+  "image": "images/point-acces-huawei-airengine-5762-12.jpg",
+  "specs": [
+   {
+    "label": "Norme",
+    "valeur": "Wi-Fi 6 (802.11ax)"
+   },
+   {
+    "label": "Débit max",
+    "valeur": "2,975 Gbit/s"
+   },
+   {
+    "label": "Utilisateurs",
+    "valeur": "Jusqu'à 256"
+   },
+   {
+    "label": "Antennes",
+    "valeur": "2×2 MIMO bi-bande"
+   }
+  ],
+  "ref": "AirEngine 5762-12",
+  "reference_fabricant": "AirEngine 5762-12",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Wi-Fi 6",
+   "256 utilisateurs"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/point-acces-huawei-airengine-5762-12-2.jpg"
+  ]
+ },
+ {
+  "slug": "routeur-4g-teltonika-rut200",
+  "nom": "Routeur 4G Teltonika RUT200",
+  "marque": "Teltonika",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Réseau & câbles",
+  "famille": "Informatique",
+  "accroche": "Routeur 4G LTE compact, jusqu'à 150 Mbit/s, Wi-Fi et 2 ports Ethernet.",
+  "description": "Le Teltonika RUT200 est un routeur 4G LTE industriel compact : jusqu'à 150 Mbit/s en téléchargement, Wi-Fi intégré et 2 ports Ethernet, pour connecter machines, points de vente et sites distants.",
+  "image": "images/routeur-4g-teltonika-rut200.jpg",
+  "specs": [
+   {
+    "label": "Cellulaire",
+    "valeur": "4G LTE Cat 4, 150 Mbit/s"
+   },
+   {
+    "label": "Wi-Fi",
+    "valeur": "Intégré"
+   },
+   {
+    "label": "Ethernet",
+    "valeur": "2 ports"
+   }
+  ],
+  "ref": "RUT200",
+  "reference_fabricant": "RUT200",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "4G LTE",
+   "Compact"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/routeur-4g-teltonika-rut200-2.jpg",
+   "images/routeur-4g-teltonika-rut200-3.jpg",
+   "images/routeur-4g-teltonika-rut200-4.jpg"
+  ]
+ },
+ {
+  "slug": "telephone-conference-yealink-cp965",
+  "nom": "Téléphone de conférence Yealink CP965",
+  "marque": "Yealink",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Téléphone de conférence IP HD, captation 6 m à 360°, PoE et Wi-Fi.",
+  "description": "Le Yealink CP965 est un téléphone de conférence IP HD pour salles de réunion : 12 microphones plus 1 anti-bruit, captation vocale sur 6 m à 360°, alimentation PoE et Wi-Fi bi-bande.",
+  "image": "images/telephone-conference-yealink-cp965.jpg",
+  "specs": [
+   {
+    "label": "Microphones",
+    "valeur": "12 + 1 anti-bruit"
+   },
+   {
+    "label": "Portée",
+    "valeur": "6 m à 360°"
+   },
+   {
+    "label": "Alimentation",
+    "valeur": "PoE"
+   },
+   {
+    "label": "Wi-Fi",
+    "valeur": "Bi-bande"
+   }
+  ],
+  "ref": "CP965",
+  "reference_fabricant": "CP965",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "360°",
+   "PoE"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/telephone-conference-yealink-cp965-2.jpg",
+   "images/telephone-conference-yealink-cp965-3.jpg",
+   "images/telephone-conference-yealink-cp965-4.jpg"
+  ]
+ },
+ {
+  "slug": "systeme-conference-barco-cx20",
+  "nom": "Système de conférence sans fil Barco ClickShare CX-20",
+  "marque": "Barco",
+  "prix": null,
+  "devise": "F CFA",
+  "disponibilite": "en stock",
+  "categorie": "Audio-conférence",
+  "famille": "Informatique",
+  "accroche": "Conférence sans fil ClickShare, sortie 4K UHD, 1 bouton inclus.",
+  "description": "Le Barco ClickShare CX-20 est un système de conférence sans fil pour salles de réunion : partage d'écran par bouton ClickShare (1 inclus), 1 source simultanée à l'écran et sortie vidéo 4K UHD 3840×2160 à 30 Hz.",
+  "image": "images/systeme-conference-barco-cx20.jpg",
+  "specs": [
+   {
+    "label": "Sortie vidéo",
+    "valeur": "4K UHD 3840×2160 à 30 Hz"
+   },
+   {
+    "label": "Sources",
+    "valeur": "1 simultanée"
+   },
+   {
+    "label": "Bouton",
+    "valeur": "1 ClickShare inclus"
+   }
+  ],
+  "ref": "ClickShare CX-20",
+  "reference_fabricant": "ClickShare CX-20",
+  "stock": null,
+  "store_url": null,
+  "points_forts": [
+   "Sans fil",
+   "4K UHD"
+  ],
+  "consommables": [],
+  "options": [],
+  "ean": null,
+  "extras": [
+   "images/systeme-conference-barco-cx20-2.jpg",
+   "images/systeme-conference-barco-cx20-3.jpg",
+   "images/systeme-conference-barco-cx20-4.jpg"
+  ]
  }
 ]
