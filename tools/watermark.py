@@ -2,7 +2,7 @@
 """Watermark discret des photos produits Marexstore.
 
 - Cible : les images référencées dans data/store.db (table products, colonne image).
-- Bandeau "store.neva-ci.pro" en bas à droite, blanc semi-transparent + ombre.
+- Bandeau "KMA store" en bas à droite, blanc semi-transparent + ombre.
 - Métadonnées EXIF supprimées (hygiène + anti-fuites GPS).
 - Formats : JPG/PNG/WebP (Pillow). AVIF ignoré (support Pillow absent) et signalé.
 - Usage échantillon : ./tools/watermark.py --sample 6
@@ -15,7 +15,7 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
-TEXT = "store.neva-ci.pro"
+TEXT = "KMA store"
 FONT_PATHS = [
     "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
