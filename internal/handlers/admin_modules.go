@@ -511,24 +511,65 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		inner.WriteString(`<div class="mx-kpis">`)
 		inner.WriteString(mxKPI("Produits en stock", strconv.FormatInt(enStock, 10), "#00a32a", icStock))
 		inner.WriteString(mxKPI("En rupture", strconv.FormatInt(rupture, 10), "#d63638", icAlert))
-		inner.WriteString(mxKPI("Stock faible (≤ 2)", strconv.FormatInt(faible, 10), "#dba617", icProd))
+		inner.WriteString(mxKPI("Stock ≤ 2", strconv.FormatInt(faible, 10), "#dba617", icProd))
 		inner.WriteString(mxKPI("Sur devis (sans prix)", strconv.FormatInt(sansPrix, 10), "#9b51e0", icCaisse))
 		inner.WriteString(`</div>`)
-		rows, err := a.DB.Query(`SELECT slug,nom,dispo,stock FROM products WHERE dispo<>'en stock' OR (stock IS NOT NULL AND stock<=2) ORDER BY dispo, nom LIMIT 100`)
-		var tr [][]string
+		rows, err := a.DB.Query(`SELECT slug,nom,dispo,stock FROM products WHERE dispo<>'en stock' OR (stock IS NOT NULL AND stock<=2) ORDER BY dispo, nom LIMIT 300`)
+		type stockRow struct {
+			slug, nom, dispo string
+			stock            *int64
+		}
+		groupKey := func(dispo string, stock *int64) string {
+			if dispo == "rupture de stock" {
+				return "Rupture de stock"
+			}
+			if stock != nil && *stock <= 2 {
+				return "Stock faible (≤ 2)"
+			}
+			return "Autres"
+		}
+		order := []string{"Rupture de stock", "Stock faible (≤ 2)", "Autres"}
+		groups := map[string][]stockRow{}
 		if err == nil {
 			defer rows.Close()
 			for rows.Next() {
 				var slug, nom, dispo string
 				var stock *int64
 				_ = rows.Scan(&slug, &nom, &dispo, &stock)
-				tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(slug) + `">` + render.Esc(nom) + `</a>`, mxDispoBadge(dispo), mxStockCell(stock)})
+				k := groupKey(dispo, stock)
+				groups[k] = append(groups[k], stockRow{slug, nom, dispo, stock})
 			}
 		}
-		if len(tr) == 0 {
+		total := 0
+		for _, k := range order {
+			total += len(groups[k])
+		}
+		if total == 0 {
 			inner.WriteString(mxEmpty("Aucun produit en rupture ni en stock faible."))
 		} else {
-			inner.WriteString(mxSection("Produits à surveiller", "Ruptures et stocks faibles", mxCard(mxTableAlign([]string{"Produit", "Disponibilité", "Stock"}, tr, "lrl"))))
+			var b strings.Builder
+			b.WriteString(`<div class="mx-accordion">`)
+			opened := false
+			for _, k := range order {
+				rws := groups[k]
+				if len(rws) == 0 {
+					continue
+				}
+				openAttr := ""
+				if !opened {
+					openAttr = " open"
+					opened = true
+				}
+				b.WriteString(`<details class="mx-acc-item"` + openAttr + `><summary><strong>` + render.Esc(k) + `</strong><span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` produits</span></summary>`)
+				var tr [][]string
+				for _, rr := range rws {
+					tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(rr.slug) + `">` + render.Esc(rr.nom) + `</a>`, mxDispoBadge(rr.dispo), mxStockCell(rr.stock)})
+				}
+				b.WriteString(mxTableAlign([]string{"Produit", "Disponibilité", "Stock"}, tr, "lrl"))
+				b.WriteString(`</details>`)
+			}
+			b.WriteString(`</div>`)
+			inner.WriteString(mxSection("Produits à surveiller", "Ruptures et stocks faibles", mxCard(b.String())))
 		}
 	case "variations":
 		nbOpts, nbProds := 0, 0
