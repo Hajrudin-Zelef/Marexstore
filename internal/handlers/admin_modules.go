@@ -465,18 +465,43 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxSection("Catalogue et ventes par catégorie", "Produits publiés et volumes vendus", mxCard(mxTableAlign([]string{"Catégorie", "Produits", "En stock", "Quantité vendue", "Revenu"}, tr, "lrrrr"))))
 		}
 		srows, serr := a.DB.Query(`SELECT main, sub, COUNT(*) FROM products GROUP BY main, sub ORDER BY main, COUNT(*) DESC`)
-		var str [][]string
+		type typeRow struct {
+			sub string
+			n   int64
+		}
+		groups := map[string][]typeRow{}
+		var order []string
 		if serr == nil {
 			defer srows.Close()
 			for srows.Next() {
 				var main, sub string
 				var n int64
 				_ = srows.Scan(&main, &sub, &n)
-				str = append(str, []string{mxCatBadge(main), render.Esc(sub), strconv.FormatInt(n, 10)})
+				if _, ok := groups[main]; !ok {
+					order = append(order, main)
+				}
+				groups[main] = append(groups[main], typeRow{sub, n})
 			}
 		}
-		if len(str) > 0 {
-			inner.WriteString(mxSection("Répartition par type", "Sous-catégories du catalogue", mxCard(mxTableAlign([]string{"Catégorie", "Type", "Produits"}, str, "llr"))))
+		if len(order) > 0 {
+			var b strings.Builder
+			b.WriteString(`<div class="mx-accordion">`)
+			for _, main := range order {
+				rws := groups[main]
+				var total int64
+				for _, rr := range rws {
+					total += rr.n
+				}
+				b.WriteString(`<details class="mx-acc-item"><summary>` + mxCatBadge(main) + `<span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` types · ` + strconv.FormatInt(total, 10) + ` produits</span></summary>`)
+				var tr [][]string
+				for _, rr := range rws {
+					tr = append(tr, []string{render.Esc(rr.sub), strconv.FormatInt(rr.n, 10)})
+				}
+				b.WriteString(mxTableAlign([]string{"Type", "Produits"}, tr, "lr"))
+				b.WriteString(`</details>`)
+			}
+			b.WriteString(`</div>`)
+			inner.WriteString(mxSection("Répartition par type", "Sous-catégories du catalogue", mxCard(b.String())))
 		}
 	case "stock":
 		enStock := a.statInt(`SELECT COUNT(*) FROM products WHERE dispo='en stock'`)

@@ -427,3 +427,15 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 
 /* valeurs à zero grisées */
 .mx-zero{color:#9ca0a6;font-weight:400}
+
+/* accordéon répartition par type */
+.mx-accordion{display:flex;flex-direction:column}
+.mx-acc-item{border-bottom:1px solid var(--mx-border)}
+.mx-acc-item:last-child{border-bottom:0}
+.mx-acc-item summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:12px;user-select:none}
+.mx-acc-item summary::-webkit-details-marker{display:none}
+.mx-acc-item summary::before{content:"▸";color:#8c8f94;font-size:11px;transition:transform .15s ease}
+.mx-acc-item[open] summary::before{transform:rotate(90deg)}
+.mx-acc-item summary:hover{background:#f6f7f7}
+.mx-acc-meta{color:#646970;font-size:12.5px;margin-left:auto}
+.mx-acc-item .mx-tablewrap{border-top:1px solid var(--mx-border)}
