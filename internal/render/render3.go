@@ -176,7 +176,7 @@ func IndexBodyThemeDoc(d *design.Document, s *catalog.Store, recents []*catalog.
 		if f, ok := s.BySlug[slug]; ok {
 			im := ""
 			if f.Image != "" {
-				im = `<img src="` + esc(f.Image) + `" alt="">`
+				im = `<img src="` + esc(imgV(f.Image)) + `" alt="">`
 			}
 			fmt.Fprintf(&top8, `<div class="hcard">%s
 <div><h4><a href="produits/%s.html">%s</a></h4>
@@ -201,7 +201,7 @@ func IndexBodyThemeDoc(d *design.Document, s *catalog.Store, recents []*catalog.
 		}
 		im := ""
 		if f.Image != "" {
-			im = `<img src="` + esc(f.Image) + `" alt="">`
+			im = `<img src="` + esc(imgV(f.Image)) + `" alt="">`
 		}
 		if lien == "" {
 			lien = "produits/" + esc(slug) + ".html"

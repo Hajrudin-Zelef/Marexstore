@@ -42,7 +42,7 @@ func Esc(s string) string { return catalog.Esc(s) }
 
 func ImgTag(p *catalog.RawProduct, prefix string) string {
 	if p.Image != "" {
-		return `<img src="` + esc(prefix+p.Image) + `" alt="` + esc(p.Nom) + `" loading="lazy">`
+		return `<img src="` + esc(prefix+imgV(p.Image)) + `" alt="` + esc(p.Nom) + `" loading="lazy">`
 	}
 	return `<div class="noimg">Photo à venir</div>`
 }
@@ -73,11 +73,11 @@ func GalCarousel(p *catalog.RawProduct, prefix string) string {
 			on = ` class="on"`
 		}
 		fmt.Fprintf(&thumbs, `<button type="button" data-gal-thumb="%d"%s aria-label="Photo %d"><img src="%s" alt="%s" loading="lazy"></button>`,
-			i, on, i+1, esc(prefix+src), esc(p.Nom))
+			i, on, i+1, esc(prefix+imgV(src)), esc(p.Nom))
 	}
 	return `<div class="gal" data-gal>` +
 		`<button type="button" class="gal-prev" data-gal-prev aria-label="Photo précédente">‹</button>` +
-		`<img src="` + esc(prefix+imgs[0]) + `" alt="` + esc(p.Nom) + `" data-gal-main>` +
+		`<img src="` + esc(prefix+imgV(imgs[0])) + `" alt="` + esc(p.Nom) + `" data-gal-main>` +
 		`<button type="button" class="gal-next" data-gal-next aria-label="Photo suivante">›</button>` +
 		`<div class="gal-thumbs">` + thumbs.String() + `</div></div>`
 }

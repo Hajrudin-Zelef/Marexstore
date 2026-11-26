@@ -257,13 +257,13 @@ func addCartBtnFullTx(d *design.Document, p *catalog.RawProduct) string {
 	if pr == nil {
 		return ""
 	}
-	return `<button class="btn cart-btn" type="button" data-add-cart data-slug="` + esc(p.Slug) + `" data-nom="` + esc(p.Nom) + `" data-prix="` + fmt.Sprint(*pr) + `" data-image="` + esc(p.Image) + `" data-qty="#qty">` + CartSVG + ` ` + escTx(d.Text("ajouter_panier", "Ajouter au panier")) + `</button>`
+	return `<button class="btn cart-btn" type="button" data-add-cart data-slug="` + esc(p.Slug) + `" data-nom="` + esc(p.Nom) + `" data-prix="` + fmt.Sprint(*pr) + `" data-image="` + esc(imgV(p.Image)) + `" data-qty="#qty">` + CartSVG + ` ` + escTx(d.Text("ajouter_panier", "Ajouter au panier")) + `</button>`
 }
 
 func Card(s *catalog.Store, p *catalog.RawProduct, prefix, filterKey string) string {
 	im := `<div class="noimg">Photo à venir</div>`
 	if p.Image != "" {
-		im = `<img src="` + esc(prefix+p.Image) + `" alt="` + esc(p.Nom) + `" loading="lazy">`
+		im = `<img src="` + esc(prefix+imgV(p.Image)) + `" alt="` + esc(p.Nom) + `" loading="lazy">`
 	}
 	var specAttrs strings.Builder
 	facets := catalog.FacetValues(p)
@@ -368,7 +368,7 @@ func mini(fs []*catalog.RawProduct, prefix string) string {
 	for _, f := range fs {
 		im := ""
 		if f.Image != "" {
-			im = `<img src="` + esc(prefix+f.Image) + `" alt="">`
+			im = `<img src="` + esc(prefix+imgV(f.Image)) + `" alt="">`
 		}
 		fmt.Fprintf(&out, `<div class="hcard">%s<div><h4><a href="%sproduits/%s.html">%s</a></h4><div class="pr">%s</div></div></div>`,
 			im, prefix, esc(f.Slug), esc(f.Nom), PrixHTML(f))
