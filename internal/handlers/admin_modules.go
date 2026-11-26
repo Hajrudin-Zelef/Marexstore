@@ -217,6 +217,14 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			inner.WriteString(mxTable([]string{"Produit", "Quantité vendue", "Revenu"}, tr))
 		}
 	case "revenu":
+		revTotal := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders`)
+		revMois := a.statInt(`SELECT COALESCE(SUM(total),0) FROM orders WHERE created_at >= datetime('now','start of month')`)
+		revPanier := a.statInt(`SELECT COALESCE(AVG(total),0) FROM orders`)
+		inner.WriteString(`<div class="mx-kpis">`)
+		inner.WriteString(kpiCard("Revenu total", fcfa(revTotal), "#2271b1", icCaisse))
+		inner.WriteString(kpiCard("Revenu ce mois-ci", fcfa(revMois), "#00a32a", icRevenu))
+		inner.WriteString(kpiCard("Panier moyen", fcfa(revPanier), "#dba617", icCmd))
+		inner.WriteString(`</div>`)
 		rows, err := a.DB.Query(`SELECT strftime('%Y-%m',created_at), COUNT(*), COALESCE(SUM(total),0) FROM orders GROUP BY 1 ORDER BY 1 DESC LIMIT 24`)
 		var tr [][]string
 		if err == nil {
@@ -231,6 +239,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		if len(tr) == 0 {
 			inner.WriteString(mxEmpty("Aucune commande pour le moment."))
 		} else {
+			inner.WriteString(`<h3 style="margin:22px 0 10px">Revenu par mois</h3>`)
 			inner.WriteString(mxTable([]string{"Mois", "Commandes", "Revenu"}, tr))
 		}
 	case "commandes":
