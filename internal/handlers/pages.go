@@ -93,6 +93,10 @@ func (a *App) Produit(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/produits/"+target+".html", http.StatusMovedPermanently)
 		return
 	}
+	if target, ok := a.customRedirects()[slug]; ok {
+		http.Redirect(w, r, "/produits/"+target+".html", http.StatusMovedPermanently)
+		return
+	}
 	p, ok := a.Store.BySlug[slug]
 	if !ok {
 		http.NotFound(w, r)

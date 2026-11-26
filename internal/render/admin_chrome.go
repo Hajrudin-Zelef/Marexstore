@@ -8,24 +8,58 @@ import (
 	"strings"
 )
 
+type MxSub struct {
+	Href, Label string
+}
+
 type MxItem struct {
 	Slug, Label, Icon string
 	Count             int
 	ShowCount         bool
+	Subs              []MxSub
 }
 
-// MxSidebar : menu latéral avec compteurs.
+// MxSidebar : menu latéral avec compteurs et sous-menus (style WP).
 func MxSidebar(active string, counts map[string]int) string {
 	items := []MxItem{
-		{"", "Tableau de bord", "dashboard", 0, false},
-		{"produits", "Produits", "archive", counts["produits"], true},
-		{"types", "Types", "tag", 0, false},
-		{"design", "Design", "palette", 0, false},
-		{"commandes", "Commandes", "cart", counts["commandes"], true},
-		{"clients", "Clients", "users", counts["clients"], true},
-		{"medias", "Médias", "image", 0, false},
-		{"reglages", "Réglages", "cog", 0, false},
-		{"systeme", "Système", "activity", 0, false},
+		{Slug: "", Label: "Tableau de bord", Icon: "dashboard"},
+		{Slug: "produits", Label: "Produits", Icon: "archive", Count: counts["produits"], ShowCount: true, Subs: []MxSub{
+			{"/admin/produits", "Tous les produits"},
+			{"/admin/produits/nouveau", "Ajouter un nouveau produit"},
+			{"/admin/produits/marques", "Marques"},
+			{"/admin/types", "Catégories"},
+			{"/admin/produits/etiquettes", "Étiquettes"},
+			{"/admin/produits/attributs", "Attributs"},
+			{"/admin/produits/avis", "Avis"},
+		}},
+		{Slug: "stats", Label: "Statistiques", Icon: "activity", Subs: []MxSub{
+			{"/admin/stats", "Vue d'ensemble"},
+			{"/admin/stats?vue=produits", "Produits"},
+			{"/admin/stats?vue=revenu", "Revenu"},
+			{"/admin/stats?vue=commandes", "Commandes"},
+			{"/admin/stats?vue=variations", "Variations"},
+			{"/admin/stats?vue=categories", "Catégories"},
+			{"/admin/stats?vue=promos", "Codes promo"},
+			{"/admin/stats?vue=taxes", "Taxes"},
+			{"/admin/stats?vue=telechargements", "Téléchargements"},
+			{"/admin/stats?vue=stock", "Stock"},
+		}},
+		{Slug: "marketing", Label: "Marketing", Icon: "tag", Subs: []MxSub{
+			{"/admin/marketing", "Vue d'ensemble"},
+			{"/admin/marketing/promos", "Codes promo"},
+		}},
+		{Slug: "design", Label: "Design", Icon: "palette"},
+		{Slug: "commandes", Label: "Commandes", Icon: "cart", Count: counts["commandes"], ShowCount: true},
+		{Slug: "clients", Label: "Clients", Icon: "users", Count: counts["clients"], ShowCount: true},
+		{Slug: "medias", Label: "Médias", Icon: "image"},
+		{Slug: "outils", Label: "Outils", Icon: "cog", Subs: []MxSub{
+			{"/admin/outils", "Outils disponibles"},
+			{"/admin/outils?vue=importer", "Importer"},
+			{"/admin/outils?vue=exporter", "Exporter"},
+			{"/admin/outils?vue=redirections", "Redirections"},
+		}},
+		{Slug: "reglages", Label: "Réglages", Icon: "cog"},
+		{Slug: "systeme", Label: "Système", Icon: "activity"},
 	}
 	var b strings.Builder
 	b.WriteString(`<aside class="mx-side"><div class="mx-brand"><img src="/images/logo-mediatec.png" alt=""><div>Marexstore<small>Administration</small></div><button class="mx-side-x" type="button" data-side-close aria-label="Fermer le menu">✕</button></div><nav class="mx-nav"><div class="sep">Administration</div>`)
@@ -34,8 +68,9 @@ func MxSidebar(active string, counts map[string]int) string {
 		if it.Slug != "" {
 			href = "/admin/" + it.Slug
 		}
+		open := active == it.Slug || (it.Slug != "" && strings.HasPrefix(active, it.Slug+"/"))
 		cls := ""
-		if active == it.Slug {
+		if open {
 			cls = ` class="on"`
 		}
 		cnt := ""
@@ -43,6 +78,13 @@ func MxSidebar(active string, counts map[string]int) string {
 			cnt = fmt.Sprintf(`<span class="cnt">%d</span>`, it.Count)
 		}
 		fmt.Fprintf(&b, `<a href="%s"%s>%s<span>%s</span>%s</a>`, href, cls, MxSVG(it.Icon), it.Label, cnt)
+		if open && len(it.Subs) > 0 {
+			b.WriteString(`<div class="mx-subnav">`)
+			for _, s := range it.Subs {
+				fmt.Fprintf(&b, `<a href="%s">%s</a>`, s.Href, Esc(s.Label))
+			}
+			b.WriteString(`</div>`)
+		}
 	}
 	b.WriteString(`<div class="sep">Boutique</div><a href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span>Voir le site</span></a></nav><div class="mx-user"><span class="mx-user-av">A</span><span class="mx-user-tx"><strong>admin</strong><small>Administrateur</small></span><a class="mx-user-out" href="/" title="Retour boutique">↗</a></div></aside>`)
 	return b.String()

@@ -32,6 +32,14 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-nav .cnt{margin-left:auto;background:#464646;color:#fff;font-size:11px;font-weight:700;border-radius:10px;padding:1px 8px}
 .mx-nav a.on .cnt{background:var(--mx-accent)}
 .mx-nav .sep{margin:12px 16px 4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mx-side-mut)}
+.mx-subnav{background:rgba(0,0,0,.25);padding:4px 0 8px}
+.mx-subnav a{display:block;padding:5px 16px 5px 43px;font-size:12.5px;color:var(--mx-side-tx);text-decoration:none;border-left:3px solid transparent}
+.mx-subnav a:hover{color:#fff;background:var(--mx-side-2)}
+.mx-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin:14px 0}
+.mx-kpi{background:#fff;border:1px solid var(--mx-border,#e2e4e7);border-radius:10px;padding:16px}
+.mx-kpi .lb{font-size:12px;color:#646970;text-transform:uppercase;letter-spacing:.04em}
+.mx-kpi .vl{font-size:24px;font-weight:800;margin-top:6px}
+.mx-empty{background:#fff;border:1px dashed #c3c4c7;border-radius:10px;padding:22px;color:#646970;text-align:center}
 /* ---------- Main + topbar ---------- */
 .mx-main{flex:1;min-width:0;display:flex;flex-direction:column}
 .mx-top{background:var(--mx-surface);border-bottom:1px solid var(--mx-border);padding:0 22px;height:56px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:40}
