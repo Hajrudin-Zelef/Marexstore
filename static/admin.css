@@ -19,6 +19,11 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-brand{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;font-weight:800;font-size:15px}
 .mx-brand img{height:30px;width:auto;background:#fff;border-radius:6px;padding:2px}
 .mx-brand small{display:block;font-weight:400;font-size:11px;color:var(--mx-side-mut)}
+.mx-side-x{display:none;flex:none;margin-left:auto;border:0;background:transparent;color:var(--mx-side-mut);font-size:16px;line-height:1;padding:6px;cursor:pointer}
+/* Le bloc marque doit pouvoir se réduire, sinon le ✕ déborde de la sidebar */
+.mx-brand>div{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.mx-brand img{flex:none}
+.mx-scrim{display:none}
 .mx-nav{flex:1;overflow-y:auto;padding:6px 0 16px}
 .mx-nav a{display:flex;align-items:center;gap:10px;color:var(--mx-side-tx);text-decoration:none;padding:9px 16px;font-size:13.5px;border-left:3px solid transparent}
 .mx-nav a:hover{background:var(--mx-side-2);color:#fff}
@@ -205,6 +210,11 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
   .mx-side{position:fixed;left:0;top:0;bottom:0;transform:translateX(-105%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.3)}
   body.mx.nav-open .mx-side{transform:none}
   .mx-burger{display:block}
+  .mx-side-x{display:block}
+  /* Sidebar étroite (230 px) : le logo large ne laisse pas de place au texte,
+     qui serait tronqué. On garde le logo + le ✕. */
+  .mx-brand>div{display:none}
+  body.mx.nav-open .mx-scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:49}
   /* Le retour reste accessible mais compact : « ← » seul, le titre garde la place. */
   .mx-back .lb{display:none}
   .mx-back{padding:6px 9px}

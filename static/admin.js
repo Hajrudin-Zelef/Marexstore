@@ -303,3 +303,24 @@
     }
   });
 })();
+
+// Sidebar mobile : trois façons de la ranger — icône ✕ dans la sidebar,
+// appui dans le vide (voile .mx-scrim) et glisser vers la gauche.
+(function () {
+  function close() { document.body.classList.remove('nav-open'); }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-side-close]')) close();
+  });
+  var sx = 0, sy = 0, tracking = false;
+  document.addEventListener('touchstart', function (e) {
+    if (!document.body.classList.contains('nav-open')) return;
+    var t = e.touches[0];
+    sx = t.clientX; sy = t.clientY; tracking = true;
+  }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    if (t.clientX - sx < -50 && Math.abs(t.clientY - sy) < 60) close();
+  }, { passive: true });
+})();
