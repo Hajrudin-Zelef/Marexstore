@@ -450,3 +450,7 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-chips.open .mx-chips-extra{display:contents}
 .mx-chip-more{background:#eef2f6;border:1px solid var(--mx-border);border-radius:6px;padding:2px 8px;font-size:12px;color:#2271b1;font-weight:600;cursor:pointer}
 .mx-chip-more:hover{background:#e2e8ee}
+
+/* module stock : stock faible mis en évidence */
+.mx-stock-val{font-weight:600}
+.mx-stock-low{color:#d63638;background:#fbeaea;background:color-mix(in srgb,#d63638 10%,#fff);padding:2px 8px;border-radius:6px}

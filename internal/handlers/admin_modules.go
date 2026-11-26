@@ -522,11 +522,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				var slug, nom, dispo string
 				var stock *int64
 				_ = rows.Scan(&slug, &nom, &dispo, &stock)
-				st := "—"
-				if stock != nil {
-					st = strconv.FormatInt(*stock, 10)
-				}
-				tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(slug) + `">` + render.Esc(nom) + `</a>`, render.Esc(dispo), st})
+				tr = append(tr, []string{`<a href="/admin/produits/` + render.Esc(slug) + `">` + render.Esc(nom) + `</a>`, mxDispoBadge(dispo), mxStockCell(stock)})
 			}
 		}
 		if len(tr) == 0 {
@@ -995,4 +991,30 @@ func mxChips(vals []string) string {
 	}
 	b.WriteString(`</div>`)
 	return b.String()
+}
+
+// mxDispoBadge réutilise les couleurs de statut existantes (.mx-badge ok/warn/bad).
+func mxDispoBadge(dispo string) string {
+	cls := "mx-badge"
+	switch dispo {
+	case "en stock":
+		cls += " ok"
+	case "rupture de stock":
+		cls += " bad"
+	case "sur commande", "retour":
+		cls += " warn"
+	}
+	return `<span class="` + cls + `">` + render.Esc(dispo) + `</span>`
+}
+
+func mxStockCell(stock *int64) string {
+	if stock == nil {
+		return "—"
+	}
+	n := *stock
+	cls := ""
+	if n <= 2 {
+		cls = " mx-stock-low"
+	}
+	return `<span class="mx-stock-val` + cls + `">` + strconv.FormatInt(n, 10) + `</span>`
 }
