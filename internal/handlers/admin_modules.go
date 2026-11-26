@@ -492,7 +492,13 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				for _, rr := range rws {
 					total += rr.n
 				}
-				b.WriteString(`<details class="mx-acc-item"><summary>` + mxCatBadge(main) + `<span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` types · ` + strconv.FormatInt(total, 10) + ` produits</span></summary>`)
+				typeLbl := "types"
+				if len(rws) == 1 {
+					typeLbl = "type"
+				}
+				b.WriteString(`<details class="mx-acc-item"><summary>` + mxCatTitle(main) +
+					`<span class="mx-cat-count" style="--bc:` + mxBadgeColor(main) + `">` + strconv.FormatInt(total, 10) + `</span>` +
+					`<span class="mx-acc-meta">` + strconv.Itoa(len(rws)) + ` ` + typeLbl + `</span></summary>`)
 				var tr [][]string
 				for _, rr := range rws {
 					tr = append(tr, []string{render.Esc(rr.sub), strconv.FormatInt(rr.n, 10)})
@@ -985,6 +991,11 @@ func mxBadgeColor(s string) string {
 
 func mxCatBadge(s string) string {
 	return `<span class="mx-catbadge" style="--bc:` + mxBadgeColor(s) + `">` + render.Esc(s) + `</span>`
+}
+
+// mxCatTitle : titre de catégorie en grand, coloré (même couleur que la pastille).
+func mxCatTitle(s string) string {
+	return `<span class="mx-acc-cat" style="--bc:` + mxBadgeColor(s) + `">` + render.Esc(s) + `</span>`
 }
 
 func mxStockBar(dispo, total int64) string {
