@@ -185,10 +185,18 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	vue := r.URL.Query().Get("vue")
-	kpi := func(lb string, vl string) string {
-		return `<div class="mx-kpi"><div class="lb">` + render.Esc(lb) + `</div><div class="vl">` + render.Esc(vl) + `</div></div>`
-	}
 	fcfa := func(v int64) string { return catalog.FmtPrix(&v) }
+	kpiCard := func(label, value, color, icon string) string {
+		return `<div class="mx-kpi" style="--mx-kpi:` + color + `">` +
+			`<div class="mx-kpi-ic">` + icon + `</div>` +
+			`<div class="mx-kpi-tx"><h3 class="lb">` + render.Esc(label) + `</h3>` +
+			`<div class="vl big">` + render.Esc(value) + `</div></div></div>`
+	}
+	icCaisse := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v2"/></svg>`
+	icRevenu := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
+	icCmd := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>`
+	icProd := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>`
+	icStock := `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V8H4v4M4 8l1-4h14l1 4M4 8v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/></svg>`
 	var inner strings.Builder
 	switch vue {
 	case "produits":
@@ -293,11 +301,11 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 		cmds := a.statInt(`SELECT COUNT(*) FROM orders`)
 		vendus := a.statInt(`SELECT COALESCE(SUM(qty),0) FROM order_items`)
 		inner.WriteString(`<div class="mx-kpis">`)
-		inner.WriteString(kpi("Total des ventes", fcfa(ventes)))
-		inner.WriteString(kpi("Ventes nettes", fcfa(ventes)))
-		inner.WriteString(kpi("Commandes", strconv.FormatInt(cmds, 10)))
-		inner.WriteString(kpi("Produits vendus", strconv.FormatInt(vendus, 10)))
-		inner.WriteString(kpi("Produits au catalogue", strconv.Itoa(len(a.Store.Products))))
+		inner.WriteString(kpiCard("Total des ventes", fcfa(ventes), "#2271b1", icCaisse))
+		inner.WriteString(kpiCard("Ventes nettes", fcfa(ventes), "#00a32a", icRevenu))
+		inner.WriteString(kpiCard("Commandes", strconv.FormatInt(cmds, 10), "#d63638", icCmd))
+		inner.WriteString(kpiCard("Produits vendus", strconv.FormatInt(vendus, 10), "#dba617", icProd))
+		inner.WriteString(kpiCard("Produits au catalogue", strconv.Itoa(len(a.Store.Products)), "#9b51e0", icStock))
 		inner.WriteString(`</div>`)
 		if cmds == 0 {
 			inner.WriteString(mxEmpty("Aucune donnée pour la période : aucune commande enregistrée."))
