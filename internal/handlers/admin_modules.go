@@ -546,8 +546,8 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 			nbOpts += len(names)
 			vtr = append(vtr, []string{
 				`<a href="/admin/produits/` + render.Esc(prod.Slug) + `">` + render.Esc(prod.Nom) + `</a>`,
-				strconv.Itoa(len(names)),
-				render.Esc(strings.Join(names, " · ")),
+				mxOptCount(len(names)),
+				mxChips(names),
 			})
 		}
 		sort.Slice(vtr, func(i, j int) bool { return vtr[i][0] < vtr[j][0] })
@@ -970,4 +970,18 @@ func mxMoneyCell(n int64, formatted string) string {
 		return `<span class="mx-zero">` + formatted + `</span>`
 	}
 	return formatted
+}
+
+func mxOptCount(n int) string {
+	return `<span class="mx-opt-count">` + strconv.Itoa(n) + `</span>`
+}
+
+func mxChips(vals []string) string {
+	var b strings.Builder
+	b.WriteString(`<div class="mx-chips">`)
+	for _, v := range vals {
+		b.WriteString(`<span class="mx-chip">` + render.Esc(v) + `</span>`)
+	}
+	b.WriteString(`</div>`)
+	return b.String()
 }
