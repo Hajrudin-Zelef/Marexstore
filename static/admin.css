@@ -406,3 +406,13 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-card.closed > :not(h2):not(.mx-type-head){display:none}
 .mx-type.closed > :not(.mx-type-head){display:none}
 .closed .mx-fold{transform:rotate(-90deg)}
+
+/* === Amélioration visuelle tableaux stats === */
+.mx-table thead th{background:#f3f4f6;border-bottom:2px solid var(--mx-border);color:#1d2327}
+.mx-table tbody tr:nth-child(even){background:#fafbfc}
+.mx-table tbody tr:hover{background:#eef4fb}
+.mx-table td:first-child{font-weight:600;color:#1d2327}
+.mx-table td.num{font-weight:600}
+.mx-section-head h3{position:relative;padding-left:12px}
+.mx-section-head h3::before{content:"";position:absolute;left:0;top:1px;bottom:1px;width:3px;border-radius:2px;background:#2271b1}
+.mx-section + .mx-section{margin-top:4px}
