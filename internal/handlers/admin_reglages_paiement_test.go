@@ -15,9 +15,6 @@ func TestAdminReglagesPaiement(t *testing.T) {
 
 	form := url.Values{}
 	form.Set("csrf", app.adminCSRF())
-	form.Set("maintenance", "0")
-	form.Set("maintenance_message", "")
-	form.Set("whatsapp", "2250705087507")
 	form.Set("paiement_orange_on", "1")
 	form.Set("paiement_orange_numero", "0705087507")
 	form.Set("paiement_mtn_on", "1")
@@ -25,7 +22,7 @@ func TestAdminReglagesPaiement(t *testing.T) {
 	form.Set("paiement_cod_on", "1")
 	// wave / moov volontairement décochés
 
-	req := httptest.NewRequest(http.MethodPost, "/admin/reglages", strings.NewReader(form.Encode()))
+	req := httptest.NewRequest(http.MethodPost, "/admin/reglages?vue=paiement", strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.SetBasicAuth("admin", "test1234")
 	rec := httptest.NewRecorder()
@@ -35,7 +32,7 @@ func TestAdminReglagesPaiement(t *testing.T) {
 	}
 
 	// Relecture : GET affiche les valeurs enregistrées.
-	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages", nil)
+	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages?vue=paiement", nil)
 	req2.SetBasicAuth("admin", "test1234")
 	rec2 := httptest.NewRecorder()
 	app.AdminReglages(rec2, req2)

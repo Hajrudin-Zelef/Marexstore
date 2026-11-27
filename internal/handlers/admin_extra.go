@@ -788,10 +788,18 @@ func (a *App) AdminTypes(w http.ResponseWriter, r *http.Request) {
 <div class="mx-grid mx-types">`+cards.String()+`</div>`, r))
 }
 
-// AdminReglages : maintenance + WhatsApp (appliqué au redémarrage).
+// AdminReglages : 4 onglets (?vue=boutique|contact|paiement|notifications),
+// chacun avec son formulaire et son enregistrement. Un onglet ne touche
+// jamais les clés des autres (pas d'écrasement par champ absent).
 func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
 		return
+	}
+	vue := r.URL.Query().Get("vue")
+	switch vue {
+	case "contact", "paiement", "notifications":
+	default:
+		vue = "boutique"
 	}
 	get := func(k, def string) string {
 		var v string
@@ -808,34 +816,43 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 		set := func(k, v string) {
 			_, _ = a.DB.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
 		}
-		maint := "0"
-		if r.FormValue("maintenance") == "1" {
-			maint = "1"
-		}
-		set("maintenance", maint)
-		set("maintenance_message", strings.TrimSpace(r.FormValue("maintenance_message")))
-		set("whatsapp", strings.TrimSpace(r.FormValue("whatsapp")))
-
-		payOn := func(name string) string {
-			if r.FormValue(name) == "1" {
-				return "1"
+		detail := vue
+		switch vue {
+		case "boutique":
+			maint := "0"
+			if r.FormValue("maintenance") == "1" {
+				maint = "1"
 			}
-			return "0"
+			set("maintenance", maint)
+			set("maintenance_message", strings.TrimSpace(r.FormValue("maintenance_message")))
+			detail = "maintenance=" + maint
+		case "contact":
+			set("whatsapp", strings.TrimSpace(r.FormValue("whatsapp")))
+			detail = "whatsapp"
+		case "paiement":
+			payOn := func(name string) string {
+				if r.FormValue(name) == "1" {
+					return "1"
+				}
+				return "0"
+			}
+			set("paiement_orange_on", payOn("paiement_orange_on"))
+			set("paiement_orange_numero", strings.TrimSpace(r.FormValue("paiement_orange_numero")))
+			set("paiement_mtn_on", payOn("paiement_mtn_on"))
+			set("paiement_mtn_numero", strings.TrimSpace(r.FormValue("paiement_mtn_numero")))
+			set("paiement_wave_on", payOn("paiement_wave_on"))
+			set("paiement_wave_numero", strings.TrimSpace(r.FormValue("paiement_wave_numero")))
+			set("paiement_moov_on", payOn("paiement_moov_on"))
+			set("paiement_moov_numero", strings.TrimSpace(r.FormValue("paiement_moov_numero")))
+			set("paiement_cod_on", payOn("paiement_cod_on"))
+			detail = "paiement"
+		case "notifications":
+			set("notif_numero", strings.TrimSpace(r.FormValue("notif_numero")))
+			detail = "notif_numero"
 		}
-		set("paiement_orange_on", payOn("paiement_orange_on"))
-		set("paiement_orange_numero", strings.TrimSpace(r.FormValue("paiement_orange_numero")))
-		set("paiement_mtn_on", payOn("paiement_mtn_on"))
-		set("paiement_mtn_numero", strings.TrimSpace(r.FormValue("paiement_mtn_numero")))
-		set("paiement_wave_on", payOn("paiement_wave_on"))
-		set("paiement_wave_numero", strings.TrimSpace(r.FormValue("paiement_wave_numero")))
-		set("paiement_moov_on", payOn("paiement_moov_on"))
-		set("paiement_moov_numero", strings.TrimSpace(r.FormValue("paiement_moov_numero")))
-		set("paiement_cod_on", payOn("paiement_cod_on"))
 
-		set("notif_numero", strings.TrimSpace(r.FormValue("notif_numero")))
-
-		a.auditAdmin(r, "reglages.enregistrer", "maintenance="+maint)
-		http.Redirect(w, r, "/admin/reglages?msg=R%C3%A9glages+enregistr%C3%A9s", http.StatusSeeOther)
+		a.auditAdmin(r, "reglages.enregistrer", detail)
+		http.Redirect(w, r, "/admin/reglages?vue="+vue+"&msg=R%C3%A9glages+enregistr%C3%A9s", http.StatusSeeOther)
 		return
 	}
 
@@ -862,14 +879,47 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var b strings.Builder
-	b.WriteString(`<form method="post"><input type="hidden" name="csrf" value="` + a.adminCSRF() + `">`)
-	b.WriteString(reglagesSectionBoutique(maint, mmsg))
-	b.WriteString(reglagesSectionContact(wa))
-	b.WriteString(reglagesSectionPaiement(payOrangeOn, payOrangeNum, payMtnOn, payMtnNum, payWaveOn, payWaveNum, payMoovOn, payMoovNum, payCodOn))
-	b.WriteString(`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`)
-	b.WriteString(reglagesSectionNotifications(notifNumero, stockReportLink))
+	b.WriteString(reglagesTabs(vue))
+	formFor := func(inner string) string {
+		return `<form method="post" action="/admin/reglages?vue=` + vue + `"><input type="hidden" name="csrf" value="` + a.adminCSRF() + `">` + inner +
+			`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form>`
+	}
+	switch vue {
+	case "contact":
+		b.WriteString(formFor(reglagesSectionContact(wa)))
+	case "paiement":
+		b.WriteString(formFor(reglagesSectionPaiement(payOrangeOn, payOrangeNum, payMtnOn, payMtnNum, payWaveOn, payWaveNum, payMoovOn, payMoovNum, payCodOn)))
+	case "notifications":
+		b.WriteString(reglagesSectionNotifications(notifNumero, stockReportLink, a.adminCSRF(), vue))
+	default:
+		b.WriteString(status)
+		b.WriteString(formFor(reglagesSectionBoutique(maint, mmsg)))
+	}
 
-	a.write(w, 200, a.adminPage("Réglages", "reglages", status+b.String(), r))
+	a.write(w, 200, a.adminPage("Réglages", "reglages", b.String(), r))
+}
+
+// reglagesTabs : onglets des 4 blocs (même style que mx-views, sans compteurs).
+func reglagesTabs(cur string) string {
+	tabs := []struct{ key, label string }{
+		{"boutique", "Boutique"},
+		{"contact", "Contact"},
+		{"paiement", "Paiement"},
+		{"notifications", "Notifications"},
+	}
+	var b strings.Builder
+	b.WriteString(`<ul class="mx-views">`)
+	for i, t := range tabs {
+		if i > 0 {
+			b.WriteString(`<li aria-hidden="true">|</li>`)
+		}
+		cls := ""
+		if t.key == cur {
+			cls = ` class="on"`
+		}
+		fmt.Fprintf(&b, `<li><a href="/admin/reglages?vue=%s"%s>%s</a></li>`, t.key, cls, t.label)
+	}
+	return b.String() + `</ul>`
 }
 
 // reglagesSectionBoutique : bloc "Boutique" (mode maintenance + message).
@@ -953,14 +1003,18 @@ func (a *App) buildStockReportWaLink(numero string) string {
 	return "https://wa.me/" + render.Esc(strings.TrimSpace(numero)) + "?text=" + escQForWa(b.String())
 }
 
-// reglagesSectionNotifications : bloc "Notifications" (rapport stock bas).
-func reglagesSectionNotifications(numero, waLink string) string {
-	return `<div class="mx-fsec" style="max-width:640px"><h3>Notifications</h3>
+// reglagesSectionNotifications : bloc "Notifications" (rapport stock bas),
+// avec son propre formulaire (le champ doit être envoyé, sinon le numéro
+// ne persiste jamais).
+func reglagesSectionNotifications(numero, waLink, csrf, vue string) string {
+	return `<form method="post" action="/admin/reglages?vue=` + vue + `"><input type="hidden" name="csrf" value="` + csrf + `">` +
+		`<div class="mx-fsec" style="max-width:640px"><h3>Notifications</h3>
 <div class="mx-fgrid"><label class="span2">Numéro destinataire des alertes <input name="notif_numero" value="` + render.Esc(numero) + `"></label></div>
 <p class="hint">Par défaut, le numéro WhatsApp de Contact. Modifie-le ici pour envoyer les alertes à un autre numéro.</p>
 <p class="hint">Génère un message listant les produits en rupture et en stock faible (≤3), à envoyer manuellement.</p>
-<a class="mx-btn primary" target="_blank" rel="noopener" href="` + waLink + `">📋 Envoyer le rapport stock bas</a>
-</div>`
+<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button>
+<a class="mx-btn ghost" target="_blank" rel="noopener" href="` + waLink + `">📋 Envoyer le rapport stock bas</a></div>
+</div></form>`
 }
 
 // reglagesSectionPaiement : bloc "Paiement" (Orange Money, MTN MoMo, Wave, Moov Money, à la livraison).

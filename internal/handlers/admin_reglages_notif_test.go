@@ -23,10 +23,8 @@ func TestAdminReglagesNotificationsStock(t *testing.T) {
 
 	form := url.Values{}
 	form.Set("csrf", app.adminCSRF())
-	form.Set("maintenance", "0")
-	form.Set("whatsapp", "2250705087507")
 	form.Set("notif_numero", "2250102030405")
-	req := httptest.NewRequest(http.MethodPost, "/admin/reglages", strings.NewReader(form.Encode()))
+	req := httptest.NewRequest(http.MethodPost, "/admin/reglages?vue=notifications", strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.SetBasicAuth("admin", "test1234")
 	rec := httptest.NewRecorder()
@@ -35,7 +33,7 @@ func TestAdminReglagesNotificationsStock(t *testing.T) {
 		t.Fatalf("enregistrement : %d", rec.Code)
 	}
 
-	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages", nil)
+	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages?vue=notifications", nil)
 	req2.SetBasicAuth("admin", "test1234")
 	rec2 := httptest.NewRecorder()
 	app.AdminReglages(rec2, req2)
@@ -61,15 +59,14 @@ func TestAdminReglagesNotificationsEchappement(t *testing.T) {
 	app, _ := testAppDesign(t)
 	form := url.Values{}
 	form.Set("csrf", app.adminCSRF())
-	form.Set("maintenance", "0")
 	form.Set("notif_numero", `225"onmouseover="alert(1)`)
-	req := httptest.NewRequest(http.MethodPost, "/admin/reglages", strings.NewReader(form.Encode()))
+	req := httptest.NewRequest(http.MethodPost, "/admin/reglages?vue=notifications", strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.SetBasicAuth("admin", "test1234")
 	rec := httptest.NewRecorder()
 	app.AdminReglages(rec, req)
 
-	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages", nil)
+	req2 := httptest.NewRequest(http.MethodGet, "/admin/reglages?vue=notifications", nil)
 	req2.SetBasicAuth("admin", "test1234")
 	rec2 := httptest.NewRecorder()
 	app.AdminReglages(rec2, req2)
