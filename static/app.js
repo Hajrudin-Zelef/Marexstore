@@ -242,7 +242,7 @@
       var rem = e.target.closest('[data-cart-remove]');
       if (rem) { cart.splice(+rem.getAttribute('data-cart-remove'), 1); saveCart(cart); renderCart(); return; }
     });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeCart(); closeAuth(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAvatarMenu(); closeCart(); closeAuth(); } });
     document.addEventListener('input', function (e) {
       if (e.target.closest && e.target.closest('[data-promo-input]')) { renderCart(); }
     });
@@ -273,14 +273,37 @@
     });
     document.querySelectorAll('[data-auth-close]').forEach(function (b) { b.addEventListener('click', closeAuth); });
     if (authOverlay) authOverlay.addEventListener('click', closeAuth);
+    function closeAvatarMenu() {
+      var m = document.querySelector('[data-avatar-menu]');
+      if (m) m.hidden = true;
+      document.querySelectorAll('[data-avatar]').forEach(function (a) { a.setAttribute('aria-expanded', 'false'); });
+    }
+    function toggleAvatarMenu(opener) {
+      var m = document.querySelector('[data-avatar-menu]');
+      if (!m) return;
+      var open = m.hidden;
+      closeAvatarMenu();
+      if (open) { m.hidden = false; opener.setAttribute('aria-expanded', 'true'); }
+    }
     document.addEventListener('click', function (e) {
       var opener = e.target.closest('[data-auth-open]');
       if (opener) {
-        if (loadAcct() && sessionOn()) return; // connecté : le lien mène à compte.html
+        if (loadAcct() && sessionOn()) {
+          // Connecté + avatar : dropdown au lieu de naviguer. Les autres
+          // liens (ex. topbar) mènent à compte.html comme avant.
+          if (opener.hasAttribute('data-avatar')) {
+            e.preventDefault();
+            toggleAvatarMenu(opener);
+            return;
+          }
+          return; // connecté : le lien mène à compte.html
+        }
         e.preventDefault();
         openAuth(opener.getAttribute('data-auth-tab') || 'login');
         return;
       }
+      var menu = document.querySelector('[data-avatar-menu]');
+      if (menu && !menu.hidden && !e.target.closest('[data-avatar-menu]')) closeAvatarMenu();
     });
 
     /* ---------- Suivi de commande : prépare le message WhatsApp ---------- */
@@ -1245,7 +1268,7 @@
       });
     }
     document.querySelectorAll('[data-logout]').forEach(function (b) {
-      b.addEventListener('click', function () { saveSession(false); renderAcct(); showToast('Vous êtes déconnecté.'); });
+      b.addEventListener('click', function () { saveSession(false); closeAvatarMenu(); renderAcct(); showToast('Vous êtes déconnecté.'); });
     });
     var infosForm = document.querySelector('[data-infos-form]');
     if (infosForm) {

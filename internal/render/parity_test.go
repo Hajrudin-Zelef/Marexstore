@@ -48,6 +48,7 @@ var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button
 var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
 var rePromoInput = regexp.MustCompile(`<label class="drawer-promo"[^>]*><input data-promo-input[^>]*></label>\n?`)
+var reAvatarMenu = regexp.MustCompile(`<div class="avatar-menu"[^>]*>.*?</div>\n?`)
 var reViewBtn = regexp.MustCompile(`<button type="button" class="[^"]*" data-view="([a-z]+)">`)
 var reGamme = regexp.MustCompile(`(?s)<div class="gamme">.*?(<div style="margin-top:12px)`)
 var reGalCarousel = regexp.MustCompile(`(?s)<div class="gal" data-gal>.*?<img src="([^"]*)"[^>]*data-gal-main>.*?</div></div>`)
@@ -76,6 +77,11 @@ func normPage(s string) string {
 	// retiré avant comparaison — vérifié par E2E Playwright (input présent,
 	// code repris dans le lien WhatsApp, sans erreur JS).
 	s = rePromoInput.ReplaceAllString(s, "")
+	// Menu avatar (ajout volontaire) : même traitement — vérifié par
+	// TestTopAvatarMenu/TestHeaderAvatarMenu + E2E Playwright (ouverture,
+	// navigation, déconnexion).
+	s = reAvatarMenu.ReplaceAllString(s, "")
+	s = strings.ReplaceAll(s, ` data-auth-open data-avatar aria-haspopup="true" aria-expanded="false"`, ` data-auth-open`)
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
 	// « Voir tous » du méga-menu : pointe maintenant vers la page catégorie

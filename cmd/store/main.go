@@ -129,6 +129,7 @@ func main() {
 		"/mentions-legales.html":            {"mentions-legales", "Mentions légales"},
 		"/contact.html":                     {"contact", "Contact"},
 		"/contactez-nous.html":              {"contactez-nous", "Contactez-nous"},
+		"/faq.html":                         {"faq", "Questions fréquentes"},
 		"/devis.html":                       {"devis", "Demande de devis"},
 		"/suivi-commande.html":              {"suivi-commande", "Suivi de commande"},
 		"/compte.html":                      {"compte", "Mon compte"},
