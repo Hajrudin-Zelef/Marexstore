@@ -57,7 +57,9 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 	var st, moy, client, at string
 	var tot sql.NullInt64
 	var uid sql.NullInt64
-	err := a.DB.QueryRow(`SELECT statut,moyen_paiement,client_json,created_at,total,user_id FROM orders WHERE id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid)
+	var promoCode string
+	var remise int64
+	err := a.DB.QueryRow(`SELECT statut,moyen_paiement,client_json,created_at,total,user_id,COALESCE(promo_code,''),COALESCE(remise,0) FROM orders WHERE id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid, &promoCode, &remise)
 	if err != nil {
 		http.NotFound(w, r)
 		return
@@ -87,8 +89,17 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer tx.Rollback()
-		if _, err := tx.Exec(`UPDATE orders SET statut=? WHERE id=?`, vers, id); err != nil {
+		// Compare-and-swap : la transition ne s'applique que si la commande
+		// est toujours dans l'état lu en début de requête. Deux admins
+		// qui valident simultanément : un seul gagne, l'autre reçoit une
+		// erreur honnête au lieu d'un double événement contradictoire.
+		resUpd, err := tx.Exec(`UPDATE orders SET statut=? WHERE id=? AND statut=?`, vers, id, st)
+		if err != nil {
 			http.Error(w, "impossible", 500)
+			return
+		}
+		if n, _ := resUpd.RowsAffected(); n != 1 {
+			http.Redirect(w, r, "/admin/commandes/"+strconv.FormatInt(id, 10)+"?err=Commande+modifi%C3%A9e+entre-temps+(rechargez+la+page)", http.StatusSeeOther)
 			return
 		}
 		if _, err := tx.Exec(`INSERT INTO order_events(order_id,de_statut,vers_statut,par) VALUES(?,?,?,?)`, id, st, vers, "admin"); err != nil {
@@ -208,13 +219,17 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 			cli = fmt.Sprintf(`<a href="/admin/clients/%d">%s</a> (%s)`, uid.Int64, render.Esc(nm), render.Esc(em))
 		}
 	}
+	promoLigne := ""
+	if promoCode != "" && remise > 0 {
+		promoLigne = `<br>Promo : <strong>` + render.Esc(promoCode) + `</strong> (−` + fmtMoney(remise) + ` F CFA)`
+	}
 	a.write(w, 200, a.adminPage(fmt.Sprintf("Commande #%d", id), "commandes",
 		stepper.String()+`
 <div class="mx-cols"><div>
 <div class="mx-postbox"><h2>Lignes</h2><div class="in"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Qté</th><th>Prix unit.</th><th>Total ligne</th></tr>`+items.String()+`</table></div>
 <p style="text-align:right">Total des lignes : <strong>`+fmtMoney(lignesTotal)+` F CFA</strong></p></div></div>
 <div class="mx-postbox"><h2>Historique</h2><div class="in"><ul class="mx-timeline">`+tl.String()+`</ul></div></div>
-</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(moy)+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
+</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(moy)+promoLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
 <div class="mx-postbox mx-pub"><h2>Statut</h2><div class="in"><p>Actuel : `+statutBadge(st)+`</p>`+btns.String()+`</div></div></div></div>`, r))
 }
 
@@ -1018,6 +1033,20 @@ func (a *App) saveGallery(r *http.Request, slug string, existing []string) strin
 	if err != nil {
 		return err.Error()
 	}
+	// Plafond atteint : les fichiers surnuméraires sont écartés sans
+	// erreur — on le dit honnêtement au lieu de les jeter en silence.
+	avert := ""
+	if r.MultipartForm != nil {
+		valides := 0
+		for _, h := range r.MultipartForm.File["photos"] {
+			if h != nil && strings.TrimSpace(h.Filename) != "" {
+				valides++
+			}
+		}
+		if reste := valides - len(up); reste > 0 {
+			avert = fmt.Sprintf("%d photo(s) ignorée(s), 4 maximum", reste)
+		}
+	}
 	merged := mergeGallery(kept, map[string]bool{}, up)
 	b, _ := json.Marshal(merged)
 	if _, err := a.DB.Exec(`UPDATE products SET images_json=? WHERE slug=?`, string(b), slug); err != nil {
@@ -1032,7 +1061,7 @@ func (a *App) saveGallery(r *http.Request, slug string, existing []string) strin
 			os.Remove(s) // best-effort
 		}
 	}
-	return ""
+	return avert
 }
 
 // saveUpload : photo produit (JPG/PNG/WebP ≤ 5 Mo) → images/<slug>.<ext>.

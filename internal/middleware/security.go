@@ -4,7 +4,9 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/hex"
+	"net"
 	"net/http"
+	"strings"
 	"sync"
 	"time"
 )
@@ -84,9 +86,21 @@ func RateLimit(rps int, burst int) func(http.Handler) http.Handler {
 	}()
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			ip := r.Header.Get("X-Forwarded-For")
+			// Clé = IP cliente réelle : X-Forwarded-For (nginx), sinon
+			// X-Real-IP, sinon l'hôte de RemoteAddr SANS le port éphémère
+			// (chaque connexion TCP a un port différent : cléer sur
+			// RemoteAddr brut donne un seau par connexion, donc aucun
+			// plafonnement réel).
+			ip := strings.TrimSpace(strings.SplitN(r.Header.Get("X-Forwarded-For"), ",", 2)[0])
 			if ip == "" {
-				ip = r.RemoteAddr
+				ip = strings.TrimSpace(r.Header.Get("X-Real-IP"))
+			}
+			if ip == "" {
+				if h, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
+					ip = h
+				} else {
+					ip = r.RemoteAddr
+				}
 			}
 			mu.Lock()
 			b, ok := buckets[ip]
