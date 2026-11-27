@@ -776,7 +776,7 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 			}
 			cl := clientLabel(client)
 			fmt.Fprintf(&tr, `<tr><td><a href="/admin/commandes/%d"><strong>#%d</strong></a><div class="row-actions"><a href="/admin/commandes/%d">Détail</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
-				id, id, id, render.Esc(at), render.Esc(moyen), t, render.Esc(cl), statutBadge(statut))
+				id, id, id, render.Esc(at), render.Esc(mxLabel(mxPaiementLabels, moyen)), t, render.Esc(cl), statutBadge(statut))
 		}
 	}
 	a.write(w, 200, a.adminPage("Commandes", "commandes",

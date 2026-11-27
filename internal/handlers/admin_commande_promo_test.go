@@ -14,7 +14,7 @@ import (
 // en porte une (sinon rien ne change à l'affichage).
 func TestAdminCommandeAffichePromo(t *testing.T) {
 	app, database := testAppDesign(t)
-	if _, err := database.Exec(`INSERT INTO orders(statut,moyen_paiement,total,client_json,promo_code,remise) VALUES('devis','whatsapp',17000,'{}','REMISE3000',3000)`); err != nil {
+	if _, err := database.Exec(`INSERT INTO orders(statut,moyen_paiement,total,client_json,promo_code,remise) VALUES('devis','moov',17000,'{}','REMISE3000',3000)`); err != nil {
 		t.Fatal(err)
 	}
 	req := httptest.NewRequest(http.MethodGet, "/admin/commandes/1", nil)
@@ -27,7 +27,7 @@ func TestAdminCommandeAffichePromo(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("fiche : %d", rec.Code)
 	}
-	for _, want := range []string{"REMISE3000", "3 000"} {
+	for _, want := range []string{"REMISE3000", "3 000", "Moov Money"} {
 		if !strings.Contains(rec.Body.String(), want) {
 			t.Fatalf("promo absente de la fiche : %q manquant", want)
 		}

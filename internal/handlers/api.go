@@ -114,10 +114,21 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "panier vide", http.StatusBadRequest)
 		return
 	}
-	moyen := r.FormValue("moyen")
-	switch moyen {
-	case "whatsapp", "wave", "orange", "mtn", "livraison", "virement":
-	default:
+	moyen := strings.TrimSpace(r.FormValue("moyen"))
+	// Clés acceptées : whatsapp (canal historique) + moyens cochés en admin
+	// (+ livraison/virement, canaux legacy). Un moyen désactivé après
+	// chargement du panier est refusé : repli explicite sur whatsapp,
+	// jamais de confiance aveugle au client.
+	okMoyen := moyen == "whatsapp" || moyen == "livraison" || moyen == "virement"
+	if !okMoyen {
+		for _, m := range a.moyensPaiementActifs() {
+			if m.Cle == moyen {
+				okMoyen = true
+				break
+			}
+		}
+	}
+	if !okMoyen {
 		moyen = "whatsapp"
 	}
 	// Promo : code client optionnel, validé côté serveur (actif, non

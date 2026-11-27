@@ -46,7 +46,8 @@
     if (ord && ord.getAttribute('href')) {
       var items = cart().map(function (it) { return it.slug + 'x' + it.qty; }).join(',');
       var pi = document.querySelector('[data-promo-input]');
-      post('/api/commande', { items: items, moyen: 'whatsapp', promo: pi ? pi.value.trim() : '' });
+      var pr = document.querySelector('input[name="cart-paiement"]:checked');
+      post('/api/commande', { items: items, moyen: pr ? pr.value : 'whatsapp', promo: pi ? pi.value.trim() : '' });
       return;
     }
     var lo = e.target.closest ? e.target.closest('[data-logout]') : null;

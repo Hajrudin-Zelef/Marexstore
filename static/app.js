@@ -203,10 +203,13 @@
         else {
           order.classList.remove('disabled');
           var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
-          var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n') + '\nTotal : ' + fmt(cartSubtotal());
+          var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n');
           var promoInp = document.querySelector('[data-promo-input]');
           var promoCode = promoInp ? promoInp.value.trim().toUpperCase() : '';
-          if (promoCode) { msg += '\nCode promo : ' + promoCode + ' (remise appliquée par la boutique)'; }
+          // Total boutique recalculé serveur (remise déduite) : le message
+          // affiche le sous-total + le code, jamais un total faux.
+          if (promoCode) { msg += '\nSous-total : ' + fmt(cartSubtotal()) + '\nCode promo : ' + promoCode + ' (remise appliquée par la boutique)'; }
+          else { msg += '\nTotal : ' + fmt(cartSubtotal()); }
           var p = paiementChoisi ? libellePaiement(paiementChoisi) : null;
           if (p) {
             msg += '\nPaiement : ' + p.libelle + (p.numero ? ' — numéro ' + p.numero : '');
