@@ -204,6 +204,9 @@
           order.classList.remove('disabled');
           var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
           var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n') + '\nTotal : ' + fmt(cartSubtotal());
+          var promoInp = document.querySelector('[data-promo-input]');
+          var promoCode = promoInp ? promoInp.value.trim().toUpperCase() : '';
+          if (promoCode) { msg += '\nCode promo : ' + promoCode + ' (remise appliquée par la boutique)'; }
           var p = paiementChoisi ? libellePaiement(paiementChoisi) : null;
           if (p) {
             msg += '\nPaiement : ' + p.libelle + (p.numero ? ' — numéro ' + p.numero : '');
@@ -240,6 +243,9 @@
       if (rem) { cart.splice(+rem.getAttribute('data-cart-remove'), 1); saveCart(cart); renderCart(); return; }
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeCart(); closeAuth(); } });
+    document.addEventListener('input', function (e) {
+      if (e.target.closest && e.target.closest('[data-promo-input]')) { renderCart(); }
+    });
     renderCart();
 
     /* ---------- Modale Connexion / Créer un compte ---------- */

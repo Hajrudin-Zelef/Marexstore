@@ -45,7 +45,8 @@
     var ord = e.target.closest ? e.target.closest('[data-cart-order]') : null;
     if (ord && ord.getAttribute('href')) {
       var items = cart().map(function (it) { return it.slug + 'x' + it.qty; }).join(',');
-      post('/api/commande', { items: items, moyen: 'whatsapp' });
+      var pi = document.querySelector('[data-promo-input]');
+      post('/api/commande', { items: items, moyen: 'whatsapp', promo: pi ? pi.value.trim() : '' });
       return;
     }
     var lo = e.target.closest ? e.target.closest('[data-logout]') : null;

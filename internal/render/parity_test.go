@@ -47,6 +47,7 @@ var reThemeJs = regexp.MustCompile(`<script src="[^"]*theme\.js[^"]*"></script>\
 var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button>`)
 var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
+var rePromoInput = regexp.MustCompile(`<label class="drawer-promo"[^>]*><input data-promo-input[^>]*></label>\n?`)
 var reViewBtn = regexp.MustCompile(`<button type="button" class="[^"]*" data-view="([a-z]+)">`)
 var reGamme = regexp.MustCompile(`(?s)<div class="gamme">.*?(<div style="margin-top:12px)`)
 var reGalCarousel = regexp.MustCompile(`(?s)<div class="gal" data-gal>.*?<img src="([^"]*)"[^>]*data-gal-main>.*?</div></div>`)
@@ -71,6 +72,10 @@ func normPage(s string) string {
 	s = reViewBtn.ReplaceAllString(s, `<button data-view="$1">`)
 	// Newsletter : <form action="mailto:"> remplacé par JS (même UX, sans Mixed Content).
 	s = reNewsletter.ReplaceAllString(s, `<form>NEWSLETTER</form>`)
+	// Champ code promo du panier (ajout volontaire) : absent de la v3.25,
+	// retiré avant comparaison — vérifié par E2E Playwright (input présent,
+	// code repris dans le lien WhatsApp, sans erreur JS).
+	s = rePromoInput.ReplaceAllString(s, "")
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
 	// « Voir tous » du méga-menu : pointe maintenant vers la page catégorie

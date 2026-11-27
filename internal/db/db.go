@@ -113,7 +113,33 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 			}
 		}
 	}
-	// Tables admin (traçabilité commandes + réglages boutique).
+	// Commandes : traçabilité promo (code appliqué + remise accordée).
+	ocolumns := map[string]bool{}
+	if orows, err := d.Query(`PRAGMA table_info(orders)`); err == nil {
+		defer orows.Close()
+		for orows.Next() {
+			var cid int
+			var n, typ string
+			var nn, dflt, pk any
+			if err := orows.Scan(&cid, &n, &typ, &nn, &dflt, &pk); err != nil {
+				return err
+			}
+			ocolumns[n] = true
+		}
+	}
+	owant := map[string]string{
+		"promo_code": "TEXT NOT NULL DEFAULT ''",
+		"remise":     "INTEGER NOT NULL DEFAULT 0",
+	}
+	for col, typ := range owant {
+		if !ocolumns[col] {
+			if _, err := d.Exec(fmt.Sprintf("ALTER TABLE orders ADD COLUMN %s %s", col, typ)); err != nil {
+				if !strings.Contains(err.Error(), "duplicate column") {
+					return fmt.Errorf("col orders.%s: %w", col, err)
+				}
+			}
+		}
+	}
 	for _, q := range []string{
 		`CREATE TABLE IF NOT EXISTS order_events(id INTEGER PRIMARY KEY AUTOINCREMENT, order_id INTEGER NOT NULL, de_statut TEXT NOT NULL DEFAULT '', vers_statut TEXT NOT NULL, par TEXT NOT NULL DEFAULT 'admin', cree_le TEXT NOT NULL DEFAULT (datetime('now','localtime')))`,
 		`CREATE TABLE IF NOT EXISTS settings(nom TEXT PRIMARY KEY, valeur TEXT NOT NULL DEFAULT '')`,

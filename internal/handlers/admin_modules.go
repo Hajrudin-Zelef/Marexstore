@@ -653,7 +653,7 @@ func (a *App) AdminStats(w http.ResponseWriter, r *http.Request) {
 				ptr = append(ptr, []string{render.Esc(code), render.Esc(valLb), strconv.FormatInt(usage, 10) + " / " + lim, render.Esc(exp), render.Esc(etat)})
 			}
 		}
-		inner.WriteString(`<p style="color:#646970;margin:6px 0 12px">Gestion dans <a href="/admin/marketing/promos">Marketing &gt; Codes promo</a>. Les codes ne sont pas encore appliqués au panier : les utilisations restent à 0.</p>`)
+		inner.WriteString(`<p style="color:#646970;margin:6px 0 12px">Gestion dans <a href="/admin/marketing/promos">Marketing &gt; Codes promo</a>. Les codes saisis par les clients au panier sont appliqués automatiquement et les utilisations sont comptées.</p>`)
 		if len(ptr) == 0 {
 			inner.WriteString(mxEmpty("Aucun code promo créé."))
 		} else {
@@ -727,7 +727,7 @@ func (a *App) AdminMarketing(w http.ResponseWriter, r *http.Request) {
 	n := a.statInt(`SELECT COUNT(*) FROM promos WHERE actif=1`)
 	inner := mxPageHead("Vue d'ensemble", "Codes promo et opérations marketing de la boutique.") +
 		`<div class="mx-kpis"><div class="mx-kpi" style="--mx-kpi:#00a32a"><div class="mx-kpi-ic">` + mxIcoInfo + `</div><div class="mx-kpi-tx"><h3 class="lb">Codes promo actifs</h3><div class="vl big">` + strconv.FormatInt(n, 10) + `</div></div></div></div>` +
-		mxSection("Codes promo", "Créer, suivre et supprimer les codes", mxCard(`<div class="mx-card-pad"><a class="mx-btn" href="/admin/marketing/promos">Gérer les codes promo</a><p style="color:#646970;margin:10px 0 0">Les codes ne sont pas encore appliqués au panier.</p></div>`))
+		mxSection("Codes promo", "Créer, suivre et supprimer les codes", mxCard(`<div class="mx-card-pad"><a class="mx-btn" href="/admin/marketing/promos">Gérer les codes promo</a><p style="color:#646970;margin:10px 0 0">Les codes saisis au panier sont appliqués automatiquement.</p></div>`))
 	a.writeAdmin(w, r, "Marketing", "marketing", inner)
 }
 

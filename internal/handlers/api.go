@@ -82,11 +82,15 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	var items []item
 	var total int64
 	for _, part := range strings.Split(r.FormValue("items"), ",") {
-		kv := strings.SplitN(strings.TrimSpace(part), "x", 2)
-		if len(kv) != 2 {
+		// Le séparateur est le DERNIER "x" : les slugs peuvent eux-mêmes
+		// contenir des "x" (ex. lux-pad-ux → "lux-pad-uxx3").
+		piece := strings.TrimSpace(part)
+		sep := strings.LastIndex(piece, "x")
+		if sep < 0 {
 			continue
 		}
-		q, _ := strconv.Atoi(kv[1])
+		slug, sqty := piece[:sep], piece[sep+1:]
+		q, _ := strconv.Atoi(sqty)
 		if q < 1 {
 			q = 1
 		}
@@ -95,7 +99,7 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		}
 		var id int64
 		var prix sql.NullInt64
-		if err := a.DB.QueryRow(`SELECT id,COALESCE(prix_boutique,prix) FROM products WHERE slug=?`, kv[0]).Scan(&id, &prix); err != nil {
+		if err := a.DB.QueryRow(`SELECT id,COALESCE(prix_boutique,prix) FROM products WHERE slug=?`, slug).Scan(&id, &prix); err != nil {
 			continue
 		}
 		var p *int64
@@ -116,6 +120,37 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	default:
 		moyen = "whatsapp"
 	}
+	// Promo : code client optionnel, validé côté serveur (actif, non
+	// expiré, sous le plafond d'usage). Invalide/expiré/épuisé = ignoré
+	// sans erreur ; remise plafonnée au total (jamais de total négatif).
+	promoCode := ""
+	var remise int64
+	if pc := strings.ToUpper(strings.TrimSpace(r.FormValue("promo"))); pc != "" {
+		var typ, expire string
+		var valeur, usages int64
+		var limite sql.NullInt64
+		var actif int
+		if err := a.DB.QueryRow(`SELECT type,valeur,usage_count,limite,expire,actif FROM promos WHERE code=?`, pc).Scan(&typ, &valeur, &usages, &limite, &expire, &actif); err == nil && actif == 1 &&
+			(expire == "" || expire >= time.Now().Format("2006-01-02")) &&
+			(!limite.Valid || usages < limite.Int64) && valeur > 0 {
+			switch typ {
+			case "pourcentage":
+				if valeur > 100 {
+					valeur = 100
+				}
+				remise = total * valeur / 100
+			default:
+				remise = valeur
+			}
+			if remise > total {
+				remise = total
+			}
+			if remise > 0 {
+				promoCode = pc
+			}
+		}
+	}
+	total -= remise
 	client, _ := json.Marshal(map[string]string{"nom": r.FormValue("nom"), "tel": r.FormValue("tel")})
 	var uid any
 	if id := auth.CurrentUserID(a.DB, r); id != nil {
@@ -135,13 +170,19 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json) VALUES(?,?,?,?,?)`,
-		uid, "whatsapp_recu", moyen, total, string(client))
+	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json,promo_code,remise) VALUES(?,?,?,?,?,?,?)`,
+		uid, "whatsapp_recu", moyen, total, string(client), promoCode, remise)
 	if err != nil {
 		http.Error(w, "indisponible", 500)
 		return
 	}
 	oid, _ := res.LastInsertId()
+	if promoCode != "" {
+		if _, err := tx.Exec(`UPDATE promos SET usage_count=usage_count+1 WHERE code=?`, promoCode); err != nil {
+			http.Error(w, "indisponible", 500)
+			return
+		}
+	}
 	for _, it := range items {
 		var p any
 		if it.pr != nil {
