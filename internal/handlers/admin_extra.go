@@ -229,7 +229,7 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 <div class="mx-postbox"><h2>Lignes</h2><div class="in"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Qté</th><th>Prix unit.</th><th>Total ligne</th></tr>`+items.String()+`</table></div>
 <p style="text-align:right">Total des lignes : <strong>`+fmtMoney(lignesTotal)+` F CFA</strong></p></div></div>
 <div class="mx-postbox"><h2>Historique</h2><div class="in"><ul class="mx-timeline">`+tl.String()+`</ul></div></div>
-</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(moy)+promoLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
+</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(mxLabel(mxPaiementLabels, moy))+promoLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
 <div class="mx-postbox mx-pub"><h2>Statut</h2><div class="in"><p>Actuel : `+statutBadge(st)+`</p>`+btns.String()+`</div></div></div></div>`, r))
 }
 
