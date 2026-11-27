@@ -180,8 +180,25 @@ func MxDoc(title, active, current string, counts map[string]int, back, body stri
 </head><body class="mx"><div class="mx-shell">` +
 		MxSidebar(active, current, counts) +
 		`<div class="mx-scrim" data-side-close></div>` +
-		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button>` + back + `<h1>` + Esc(title) + `</h1><span class="sp"></span><a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
+		`<div class="mx-main"><div class="mx-top"><button class="mx-burger" type="button" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰</button>` + back + `<h1>` + Esc(title) + `</h1><span class="sp"></span>` + MxBell(counts) + `<a class="mx-btn ghost" href="/">Voir le site</a></div><div class="mx-body">` +
 		body + `</div></div></div><script src="/static/admin.js?v=11"></script></body></html>`
+}
+
+// MxBell : cloche d'alertes de la topbar (badge = commandes à traiter,
+// menu = raccourcis avec compteurs live). Zéro JS requis pour l'affichage
+// des chiffres : tout est rendu côté serveur à chaque page.
+func MxBell(counts map[string]int) string {
+	at, ru, sp := counts["a_traiter"], counts["ruptures"], counts["sansprix"]
+	badge := ""
+	if at > 0 {
+		badge = `<span class="mx-bell-nb">` + fmt.Sprint(at) + `</span>`
+	}
+	return `<button class="mx-bell" type="button" data-admin-bell aria-haspopup="true" aria-expanded="false" title="Alertes" aria-label="Alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>` + badge + `</button>` +
+		`<div class="mx-bell-menu" data-admin-notifs hidden>` +
+		`<a href="/admin/commandes"><strong>` + fmt.Sprint(at) + `</strong> commande(s) à traiter</a>` +
+		`<a href="/admin/produits?vue=rupture"><strong>` + fmt.Sprint(ru) + `</strong> rupture(s) de stock</a>` +
+		`<a href="/admin/produits?vue=sansprix"><strong>` + fmt.Sprint(sp) + `</strong> produit(s) sans prix</a>` +
+		`</div>`
 }
 
 // MxView : un onglet de vue (Tous/En stock/...) avec compteur.

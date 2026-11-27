@@ -76,6 +76,17 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-top{background:var(--mx-surface);border-bottom:1px solid var(--mx-border);padding:0 22px;height:56px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:40}
 .mx-top h1{font-size:18px;margin:0;font-weight:700;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mx-top .sp{flex:1}
+.mx-bell{position:relative;flex:none;width:36px;height:36px;border:1px solid var(--mx-border);border-radius:8px;background:#fff;color:var(--mx-ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.mx-bell:hover{border-color:var(--mx-accent);color:var(--mx-accent)}
+.mx-bell:focus-visible{outline:2px solid var(--mx-accent);outline-offset:2px}
+.mx-bell svg{width:19px;height:19px}
+.mx-bell-nb{position:absolute;top:-7px;right:-7px;background:var(--mx-red);color:#fff;border-radius:999px;min-width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;padding:0 4px}
+.mx-bell-menu{position:absolute;top:56px;right:22px;width:280px;background:#fff;border:1px solid var(--mx-border);border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:6px;z-index:60}
+.mx-bell-menu[hidden]{display:none}
+.mx-bell-menu a{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:6px;color:var(--mx-ink);text-decoration:none;font-size:13.5px}
+.mx-bell-menu a:hover{background:var(--mx-bg);text-decoration:none}
+.mx-bell-menu a strong{color:var(--mx-red)}
+.mx-bell-menu a:first-child strong{color:var(--mx-accent)}
 .mx-top .mx-btn{flex:none;white-space:nowrap}
 .mx-burger{display:none;border:1px solid var(--mx-border);background:#fff;border-radius:6px;padding:6px 10px;font-size:16px;cursor:pointer}
 /* Retour hiérarchique : discret, toujours à gauche du titre */
@@ -97,10 +108,13 @@ body.mx{background:var(--mx-bg);color:var(--mx-ink);font-family:Inter,-apple-sys
 .mx-card .sub{font-size:12.5px;color:var(--mx-muted)}
 .mx-card h2{margin:0 0 12px;font-size:15px}
 /* ---------- Vues (tabs) ---------- */
-.mx-views{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 12px;padding:0;list-style:none;font-size:13px}
-.mx-views a{color:var(--mx-accent);text-decoration:none;padding:4px 8px;border-radius:4px}
-.mx-views a.on{background:var(--mx-ink);color:#fff;font-weight:700}
+.mx-views{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 12px;padding:6px;list-style:none;font-size:13px;background:var(--mx-surface);border:1px solid var(--mx-border);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.mx-views a{color:var(--mx-muted);text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:600;transition:background .15s,color .15s}
+.mx-views a:hover{color:var(--mx-ink);background:var(--mx-bg);text-decoration:none}
+.mx-views a.on{background:var(--mx-ink);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.mx-views li[aria-hidden="true"]{color:var(--mx-border);align-self:center}
 .mx-views .c{color:var(--mx-muted);font-weight:400}
+.mx-views a.on .c{color:#fff;opacity:.75}
 /* ---------- Tables ---------- */
 .mx-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .mx-tools input[type=search],.mx-tools select{border:1px solid var(--mx-border);border-radius:6px;padding:7px 10px;font-size:13.5px;background:#fff;font-family:inherit}
@@ -173,6 +187,8 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-btn.ghost:hover{border-color:var(--mx-accent);color:var(--mx-accent)}
 .mx-btn.danger{background:var(--mx-red);border-color:var(--mx-red)}
 .mx-btn:disabled{opacity:.55;cursor:default}
+.mx-btn .mx-btn-logo{height:18px;width:auto;vertical-align:-4px;margin-right:6px;border-radius:4px}
+a.mx-btn{display:inline-flex;align-items:center}
 .mx-form label{display:block;font-size:13px;font-weight:600;margin:0 0 12px}
 .mx-form input[type=text],.mx-form input[type=number],.mx-form input[type=email],.mx-form input[type=url],.mx-form select,.mx-form textarea{width:100%;border:1px solid var(--mx-border);border-radius:6px;padding:8px 10px;font-size:13.5px;font-family:inherit;background:#fff;margin-top:4px}
 .mx-form textarea{resize:vertical}

@@ -92,6 +92,24 @@ func TestAdminReglagesLogosPaiement(t *testing.T) {
 	}
 }
 
+// Onglet notifications : boutons WhatsApp + Telegram avec logos, dans un
+// formulaire qui persiste le numéro.
+func TestAdminReglagesPartage(t *testing.T) {
+	app, _ := testAppDesign(t)
+	body := getReglages(t, app, "/admin/reglages?vue=notifications")
+	for _, want := range []string{
+		`src="/static/logos/partage-whatsapp.png"`,
+		`src="/static/logos/partage-telegram.jpg"`,
+		`https://wa.me/`,
+		`https://t.me/share/url?`,
+		`<form method="post" action="/admin/reglages?vue=notifications">`,
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("partage : %q manquant", want)
+		}
+	}
+}
+
 // POST par onglet : seules les clés de l'onglet sont touchées.
 func TestAdminReglagesPostParOnglet(t *testing.T) {
 	app, database := testAppDesign(t)

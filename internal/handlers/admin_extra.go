@@ -872,6 +872,7 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 
 	notifNumero := get("notif_numero", wa)
 	stockReportLink := a.buildStockReportWaLink(notifNumero)
+	stockReportTg := a.buildStockReportTgLink()
 
 	status := `<div class="mx-notice" style="margin-bottom:16px">Boutique <strong>en ligne</strong> — les visiteurs voient le catalogue normalement.</div>`
 	if maint == "1" {
@@ -890,7 +891,7 @@ func (a *App) AdminReglages(w http.ResponseWriter, r *http.Request) {
 	case "paiement":
 		b.WriteString(formFor(reglagesSectionPaiement(payOrangeOn, payOrangeNum, payMtnOn, payMtnNum, payWaveOn, payWaveNum, payMoovOn, payMoovNum, payCodOn)))
 	case "notifications":
-		b.WriteString(reglagesSectionNotifications(notifNumero, stockReportLink, a.adminCSRF(), vue))
+		b.WriteString(reglagesSectionNotifications(notifNumero, stockReportLink, stockReportTg, a.adminCSRF(), vue))
 	default:
 		b.WriteString(status)
 		b.WriteString(formFor(reglagesSectionBoutique(maint, mmsg)))
@@ -951,10 +952,9 @@ func escQForWa(s string) string {
 	return strings.ReplaceAll(q, "%2F", "/")
 }
 
-// buildStockReportWaLink : construit un lien wa.me prérempli listant les
-// produits en rupture et en stock faible (≤3), prêt à envoyer en un clic
-// depuis Réglages > Notifications.
-func (a *App) buildStockReportWaLink(numero string) string {
+// buildStockReportText : message listant les produits en rupture et en
+// stock faible (≤3). Le canal (WhatsApp / Telegram) est ajouté par l'appelant.
+func (a *App) buildStockReportText() string {
 	var b strings.Builder
 	b.WriteString("📋 Rapport stock — Marexstore\n")
 
@@ -998,22 +998,33 @@ func (a *App) buildStockReportWaLink(numero string) string {
 	for _, f := range faibles {
 		b.WriteString(fmt.Sprintf("- %s (%d)\n", f.nom, f.stock))
 	}
+	return b.String()
+}
 
+// buildStockReportWaLink : lien wa.me prérempli avec le rapport de stock.
+func (a *App) buildStockReportWaLink(numero string) string {
 	// numero vient d'un champ admin : échappé pour l'attribut href.
-	return "https://wa.me/" + render.Esc(strings.TrimSpace(numero)) + "?text=" + escQForWa(b.String())
+	return "https://wa.me/" + render.Esc(strings.TrimSpace(numero)) + "?text=" + escQForWa(a.buildStockReportText())
+}
+
+// buildStockReportTgLink : même rapport via le partage Telegram (sans bot,
+// sans numéro : le texte est prérempli, l'utilisateur choisit le destinataire).
+func (a *App) buildStockReportTgLink() string {
+	return "https://t.me/share/url?url=&text=" + escQForWa(a.buildStockReportText())
 }
 
 // reglagesSectionNotifications : bloc "Notifications" (rapport stock bas),
 // avec son propre formulaire (le champ doit être envoyé, sinon le numéro
 // ne persiste jamais).
-func reglagesSectionNotifications(numero, waLink, csrf, vue string) string {
+func reglagesSectionNotifications(numero, waLink, tgLink, csrf, vue string) string {
 	return `<form method="post" action="/admin/reglages?vue=` + vue + `"><input type="hidden" name="csrf" value="` + csrf + `">` +
-		`<div class="mx-fsec mx-fsec-premium" style="max-width:640px">` + reglagesHead(mxIcoBell, "Notifications", "Alertes de stock envoyées en un clic sur WhatsApp.", "") + `
+		`<div class="mx-fsec mx-fsec-premium" style="max-width:640px">` + reglagesHead(mxIcoBell, "Notifications", "Alertes de stock envoyées en un clic, sur WhatsApp ou Telegram.", "") + `
 <div class="mx-fgrid"><label class="span2">Numéro destinataire des alertes <input name="notif_numero" value="` + render.Esc(numero) + `"></label></div>
-<p class="hint">Par défaut, le numéro WhatsApp de Contact. Modifie-le ici pour envoyer les alertes à un autre numéro.</p>
+<p class="hint">Par défaut, le numéro WhatsApp de Contact. Modifie-le ici pour envoyer les alertes WhatsApp à un autre numéro. Telegram n'a besoin d'aucun numéro : le texte est prérempli, tu choisis le destinataire.</p>
 <p class="hint">Génère un message listant les produits en rupture et en stock faible (≤3), à envoyer manuellement.</p>
 <div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button>
-<a class="mx-btn ghost" target="_blank" rel="noopener" href="` + waLink + `">📋 Envoyer le rapport stock bas</a></div>
+<a class="mx-btn ghost" target="_blank" rel="noopener" href="` + waLink + `"><img class="mx-btn-logo" src="/static/logos/partage-whatsapp.png" alt="WhatsApp"> WhatsApp</a>
+<a class="mx-btn ghost" target="_blank" rel="noopener" href="` + tgLink + `"><img class="mx-btn-logo" src="/static/logos/partage-telegram.jpg" alt="Telegram"> Telegram</a></div>
 </div></form>`
 }
 
