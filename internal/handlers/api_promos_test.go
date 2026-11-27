@@ -67,7 +67,7 @@ func TestApiCommandePromoCasLimites(t *testing.T) {
 		nom         string
 		setup       string // INSERT promo
 		promo       string
-		totalAvant  int64  // prix unitaire x1
+		totalAvant  int64 // prix unitaire x1
 		totalApres  int64
 		remise      int64
 		codeEnBase  string

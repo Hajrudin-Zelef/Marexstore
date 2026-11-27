@@ -19,11 +19,11 @@ func TestTopAvatarMenu(t *testing.T) {
 	for _, want := range []string{
 		`data-avatar-menu`,
 		`compte.html#informations`, // Profil + Réglages
-		`parametres.html`,           // Préférences
-		`contact.html`,              // Obtenir de l'aide
-		`faq.html`,                  // FAQ
-		`apropos.html`,              // À propos
-		`data-logout`,               // Déconnexion
+		`parametres.html`,          // Préférences
+		`contact.html`,             // Obtenir de l'aide
+		`faq.html`,                 // FAQ
+		`apropos.html`,             // À propos
+		`data-logout`,              // Déconnexion
 		`aria-expanded`,
 	} {
 		if !strings.Contains(s, want) {
