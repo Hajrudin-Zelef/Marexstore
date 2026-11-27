@@ -53,6 +53,25 @@ func TestHeaderAvatarMenu(t *testing.T) {
 	}
 }
 
+// Même principe côté admin : l'avatar de la sidebar ouvre un menu
+// (tableau de bord, voir le site, réglages, système, déconnexion).
+func TestAdminAvatarMenu(t *testing.T) {
+	h := render.MxSidebar("", "/admin", map[string]int{})
+	for _, want := range []string{
+		`data-admin-menu`,
+		`href="/admin"`,
+		`href="/"`,
+		`href="/admin/reglages"`,
+		`href="/admin/systeme"`,
+		`data-admin-logout`,
+		`aria-expanded`,
+	} {
+		if !strings.Contains(h, want) {
+			t.Fatalf("menu avatar admin : %q manquant dans MxSidebar()", want)
+		}
+	}
+}
+
 // La page FAQ existe et couvre l'essentiel (commande, livraison,
 // paiement + promo, suivi, compte, retours).
 func TestFaqPage(t *testing.T) {

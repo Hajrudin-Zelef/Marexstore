@@ -370,3 +370,40 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+// Menu avatar admin : ouvre au clic, ferme dehors / Échap. Déconnexion :
+// l'admin est en HTTP Basic Auth (sans session serveur) : on recharge les
+// identifiants avec un couple invalide, le navigateur oublie les bons et
+// réaffiche la mire de connexion.
+(function () {
+  function menu() { return document.querySelector('[data-admin-menu]'); }
+  function btn() { return document.querySelector('[data-admin-avatar]'); }
+  function close() {
+    var m = menu();
+    if (m) m.hidden = true;
+    var b = btn();
+    if (b) b.setAttribute('aria-expanded', 'false');
+  }
+  var b = btn();
+  if (b) b.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var m = menu();
+    if (!m) return;
+    var open = m.hidden;
+    close();
+    if (open) { m.hidden = false; b.setAttribute('aria-expanded', 'true'); }
+  });
+  document.addEventListener('click', function (e) {
+    var m = menu();
+    if (m && !m.hidden && !e.target.closest('[data-admin-menu]') && !e.target.closest('[data-admin-avatar]')) close();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.querySelectorAll('[data-admin-logout]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      close();
+      try {
+        window.location.href = window.location.protocol + '//deconnexion:deconnexion@' + window.location.host + '/admin';
+      } catch (err) { window.location.href = '/admin'; }
+    });
+  });
+})();
