@@ -129,7 +129,7 @@ var mxPaiementLabels = map[string]string{
 	"wave": "Wave", "virement": "Virement", "carte": "Carte bancaire",
 	// Clés envoyées par le panier (moyens cochés en admin).
 	"orange": "Orange Money", "mtn": "MTN Mobile Money",
-	"moov":   "Moov Money", "cod": "Paiement à la livraison",
+	"moov": "Moov Money", "cod": "Paiement à la livraison",
 }
 
 func mxLabel(m map[string]string, v string) string {
