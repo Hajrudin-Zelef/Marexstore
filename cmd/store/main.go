@@ -89,10 +89,12 @@ func main() {
 			next.ServeHTTP(w, r)
 		})
 	})
-	// Mode maintenance (réglages admin) : tout le public en 503, /admin et /health passent.
+	// Mode maintenance (réglages admin) : tout le public en 503, /admin et
+	// /health passent — ainsi que les assets statiques (sinon l'admin
+	// perd ses styles et ses images quand la boutique est en maintenance).
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if strings.HasPrefix(r.URL.Path, "/admin") || r.URL.Path == "/health" || r.URL.Path == "/health/detailed" || r.URL.Path == "/robots.txt" {
+			if strings.HasPrefix(r.URL.Path, "/admin") || strings.HasPrefix(r.URL.Path, "/static/") || strings.HasPrefix(r.URL.Path, "/assets/") || strings.HasPrefix(r.URL.Path, "/images/") || r.URL.Path == "/health" || r.URL.Path == "/health/detailed" || r.URL.Path == "/robots.txt" {
 				next.ServeHTTP(w, r)
 				return
 			}

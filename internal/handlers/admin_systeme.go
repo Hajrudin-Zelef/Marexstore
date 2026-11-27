@@ -92,12 +92,17 @@ func (a *App) AdminSysteme(w http.ResponseWriter, r *http.Request) {
 	if !site.FileEditAllowed() {
 		editStr = "interdite"
 	}
+	etatCls, etatTxt := "ok", "en ligne"
+	if maint == "1" || nFTS != nProd {
+		etatCls, etatTxt = "ko", "attention requise"
+	}
+	moteur := `<span class="mx-dot ` + etatCls + `"></span> ` + etatTxt
 	row := func(k, v string) string {
 		return `<tr><td>` + render.Esc(k) + `</td><td><strong>` + render.Esc(v) + `</strong></td></tr>`
 	}
 	a.write(w, 200, a.adminPage("Système", "systeme",
 		`<div class="mx-postbox"><h2>État du backend</h2><div class="in"><div class="mx-tablewrap"><table class="mx-table">`+
-			row("Moteur", "en ligne")+
+			`<tr><td>Moteur</td><td><strong>`+moteur+`</strong></td></tr>`+
 			row("Thème publié", themeStr)+
 			row("Produits", fmt.Sprint(c["produits"])+fmt.Sprintf(" (lignes de commande : %d)", nItems))+
 			row("Clients", fmt.Sprint(c["clients"]))+

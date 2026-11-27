@@ -36,4 +36,28 @@ func TestAdminSystemeSobre(t *testing.T) {
 			t.Fatalf("état essentiel manquant : %q", want)
 		}
 	}
+	// Pastille de statut : verte et pulsée quand tout va bien.
+	for _, want := range []string{`mx-dot ok`, "en ligne"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("pastille de statut absente : %q", want)
+		}
+	}
+}
+
+// Pastille rouge quand ça demande l'attention (maintenance active).
+func TestAdminSystemePastilleColere(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO settings(nom,valeur) VALUES('maintenance','1')`); err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest(http.MethodGet, "/admin/systeme", nil)
+	req.SetBasicAuth("admin", "test1234")
+	rec := httptest.NewRecorder()
+	app.AdminSysteme(rec, req)
+	body := rec.Body.String()
+	for _, want := range []string{`mx-dot ko`, "attention requise"} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("pastille colère absente : %q", want)
+		}
+	}
 }
