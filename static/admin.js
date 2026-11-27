@@ -376,31 +376,35 @@
 // identifiants avec un couple invalide, le navigateur oublie les bons et
 // réaffiche la mire de connexion.
 (function () {
-  function menu() { return document.querySelector('[data-admin-menu]'); }
-  function btn() { return document.querySelector('[data-admin-avatar]'); }
-  function close() {
-    var m = menu();
-    if (m) m.hidden = true;
-    var b = btn();
-    if (b) b.setAttribute('aria-expanded', 'false');
-  }
-  var b = btn();
-  if (b) b.addEventListener('click', function (e) {
-    e.stopPropagation();
-    var m = menu();
-    if (!m) return;
+  function toggle(btnSel, menuSel) {
+    var m = document.querySelector(menuSel);
+    var b = document.querySelector(btnSel);
+    if (!m || !b) return;
     var open = m.hidden;
-    close();
+    closeAll();
     if (open) { m.hidden = false; b.setAttribute('aria-expanded', 'true'); }
+  }
+  function closeAll() {
+    document.querySelectorAll('[data-admin-menu],[data-admin-notifs]').forEach(function (m) { m.hidden = true; });
+    document.querySelectorAll('[data-admin-avatar],[data-admin-bell]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+  }
+  var av = document.querySelector('[data-admin-avatar]');
+  if (av) av.addEventListener('click', function (e) {
+    e.stopPropagation();
+    toggle('[data-admin-avatar]', '[data-admin-menu]');
+  });
+  var bell = document.querySelector('[data-admin-bell]');
+  if (bell) bell.addEventListener('click', function (e) {
+    e.stopPropagation();
+    toggle('[data-admin-bell]', '[data-admin-notifs]');
   });
   document.addEventListener('click', function (e) {
-    var m = menu();
-    if (m && !m.hidden && !e.target.closest('[data-admin-menu]') && !e.target.closest('[data-admin-avatar]')) close();
+    if (!e.target.closest('[data-admin-menu]') && !e.target.closest('[data-admin-notifs]')) closeAll();
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
   document.querySelectorAll('[data-admin-logout]').forEach(function (el) {
     el.addEventListener('click', function () {
-      close();
+      closeAll();
       try {
         window.location.href = window.location.protocol + '//deconnexion:deconnexion@' + window.location.host + '/admin';
       } catch (err) { window.location.href = '/admin'; }

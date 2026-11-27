@@ -409,6 +409,21 @@ table.specs tr:hover td{background:rgba(var(--brand-rgb),.14)}
 .drawer-foot .btn{text-align:center;justify-content:center}
 .drawer-foot .btn.disabled{opacity:.45;pointer-events:none}
 
+/* ----- Cloche d'alertes (abonnés connectés) : carte sous l'en-tête ----- */
+.bell-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(340px,92vw);max-height:min(420px,70vh);overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:6px;z-index:70}
+.bell-panel[hidden]{display:none}
+.bell-panel h4{margin:6px 12px 4px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.bell-item{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:10px 12px;border:0;border-radius:8px;background:none;color:var(--text);font-size:14px;text-align:left;text-decoration:none;font-family:inherit}
+a.bell-item:hover,button.bell-item:hover{background:var(--surface2);text-decoration:none}
+.bell-item .bl-code{font-weight:800;color:var(--brand-dark)}
+.bell-item .bl-sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.bell-item .bl-use{margin-left:auto;flex:none;font-size:12.5px;font-weight:700;color:var(--brand);border:1px solid var(--brand);border-radius:999px;padding:4px 12px;background:none;cursor:pointer}
+.bell-item .bl-use:hover{background:var(--brand);color:#fff}
+.bell-item .bl-x{margin-left:auto;flex:none;border:0;background:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:4px}
+.bell-empty{margin:6px 12px 10px;font-size:13.5px;color:var(--muted)}
+.bell-sep{border:0;border-top:1px solid var(--border);margin:6px 4px}
+@media (prefers-reduced-motion:reduce){.bell-panel{transition:none}}
+
 /* ----- Menu avatar (compte) : carte sous l'icône ----- */
 .hicons{position:relative}
 .avatar-menu{position:absolute;top:calc(100% + 8px);right:0;width:238px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.18);z-index:60;padding:6px}

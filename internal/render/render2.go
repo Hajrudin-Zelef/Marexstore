@@ -145,7 +145,7 @@ func HeaderThemeDoc(d *design.Document, s *catalog.Store, prefix, searchQ string
 	// Icônes de l'en-tête (phase 3.1) : libellés Tx + bascules show*.
 	icBoutique := ""
 	if d.Bool("header", "showBoutique", true) {
-		icBoutique = `<a class="hicon" href="` + prefix + `boutique.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="hic-lab">` + escTx(d.Text("boutique_ico", "Boutique")) + `</span></a>`
+		icBoutique = `<a class="hicon" href="` + prefix + `boutique.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg><span class="hic-lab">` + escTx(d.Text("boutique_ico", "Boutique")) + `</span></a>`
 	}
 	icCompte := ""
 	if d.Bool("header", "showCompte", true) {
@@ -156,6 +156,10 @@ func HeaderThemeDoc(d *design.Document, s *catalog.Store, prefix, searchQ string
 	if d.Bool("header", "showPanier", true) {
 		icPanier = `<button class="hicon" type="button" data-cart-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="hic-badge" data-cart-count>0</span><span class="hic-lab">` + escTx(d.Text("panier_ico", "Panier")) + `</span></button>`
 	}
+	// Cloche d'alertes (abonnés connectés uniquement : masquée par défaut,
+	// affichée par app.js quand la session locale existe). Contenu rempli
+	// en JS : promos utilisables + commandes locales.
+	icCloche := `<button class="hicon" type="button" data-bell hidden aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="hic-badge" data-bell-count hidden>0</span><span class="hic-lab">Alertes</span></button><div class="bell-panel" data-bell-panel hidden></div>`
 	icPrefs := ""
 	if d.Bool("header", "showPrefs", true) {
 		icPrefs = `<a class="hicon" href="` + prefix + `parametres.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="hic-lab">` + escTx(d.Text("prefs_ico", "Préférences")) + `</span></a>`
@@ -166,7 +170,7 @@ func HeaderThemeDoc(d *design.Document, s *catalog.Store, prefix, searchQ string
 ` + opts.String() + `</select>
 <input name="q" type="search" placeholder="` + escTx(d.Text("recherche_ph", "Rechercher un produit, une référence…")) + `" value="` + esc(searchQ) + `"><button type="submit">` + escTx(d.Text("rechercher", "Rechercher")) + `</button></form>
 <div class="hicons">
-` + icBoutique + "\n" + icCompte + "\n" + icPanier + "\n" + icPrefs + "\n" + `</div></div></header>
+` + icBoutique + "\n" + icCompte + "\n" + icPanier + "\n" + icCloche + "\n" + icPrefs + "\n" + `</div></div></header>
 <nav class="main"><div class="in">
 ` + MegaBtn() + `
 ` + navLinksHTML(prefix) + `</div>

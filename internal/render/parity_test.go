@@ -49,6 +49,18 @@ var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next"
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
 var rePromoInput = regexp.MustCompile(`<label class="drawer-promo"[^>]*><input data-promo-input[^>]*></label>\n?`)
 var reAvatarMenu = regexp.MustCompile(`<div class="avatar-menu"[^>]*>.*?</div>\n?`)
+
+// Icône Boutique : punaise v3.25 → maison (même que l'onglet réglages).
+// Changement volontaire vérifié visuellement ; le rendu courant est
+// ramené à l'ancienne forme pour garder les empreintes stables.
+var reBoutiqueHome = regexp.MustCompile(`<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>`)
+
+const svgBoutiquePin = `<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`
+
+// Cloche d'alertes (ajout volontaire, contenu rempli en JS) : retirée avant
+// comparaison — vérifiée par TestHeaderCloche + E2E Playwright.
+var reBellBtn = regexp.MustCompile(`<button class="hicon" type="button" data-bell hidden.*?</button>\n?`)
+var reBellPanel = regexp.MustCompile(`<div class="bell-panel" data-bell-panel hidden></div>\n?`)
 var reViewBtn = regexp.MustCompile(`<button type="button" class="[^"]*" data-view="([a-z]+)">`)
 var reGamme = regexp.MustCompile(`(?s)<div class="gamme">.*?(<div style="margin-top:12px)`)
 var reGalCarousel = regexp.MustCompile(`(?s)<div class="gal" data-gal>.*?<img src="([^"]*)"[^>]*data-gal-main>.*?</div></div>`)
@@ -82,6 +94,9 @@ func normPage(s string) string {
 	// navigation, déconnexion).
 	s = reAvatarMenu.ReplaceAllString(s, "")
 	s = strings.ReplaceAll(s, ` data-auth-open data-avatar aria-haspopup="true" aria-expanded="false"`, ` data-auth-open`)
+	s = reBoutiqueHome.ReplaceAllString(s, svgBoutiquePin)
+	s = reBellBtn.ReplaceAllString(s, "")
+	s = reBellPanel.ReplaceAllString(s, "")
 	s = reVer.ReplaceAllString(s, "assets/X")
 	s = reFiltersToggle.ReplaceAllString(s, "")
 	// « Voir tous » du méga-menu : pointe maintenant vers la page catégorie

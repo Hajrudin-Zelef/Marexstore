@@ -86,3 +86,43 @@ func TestFaqPage(t *testing.T) {
 		}
 	}
 }
+
+// La cloche d'alertes (topbar admin) : badge = commandes à traiter,
+// menu = 3 raccourcis avec compteurs réels (jamais de chiffre en dur).
+func TestAdminClocheAlertes(t *testing.T) {
+	counts := map[string]int{"produits": 10, "clients": 2, "commandes": 3, "a_traiter": 2, "ruptures": 1, "sansprix": 0}
+	body := render.MxDoc("X", "", "/admin", counts, "", "x")
+	for _, want := range []string{
+		`data-admin-bell`,
+		`data-admin-notifs`,
+		`/admin/commandes`,
+		`/admin/produits?vue=rupture`,
+		`aria-expanded`,
+		`<span class="mx-bell-nb">2</span>`,
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("cloche admin : %q manquant", want)
+		}
+	}
+}
+
+// Cloche d'alertes boutique (abonnés connectés) : présente dans les deux
+// rendus d'en-tête, masquée par défaut (JS l'affiche si session locale).
+func TestHeaderCloche(t *testing.T) {
+	s := testStore(t)
+	h := render.Header(s, "../", "")
+	for _, want := range []string{`data-bell`, `data-bell-panel`, `data-bell-count`} {
+		if !strings.Contains(h, want) {
+			t.Fatalf("cloche boutique : %q manquant dans Header()", want)
+		}
+	}
+	raw, err := os.ReadFile("../../templates/static/_top.html")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{`data-bell`, `data-bell-panel`} {
+		if !strings.Contains(string(raw), want) {
+			t.Fatalf("cloche boutique : %q manquant dans _top.html", want)
+		}
+	}
+}

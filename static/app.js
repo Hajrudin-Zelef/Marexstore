@@ -1155,6 +1155,9 @@
       var logged = !!a && sessionOn();
       renderParamGate();
       document.querySelectorAll('[data-compte-lab]').forEach(function (el) { el.textContent = logged && a.prenom ? a.prenom : 'Compte'; });
+      document.querySelectorAll('[data-bell]').forEach(function (el) { el.hidden = !logged; });
+      if (!logged) closeBell();
+      else renderBell();
       var out = document.querySelector('[data-acct-logged-out]');
       var inn = document.querySelector('[data-acct-logged-in]');
       if (out) out.hidden = logged;
@@ -1172,6 +1175,94 @@
       }
       renderOrders(); renderAdresses(); renderPaniers();
     }
+    /* ---------- Cloche d'alertes (abonnés connectés) : promos utilisables
+       + commandes locales. Lus = codes promo masqués (localStorage).  */
+    var READ_KEY = 'mediatec-lues-v1';
+    function loadRead() { try { return JSON.parse(window.localStorage.getItem(READ_KEY)) || []; } catch (e) { return []; } }
+    function saveRead(l) { try { window.localStorage.setItem(READ_KEY, JSON.stringify(l)); } catch (e) {} }
+    function promoLibelle(p) {
+      if (p.type === 'pourcentage') return 'Moins ' + p.valeur + ' % au panier';
+      return 'Moins ' + fmt(p.valeur);
+    }
+    function renderBell() {
+      var panel = document.querySelector('[data-bell-panel]');
+      var badge = document.querySelector('[data-bell-count]');
+      if (!panel) return;
+      var lues = loadRead();
+      var seen = {};
+      lues.forEach(function (c) { seen[c] = true; });
+      var fresh = function (list) {
+        return list.filter(function (p) { return !seen[p.code]; });
+      };
+      var draw = function (promos) {
+        var news = fresh(promos || []);
+        var orders = loadList(ORDERS_KEY).slice(-5).reverse();
+        var h = '';
+        if (news.length) {
+          h += '<h4>Promos pour vous</h4>' + news.map(function (p) {
+            return '<div class="bell-item"><div><span class="bl-code">' + escHtml(p.code) + '</span><span class="bl-sub">' + escHtml(promoLibelle(p)) + '</span></div>' +
+              '<button type="button" class="bl-use" data-bell-use="' + escHtml(p.code) + '">Utiliser</button>' +
+              '<button type="button" class="bl-x" data-bell-lu="' + escHtml(p.code) + '" aria-label="Marquer comme lu">×</button></div>';
+          }).join('');
+        }
+        if (orders.length) {
+          if (news.length) h += '<hr class="bell-sep">';
+          h += '<h4>Vos commandes</h4>' + orders.map(function (o) {
+            return '<a class="bell-item" href="suivi-commande.html"><div><span class="bl-code">' + escHtml(o.id) + '</span><span class="bl-sub">' + escHtml(o.date) + ' — ' + fmt(o.total) + '</span></div></a>';
+          }).join('');
+        }
+        if (!h) h = '<p class="bell-empty">Rien de nouveau pour le moment.</p>';
+        panel.innerHTML = h;
+        if (badge) {
+          if (news.length) { badge.hidden = false; badge.textContent = news.length > 9 ? '9+' : String(news.length); }
+          else badge.hidden = true;
+        }
+      };
+      fetch('/api/promos', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : { promos: [] }; }, function () { return { promos: [] }; })
+        .then(function (j) { draw((j && j.promos) || []); });
+    }
+    function closeBell() {
+      var p = document.querySelector('[data-bell-panel]');
+      if (p) p.hidden = true;
+      document.querySelectorAll('[data-bell]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    }
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-bell]');
+      if (t && !t.hidden) {
+        e.preventDefault();
+        var p = document.querySelector('[data-bell-panel]');
+        if (!p) return;
+        var open = p.hidden;
+        closeBell();
+        closeAvatarMenu();
+        if (open) { p.hidden = false; t.setAttribute('aria-expanded', 'true'); }
+        return;
+      }
+      var use = e.target.closest('[data-bell-use]');
+      if (use) {
+        var inp = document.querySelector('[data-promo-input]');
+        if (inp) {
+          inp.value = use.getAttribute('data-bell-use') || '';
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+          showToast('Code promo ajouté au panier.');
+        } else {
+          window.location.href = 'boutique.html';
+        }
+        closeBell();
+        return;
+      }
+      var lu = e.target.closest('[data-bell-lu]');
+      if (lu) {
+        var l = loadRead();
+        l.push(lu.getAttribute('data-bell-lu'));
+        saveRead(l);
+        renderBell();
+        return;
+      }
+      var panel = document.querySelector('[data-bell-panel]');
+      if (panel && !panel.hidden && !e.target.closest('[data-bell-panel]')) closeBell();
+    });
     function showPane(slug) {
       document.querySelectorAll('[data-acct-pane]').forEach(function (p) { p.hidden = (p.getAttribute('data-acct-pane') !== slug); });
       document.querySelectorAll('[data-acct-tab]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-acct-tab') === slug); });

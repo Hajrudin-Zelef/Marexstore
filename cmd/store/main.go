@@ -168,6 +168,7 @@ func main() {
 	r.Get("/api/csrf", app.ApiCSRF)
 	r.Get("/api/recherche", app.ApiRecherche)
 	r.Get("/api/paiements", app.ApiPaiements)
+	r.Get("/api/promos", app.ApiPromos)
 	r.Post("/auth/inscription", app.Register)
 	r.Post("/auth/connexion", app.Login)
 	r.Post("/auth/logout", app.Logout)

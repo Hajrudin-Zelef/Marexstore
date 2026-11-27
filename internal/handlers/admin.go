@@ -60,6 +60,12 @@ func (a *App) counts() map[string]int {
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM users`).Scan(&u)
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders`).Scan(&o)
 	c["produits"], c["clients"], c["commandes"] = p, u, o
+	// Alertes de la cloche topbar (valeurs live, jamais de chiffre en dur).
+	var at, ru, sp int
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE statut NOT IN ('livre','annule')`).Scan(&at)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE dispo='rupture de stock' OR (stock IS NOT NULL AND stock<=0)`).Scan(&ru)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM products WHERE prix IS NULL AND prix_boutique IS NULL`).Scan(&sp)
+	c["a_traiter"], c["ruptures"], c["sansprix"] = at, ru, sp
 	return c
 }
 

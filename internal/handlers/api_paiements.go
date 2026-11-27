@@ -41,3 +41,41 @@ func (a *App) moyensPaiementActifs() []MoyenPaiement {
 func (a *App) ApiPaiements(w http.ResponseWriter, r *http.Request) {
 	a.writeJSON(w, http.StatusOK, map[string]any{"ok": true, "paiements": a.moyensPaiementActifs()})
 }
+
+// PromoPublique : un code utilisable, exposé aux abonnés connectés.
+type PromoPublique struct {
+	Code        string `json:"code"`
+	Type        string `json:"type"`
+	Valeur      int64  `json:"valeur"`
+	Description string `json:"description"`
+}
+
+// promosUtilisables : codes actifs et non expirés (la limite d'usage se
+// vérifie à la commande, pas ici : l'affichage ne réserve rien).
+func (a *App) promosUtilisables() []PromoPublique {
+	a.ensurePromos()
+	out := []PromoPublique{}
+	rows, err := a.DB.Query(`SELECT code,type,valeur,description FROM promos WHERE actif=1 AND (expire='' OR expire>=date('now')) ORDER BY code`)
+	if err != nil {
+		return out
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var p PromoPublique
+		if err := rows.Scan(&p.Code, &p.Type, &p.Valeur, &p.Description); err == nil && p.Valeur > 0 {
+			out = append(out, p)
+		}
+	}
+	return out
+}
+
+// ApiPromos : GET /api/promos — codes utilisables (abonnés connectés).
+// Public comme les moyens de paiement : seuls les codes valables, sans
+// compteurs ni limites internes.
+func (a *App) ApiPromos(w http.ResponseWriter, r *http.Request) {
+	if out := a.promosUtilisables(); out != nil {
+		a.writeJSON(w, http.StatusOK, map[string]any{"ok": true, "promos": out})
+		return
+	}
+	a.writeJSON(w, http.StatusOK, map[string]any{"ok": true, "promos": []PromoPublique{}})
+}
