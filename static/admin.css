@@ -3,7 +3,7 @@
   --mx-bg:#f0f2f5; --mx-surface:#ffffff; --mx-ink:#1d2327; --mx-muted:#646970;
   --mx-border:#dcdcde; --mx-accent:#2271b1; --mx-accent-dark:#135e96;
   --mx-green:#00a32a; --mx-red:#d63638; --mx-amber:#dba617;
-  --mx-brand:#2e5136; --mx-lime:#8dc63f; --mx-lime-dark:#6fa82e;
+  --mx-brand:#2e5136; --mx-brand-dark:#223d27; --mx-brand-pale:#e9efe7; --mx-lime:#8dc63f; --mx-lime-dark:#6fa82e;
   --mx-side:#1d2327; --mx-side-2:#2c3338; --mx-side-tx:#eeeeee; --mx-side-mut:#8c8f94;
   --mx-radius:8px;
 }
@@ -366,6 +366,27 @@ table.mx-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .mx-switch-sl::before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .mx-switch input:checked + .mx-switch-sl{background:var(--mx-brand)}
 .mx-switch input:checked + .mx-switch-sl::before{transform:translateX(22px)}
+/* Sections réglages premium : en-tête à icône + cartes fournisseurs. */
+.mx-fsec-premium{border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px -16px rgba(46,81,54,.25)}
+.mx-sec-head{display:flex;align-items:center;gap:12px;margin:0 0 4px}
+.mx-sec-ic{flex:none;width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--mx-brand),var(--mx-brand-dark));color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px -4px rgba(46,81,54,.5)}
+.mx-sec-ic svg{width:22px;height:22px}
+.mx-sec-head h3{margin:0;font-size:16px}
+.mx-sec-head p{margin:2px 0 0;font-size:12.5px;color:var(--mx-muted)}
+.mx-pill{margin-left:auto;flex:none;font-size:12px;font-weight:700;color:var(--mx-brand-dark);background:var(--mx-brand-pale);border-radius:999px;padding:4px 12px;white-space:nowrap}
+.mx-pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.mx-pay-card{background:var(--mx-surface);border:1px solid var(--mx-border);border-radius:10px;padding:14px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 12px;align-items:center;transition:border-color .2s,box-shadow .2s}
+.mx-pay-card:hover{border-color:var(--mx-brand);box-shadow:0 8px 20px -12px rgba(46,81,54,.4)}
+.mx-pay-card.wide{grid-column:1/-1}
+.mx-pay-logo{width:52px;height:52px;border-radius:12px;background:#fff;border:1px solid var(--mx-border);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.02)}
+.mx-pay-logo img{width:100%;height:100%;object-fit:contain}
+.mx-pay-logo svg{width:26px;height:26px;color:var(--mx-brand)}
+.mx-pay-tx strong{display:block;font-size:14px}
+.mx-pay-tx span{font-size:12.5px;color:var(--mx-muted)}
+.mx-pay-num{grid-column:1/-1;display:block;font-size:11.5px;font-weight:700;color:var(--mx-brand);text-transform:uppercase;letter-spacing:.4px}
+.mx-pay-num input{width:100%;padding:11px 12px;border:1.5px solid #e2e9e6;border-radius:10px;background:#f9fbf9;font-size:14px;font-family:inherit;color:var(--mx-ink);margin-top:6px;text-transform:none;letter-spacing:0;font-weight:400}
+.mx-pay-num input:focus{outline:none;border-color:var(--mx-brand)}
+@media(max-width:700px){.mx-pay-grid{grid-template-columns:1fr}}
 .mx-fsec .hint{margin:10px 0 0}
 
 /* ---------- Studio Design ---------- */

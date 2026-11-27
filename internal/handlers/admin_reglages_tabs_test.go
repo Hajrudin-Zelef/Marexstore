@@ -76,6 +76,22 @@ func TestAdminReglagesOnglets(t *testing.T) {
 	}
 }
 
+// Chaque moyen a son logo (fichiers static/logos/paiement-*).
+func TestAdminReglagesLogosPaiement(t *testing.T) {
+	app, _ := testAppDesign(t)
+	body := getReglages(t, app, "/admin/reglages?vue=paiement")
+	for _, want := range []string{
+		`src="/static/logos/paiement-orange.png"`,
+		`src="/static/logos/paiement-mtn.jpg"`,
+		`src="/static/logos/paiement-wave.jpg"`,
+		`src="/static/logos/paiement-moov.png"`,
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("logo paiement manquant : %s", want)
+		}
+	}
+}
+
 // POST par onglet : seules les clés de l'onglet sont touchées.
 func TestAdminReglagesPostParOnglet(t *testing.T) {
 	app, database := testAppDesign(t)

@@ -928,7 +928,7 @@ func reglagesSectionBoutique(maint, mmsg string) string {
 	if maint == "1" {
 		chk = " checked"
 	}
-	return `<div class="mx-fsec" style="max-width:640px"><h3>Boutique</h3>
+	return `<div class="mx-fsec mx-fsec-premium" style="max-width:640px">` + reglagesHead(mxIcoShop, "Boutique", "Visibilité de la boutique et message affiché aux visiteurs.", "") + `
 <label class="mx-switch-row"><span class="mx-switch-tx"><strong>Mode maintenance</strong><span class="hint">La boutique affiche un message, /admin reste accessible.</span></span><span class="mx-switch"><input type="checkbox" name="maintenance" value="1"` + chk + `><span class="mx-switch-sl"></span></span></label>
 <div class="mx-fgrid"><label class="span2">Message de maintenance <input name="maintenance_message" value="` + render.Esc(mmsg) + `"></label></div>
 </div>`
@@ -936,7 +936,7 @@ func reglagesSectionBoutique(maint, mmsg string) string {
 
 // reglagesSectionContact : bloc "Contact" (WhatsApp).
 func reglagesSectionContact(wa string) string {
-	return `<div class="mx-fsec" style="max-width:640px"><h3>Contact</h3>
+	return `<div class="mx-fsec mx-fsec-premium" style="max-width:640px">` + reglagesHead(mxIcoChat, "Contact", "Numéro WhatsApp affiché aux clients et utilisé pour les commandes.", "") + `
 <div class="mx-fgrid"><label class="span2">WhatsApp <input name="whatsapp" value="` + render.Esc(wa) + `"></label></div>
 <p class="hint">Appliqué au redémarrage du conteneur.</p>
 </div>`
@@ -1008,7 +1008,7 @@ func (a *App) buildStockReportWaLink(numero string) string {
 // ne persiste jamais).
 func reglagesSectionNotifications(numero, waLink, csrf, vue string) string {
 	return `<form method="post" action="/admin/reglages?vue=` + vue + `"><input type="hidden" name="csrf" value="` + csrf + `">` +
-		`<div class="mx-fsec" style="max-width:640px"><h3>Notifications</h3>
+		`<div class="mx-fsec mx-fsec-premium" style="max-width:640px">` + reglagesHead(mxIcoBell, "Notifications", "Alertes de stock envoyées en un clic sur WhatsApp.", "") + `
 <div class="mx-fgrid"><label class="span2">Numéro destinataire des alertes <input name="notif_numero" value="` + render.Esc(numero) + `"></label></div>
 <p class="hint">Par défaut, le numéro WhatsApp de Contact. Modifie-le ici pour envoyer les alertes à un autre numéro.</p>
 <p class="hint">Génère un message listant les produits en rupture et en stock faible (≤3), à envoyer manuellement.</p>
@@ -1017,26 +1017,59 @@ func reglagesSectionNotifications(numero, waLink, csrf, vue string) string {
 </div></form>`
 }
 
-// reglagesSectionPaiement : bloc "Paiement" (Orange Money, MTN MoMo, Wave, Moov Money, à la livraison).
+// reglagesHead : en-tête de section premium (icône + titre + chapeau).
+// `extra` (ex. pastille de compteur) s'affiche en bout de ligne.
+func reglagesHead(icon, title, lead, extra string) string {
+	return `<div class="mx-sec-head"><span class="mx-sec-ic">` + icon + `</span><div><h3>` + title + `</h3><p>` + lead + `</p></div>` + extra + `</div>`
+}
+
+const (
+	mxIcoShop = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>`
+	mxIcoChat = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`
+	mxIcoCard = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`
+	mxIcoBell = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>`
+	mxIcoCash = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg>`
+)
+
+// reglagesSectionPaiement : cartes fournisseurs avec logos (grille 2
+// colonnes, interrupteur conservé : même markup, même nom de champ).
 func reglagesSectionPaiement(orangeOn, orangeNum, mtnOn, mtnNum, waveOn, waveNum, moovOn, moovNum, codOn string) string {
-	sw := func(name, label, hint, numVal string, on string, showNumero bool) string {
+	actifs := 0
+	for _, on := range []string{orangeOn, mtnOn, waveOn, moovOn, codOn} {
+		if on == "1" {
+			actifs++
+		}
+	}
+	card := func(name, label, hint, numVal, on, logo string, showNumero, wide bool) string {
 		chk := ""
 		if on == "1" {
 			chk = " checked"
 		}
-		numField := ""
+		num := ""
 		if showNumero {
-			numField = `<div class="mx-fgrid"><label class="span2">Numéro marchand <input name="` + name + `_numero" value="` + render.Esc(numVal) + `"></label></div>`
+			num = `<label class="mx-pay-num">Numéro marchand <input name="` + name + `_numero" value="` + render.Esc(numVal) + `" placeholder="Ex. 0700000000" inputmode="tel" autocomplete="off"></label>`
 		}
-		return `<label class="mx-switch-row"><span class="mx-switch-tx"><strong>` + label + `</strong><span class="hint">` + hint + `</span></span><span class="mx-switch"><input type="checkbox" name="` + name + `_on" value="1"` + chk + `><span class="mx-switch-sl"></span></span></label>` + numField
+		wideCls := ""
+		if wide {
+			wideCls = " wide"
+		}
+		return `<div class="mx-pay-card` + wideCls + `"><span class="mx-pay-logo">` + logo + `</span>` +
+			`<div class="mx-pay-tx"><strong>` + label + `</strong><span>` + hint + `</span></div>` +
+			`<span class="mx-switch"><input type="checkbox" name="` + name + `_on" value="1"` + chk + `><span class="mx-switch-sl"></span></span>` +
+			num + `</div>`
 	}
-	return `<div class="mx-fsec" style="max-width:640px"><h3>Paiement</h3>` +
-		sw("paiement_orange", "Orange Money", "Paiement via Orange Money", orangeNum, orangeOn, true) +
-		sw("paiement_mtn", "MTN Mobile Money", "Paiement via MTN MoMo", mtnNum, mtnOn, true) +
-		sw("paiement_wave", "Wave", "Paiement via Wave", waveNum, waveOn, true) +
-		sw("paiement_moov", "Moov Money", "Paiement via Moov Money", moovNum, moovOn, true) +
-		sw("paiement_cod", "Paiement à la livraison", "Le client paie en espèces à la réception", "", codOn, false) +
-		`</div>`
+	img := func(src, alt string) string {
+		return `<img src="/static/logos/` + src + `" alt="` + alt + `" loading="lazy">`
+	}
+	return `<div class="mx-fsec mx-fsec-premium" style="max-width:720px">` +
+		reglagesHead(mxIcoCard, "Paiement", "Moyens acceptés sur la boutique. Le client choisit au panier ; le marchand reçoit sur le numéro indiqué.", `<span class="mx-pill">`+fmt.Sprint(actifs)+` actif(s)</span>`) +
+		`<div class="mx-pay-grid">` +
+		card("paiement_orange", "Orange Money", "Paiement via Orange Money", orangeNum, orangeOn, img("paiement-orange.png", "Orange Money"), true, false) +
+		card("paiement_mtn", "MTN Mobile Money", "Paiement via MTN MoMo", mtnNum, mtnOn, img("paiement-mtn.jpg", "MTN MoMo"), true, false) +
+		card("paiement_wave", "Wave", "Paiement via Wave", waveNum, waveOn, img("paiement-wave.jpg", "Wave"), true, false) +
+		card("paiement_moov", "Moov Money", "Paiement via Moov Money", moovNum, moovOn, img("paiement-moov.png", "Moov Money"), true, false) +
+		card("paiement_cod", "Paiement à la livraison", "Le client paie en espèces à la réception", "", codOn, mxIcoCash, false, true) +
+		`</div></div>`
 }
 
 // mergeGallery : fusionne les extras existants (moins les suppressions
