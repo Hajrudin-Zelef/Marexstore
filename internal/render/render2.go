@@ -426,7 +426,7 @@ func FooterDoc(d *design.Document, s *catalog.Store, prefix string) string {
 ` + cols + `
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=349"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=5" defer></script>`
+<script src="` + prefix + `assets/app.js?v=350"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=5" defer></script>`
 }
 
 // ---------- Document ----------
@@ -437,7 +437,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=340">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=341">
 <script src="` + prefix + `assets/theme.js?v=2"></script>
 ` + extraHead
 }

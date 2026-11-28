@@ -1108,6 +1108,13 @@ img{height:auto}
 .cp-ok .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2)}
 .cp-ok-num{font-size:16px;font-weight:800;margin:6px 0}
 .cp-ok .btn{margin-top:8px}
+.cp-steps{list-style:none;display:flex;gap:0;margin:0 0 16px;padding:0}
+.cp-steps li{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--text2);padding-top:14px;position:relative}
+.cp-steps li::before{content:attr(data-step-dot);position:absolute;top:0;left:50%;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:var(--surface2);border:2px solid var(--border);font-size:11px;line-height:19px;color:var(--text2)}
+.cp-steps li.on{color:var(--text)}
+.cp-steps li.on::before{background:#2e5136;border-color:#2e5136;color:#fff}
+.cp-nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.cp-notice{font-size:13px;color:var(--text2);background:var(--surface2);border:1px dashed var(--border);border-radius:8px;padding:10px 12px}
 .cp-empty{margin:0 0 12px;padding:16px;border:1px dashed var(--border);border-radius:10px;background:var(--surface2)}
 .cp-empty p{font-size:15px;font-weight:700;margin:0 0 10px}
 [data-cart-order].busy{opacity:.6;pointer-events:none}

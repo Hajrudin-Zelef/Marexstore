@@ -129,7 +129,11 @@
       // Sans hôte (tiroir allégé), on ne crée rien et on sort.
       var host = document.querySelector('[data-cart-paiement]');
       if (!host) return;
-      if (!PAIEMENTS.length) { host.innerHTML = ''; host.hidden = true; return; }
+      if (!PAIEMENTS.length) {
+        host.innerHTML = '<p class="cp-notice">Aucun moyen de paiement configuré — le paiement sera confirmé avec la boutique sur WhatsApp.</p>';
+        host.hidden = false;
+        return;
+      }
       host.hidden = false;
       // un seul moyen actif → présélectionné (zéro friction)
       if (!paiementChoisi && PAIEMENTS.length === 1) paiementChoisi = PAIEMENTS[0].cle;
@@ -276,6 +280,70 @@
       if (err) { err.textContent = msg; err.hidden = false; }
       if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
     }
+    // Parcours en 4 écrans (page Commander) : un seul panneau visible,
+    // Continuer valide l'étape, Retour revient en arrière sans perdre
+    // la saisie. Les pastilles cliquables ne permettent que de revenir.
+    var etapeCheckout = 1;
+    function afficherEtape(n) {
+      var steps = Array.prototype.slice.call(document.querySelectorAll('[data-checkout-step]'));
+      if (!steps.length) return;
+      etapeCheckout = Math.min(Math.max(n, 1), steps.length);
+      steps.forEach(function (s) { s.hidden = String(s.getAttribute('data-checkout-step')) !== String(etapeCheckout); });
+      document.querySelectorAll('[data-step-dot]').forEach(function (d) {
+        var on = String(d.getAttribute('data-step-dot')) === String(etapeCheckout);
+        if (on) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
+        d.classList.toggle('on', on);
+      });
+      var prev = document.querySelector('[data-checkout-prev]');
+      var next = document.querySelector('[data-checkout-next]');
+      var submit = document.querySelector('[data-checkout-submit]');
+      var last = etapeCheckout === steps.length;
+      if (prev) prev.hidden = etapeCheckout === 1;
+      if (next) next.hidden = last;
+      if (submit) submit.hidden = !last;
+    }
+    function validerEtape(n) {
+      checkoutError(null);
+      if (n === 1) {
+        if (!LIVRAISONS.length) { checkoutError("Aucune livraison disponible pour le moment."); return false; }
+        if (!zoneChoisie()) { checkoutError("Choisissez un mode de livraison."); return false; }
+        return true;
+      }
+      var form = document.querySelector('[data-checkout-form]');
+      if (!form) return false;
+      if (n === 2) {
+        var nom = form.querySelector('[name="nom"]');
+        var tel = form.querySelector('[name="tel"]');
+        var adresse = form.querySelector('[name="adresse"]');
+        var z = zoneChoisie();
+        if (!nom.value.trim()) { checkoutError('Indiquez votre nom.', nom); return false; }
+        if (!tel.value.trim()) { checkoutError('Indiquez votre numéro de téléphone.', tel); return false; }
+        if (z && z.type !== 'retrait' && !adresse.value.trim()) { checkoutError('Indiquez votre adresse de livraison.', adresse); return false; }
+        return true;
+      }
+      if (n === 3) {
+        if (PAIEMENTS.length && !paiementChoisi) { checkoutError('Choisissez un moyen de paiement.'); return false; }
+        var payeur = form.querySelector('[name="numero_payeur"]');
+        if (moyenEstMobile(paiementChoisi)) {
+          var pn = payeur.value.replace(/[\s-]/g, '');
+          if (pn.length < 8 || !/^\d+$/.test(pn)) { checkoutError('Indiquez le numéro ayant servi au paiement.', payeur); return false; }
+        }
+        return true;
+      }
+      return true;
+    }
+    document.addEventListener('click', function (e) {
+      var next = e.target.closest ? e.target.closest('[data-checkout-next]') : null;
+      if (next) { if (validerEtape(etapeCheckout)) { afficherEtape(etapeCheckout + 1); renderRecap(); window.scrollTo(0, 0); } return; }
+      var prev = e.target.closest ? e.target.closest('[data-checkout-prev]') : null;
+      if (prev) { checkoutError(null); afficherEtape(etapeCheckout - 1); window.scrollTo(0, 0); return; }
+      var dot = e.target.closest ? e.target.closest('[data-step-dot]') : null;
+      if (dot) {
+        var back = parseInt(dot.getAttribute('data-step-dot'), 10);
+        if (back < etapeCheckout) { checkoutError(null); afficherEtape(back); }
+        return;
+      }
+    });
     // Récap : sous-total, promo (code), livraison, total = sous-total + frais.
     // La remise promo est calculée côté serveur (jamais de faux total ici).
     function renderRecap() {
@@ -283,6 +351,15 @@
       if (!form) return;
       var hide = !cart.length;
       form.hidden = hide;
+      var stepsNav = document.querySelector('[data-checkout-steps]');
+      if (stepsNav) stepsNav.hidden = hide;
+      var navBtns = form.querySelector('.cp-nav');
+      if (navBtns) navBtns.hidden = hide;
+      if (hide) {
+        document.querySelectorAll('[data-checkout-step]').forEach(function (s) { s.hidden = true; });
+      } else {
+        afficherEtape(etapeCheckout);
+      }
       // Panier vide sur la page : message + lien boutique, Commander désactivé.
       var empty = document.querySelector('[data-checkout-empty]');
       if (empty) empty.hidden = !hide;
@@ -501,6 +578,7 @@
     }
     chargerPaiements();
     chargerLivraison();
+    if (document.querySelector('[data-checkout-form]')) afficherEtape(1);
     document.addEventListener('click', function (e) {
       var add = e.target.closest('[data-add-cart]');
       if (add) {

@@ -10,29 +10,35 @@
 </div>
 <div data-param-content hidden>
 <p class="acct-note">Vos coordonnées du compte sont pré-remplies ci-dessous : vérifiez-les avant de commander.</p>
-<section>
+<ol class="cp-steps" data-checkout-steps>
+<li data-step-dot="1" aria-current="step">Livraison</li>
+<li data-step-dot="2">Coordonnées</li>
+<li data-step-dot="3">Paiement</li>
+<li data-step-dot="4">Récapitulatif</li>
+</ol>
+<section data-checkout-step="1">
 <h2>1. Livraison</h2>
 <div data-cart-livraison></div>
 </section>
 <form class="cp-form" data-checkout-form novalidate>
-<section>
+<section data-checkout-step="2">
 <h2>2. Vos coordonnées</h2>
 <label class="cp-field">Nom complet *<input name="nom" required autocomplete="name" placeholder="Votre nom"></label>
 <label class="cp-field">Téléphone *<input name="tel" type="tel" required autocomplete="tel" placeholder="07 00 00 00 00"></label>
-<label class="cp-field" data-payeur hidden>Numéro ayant servi au paiement *<input name="numero_payeur" type="tel" inputmode="numeric" placeholder="07 00 00 00 00"></label>
 <label class="cp-field" data-adresse hidden>Adresse de livraison *<input name="adresse" autocomplete="street-address" placeholder="Commune, rue, repère"></label>
 </section>
-<section>
+<section data-checkout-step="3">
 <h2>3. Paiement</h2>
 <div data-cart-paiement></div>
+<label class="cp-field" data-payeur hidden>Numéro ayant servi au paiement *<input name="numero_payeur" type="tel" inputmode="numeric" placeholder="07 00 00 00 00"></label>
 </section>
-<section>
+<section data-checkout-step="4">
 <h2>4. Récapitulatif</h2>
 <label class="cp-field">Code promo (optionnel)<input data-promo-input autocomplete="off" placeholder="Votre code promo"></label>
 <div class="cp-recap" data-checkout-recap></div>
 </section>
 <p class="cp-err" data-checkout-error hidden></p>
-<button class="btn" type="submit" data-checkout-submit>Commander</button>
+<div class="cp-nav"><button class="btn ghost" type="button" data-checkout-prev>Retour</button><button class="btn" type="button" data-checkout-next>Continuer</button><button class="btn" type="submit" data-checkout-submit>Commander</button></div>
 </form>
 <div class="cp-empty" data-checkout-empty hidden><p>Votre panier est vide.</p><a class="btn" href="boutique.html">Retour à la boutique</a></div>
 <div class="cp-ok" data-checkout-ok hidden></div>
