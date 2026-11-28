@@ -805,9 +805,9 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	payViews := []render.MxView{
-		{Key: "tous", Href: "/admin/commandes?vue=" + vue + "&paiement=tous", Label: "Tous paiements", Count: total},
-		{Key: "a_verifier", Href: "/admin/commandes?vue=" + vue + "&paiement=a_verifier", Label: "À vérifier", Count: payCounts["en_attente"]},
-		{Key: "a_encaisser", Href: "/admin/commandes?vue=" + vue + "&paiement=a_encaisser", Label: "À encaisser", Count: payCounts["a_encaisser"]},
+		{Key: "tous", Href: "/admin/commandes?vue=" + url.QueryEscape(vue) + "&paiement=tous", Label: "Tous paiements", Count: total},
+		{Key: "a_verifier", Href: "/admin/commandes?vue=" + url.QueryEscape(vue) + "&paiement=a_verifier", Label: "À vérifier", Count: payCounts["en_attente"]},
+		{Key: "a_encaisser", Href: "/admin/commandes?vue=" + url.QueryEscape(vue) + "&paiement=a_encaisser", Label: "À encaisser", Count: payCounts["a_encaisser"]},
 	}
 	// Mini-stats : CA encaissé (payée/préparée/livrée), en cours, livrées.
 	var ca, enCours, livrees int64
@@ -840,5 +840,5 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 			miniStat("/admin/commandes?vue=livre", "Livrées", fmt.Sprint(livrees), "#6fa82e")+
 			`</div>`+
 			render.MxViews(views, vue)+render.MxViews(payViews, paiement)+`
-<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client</th><th>Paiement</th><th>Statut</th></tr>`+tr.String()+`</table></div>`+render.MxPager("/admin/commandes?vue="+vue+"&paiement="+paiement, page, pages), r))
+<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client</th><th>Paiement</th><th>Statut</th></tr>`+tr.String()+`</table></div>`+render.MxPager("/admin/commandes?vue="+url.QueryEscape(vue)+"&paiement="+paiement, page, pages), r))
 }

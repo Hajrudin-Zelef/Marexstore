@@ -227,7 +227,11 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 	// (payeur) » + bouton d'action suivante (états non terminaux).
 	// COALESCE au SELECT : les lignes d'avant la colonne se lisent
 	// « En attente », jamais vide.
-	paiementBloc := `<p>Paiement : ` + render.Esc(mxLabel(mxPaiementStatutLabels, paiementStatut)) + ` — ` + t + ` via ` + render.Esc(mxLabel(mxPaiementLabels, moy))
+	montantPaiement := t
+	if !tot.Valid {
+		montantPaiement = "Total non défini"
+	}
+	paiementBloc := `<p>Paiement : ` + render.Esc(mxLabel(mxPaiementStatutLabels, paiementStatut)) + ` — ` + render.Esc(montantPaiement) + ` via ` + render.Esc(mxLabel(mxPaiementLabels, moy))
 	if payeur != "" {
 		paiementBloc += ` (` + render.Esc(payeur) + `)`
 	}
