@@ -72,6 +72,11 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 	if err := Migrate(d, migDir+"/005_types_gestion.sql"); err != nil {
 		return fmt.Errorf("005: %w", err)
 	}
+	// T6 — module livraison : zones + backfill orders + settings.
+	// Jamais destructif (IF NOT EXISTS), rejouable sans risque.
+	if err := Migrate(d, migDir+"/006_livraison.sql"); err != nil {
+		return fmt.Errorf("006: %w", err)
+	}
 	cols := map[string]bool{}
 	rows, err := d.Query(`PRAGMA table_info(products)`)
 	if err != nil {
@@ -130,6 +135,10 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 	owant := map[string]string{
 		"promo_code": "TEXT NOT NULL DEFAULT ''",
 		"remise":     "INTEGER NOT NULL DEFAULT 0",
+		"livraison_zone_id": "INTEGER NOT NULL DEFAULT 0",
+		"livraison_frais":   "INTEGER NOT NULL DEFAULT 0",
+		"numero_payeur": "TEXT NOT NULL DEFAULT ''",
+		"adresse":       "TEXT NOT NULL DEFAULT ''",
 	}
 	for col, typ := range owant {
 		if !ocolumns[col] {
@@ -143,6 +152,8 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 	for _, q := range []string{
 		`CREATE TABLE IF NOT EXISTS order_events(id INTEGER PRIMARY KEY AUTOINCREMENT, order_id INTEGER NOT NULL, de_statut TEXT NOT NULL DEFAULT '', vers_statut TEXT NOT NULL, par TEXT NOT NULL DEFAULT 'admin', cree_le TEXT NOT NULL DEFAULT (datetime('now','localtime')))`,
 		`CREATE TABLE IF NOT EXISTS settings(nom TEXT PRIMARY KEY, valeur TEXT NOT NULL DEFAULT '')`,
+		`INSERT OR IGNORE INTO settings(nom, valeur) VALUES('livraison_seuil_abidjan', '100000')`,
+		`INSERT OR IGNORE INTO settings(nom, valeur) VALUES('livraison_retrait_adresse', 'Plateau, Abidjan')`,
 	} {
 		if _, err := d.Exec(q); err != nil {
 			return fmt.Errorf("table admin: %w", err)
