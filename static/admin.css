@@ -520,3 +520,22 @@ a.mx-btn{display:inline-flex;align-items:center}
 .mx-acc-cat{font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--bc,#1d2327)}
 .mx-cat-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:700;color:var(--bc,#3c434a);background:#f0f2f5;background:color-mix(in srgb,var(--bc,#3c434a) 14%,#fff)}
 .mx-acc-item summary .mx-acc-meta{font-size:12px}
+
+/* ===== module livraison : zones premium ===== */
+.mx-liv-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px 16px;align-items:end;background:#fff;border:1px solid var(--mx-border);border-radius:12px;padding:18px 20px 16px;margin-bottom:10px;position:relative}
+.mx-liv-row:hover{border-color:#c9d6cf;box-shadow:0 4px 16px -10px rgba(46,81,54,.25)}
+.mx-liv-row > strong{grid-column:1/-1;font-size:15px;color:var(--mx-ink);letter-spacing:-.01em;margin-bottom:-4px}
+.mx-liv-etat{grid-column:1/-1;justify-self:start;margin-top:-8px;margin-bottom:4px;display:inline-flex;width:fit-content;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 10px 3px 8px;border-radius:999px;background:color-mix(in srgb,var(--mx-green) 12%,#fff);color:var(--mx-green)}
+.mx-liv-etat::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.mx-liv-etat.off{background:color-mix(in srgb,var(--mx-muted) 14%,#fff);color:var(--mx-muted)}
+.mx-liv-row label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:700;color:var(--mx-brand);text-transform:uppercase;letter-spacing:.03em;margin:0}
+.mx-liv-row label input,.mx-liv-row label select{width:100%;padding:9px 11px;border:1.5px solid #e2e9e6;border-radius:9px;background:#f9fbf9;font-size:13.5px;font-family:inherit;color:var(--mx-ink);text-transform:none;letter-spacing:0;font-weight:400}
+.mx-liv-row label input:focus,.mx-liv-row label select:focus{outline:none;border-color:var(--mx-brand);background:#fff}
+.mx-liv-row button.mx-btn{align-self:end;white-space:nowrap}
+.mx-liv-mini{display:flex;gap:8px;justify-content:flex-end;margin:-4px 0 18px;padding:0 4px}
+.mx-liv-mini .mx-btn{padding:7px 14px;font-size:12.5px}
+@media(max-width:640px){
+  .mx-liv-row{grid-template-columns:1fr 1fr}
+  .mx-liv-mini{justify-content:stretch}
+  .mx-liv-mini .mx-btn{flex:1;text-align:center}
+}

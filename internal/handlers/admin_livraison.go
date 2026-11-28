@@ -202,6 +202,10 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 		if !z.actif {
 			etat = "Masquée"
 		}
+		etatClass := ""
+		if !z.actif {
+			etatClass = " off"
+		}
 		sel := func(v string) string {
 			if z.typ == v {
 				return " selected"
@@ -209,7 +213,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 			return ""
 		}
 		rows.WriteString(`<form method="post" class="mx-liv-row"><input type="hidden" name="csrf" value="` + csrf + `"><input type="hidden" name="action" value="maj"><input type="hidden" name="id" value="` + strconv.FormatInt(z.id, 10) + `">` +
-			`<strong>` + render.Esc(z.nom) + `</strong><span class="mx-liv-etat">` + etat + `</span>` +
+			`<strong>` + render.Esc(z.nom) + `</strong><span class="mx-liv-etat` + etatClass + `">` + etat + `</span>` +
 			`<label>Nom <input name="nom" value="` + render.Esc(z.nom) + `" required></label>` +
 			`<label>Type <select name="type"><option value="retrait"` + sel("retrait") + `>Retrait</option><option value="livraison"` + sel("livraison") + `>Livraison</option><option value="expedition"` + sel("expedition") + `>Expédition</option></select></label>` +
 			`<label>Frais (F CFA) <input name="frais" type="number" min="0" value="` + strconv.FormatInt(z.frais, 10) + `"></label>` +
