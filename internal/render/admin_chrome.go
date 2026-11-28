@@ -59,6 +59,7 @@ func MxSidebar(active, current string, counts map[string]int) string {
 			{"/admin/outils?vue=redirections", "Redirections"},
 		}},
 		{Slug: "reglages", Label: "Réglages", Icon: "cog"},
+		{Slug: "livraison", Label: "Livraison", Icon: "cart"},
 		{Slug: "systeme", Label: "Système", Icon: "activity"},
 	}
 	var b strings.Builder

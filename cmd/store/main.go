@@ -206,6 +206,8 @@ func main() {
 	r.Post("/admin/types", app.AdminTypes)
 	r.Get("/admin/reglages", app.AdminReglages)
 	r.Post("/admin/reglages", app.AdminReglages)
+	r.Get("/admin/livraison", app.AdminLivraison)
+	r.Post("/admin/livraison", app.AdminLivraison)
 	r.Get("/admin/design", app.AdminDesign)
 	r.Post("/admin/design", app.AdminDesign)
 	r.Post("/admin/design/reset", app.AdminDesign)
