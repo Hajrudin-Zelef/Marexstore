@@ -1081,3 +1081,31 @@ img{height:auto}
 .cart-pay .cp-row input{accent-color:var(--brand);width:16px;height:16px}
 .cart-pay .cp-lab{flex:1}
 .cart-pay .cp-num{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text2)}
+.cart-pay .cp-logo{width:28px;height:28px;object-fit:contain;flex:none;border-radius:6px;background:#fff}
+.cart-pay .cp-cod{display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:14px;background:#fff;border:1px solid var(--border);font-size:12px;font-weight:700;flex:none}
+
+/* Tunnel d'achat : livraison + formulaire + récap + confirmation (app.js) */
+.cart-liv{margin:0 0 12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)}
+.cart-liv .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2);margin-bottom:6px}
+.cart-liv .cp-row{display:flex;align-items:center;gap:8px;font-size:13.5px;padding:4px 0;cursor:pointer}
+.cart-liv .cp-row input{accent-color:var(--brand);width:16px;height:16px}
+.cart-liv .cp-lab{flex:1}
+.cart-liv .cp-delai{color:var(--text2);font-size:12px}
+.cart-liv .cp-frais{font-weight:700;white-space:nowrap}
+.cart-liv .cp-seuil{font-weight:400;color:var(--text2);font-size:12px}
+.cart-liv .cp-retrait{font-size:12.5px;color:var(--text2);padding:2px 0 2px 24px}
+.cp-form{margin:0 0 12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)}
+.cp-form .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2);margin-bottom:6px}
+.cp-field{display:block;font-size:13px;margin:6px 0}
+.cp-field input{display:block;width:100%;margin-top:3px;padding:8px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:14px}
+.cp-field input[aria-invalid="true"]{border-color:#dc3545}
+.cp-err{color:#dc3545;font-size:13px;margin:6px 0 0}
+.cp-recap{margin-top:8px;border-top:1px dashed var(--border);padding-top:6px}
+.cp-recap .cp-line{display:flex;justify-content:space-between;font-size:13.5px;padding:2px 0}
+.cp-recap .cp-note{font-size:12px;color:var(--text2)}
+.cp-recap .cp-total{font-size:15px;border-top:1px solid var(--border);margin-top:4px;padding-top:6px}
+.cp-ok{margin:0 0 12px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)}
+.cp-ok .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2)}
+.cp-ok-num{font-size:16px;font-weight:800;margin:6px 0}
+.cp-ok .btn{margin-top:8px}
+[data-cart-order].busy{opacity:.6;pointer-events:none}

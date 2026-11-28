@@ -118,6 +118,12 @@
       for (var i = 0; i < PAIEMENTS.length; i++) { if (PAIEMENTS[i].cle === cle) return PAIEMENTS[i]; }
       return null;
     }
+    function escHtml(s) {
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function logoPrefix() {
+      return drawer ? (drawer.getAttribute('data-prefix') || '') : '';
+    }
     function renderPaiements() {
       var host = document.querySelector('[data-cart-paiement]');
       if (!host) {
@@ -134,9 +140,12 @@
       if (!paiementChoisi && PAIEMENTS.length === 1) paiementChoisi = PAIEMENTS[0].cle;
       host.innerHTML = '<div class="cp-titre">Moyen de paiement</div>' + PAIEMENTS.map(function (p) {
         var on = p.cle === paiementChoisi ? ' checked' : '';
-        var num = p.numero ? '<span class="cp-num">' + p.numero + '</span>' : '';
-        return '<label class="cp-row"><input type="radio" name="cart-paiement" value="' + p.cle + '"' + on + '>' +
-          '<span class="cp-lab">' + p.libelle + '</span>' + num + '</label>';
+        var num = p.numero ? '<span class="cp-num">' + escHtml(p.numero) + '</span>' : '';
+        var media = LOGOS_PAIEMENT[p.cle]
+          ? '<img class="cp-logo" src="' + logoPrefix() + 'static/logos/' + LOGOS_PAIEMENT[p.cle] + '" alt="" loading="lazy">'
+          : (p.cle === 'cod' ? '<span class="cp-cod">Espèces</span>' : '');
+        return '<label class="cp-row"><input type="radio" name="cart-paiement" value="' + escHtml(p.cle) + '"' + on + '>' + media +
+          '<span class="cp-lab">' + escHtml(p.libelle) + '</span>' + num + '</label>';
       }).join('');
       host.querySelectorAll('input[name="cart-paiement"]').forEach(function (inp) {
         inp.addEventListener('change', function () {
@@ -147,7 +156,278 @@
     }
     document.addEventListener('change', function (e) {
       var inp = e.target.closest ? e.target.closest('input[name="cart-paiement"]') : null;
-      if (inp) paiementChoisi = inp.value;
+      if (inp) { paiementChoisi = inp.value; syncCheckoutForm(); renderRecap(); }
+      var liv = e.target.closest ? e.target.closest('input[name="cart-livraison"]') : null;
+      if (liv) { livraisonChoisie = liv.value; syncCheckoutForm(); renderRecap(); renderLivraisonSel(); }
+    });
+
+    /* ---------- Tunnel d'achat : livraison + formulaire + commande ----------
+       Injecté dans le tiroir (aucun HTML serveur modifié). Les zones
+       viennent de /api/livraison ; la commande part en POST /api/commande
+       (Idempotency-Key + CSRF), puis WhatsApp s'ouvre avec le récap et un
+       écran de confirmation s'affiche. */
+    var LOGOS_PAIEMENT = { orange: 'paiement-orange.png', mtn: 'paiement-mtn.jpg', wave: 'paiement-wave.jpg', moov: 'paiement-moov.png' };
+    var MOYENS_MOBILE = ['orange', 'mtn', 'wave', 'moov'];
+    var LIVRAISONS = [];
+    var livraisonChoisie = '';
+    var retraitAdresse = '';
+    function zoneChoisie() {
+      for (var i = 0; i < LIVRAISONS.length; i++) { if (String(LIVRAISONS[i].id) === String(livraisonChoisie)) return LIVRAISONS[i]; }
+      return null;
+    }
+    function moyenEstMobile(cle) { return MOYENS_MOBILE.indexOf(cle) !== -1; }
+    function fraisLivraison(zone, sousTotal) {
+      if (!zone) return 0;
+      if (zone.type === 'retrait') return 0;
+      if (zone.seuil_franco > 0 && sousTotal >= zone.seuil_franco) return 0;
+      return zone.frais || 0;
+    }
+    function chargerLivraison() {
+      fetch('/api/livraison', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          LIVRAISONS = (j && j.zones) || [];
+          retraitAdresse = (j && j.retrait_adresse) || '';
+          if (!livraisonChoisie && LIVRAISONS.length) livraisonChoisie = String(LIVRAISONS[0].id);
+          renderLivraison();
+          syncCheckoutForm();
+          renderRecap();
+        })
+        .catch(function () {});
+    }
+    // N'ajoute que le rappel de l'adresse de retrait sous la zone cochée.
+    function renderLivraisonSel() {
+      var host = document.querySelector('[data-cart-livraison]');
+      if (!host) return;
+      host.querySelectorAll('.cp-retrait').forEach(function (el) { el.remove(); });
+      var z = zoneChoisie();
+      if (z && z.type === 'retrait' && retraitAdresse) {
+        var sel = host.querySelector('input[name="cart-livraison"]:checked');
+        var row = sel ? sel.closest('label') : null;
+        var div = document.createElement('div');
+        div.className = 'cp-retrait';
+        div.textContent = 'Retrait : ' + retraitAdresse;
+        if (row && row.parentNode) row.parentNode.insertBefore(div, row.nextSibling);
+        else host.appendChild(div);
+      }
+    }
+    function renderLivraison() {
+      var foot = document.querySelector('.drawer-foot');
+      if (!foot) return;
+      var host = document.querySelector('[data-cart-livraison]');
+      if (!host) {
+        host = document.createElement('div');
+        host.className = 'cart-liv';
+        host.setAttribute('data-cart-livraison', '');
+        var pay = foot.querySelector('[data-cart-paiement]');
+        foot.insertBefore(host, pay || foot.firstChild);
+      }
+      if (!LIVRAISONS.length) { host.innerHTML = ''; host.hidden = true; return; }
+      host.hidden = false;
+      host.innerHTML = '<div class="cp-titre">Livraison</div>' + LIVRAISONS.map(function (z) {
+        var on = String(z.id) === String(livraisonChoisie) ? ' checked' : '';
+        var fraisTxt = (z.type === 'retrait' || !z.frais) ? 'Offert'
+          : fmt(z.frais) + (z.seuil_franco > 0 ? ' <span class="cp-seuil">(Offert dès ' + fmt(z.seuil_franco) + ')</span>' : '');
+        var delai = z.delai ? ' <span class="cp-delai">' + escHtml(z.delai) + '</span>' : '';
+        return '<label class="cp-row"><input type="radio" name="cart-livraison" value="' + z.id + '"' + on + '>' +
+          '<span class="cp-lab">' + escHtml(z.nom) + delai + '</span>' +
+          '<span class="cp-frais">' + fraisTxt + '</span></label>';
+      }).join('');
+      renderLivraisonSel();
+    }
+    // Crée le formulaire + le récap + la confirmation s'ils manquent.
+    function ensureCheckout() {
+      var foot = document.querySelector('.drawer-foot');
+      if (!foot) return null;
+      var form = document.querySelector('[data-checkout-form]');
+      if (!form) {
+        form = document.createElement('form');
+        form.className = 'cp-form';
+        form.setAttribute('data-checkout-form', '');
+        form.setAttribute('novalidate', '');
+        form.innerHTML =
+          '<div class="cp-titre">Vos coordonnées</div>' +
+          '<label class="cp-field">Nom complet *<input name="nom" required autocomplete="name" placeholder="Votre nom"></label>' +
+          '<label class="cp-field">Téléphone *<input name="tel" type="tel" required autocomplete="tel" placeholder="07 00 00 00 00"></label>' +
+          '<label class="cp-field" data-payeur hidden>Numéro ayant servi au paiement *<input name="numero_payeur" type="tel" inputmode="numeric" placeholder="07 00 00 00 00"></label>' +
+          '<label class="cp-field" data-adresse hidden>Adresse de livraison *<input name="adresse" autocomplete="street-address" placeholder="Commune, rue, repère"></label>' +
+          '<p class="cp-err" data-checkout-error hidden></p>' +
+          '<div class="cp-recap" data-checkout-recap></div>';
+        var order = foot.querySelector('[data-cart-order]');
+        foot.insertBefore(form, order);
+      }
+      var ok = document.querySelector('[data-checkout-ok]');
+      if (!ok) {
+        ok = document.createElement('div');
+        ok.className = 'cp-ok';
+        ok.setAttribute('data-checkout-ok', '');
+        ok.hidden = true;
+        var ord = foot.querySelector('[data-cart-order]');
+        foot.insertBefore(ok, ord);
+      }
+      return form;
+    }
+    // Bascule payeur/adresse selon le moyen et la zone (requis + visibles).
+    function syncCheckoutForm() {
+      var form = document.querySelector('[data-checkout-form]');
+      if (!form) return;
+      var mobile = moyenEstMobile(paiementChoisi);
+      var z = zoneChoisie();
+      var needAdr = !!z && z.type !== 'retrait';
+      var payWrap = form.querySelector('[data-payeur]');
+      var payInp = form.querySelector('[name="numero_payeur"]');
+      if (payWrap) payWrap.hidden = !mobile;
+      if (payInp) { payInp.required = mobile; if (!mobile) { payInp.removeAttribute('aria-invalid'); } }
+      var adWrap = form.querySelector('[data-adresse]');
+      var adInp = form.querySelector('[name="adresse"]');
+      if (adWrap) adWrap.hidden = !needAdr;
+      if (adInp) { adInp.required = needAdr; if (!needAdr) { adInp.removeAttribute('aria-invalid'); } }
+    }
+    function checkoutError(msg, input) {
+      var form = document.querySelector('[data-checkout-form]');
+      if (!form) return;
+      var err = form.querySelector('[data-checkout-error]');
+      form.querySelectorAll('[aria-invalid]').forEach(function (el) { el.removeAttribute('aria-invalid'); });
+      if (!msg) { if (err) err.hidden = true; return; }
+      if (err) { err.textContent = msg; err.hidden = false; }
+      if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }
+    }
+    // Récap : sous-total, promo (code), livraison, total = sous-total + frais.
+    // La remise promo est calculée côté serveur (jamais de faux total ici).
+    function renderRecap() {
+      var form = ensureCheckout();
+      if (!form) return;
+      var hide = !cart.length;
+      form.hidden = hide;
+      var livHost = document.querySelector('[data-cart-livraison]');
+      if (livHost) livHost.hidden = hide || !LIVRAISONS.length;
+      // Reprise d'achat après une commande : la confirmation précédente s'efface.
+      if (!hide) { var prevOk = document.querySelector('[data-checkout-ok]'); if (prevOk) prevOk.hidden = true; }
+      if (hide) return;
+      var st = cartSubtotal();
+      var promoInp = document.querySelector('[data-promo-input]');
+      var promoCode = promoInp ? promoInp.value.trim().toUpperCase() : '';
+      var z = zoneChoisie();
+      var frais = fraisLivraison(z, st);
+      var recap = form.querySelector('[data-checkout-recap]');
+      var html = '<div class="cp-line"><span>Sous-total</span><b>' + fmt(st) + '</b></div>';
+      if (promoCode) html += '<div class="cp-line"><span>Code promo</span><b>' + escHtml(promoCode) + '</b></div>' +
+        '<div class="cp-note">Remise déduite par la boutique.</div>';
+      html += '<div class="cp-line"><span>Livraison' + (z ? ' — ' + escHtml(z.nom) : '') + '</span><b>' +
+        (frais ? fmt(frais) : 'Offert') + '</b></div>';
+      html += '<div class="cp-line cp-total"><span>Total</span><b data-checkout-total>' + fmt(st + frais) + '</b></div>';
+      recap.innerHTML = html;
+    }
+    function pageCsrf() {
+      var m = document.querySelector('meta[name="csrf-token"]');
+      if (m && m.getAttribute('content')) return m.getAttribute('content');
+      return '';
+    }
+    function uuid() {
+      try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+      return 'cmd-' + Date.now() + '-' + Math.floor(Math.random() * 1e9);
+    }
+    function commander() {
+      var form = ensureCheckout();
+      if (!form || !cart.length) return;
+      checkoutError(null);
+      var nom = form.querySelector('[name="nom"]');
+      var tel = form.querySelector('[name="tel"]');
+      var payeur = form.querySelector('[name="numero_payeur"]');
+      var adresse = form.querySelector('[name="adresse"]');
+      var z = zoneChoisie();
+      if (!nom.value.trim()) { checkoutError('Indiquez votre nom.', nom); return; }
+      if (!tel.value.trim()) { checkoutError('Indiquez votre numéro de téléphone.', tel); return; }
+      if (moyenEstMobile(paiementChoisi)) {
+        var pn = payeur.value.replace(/[\s-]/g, '');
+        if (pn.length < 8 || !/^\d+$/.test(pn)) { checkoutError('Indiquez le numéro ayant servi au paiement.', payeur); return; }
+      }
+      if (z && z.type !== 'retrait' && !adresse.value.trim()) { checkoutError('Indiquez votre adresse de livraison.', adresse); return; }
+      var items = cart.map(function (it) { return it.slug + 'x' + it.qty; }).join(',');
+      var promoInp = document.querySelector('[data-promo-input]');
+      var body = new FormData();
+      body.append('csrf', pageCsrf());
+      body.append('items', items);
+      body.append('moyen', paiementChoisi || 'whatsapp');
+      body.append('nom', nom.value.trim());
+      body.append('tel', tel.value.trim());
+      if (z) body.append('livraison_id', String(z.id));
+      if (z && z.type !== 'retrait') body.append('adresse', adresse.value.trim());
+      if (moyenEstMobile(paiementChoisi)) body.append('numero_payeur', payeur.value.replace(/[\s-]/g, ''));
+      if (promoInp && promoInp.value.trim()) body.append('promo', promoInp.value.trim());
+      var key = uuid();
+      var btn = document.querySelector('[data-cart-order]');
+      if (btn) { btn.classList.add('busy'); btn.setAttribute('aria-disabled', 'true'); }
+      function done() { var b = document.querySelector('[data-cart-order]'); if (b) { b.classList.remove('busy'); b.removeAttribute('aria-disabled'); } }
+      function send(csrfv, retried) {
+        if (csrfv) body.set('csrf', csrfv);
+        return fetch('/api/commande', { method: 'POST', body: body, credentials: 'same-origin', headers: { 'Idempotency-Key': key } })
+          .then(function (r) {
+            if (r.status === 403 && !retried) {
+              return fetch('/api/csrf', { credentials: 'same-origin' })
+                .then(function (rr) { return rr.json(); }, function () { return {}; })
+                .then(function (j) {
+                  var fresh = (j && j.csrf) || '';
+                  var m = document.querySelector('meta[name="csrf-token"]');
+                  if (m && fresh) m.setAttribute('content', fresh);
+                  return send(fresh, true);
+                });
+            }
+            return r.text().then(function (t) { return { status: r.status, text: t }; });
+          });
+      }
+      send(pageCsrf(), false).then(function (res) {
+        done();
+        if (!res || res.status === undefined) { checkoutError('Commande impossible pour le moment, réessayez.'); return; }
+        if (res.status !== 200) {
+          var msg = (res.text || '').trim() || 'Commande impossible pour le moment, réessayez.';
+          checkoutError(msg);
+          return;
+        }
+        var oid = null;
+        try { oid = JSON.parse(res.text).commande; } catch (e) {}
+        commandeReussie(oid, z);
+      }, function () { done(); checkoutError('Commande impossible pour le moment, réessayez.'); });
+    }
+    function commandeReussie(oid, z) {
+      window.__commandeCreee = true;
+      var st = cartSubtotal();
+      var frais = fraisLivraison(z, st);
+      var promoInp = document.querySelector('[data-promo-input]');
+      var promoCode = promoInp ? promoInp.value.trim().toUpperCase() : '';
+      var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
+      var p = paiementChoisi ? libellePaiement(paiementChoisi) : null;
+      var form = document.querySelector('[data-checkout-form]');
+      var fv = function (n) { var i = form ? form.querySelector('[name="' + n + '"]') : null; return i ? i.value.trim() : ''; };
+      var msg = 'Bonjour, je confirme ma commande' + (oid ? ' n° ' + oid : '') + ' :\n' + lines.join('\n') +
+        '\nSous-total : ' + fmt(st);
+      if (promoCode) msg += '\nCode promo : ' + promoCode + ' (remise appliquée par la boutique)';
+      if (z) msg += '\nLivraison : ' + z.nom + ' — ' + (frais ? fmt(frais) : 'Offert');
+      if (p) msg += '\nPaiement : ' + p.libelle + (p.numero ? ' — numéro ' + p.numero : '');
+      if (moyenEstMobile(paiementChoisi)) msg += '\nN° payeur : ' + fv('numero_payeur');
+      msg += '\nNom : ' + fv('nom') + '\nTél : ' + fv('tel');
+      if (z && z.type !== 'retrait') msg += '\nAdresse : ' + fv('adresse');
+      msg += '\nTotal : ' + fmt(st + frais);
+      var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+      window.open(waUrl, '_blank');
+      cart = [];
+      saveCart(cart);
+      renderCart();
+      var ok = document.querySelector('[data-checkout-ok]');
+      if (ok) {
+        ok.innerHTML = '<div class="cp-titre">Commande enregistrée</div>' +
+          '<p class="cp-ok-num">Commande n° ' + escHtml(String(oid == null ? '' : oid)) + '</p>' +
+          '<p>' + escHtml(z ? z.nom : '') + (p ? ' · ' + escHtml(p.libelle) : '') + ' · ' + escHtml(fmt(st + frais)) + '</p>' +
+          '<a class="btn wa" href="' + escHtml(waUrl) + '" target="_blank" rel="noopener">Finalisez sur WhatsApp</a>';
+        ok.hidden = false;
+      }
+      if (form) form.hidden = true;
+      var livHost = document.querySelector('[data-cart-livraison]');
+      if (livHost) livHost.hidden = true;
+    }
+    document.addEventListener('click', function (e) {
+      var o = e.target.closest ? e.target.closest('[data-cart-order]') : null;
+      if (o && cart.length) { e.preventDefault(); commander(); }
     });
     function loadCart() { try { return JSON.parse(window.localStorage.getItem(CART_KEY)) || []; } catch (e) { return []; } }
     function saveCart(c) { try { window.localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) {} }
@@ -217,8 +497,13 @@
           order.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
         }
       }
+      // Tunnel : récap + visibilité du formulaire (jamais de reconstruction
+      // des champs ici, la saisie en cours est préservée).
+      syncCheckoutForm();
+      renderRecap();
     }
     chargerPaiements();
+    chargerLivraison();
     document.addEventListener('click', function (e) {
       var add = e.target.closest('[data-add-cart]');
       if (add) {
