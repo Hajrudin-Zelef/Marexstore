@@ -135,6 +135,7 @@ func main() {
 		"/devis.html":                       {"devis", "Demande de devis"},
 		"/suivi-commande.html":              {"suivi-commande", "Suivi de commande"},
 		"/compte.html":                      {"compte", "Mon compte"},
+		"/commander.html":                   {"commander", "Commander"},
 		"/parametres.html":                  {"parametres", "Mes paramètres"},
 		"/services.html":                    {"services", "Nos Logiciels Metiers"},
 		"/nos-services.html":                {"nos-services", "Nos services"},

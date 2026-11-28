@@ -1,0 +1,38 @@
+
+<div class="wrap">
+<div class="crumb"><a href="index.html">Accueil</a> › Commander</div>
+<h1 style="font-size:26px">Commander</h1>
+<div data-param-locked>
+<h2>Connectez-vous pour commander</h2>
+<p class="acct-empty">La commande est réservée aux clients connectés.<br>Connectez-vous ou créez un compte pour choisir votre livraison, payer et suivre votre commande.</p>
+<div class="acct-actions"><button class="btn" type="button" data-auth-open data-auth-tab="login">Se connecter</button>&nbsp;<button class="btn" type="button" data-auth-open data-auth-tab="create">Créer un compte</button></div>
+<p class="acct-note">Votre compte est enregistré uniquement dans ce navigateur (site statique, sans serveur) : il n'est pas synchronisé avec un autre appareil. Pensez à noter votre mot de passe.</p>
+</div>
+<div data-param-content hidden>
+<p class="acct-note">Vos coordonnées du compte sont pré-remplies ci-dessous : vérifiez-les avant de commander.</p>
+<section>
+<h2>1. Livraison</h2>
+<div data-checkout-livraison></div>
+</section>
+<form class="cp-form" data-checkout-form novalidate>
+<section>
+<h2>2. Vos coordonnées</h2>
+<label class="cp-field">Nom complet *<input name="nom" required autocomplete="name" placeholder="Votre nom"></label>
+<label class="cp-field">Téléphone *<input name="tel" type="tel" required autocomplete="tel" placeholder="07 00 00 00 00"></label>
+<label class="cp-field" data-payeur hidden>Numéro ayant servi au paiement *<input name="numero_payeur" type="tel" inputmode="numeric" placeholder="07 00 00 00 00"></label>
+<label class="cp-field" data-adresse hidden>Adresse de livraison *<input name="adresse" autocomplete="street-address" placeholder="Commune, rue, repère"></label>
+</section>
+<section>
+<h2>3. Paiement</h2>
+<div data-cart-paiement></div>
+</section>
+<section>
+<h2>4. Récapitulatif</h2>
+<div class="cp-recap" data-checkout-recap></div>
+</section>
+<p class="cp-err" data-checkout-error hidden></p>
+<button class="btn" type="submit" data-checkout-submit>Commander</button>
+</form>
+<div class="cp-ok" data-checkout-ok hidden></div>
+</div>
+</div>
