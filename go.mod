@@ -3,6 +3,7 @@ module github.com/Hajrudin-Zelef/Marexstore
 go 1.27
 
 require (
+	github.com/go-chi/chi/v5 v5.5.0
 	golang.org/x/crypto v0.59.0
 	golang.org/x/text v0.44.0
 	modernc.org/sqlite v1.62.0
@@ -10,7 +11,6 @@ require (
 
 require (
 	github.com/dustin/go-humanize v1.1.0 // indirect
-	github.com/go-chi/chi/v5 v5.5.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/ncruces/go-strftime v1.1.0 // indirect
