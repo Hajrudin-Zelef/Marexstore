@@ -39,6 +39,7 @@ func TestApiCommandeMoyenChoisi(t *testing.T) {
 			}
 			form := url.Values{
 				"items": {"p1x1"}, "moyen": {moyen}, "nom": {"T"}, "tel": {"0700"},
+				"numero_payeur": {"0701020304"},
 				"csrf": {auth.CSRFToken("test-secret", "anon")},
 			}
 			req := httptest.NewRequest(http.MethodPost, "/api/commande", strings.NewReader(form.Encode()))

@@ -70,7 +70,7 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	if key != "" {
 		var oid int64
 		if err := a.DB.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid); err == nil {
-			a.ok(w)
+			a.writeJSON(w, 200, map[string]any{"ok": true, "commande": oid})
 			return
 		}
 	}
@@ -131,6 +131,55 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	if !okMoyen {
 		moyen = "whatsapp"
 	}
+	nom := strings.TrimSpace(r.FormValue("nom"))
+	tel := strings.TrimSpace(r.FormValue("tel"))
+	if nom == "" {
+		http.Error(w, "nom requis", http.StatusBadRequest)
+		return
+	}
+	if tel == "" {
+		http.Error(w, "téléphone requis", http.StatusBadRequest)
+		return
+	}
+	// Livraison : zone optionnelle (panier historique sans zone = sans frais).
+	// Si fournie, la zone doit exister et être active.
+	var zoneID int64
+	var zoneType string
+	var zoneFrais, zoneSeuil int64
+	if zid := strings.TrimSpace(r.FormValue("livraison_id")); zid != "" {
+		id, err := strconv.ParseInt(zid, 10, 64)
+		if err != nil || id <= 0 {
+			http.Error(w, "mode de livraison indisponible", http.StatusBadRequest)
+			return
+		}
+		var actif int
+		if err := a.DB.QueryRow(`SELECT type,frais,seuil_franco,actif FROM livraison_zones WHERE id=?`, id).Scan(&zoneType, &zoneFrais, &zoneSeuil, &actif); err != nil || actif != 1 {
+			http.Error(w, "mode de livraison indisponible", http.StatusBadRequest)
+			return
+		}
+		zoneID = id
+	}
+	adresse := strings.TrimSpace(r.FormValue("adresse"))
+	if zoneID != 0 && zoneType != "retrait" && adresse == "" {
+		http.Error(w, "adresse requise", http.StatusBadRequest)
+		return
+	}
+	// Numéro payeur : requis pour les moyens mobile, normalisé
+	// (espaces/tirets retirés), ≥ 8 chiffres. Optionnel sinon.
+	payeur := strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(r.FormValue("numero_payeur")), " ", ""), "-", "")
+	switch moyen {
+	case "orange", "mtn", "wave", "moov":
+		if len(payeur) < 8 {
+			http.Error(w, "numéro de paiement invalide", http.StatusBadRequest)
+			return
+		}
+		for _, c := range payeur {
+			if c < '0' || c > '9' {
+				http.Error(w, "numéro de paiement invalide", http.StatusBadRequest)
+				return
+			}
+		}
+	}
 	// Promo : code client optionnel, validé côté serveur (actif, non
 	// expiré, sous le plafond d'usage). Invalide/expiré/épuisé = ignoré
 	// sans erreur ; remise plafonnée au total (jamais de total négatif).
@@ -162,7 +211,12 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	total -= remise
-	client, _ := json.Marshal(map[string]string{"nom": r.FormValue("nom"), "tel": r.FormValue("tel")})
+	frais := zoneFrais
+	if zoneID == 0 || zoneType == "retrait" || (zoneSeuil > 0 && total >= zoneSeuil) {
+		frais = 0
+	}
+	total += frais
+	client, _ := json.Marshal(map[string]string{"nom": nom, "tel": tel})
 	var uid any
 	if id := auth.CurrentUserID(a.DB, r); id != nil {
 		uid = *id
@@ -177,12 +231,12 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	if key != "" {
 		var oid int64
 		if err := tx.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid); err == nil {
-			a.ok(w)
+			a.writeJSON(w, 200, map[string]any{"ok": true, "commande": oid})
 			return
 		}
 	}
-	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json,promo_code,remise) VALUES(?,?,?,?,?,?,?)`,
-		uid, "whatsapp_recu", moyen, total, string(client), promoCode, remise)
+	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json,promo_code,remise,livraison_zone_id,livraison_frais,numero_payeur,adresse) VALUES(?,?,?,?,?,?,?,?,?,?,?)`,
+		uid, "whatsapp_recu", moyen, total, string(client), promoCode, remise, zoneID, frais, payeur, adresse)
 	if err != nil {
 		http.Error(w, "indisponible", 500)
 		return
@@ -220,14 +274,14 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 		if key != "" {
 			var oid2 int64
 			if err := a.DB.QueryRow(`SELECT order_id FROM idempotency_keys WHERE cle=?`, key).Scan(&oid2); err == nil {
-				a.ok(w)
+				a.writeJSON(w, 200, map[string]any{"ok": true, "commande": oid2})
 				return
 			}
 		}
 		http.Error(w, "indisponible", 500)
 		return
 	}
-	a.ok(w)
+	a.writeJSON(w, 200, map[string]any{"ok": true, "commande": oid})
 }
 
 // POST /api/devis|suivi|contact|infos — demandes enregistrées comme commandes "devis".
