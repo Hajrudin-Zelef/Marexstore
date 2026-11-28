@@ -59,7 +59,10 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 	var uid sql.NullInt64
 	var promoCode string
 	var remise int64
-	err := a.DB.QueryRow(`SELECT statut,moyen_paiement,client_json,created_at,total,user_id,COALESCE(promo_code,''),COALESCE(remise,0) FROM orders WHERE id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid, &promoCode, &remise)
+	var zoneID int64
+	var frais int64
+	var payeur, adresse, zoneNom, zoneType string
+	err := a.DB.QueryRow(`SELECT o.statut,o.moyen_paiement,o.client_json,o.created_at,o.total,o.user_id,COALESCE(o.promo_code,''),COALESCE(o.remise,0),COALESCE(o.livraison_zone_id,0),COALESCE(o.livraison_frais,0),COALESCE(o.numero_payeur,''),COALESCE(o.adresse,''),COALESCE(z.nom,''),COALESCE(z.type,'') FROM orders o LEFT JOIN livraison_zones z ON z.id=o.livraison_zone_id WHERE o.id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid, &promoCode, &remise, &zoneID, &frais, &payeur, &adresse, &zoneNom, &zoneType)
 	if err != nil {
 		http.NotFound(w, r)
 		return
@@ -223,13 +226,29 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 	if promoCode != "" && remise > 0 {
 		promoLigne = `<br>Promo : <strong>` + render.Esc(promoCode) + `</strong> (−` + fmtMoney(remise) + ` F CFA)`
 	}
+	livraisonLigne := ""
+	if zoneNom != "" {
+		suffixe := ""
+		if frais > 0 {
+			suffixe = " (+" + fmtMoney(frais) + " F CFA)"
+		} else if zoneType != "retrait" {
+			suffixe = " (Offerte)"
+		}
+		livraisonLigne = `<br>Livraison : ` + render.Esc(zoneNom) + suffixe
+	}
+	if payeur != "" {
+		livraisonLigne += `<br>N° payeur : ` + render.Esc(payeur)
+	}
+	if adresse != "" {
+		livraisonLigne += `<br>Adresse : ` + render.Esc(adresse)
+	}
 	a.write(w, 200, a.adminPage(fmt.Sprintf("Commande #%d", id), "commandes",
 		stepper.String()+`
 <div class="mx-cols"><div>
 <div class="mx-postbox"><h2>Lignes</h2><div class="in"><div class="mx-tablewrap"><table class="mx-table"><tr><th>Produit</th><th>Qté</th><th>Prix unit.</th><th>Total ligne</th></tr>`+items.String()+`</table></div>
 <p style="text-align:right">Total des lignes : <strong>`+fmtMoney(lignesTotal)+` F CFA</strong></p></div></div>
 <div class="mx-postbox"><h2>Historique</h2><div class="in"><ul class="mx-timeline">`+tl.String()+`</ul></div></div>
-</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(mxLabel(mxPaiementLabels, moy))+promoLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
+</div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(mxLabel(mxPaiementLabels, moy))+promoLigne+livraisonLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
 <div class="mx-postbox mx-pub"><h2>Statut</h2><div class="in"><p>Actuel : `+statutBadge(st)+`</p>`+btns.String()+`</div></div></div></div>`, r))
 }
 
