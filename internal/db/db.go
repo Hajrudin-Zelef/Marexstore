@@ -139,6 +139,7 @@ func EnsureSchema(d *sql.DB, migDir string) error {
 		"livraison_frais":   "INTEGER NOT NULL DEFAULT 0",
 		"numero_payeur": "TEXT NOT NULL DEFAULT ''",
 		"adresse":       "TEXT NOT NULL DEFAULT ''",
+		"paiement_statut": "TEXT NOT NULL DEFAULT 'en_attente'",
 	}
 	for col, typ := range owant {
 		if !ocolumns[col] {

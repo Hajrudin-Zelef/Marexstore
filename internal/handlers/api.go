@@ -217,6 +217,12 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 	}
 	total += frais
 	client, _ := json.Marshal(map[string]string{"nom": nom, "tel": tel})
+	// Statut paiement par défaut : cod = à encaisser à la livraison,
+	// tout le reste (mobile, whatsapp…) = en attente.
+	paiementStatut := "en_attente"
+	if moyen == "cod" {
+		paiementStatut = "a_encaisser"
+	}
 	var uid any
 	if id := auth.CurrentUserID(a.DB, r); id != nil {
 		uid = *id
@@ -235,8 +241,8 @@ func (a *App) ApiCommande(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json,promo_code,remise,livraison_zone_id,livraison_frais,numero_payeur,adresse) VALUES(?,?,?,?,?,?,?,?,?,?,?)`,
-		uid, "whatsapp_recu", moyen, total, string(client), promoCode, remise, zoneID, frais, payeur, adresse)
+	res, err := tx.Exec(`INSERT INTO orders(user_id,statut,moyen_paiement,total,client_json,promo_code,remise,livraison_zone_id,livraison_frais,numero_payeur,adresse,paiement_statut) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`,
+		uid, "whatsapp_recu", moyen, total, string(client), promoCode, remise, zoneID, frais, payeur, adresse, paiementStatut)
 	if err != nil {
 		http.Error(w, "indisponible", 500)
 		return
