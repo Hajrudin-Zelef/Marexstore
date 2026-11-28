@@ -235,6 +235,8 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 			suffixe = " (Offerte)"
 		}
 		livraisonLigne = `<br>Livraison : ` + render.Esc(zoneNom) + suffixe
+	} else if frais > 0 || zoneID != 0 {
+		livraisonLigne = `<br>Livraison : (zone supprimée) (+` + render.Esc(fmtMoney(frais)) + ` F CFA)`
 	}
 	if payeur != "" {
 		livraisonLigne += `<br>N° payeur : ` + render.Esc(payeur)

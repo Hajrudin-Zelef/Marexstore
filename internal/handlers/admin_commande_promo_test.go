@@ -65,3 +65,27 @@ func TestAdminCommandeLivraison(t *testing.T) {
 		}
 	}
 }
+
+// Zone supprimée après commande : la fiche affiche quand même les frais
+// persistés, marqués "(zone supprimée)" (sinon la livraison devient invisible).
+func TestAdminCommandeZoneSupprimee(t *testing.T) {
+	app, database := testAppDesign(t)
+	if _, err := database.Exec(`INSERT INTO orders(statut,moyen_paiement,total,client_json,livraison_zone_id,livraison_frais) VALUES('devis','orange',12000,'{}',99999,1500)`); err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest(http.MethodGet, "/admin/commandes/1", nil)
+	req.SetBasicAuth("admin", "test1234")
+	rctx := chi.NewRouteContext()
+	rctx.URLParams.Add("id", "1")
+	req = req.WithContext(context.WithValue(req.Context(), chi.RouteCtxKey, rctx))
+	rec := httptest.NewRecorder()
+	app.AdminCommande(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("fiche : %d", rec.Code)
+	}
+	for _, want := range []string{"zone supprimée", "1 500"} {
+		if !strings.Contains(rec.Body.String(), want) {
+			t.Fatalf("livraison persistée absente de la fiche : %q manquant", want)
+		}
+	}
+}

@@ -311,11 +311,13 @@
       var frais = fraisLivraison(z, st);
       var recap = form.querySelector('[data-checkout-recap]');
       var html = '<div class="cp-line"><span>Sous-total</span><b>' + fmt(st) + '</b></div>';
-      if (promoCode) html += '<div class="cp-line"><span>Code promo</span><b>' + escHtml(promoCode) + '</b></div>' +
-        '<div class="cp-note">Remise déduite par la boutique.</div>';
+      if (promoCode) html += '<div class="cp-line"><span>Code promo</span><b>' + escHtml(promoCode) + '</b></div>';
+      var fraisTxt = frais ? fmt(frais) : 'Offert';
+      if (promoCode) fraisTxt += ' (à confirmer)';
       html += '<div class="cp-line"><span>Livraison' + (z ? ' — ' + escHtml(z.nom) : '') + '</span><b>' +
-        (frais ? fmt(frais) : 'Offert') + '</b></div>';
-      html += '<div class="cp-line cp-total"><span>Total</span><b data-checkout-total>' + fmt(st + frais) + '</b></div>';
+        fraisTxt + '</b></div>';
+      html += '<div class="cp-line cp-total"><span>' + (promoCode ? 'Total hors remise' : 'Total') + '</span><b data-checkout-total>' + fmt(st + frais) + '</b></div>';
+      if (promoCode) html += '<div class="cp-note">* Remise déduite par la boutique.</div>';
       recap.innerHTML = html;
     }
     function pageCsrf() {
@@ -407,7 +409,7 @@
       if (moyenEstMobile(paiementChoisi)) msg += '\nN° payeur : ' + fv('numero_payeur');
       msg += '\nNom : ' + fv('nom') + '\nTél : ' + fv('tel');
       if (z && z.type !== 'retrait') msg += '\nAdresse : ' + fv('adresse');
-      msg += '\nTotal : ' + fmt(st + frais);
+      if (!promoCode) msg += '\nTotal : ' + fmt(st + frais);
       var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
       window.open(waUrl, '_blank');
       cart = [];

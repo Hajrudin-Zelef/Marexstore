@@ -48,12 +48,16 @@
       // Idempotency-Key — le miroir ne doit pas double-poster. Il se tait
       // dès que le formulaire existe (flux actif) ou a déjà répondu 200.
       if (window.__commandeCreee || document.querySelector('[data-checkout-form]')) return;
+      // Miroir volontairement muet quand le tunnel est actif : le fetch
+      // d'app.js porte la création (Idempotency-Key) — un double POST ici
+      // créerait un doublon. Sans formulaire, nom/tél/adresse seraient vides
+      // et rejetés par le serveur de toute façon : seuls les champs encore
+      // lisibles partent.
       var items = cart().map(function (it) { return it.slug + 'x' + it.qty; }).join(',');
       var pi = document.querySelector('[data-promo-input]');
       var pr = document.querySelector('input[name="cart-paiement"]:checked');
       var lr = document.querySelector('input[name="cart-livraison"]:checked');
-      var fv = function (n) { var i = document.querySelector('[data-checkout-form] [name="' + n + '"]'); return i ? i.value.trim() : ''; };
-      post('/api/commande', { items: items, moyen: pr ? pr.value : 'whatsapp', promo: pi ? pi.value.trim() : '', livraison_id: lr ? lr.value : '', nom: fv('nom'), tel: fv('tel'), numero_payeur: fv('numero_payeur'), adresse: fv('adresse') });
+      post('/api/commande', { items: items, moyen: pr ? pr.value : 'whatsapp', promo: pi ? pi.value.trim() : '', livraison_id: lr ? lr.value : '' });
       return;
     }
     var lo = e.target.closest ? e.target.closest('[data-logout]') : null;
