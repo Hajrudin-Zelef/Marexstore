@@ -69,6 +69,27 @@ func (a *App) livraisonSet(k, v string) {
 	_, _ = a.DB.Exec(`INSERT INTO settings(nom,valeur) VALUES(?,?) ON CONFLICT(nom) DO UPDATE SET valeur=excluded.valeur`, k, v)
 }
 
+// livraisonTabs : onglets de la page (même style mx-views que réglages).
+func livraisonTabs(cur string) string {
+	tabs := []struct{ key, label string }{
+		{"zones", "Zones"},
+		{"generaux", "Réglages globaux"},
+	}
+	var b strings.Builder
+	b.WriteString(`<ul class="mx-views">`)
+	for i, t := range tabs {
+		if i > 0 {
+			b.WriteString(`<li aria-hidden="true">|</li>`)
+		}
+		cls := ""
+		if t.key == cur {
+			cls = ` class="on"`
+		}
+		b.WriteString(`<li><a href="/admin/livraison?vue=` + t.key + `"` + cls + `>` + t.label + `</a></li>`)
+	}
+	return b.String() + `</ul>`
+}
+
 // AdminLivraison : GET liste + formulaires ; POST actions zone/globals.
 func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
@@ -92,7 +113,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 			a.livraisonSet("livraison_seuil_abidjan", seuil)
 			a.livraisonSet("livraison_retrait_adresse", strings.TrimSpace(r.FormValue("retrait_adresse")))
 			a.auditAdmin(r, "livraison.globals", "seuil_abidjan="+seuil)
-			http.Redirect(w, r, "/admin/livraison?msg=R%C3%A9glages+livraison+enregistr%C3%A9s", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/livraison?vue=generaux&msg=R%C3%A9glages+livraison+enregistr%C3%A9s", http.StatusSeeOther)
 			return
 		case "ajouter":
 			nom := strings.TrimSpace(r.FormValue("nom"))
@@ -120,7 +141,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			a.auditAdmin(r, "livraison.ajouter", nom)
-			http.Redirect(w, r, "/admin/livraison?msg=Zone+ajout%C3%A9e", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/livraison?vue=zones&msg=Zone+ajout%C3%A9e", http.StatusSeeOther)
 			return
 		case "maj":
 			id, err := strconv.ParseInt(r.FormValue("id"), 10, 64)
@@ -153,7 +174,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			a.auditAdmin(r, "livraison.maj", nom)
-			http.Redirect(w, r, "/admin/livraison?msg=Zone+mise+%C3%A0+jour", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/livraison?vue=zones&msg=Zone+mise+%C3%A0+jour", http.StatusSeeOther)
 			return
 		case "toggle":
 			id, err := strconv.ParseInt(r.FormValue("id"), 10, 64)
@@ -166,7 +187,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			a.auditAdmin(r, "livraison.toggle", r.FormValue("id"))
-			http.Redirect(w, r, "/admin/livraison?msg=Zone+mise+%C3%A0+jour", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/livraison?vue=zones&msg=Zone+mise+%C3%A0+jour", http.StatusSeeOther)
 			return
 		case "supprimer":
 			id, err := strconv.ParseInt(r.FormValue("id"), 10, 64)
@@ -179,12 +200,19 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			a.auditAdmin(r, "livraison.supprimer", r.FormValue("id"))
-			http.Redirect(w, r, "/admin/livraison?msg=Zone+supprim%C3%A9e", http.StatusSeeOther)
+			http.Redirect(w, r, "/admin/livraison?vue=zones&msg=Zone+supprim%C3%A9e", http.StatusSeeOther)
 			return
 		default:
 			http.Error(w, "action inconnue", http.StatusBadRequest)
 			return
 		}
+	}
+
+	vue := r.URL.Query().Get("vue")
+	switch vue {
+	case "generaux":
+	default:
+		vue = "zones"
 	}
 
 	zones := a.livraisonGetZones()
@@ -194,8 +222,18 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 
 	var b strings.Builder
 	b.WriteString(mxPageHead("Livraison", "Zones, frais et seuils franco — montants en F CFA, modifiables ici."))
+	b.WriteString(livraisonTabs(vue))
 
 	// Liste + édition inline.
+	if vue != "zones" {
+		a.writeAdmin(w, r, "Livraison", "livraison", b.String()+mxSection("Réglages globaux", "Seuil franco Abidjan et adresse de retrait",
+			`<div class="mx-fsec mx-fsec-premium" style="max-width:640px">`+reglagesHead(mxIcoCash, "Seuils", "Appliqués quand une zone ne définit pas son propre seuil.", "")+
+				`<form method="post"><input type="hidden" name="csrf" value="`+csrf+`"><input type="hidden" name="action" value="globals">`+
+				`<div class="mx-fgrid"><label>Seuil franco Abidjan (F CFA) <input name="seuil_abidjan" type="number" min="0" value="`+render.Esc(seuil)+`"></label>`+
+				`<label class="span2">Adresse de retrait <input name="retrait_adresse" value="`+render.Esc(adresse)+`"></label></div>`+
+				`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form></div>`))
+		return
+	}
 	var rows strings.Builder
 	for _, z := range zones {
 		etat := "Active"
@@ -230,7 +268,7 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 		liste = mxEmptyState("Aucune zone", "Ajoutez votre première zone avec le formulaire ci-dessous.")
 	}
 	b.WriteString(mxSection("Zones de livraison", "Ordre d'affichage croissant ; masquée = invisible au tunnel d'achat",
-		`<div class="mx-fsec mx-fsec-premium">` + reglagesHead(mxIcoShop, "Zones", "Frais et seuils franco par zone.", "") + liste + `</div>`))
+		`<div class="mx-fsec mx-fsec-premium">`+reglagesHead(mxIcoShop, "Zones", "Frais et seuils franco par zone.", "")+liste+`</div>`))
 
 	// Formulaire d'ajout.
 	b.WriteString(mxSection("Nouvelle zone", "Le type est fermé : retrait, livraison ou expédition",
@@ -242,14 +280,6 @@ func (a *App) AdminLivraison(w http.ResponseWriter, r *http.Request) {
 			`<label>Délai <input name="delai" placeholder="Ex. 24–72h"></label>`+
 			`<label>Ordre <input name="ordre" type="number" min="0" value="0"></label>`+
 			`<button class="mx-btn" type="submit">Ajouter la zone</button></form>`)))
-
-	// Réglages globaux.
-	b.WriteString(mxSection("Réglages globaux", "Seuil franco Abidjan et adresse de retrait",
-		`<div class="mx-fsec mx-fsec-premium" style="max-width:640px">`+reglagesHead(mxIcoCash, "Seuils", "Appliqués quand une zone ne définit pas son propre seuil.", "")+
-			`<form method="post"><input type="hidden" name="csrf" value="`+csrf+`"><input type="hidden" name="action" value="globals">`+
-			`<div class="mx-fgrid"><label>Seuil franco Abidjan (F CFA) <input name="seuil_abidjan" type="number" min="0" value="`+render.Esc(seuil)+`"></label>`+
-			`<label class="span2">Adresse de retrait <input name="retrait_adresse" value="`+render.Esc(adresse)+`"></label></div>`+
-			`<div class="mx-form-actions"><button class="mx-btn primary">Enregistrer</button></div></form></div>`))
 
 	a.writeAdmin(w, r, "Livraison", "livraison", b.String())
 }

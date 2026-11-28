@@ -31,6 +31,51 @@ func postLivraison(t *testing.T, app *App, form url.Values) *httptest.ResponseRe
 	return rec
 }
 
+// Onglets : ?vue=zones (défaut, liste + ajout) vs ?vue=generaux (globaux).
+// Chaque onglet n'affiche que son contenu ; les POST reviennent sur leur onglet.
+func TestAdminLivraisonOnglets(t *testing.T) {
+	app, _ := testAppDesign(t)
+
+	// Onglet zones par défaut : liste visible, globals absents.
+	body := getLivraison(t, app, "/admin/livraison")
+	for _, want := range []string{`vue=zones`, "Retrait boutique", `value="maj"`} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("onglet zones : %q manquant", want)
+		}
+	}
+	if strings.Contains(body, `name="seuil_abidjan"`) {
+		t.Fatal("onglet zones : formulaire globals présent (fuite)")
+	}
+
+	// Onglet généraux : globals visibles, lignes zones absentes.
+	body = getLivraison(t, app, "/admin/livraison?vue=generaux")
+	for _, want := range []string{`vue=generaux`, `name="seuil_abidjan"`} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("onglet generaux : %q manquant", want)
+		}
+	}
+	if strings.Contains(body, `value="maj"`) {
+		t.Fatal("onglet generaux : lignes zones présentes (fuite)")
+	}
+
+	// POST zone → revient sur l'onglet zones.
+	rec := postLivraison(t, app, url.Values{
+		"action": {"ajouter"}, "nom": {"Zone onglets"}, "type": {"livraison"},
+		"frais": {"0"}, "seuil_franco": {"0"}, "delai": {""}, "ordre": {"0"},
+	})
+	if loc := rec.Header().Get("Location"); !strings.Contains(loc, "vue=zones") {
+		t.Fatalf("redirect ajout : %q devrait revenir sur vue=zones", loc)
+	}
+
+	// POST globals → revient sur l'onglet généraux.
+	rec = postLivraison(t, app, url.Values{
+		"action": {"globals"}, "seuil_abidjan": {"80000"}, "retrait_adresse": {"Plateau"},
+	})
+	if loc := rec.Header().Get("Location"); !strings.Contains(loc, "vue=generaux") {
+		t.Fatalf("redirect globals : %q devrait revenir sur vue=generaux", loc)
+	}
+}
+
 // Page Livraison : liste les 3 zones seed, ajout/maj/toggle/suppression,
 // réglages globaux persistés sans écraser les autres settings.
 func TestAdminLivraisonCRUD(t *testing.T) {
