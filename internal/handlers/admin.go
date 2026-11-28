@@ -249,6 +249,25 @@ func statutBadge(st string) string {
 	return `<span class="mx-badge ` + cls + `">` + render.Esc(st) + `</span>`
 }
 
+// Libellés du suivi paiement (pastilles de /admin/commandes + fiche).
+var mxPaiementStatutLabels = map[string]string{
+	"en_attente": "En attente", "recu": "Reçu",
+	"a_encaisser": "À encaisser", "encaisse": "Encaissé",
+}
+
+// paiementBadge : pastille du statut de paiement (même motif que
+// statutBadge ; valeur inconnue rendue telle quelle, jamais vide).
+func paiementBadge(ps string) string {
+	cls := ""
+	switch ps {
+	case "recu", "encaisse":
+		cls = "ok"
+	case "en_attente", "a_encaisser":
+		cls = "warn"
+	}
+	return `<span class="mx-badge ` + cls + `">` + render.Esc(mxLabel(mxPaiementStatutLabels, ps)) + `</span>`
+}
+
 func (a *App) AdminProduits(w http.ResponseWriter, r *http.Request) {
 	if !a.adminAuth(w, r) {
 		return
@@ -727,8 +746,25 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 	if vue != "all" {
 		cond = ` AND statut='` + strings.ReplaceAll(vue, `'`, ``) + `'`
 	}
+	// Filtre paiement : à vérifier (mobile en attente) / à encaisser
+	// (livraison) / tous. Valeur inconnue = tous (jamais de liste vide
+	// par surprise). COALESCE : les lignes d'avant la colonne comptent
+	// comme « en_attente ».
+	paiement := r.URL.Query().Get("paiement")
+	switch paiement {
+	case "a_verifier", "a_encaisser":
+	default:
+		paiement = "tous"
+	}
+	condPay := ""
+	switch paiement {
+	case "a_verifier":
+		condPay = ` AND COALESCE(paiement_statut,'en_attente')='en_attente'`
+	case "a_encaisser":
+		condPay = ` AND COALESCE(paiement_statut,'en_attente')='a_encaisser'`
+	}
 	var total int
-	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE 1=1` + cond).Scan(&total)
+	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE 1=1` + cond + condPay).Scan(&total)
 	pages := (total + per - 1) / per
 	if pages < 1 {
 		pages = 1
@@ -756,27 +792,44 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 	for _, c := range counts {
 		views = append(views, render.MxView{Key: c.k, Href: "/admin/commandes?vue=" + c.k, Label: c.k, Count: c.n})
 	}
+	// Compteurs paiement (même filtre statut que la liste, pour rester honnêtes).
+	payCounts := map[string]int{}
+	prows, _ := a.DB.Query(`SELECT COALESCE(paiement_statut,'en_attente'),COUNT(*) FROM orders WHERE 1=1` + cond + ` GROUP BY 1`)
+	if prows != nil {
+		defer prows.Close()
+		for prows.Next() {
+			var k string
+			var n int
+			_ = prows.Scan(&k, &n)
+			payCounts[k] = n
+		}
+	}
+	payViews := []render.MxView{
+		{Key: "tous", Href: "/admin/commandes?vue=" + vue + "&paiement=tous", Label: "Tous paiements", Count: total},
+		{Key: "a_verifier", Href: "/admin/commandes?vue=" + vue + "&paiement=a_verifier", Label: "À vérifier", Count: payCounts["en_attente"]},
+		{Key: "a_encaisser", Href: "/admin/commandes?vue=" + vue + "&paiement=a_encaisser", Label: "À encaisser", Count: payCounts["a_encaisser"]},
+	}
 	// Mini-stats : CA encaissé (payée/préparée/livrée), en cours, livrées.
 	var ca, enCours, livrees int64
 	_ = a.DB.QueryRow(`SELECT COALESCE(SUM(total),0) FROM orders WHERE statut IN ('paye','prepare','livre')`).Scan(&ca)
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE statut NOT IN ('livre','annule')`).Scan(&enCours)
 	_ = a.DB.QueryRow(`SELECT COUNT(*) FROM orders WHERE statut='livre'`).Scan(&livrees)
-	rows, _ := a.DB.Query(`SELECT id,statut,moyen_paiement,total,client_json,created_at FROM orders WHERE 1=1`+cond+` ORDER BY id DESC LIMIT ? OFFSET ?`, per, (page-1)*per)
+	rows, _ := a.DB.Query(`SELECT id,statut,moyen_paiement,total,client_json,created_at,COALESCE(paiement_statut,'en_attente') FROM orders WHERE 1=1`+cond+condPay+` ORDER BY id DESC LIMIT ? OFFSET ?`, per, (page-1)*per)
 	var tr strings.Builder
 	if rows != nil {
 		defer rows.Close()
 		for rows.Next() {
 			var id int64
-			var statut, moyen, client, at string
+			var statut, moyen, client, at, pstat string
 			var tot sql.NullInt64
-			_ = rows.Scan(&id, &statut, &moyen, &tot, &client, &at)
+			_ = rows.Scan(&id, &statut, &moyen, &tot, &client, &at, &pstat)
 			t := `<span class="mx-muted">devis</span>`
 			if tot.Valid {
 				t = `<span class="mx-price">` + fmtMoney(tot.Int64) + ` F CFA</span>`
 			}
 			cl := clientLabel(client)
-			fmt.Fprintf(&tr, `<tr><td><a href="/admin/commandes/%d"><strong>#%d</strong></a><div class="row-actions"><a href="/admin/commandes/%d">Détail</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
-				id, id, id, render.Esc(at), render.Esc(mxLabel(mxPaiementLabels, moyen)), t, render.Esc(cl), statutBadge(statut))
+			fmt.Fprintf(&tr, `<tr><td><a href="/admin/commandes/%d"><strong>#%d</strong></a><div class="row-actions"><a href="/admin/commandes/%d">Détail</a></div></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>`,
+				id, id, id, render.Esc(at), render.Esc(mxLabel(mxPaiementLabels, moyen)), t, render.Esc(cl), paiementBadge(pstat), statutBadge(statut))
 		}
 	}
 	a.write(w, 200, a.adminPage("Commandes", "commandes",
@@ -786,6 +839,6 @@ func (a *App) AdminCommandes(w http.ResponseWriter, r *http.Request) {
 			miniStat("/admin/commandes?vue=all", "En cours", fmt.Sprint(enCours), "#dba617")+
 			miniStat("/admin/commandes?vue=livre", "Livrées", fmt.Sprint(livrees), "#6fa82e")+
 			`</div>`+
-			render.MxViews(views, vue)+`
-<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client</th><th>Statut</th></tr>`+tr.String()+`</table></div>`+render.MxPager("/admin/commandes?vue="+vue, page, pages), r))
+			render.MxViews(views, vue)+render.MxViews(payViews, paiement)+`
+<div class="mx-tablewrap"><table class="mx-table"><tr><th>#</th><th>Date</th><th>Moyen</th><th>Total</th><th>Client</th><th>Paiement</th><th>Statut</th></tr>`+tr.String()+`</table></div>`+render.MxPager("/admin/commandes?vue="+vue+"&paiement="+paiement, page, pages), r))
 }

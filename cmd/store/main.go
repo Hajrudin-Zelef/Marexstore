@@ -178,6 +178,7 @@ func main() {
 	r.Post("/admin/commandes", app.AdminCommandes)
 	r.Get("/admin/commandes/{id}", app.AdminCommande)
 	r.Post("/admin/commandes/{id}", app.AdminCommande)
+	r.Post("/admin/commandes/{id}/paiement", app.AdminCommandePaiement)
 	r.Get("/admin/clients", app.AdminClients)
 	r.Get("/admin/clients/{id}", app.AdminClient)
 	r.Post("/admin/clients/{id}", app.AdminClientAction)

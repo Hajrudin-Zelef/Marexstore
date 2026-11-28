@@ -62,7 +62,8 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 	var zoneID int64
 	var frais int64
 	var payeur, adresse, zoneNom, zoneType string
-	err := a.DB.QueryRow(`SELECT o.statut,o.moyen_paiement,o.client_json,o.created_at,o.total,o.user_id,COALESCE(o.promo_code,''),COALESCE(o.remise,0),COALESCE(o.livraison_zone_id,0),COALESCE(o.livraison_frais,0),COALESCE(o.numero_payeur,''),COALESCE(o.adresse,''),COALESCE(z.nom,''),COALESCE(z.type,'') FROM orders o LEFT JOIN livraison_zones z ON z.id=o.livraison_zone_id WHERE o.id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid, &promoCode, &remise, &zoneID, &frais, &payeur, &adresse, &zoneNom, &zoneType)
+	var paiementStatut string
+	err := a.DB.QueryRow(`SELECT o.statut,o.moyen_paiement,o.client_json,o.created_at,o.total,o.user_id,COALESCE(o.promo_code,''),COALESCE(o.remise,0),COALESCE(o.livraison_zone_id,0),COALESCE(o.livraison_frais,0),COALESCE(o.numero_payeur,''),COALESCE(o.adresse,''),COALESCE(z.nom,''),COALESCE(z.type,''),COALESCE(o.paiement_statut,'en_attente') FROM orders o LEFT JOIN livraison_zones z ON z.id=o.livraison_zone_id WHERE o.id=?`, id).Scan(&st, &moy, &client, &at, &tot, &uid, &promoCode, &remise, &zoneID, &frais, &payeur, &adresse, &zoneNom, &zoneType, &paiementStatut)
 	if err != nil {
 		http.NotFound(w, r)
 		return
@@ -222,6 +223,21 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 			cli = fmt.Sprintf(`<a href="/admin/clients/%d">%s</a> (%s)`, uid.Int64, render.Esc(nm), render.Esc(em))
 		}
 	}
+	// Suivi paiement : « Paiement : <Statut> — <total> via <moyen>
+	// (payeur) » + bouton d'action suivante (états non terminaux).
+	// COALESCE au SELECT : les lignes d'avant la colonne se lisent
+	// « En attente », jamais vide.
+	paiementBloc := `<p>Paiement : ` + render.Esc(mxLabel(mxPaiementStatutLabels, paiementStatut)) + ` — ` + t + ` via ` + render.Esc(mxLabel(mxPaiementLabels, moy))
+	if payeur != "" {
+		paiementBloc += ` (` + render.Esc(payeur) + `)`
+	}
+	paiementBloc += `</p>`
+	switch paiementStatut {
+	case "en_attente":
+		paiementBloc += `<form method="post" action="/admin/commandes/` + strconv.FormatInt(id, 10) + `/paiement"><input type="hidden" name="csrf" value="` + a.adminCSRF() + `"><input type="hidden" name="action" value="marquer_recu"><button class="mx-btn primary">Marquer reçu</button></form>`
+	case "a_encaisser":
+		paiementBloc += `<form method="post" action="/admin/commandes/` + strconv.FormatInt(id, 10) + `/paiement"><input type="hidden" name="csrf" value="` + a.adminCSRF() + `"><input type="hidden" name="action" value="marquer_encaisse"><button class="mx-btn primary">Marquer encaissé</button></form>`
+	}
 	promoLigne := ""
 	if promoCode != "" && remise > 0 {
 		promoLigne = `<br>Promo : <strong>` + render.Esc(promoCode) + `</strong> (−` + fmtMoney(remise) + ` F CFA)`
@@ -251,7 +267,61 @@ func (a *App) AdminCommande(w http.ResponseWriter, r *http.Request) {
 <p style="text-align:right">Total des lignes : <strong>`+fmtMoney(lignesTotal)+` F CFA</strong></p></div></div>
 <div class="mx-postbox"><h2>Historique</h2><div class="in"><ul class="mx-timeline">`+tl.String()+`</ul></div></div>
 </div><div><div class="mx-postbox mx-pub"><h2>Résumé</h2><div class="in"><p class="mx-big-total">`+t+`</p><p>Moyen : `+render.Esc(mxLabel(mxPaiementLabels, moy))+promoLigne+livraisonLigne+`<br>Client : `+render.Esc(clientLabel(client))+`<br>Compte : `+cli+`<br><span class="mx-muted">Créée le `+render.Esc(at)+`</span></p></div></div>
+<div class="mx-postbox"><h2>Paiement</h2><div class="in">`+paiementBloc+`</div></div>
 <div class="mx-postbox mx-pub"><h2>Statut</h2><div class="in"><p>Actuel : `+statutBadge(st)+`</p>`+btns.String()+`</div></div></div></div>`, r))
+}
+
+// AdminCommandePaiement : POST /admin/commandes/{id}/paiement {action}.
+// Machine à états stricte : en_attente→recu (marquer_recu),
+// a_encaisser→encaisse (marquer_encaisse). Répéter l'action sur un état
+// déjà atteint est idempotent (303, rien ne change) ; tout le reste = 400.
+// COALESCE : les lignes d'avant la colonne se lisent « en_attente ».
+func (a *App) AdminCommandePaiement(w http.ResponseWriter, r *http.Request) {
+	if !a.adminAuth(w, r) {
+		return
+	}
+	if r.Method != http.MethodPost {
+		http.Error(w, "méthode interdite", http.StatusMethodNotAllowed)
+		return
+	}
+	if !a.checkAdminCSRF(r) {
+		http.Error(w, "refusé", http.StatusForbidden)
+		return
+	}
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	var cur string
+	if err := a.DB.QueryRow(`SELECT COALESCE(paiement_statut,'en_attente') FROM orders WHERE id=?`, id).Scan(&cur); err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	action := strings.TrimSpace(r.FormValue("action"))
+	var cible string
+	switch {
+	case action == "marquer_recu" && cur == "en_attente":
+		cible = "recu"
+	case action == "marquer_encaisse" && cur == "a_encaisser":
+		cible = "encaisse"
+	case (action == "marquer_recu" && cur == "recu") ||
+		(action == "marquer_encaisse" && cur == "encaisse"):
+		http.Redirect(w, r, "/admin/commandes/"+strconv.FormatInt(id, 10)+"?msg=Paiement+d%C3%A9j%C3%A0+enregistr%C3%A9", http.StatusSeeOther)
+		return
+	default:
+		http.Error(w, "Transition paiement interdite", http.StatusBadRequest)
+		return
+	}
+	// Compare-and-swap comme les transitions de statut : deux validations
+	// concurrentes ne produisent pas un état incohérent.
+	res, err := a.DB.Exec(`UPDATE orders SET paiement_statut=? WHERE id=? AND COALESCE(paiement_statut,'en_attente')=?`, cible, id, cur)
+	if err != nil {
+		http.Error(w, "impossible", 500)
+		return
+	}
+	if n, _ := res.RowsAffected(); n != 1 {
+		http.Redirect(w, r, "/admin/commandes/"+strconv.FormatInt(id, 10)+"?err=Commande+modifi%C3%A9e+entre-temps+(rechargez+la+page)", http.StatusSeeOther)
+		return
+	}
+	a.auditAdmin(r, "commande.paiement", fmt.Sprintf("#%d %s -> %s", id, cur, cible))
+	http.Redirect(w, r, "/admin/commandes/"+strconv.FormatInt(id, 10)+"?msg=Paiement+enregistr%C3%A9", http.StatusSeeOther)
 }
 
 // AdminClients : liste des comptes.
