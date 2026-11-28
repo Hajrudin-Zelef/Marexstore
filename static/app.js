@@ -429,7 +429,16 @@
     }
     document.addEventListener('click', function (e) {
       var o = e.target.closest ? e.target.closest('[data-cart-order]') : null;
-      if (o && cart.length) { e.preventDefault(); commander(); }
+      if (o && cart.length) {
+        // Porte de connexion (page Commander) : invité → modale auth +
+        // retour mémorisé ; connecté → page Commander. Le tunnel WhatsApp
+        // direct depuis le tiroir est remplacé par ce passage obligé.
+        e.preventDefault();
+        var dest = logoPrefix() + 'commander.html';
+        if (loadAcct() && sessionOn()) { window.location.href = dest; return; }
+        saveNext(dest);
+        openAuth();
+      }
     });
     function loadCart() { try { return JSON.parse(window.localStorage.getItem(CART_KEY)) || []; } catch (e) { return []; } }
     function saveCart(c) { try { window.localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) {} }
@@ -481,6 +490,9 @@
       }
       var order = document.querySelector('[data-cart-order]');
       if (order) {
+        // La commande passe par la page Commander (porte de connexion) :
+        // le libellé est posé en JS pour ne toucher aucun HTML serveur (parité).
+        order.textContent = 'Passer commande';
         if (!cart.length) { order.classList.add('disabled'); order.removeAttribute('href'); }
         else {
           order.classList.remove('disabled');
@@ -1393,6 +1405,11 @@
     var SESSION_KEY = 'mediatec-session-v1';
     var ORDERS_KEY = 'mediatec-commandes-v1';
     var CARTS_KEY = 'mediatec-paniers-v1';
+    // Porte « Passer commande » : destination mémorisée avant l'auth,
+    // consommée (puis nettoyée) à la première renderAcct connecté.
+    var NEXT_KEY = 'mediatec-next';
+    function saveNext(v) { try { window.sessionStorage.setItem(NEXT_KEY, v); } catch (e) {} }
+    function takeNext() { var v = null; try { v = window.sessionStorage.getItem(NEXT_KEY); window.sessionStorage.removeItem(NEXT_KEY); } catch (e) {} return v; }
     function loadAcct() { try { return JSON.parse(window.localStorage.getItem(ACCT_KEY)); } catch (e) { return null; } }
     function saveAcct(a) { try { if (a) window.localStorage.setItem(ACCT_KEY, JSON.stringify(a)); else window.localStorage.removeItem(ACCT_KEY); } catch (e) {} }
     function sessionOn() { try { return window.localStorage.getItem(SESSION_KEY) === '1'; } catch (e) { return false; } }
@@ -1455,6 +1472,16 @@
       document.querySelectorAll('[data-acct-id]').forEach(function (el) { el.hidden = !logged; });
       document.querySelectorAll('[data-acct-guest]').forEach(function (el) { el.hidden = logged; });
       if (!logged) return;
+      // Retour page après connexion : si une destination a été mémorisée
+      // (porte « Passer commande ») et qu'on n'y est pas déjà (cas
+      // commander.html : login sur place), on y navigue puis on nettoie.
+      // Rien d'absolu ni d'externe n'est suivi (anti open-redirect).
+      var next = takeNext();
+      if (next && !/^(https?:)?\/\//i.test(next)) {
+        var here = (window.location.pathname || '').split('/').pop();
+        var there = String(next).split('/').pop().split('?')[0].split('#')[0];
+        if (there && there !== here) { window.location.href = next; return; }
+      }
       document.querySelectorAll('[data-acct-initials]').forEach(function (el) { el.textContent = acctInitials(a); });
       document.querySelectorAll('[data-acct-name]').forEach(function (el) { el.textContent = (a.prenom || '') + ' ' + (a.nom || ''); });
       document.querySelectorAll('[data-acct-num]').forEach(function (el) { el.textContent = a.numero || ''; });
@@ -1711,7 +1738,11 @@
     }
     document.addEventListener('click', function (e) {
       var ord = e.target.closest('[data-cart-order]');
-      if (ord && cart.length && ord.getAttribute('href')) {
+      // Porte de connexion : le clic ne passe plus commande (navigation ou
+      // modale, e.preventDefault), il ne doit donc plus enregistrer de
+      // commande locale — l'enregistrement aura lieu au succès réel (page
+      // Commander). Le garde !defaultPrevented protège aussi le flux sans JS.
+      if (ord && cart.length && ord.getAttribute('href') && !e.defaultPrevented) {
         var list = loadList(ORDERS_KEY);
         var d = new Date();
         list.push({ id: 'CMD-' + d.getFullYear() + '-' + String(list.length + 1).padStart(4, '0'), date: d.toLocaleDateString('fr-FR'), items: JSON.parse(JSON.stringify(cart)), total: cartSubtotal() });
