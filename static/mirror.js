@@ -29,10 +29,6 @@
         .catch(function () {});
     } catch (e) {}
   }
-  function cart() {
-    try { return JSON.parse(window.localStorage.getItem('mediatec-panier-v1') || '[]'); }
-    catch (e) { return []; }
-  }
   document.addEventListener('click', function (e) {
     var add = e.target.closest ? e.target.closest('[data-add-cart]') : null;
     if (add) {
@@ -44,20 +40,11 @@
     }
     var ord = e.target.closest ? e.target.closest('[data-cart-order]') : null;
     if (ord && ord.getAttribute('href')) {
-      // Tunnel d'achat (app.js) : le flux fetch porte la commande avec
-      // Idempotency-Key — le miroir ne doit pas double-poster. Il se tait
-      // dès que le formulaire existe (flux actif) ou a déjà répondu 200.
-      if (window.__commandeCreee || document.querySelector('[data-checkout-form]')) return;
-      // Miroir volontairement muet quand le tunnel est actif : le fetch
-      // d'app.js porte la création (Idempotency-Key) — un double POST ici
-      // créerait un doublon. Sans formulaire, nom/tél/adresse seraient vides
-      // et rejetés par le serveur de toute façon : seuls les champs encore
-      // lisibles partent.
-      var items = cart().map(function (it) { return it.slug + 'x' + it.qty; }).join(',');
-      var pi = document.querySelector('[data-promo-input]');
-      var pr = document.querySelector('input[name="cart-paiement"]:checked');
-      var lr = document.querySelector('input[name="cart-livraison"]:checked');
-      post('/api/commande', { items: items, moyen: pr ? pr.value : 'whatsapp', promo: pi ? pi.value.trim() : '', livraison_id: lr ? lr.value : '' });
+      // Le clic « Passer commande » est intercepté par le gate (app.js) :
+      // navigation vers commander.html, jamais de commande ici. Le tunnel
+      // de la page porte la création (fetch + Idempotency-Key) — le miroir
+      // se tait toujours sur ce bouton (avant : 400 « panier vide »/« refusé »
+      // à chaque clic, bruit + logs). Il se tait aussi après succès.
       return;
     }
     var lo = e.target.closest ? e.target.closest('[data-logout]') : null;

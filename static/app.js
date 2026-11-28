@@ -483,16 +483,15 @@
       if (order) {
         // La commande passe par la page Commander (porte de connexion) :
         // le libellé est posé en JS pour ne toucher aucun HTML serveur (parité).
-        // Le message reste volontairement simple (sous-total + total) : promo,
-        // moyens et livraison sont choisis sur la page, qui porte le fetch.
+        // href = page Commander (même préfixe que le gate) : clic molette /
+        // nouvel onglet / sans JS aboutissent à la porte, jamais à une
+        // commande sans validation. Le wa.me ne vit que sur la page après
+        // succès serveur — aucune construction de message ici.
         order.textContent = 'Passer commande';
         if (!cart.length) { order.classList.add('disabled'); order.removeAttribute('href'); }
         else {
           order.classList.remove('disabled');
-          var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
-          var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n');
-          msg += '\nTotal : ' + fmt(cartSubtotal());
-          order.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
+          order.setAttribute('href', prefix + 'commander.html');
         }
       }
       // Tunnel : récap + visibilité du formulaire (jamais de reconstruction
