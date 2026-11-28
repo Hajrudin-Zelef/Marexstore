@@ -47,8 +47,12 @@ var reThemeJs = regexp.MustCompile(`<script src="[^"]*theme\.js[^"]*"></script>\
 var reHrowPrev = regexp.MustCompile(`<div class="hrow-wrap"><button type="button" class="hrow-btn prev" data-hrow="-1" aria-label="Précédent">‹</button>`)
 var reHrowNext = regexp.MustCompile(`<button type="button" class="hrow-btn next" data-hrow="1" aria-label="Suivant">›</button></div>`)
 var reNewsletter = regexp.MustCompile(`<form[^>]*><input type="email"[^>]*><button type="[a-z]*"[^>]*>S'inscrire</button></form>`)
-var rePromoInput = regexp.MustCompile(`<label class="drawer-promo"[^>]*><input data-promo-input[^>]*></label>\n?`)
 var reAvatarMenu = regexp.MustCompile(`<div class="avatar-menu"[^>]*>.*?</div>\n?`)
+// Champ code promo : retiré du tiroir (2026-11-29, tunnel sur la page
+// Commander) — plus rien à normaliser : le tiroir rejoint la v3.25 et le
+// champ vit sur commander.html (page sans référence v3.25, vérifié par
+// TestCommanderPage + E2E Playwright).
+
 
 // Icône Boutique : punaise v3.25 → maison (même que l'onglet réglages).
 // Changement volontaire vérifié visuellement ; le rendu courant est
@@ -85,10 +89,6 @@ func normPage(s string) string {
 	s = reViewBtn.ReplaceAllString(s, `<button data-view="$1">`)
 	// Newsletter : <form action="mailto:"> remplacé par JS (même UX, sans Mixed Content).
 	s = reNewsletter.ReplaceAllString(s, `<form>NEWSLETTER</form>`)
-	// Champ code promo du panier (ajout volontaire) : absent de la v3.25,
-	// retiré avant comparaison — vérifié par E2E Playwright (input présent,
-	// code repris dans le lien WhatsApp, sans erreur JS).
-	s = rePromoInput.ReplaceAllString(s, "")
 	// Menu avatar (ajout volontaire) : même traitement — vérifié par
 	// TestTopAvatarMenu/TestHeaderAvatarMenu + E2E Playwright (ouverture,
 	// navigation, déconnexion).

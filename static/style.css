@@ -1108,4 +1108,6 @@ img{height:auto}
 .cp-ok .cp-titre{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:var(--text2)}
 .cp-ok-num{font-size:16px;font-weight:800;margin:6px 0}
 .cp-ok .btn{margin-top:8px}
+.cp-empty{margin:0 0 12px;padding:16px;border:1px dashed var(--border);border-radius:10px;background:var(--surface2)}
+.cp-empty p{font-size:15px;font-weight:700;margin:0 0 10px}
 [data-cart-order].busy{opacity:.6;pointer-events:none}

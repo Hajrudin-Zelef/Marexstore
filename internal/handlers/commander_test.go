@@ -51,6 +51,9 @@ func TestCommanderPage(t *testing.T) {
 		"numero_payeur",
 		"data-cart-paiement",
 		"data-checkout-recap",
+		"data-promo-input",
+		"data-checkout-empty",
+		"data-checkout-submit",
 		"Commander",
 		"data-checkout-ok",
 	} {

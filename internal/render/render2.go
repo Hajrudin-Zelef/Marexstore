@@ -183,7 +183,6 @@ func HeaderThemeDoc(d *design.Document, s *catalog.Store, prefix, searchQ string
 <div class="drawer-foot">
 <div class="drawer-total">Sous-total : <b data-cart-subtotal>0 F CFA</b></div>
 <p class="drawer-note">Frais de livraison à confirmer avec notre équipe sur WhatsApp.</p>
-<label class="drawer-promo" style="display:flex;gap:8px;margin:8px 0"><input data-promo-input placeholder="Code promo" autocomplete="off" style="flex:1;min-width:0;padding:8px;border:1px solid #c3c4c7;border-radius:6px"></label>
 <a class="btn wa" data-cart-order href="https://wa.me/` + catalog.WA + `">Commander sur WhatsApp</a>
 <button class="btn ghost" type="button" data-cart-clear>Vider le panier</button>
 <button class="linklike" type="button" data-cart-close>Continuer mes achats</button>
@@ -427,7 +426,7 @@ func FooterDoc(d *design.Document, s *catalog.Store, prefix string) string {
 ` + cols + `
 <a class="wa-float" href="https://wa.me/` + catalog.WA + `" title="WhatsApp">&#9990;</a>
 <script src="` + prefix + `assets/facets.js?v=319"></script>
-<script src="` + prefix + `assets/app.js?v=348"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=4" defer></script>`
+<script src="` + prefix + `assets/app.js?v=349"></script><script src="` + prefix + `assets/htmx.min.js?v=1912" defer></script><script src="` + prefix + `assets/mirror.js?v=4" defer></script>`
 }
 
 // ---------- Document ----------
@@ -438,7 +437,7 @@ func Head(title, prefix, extraHead string) string {
 <meta name="csrf-token" content="{{CSRF}}">
 <title>` + esc(title) + ` — Mediatec Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="` + prefix + `assets/style.css?v=339">
+<link rel="stylesheet" href="` + prefix + `assets/style.css?v=340">
 <script src="` + prefix + `assets/theme.js?v=2"></script>
 ` + extraHead
 }

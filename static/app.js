@@ -103,9 +103,9 @@
     var WA_NUMBER = '2250705087507';
 
     /* ---------- Moyens de paiement actifs (réglages admin) ----------
-       Chargés depuis /api/paiements, injectés dans le tiroir panier.
-       Aucun HTML serveur n'est modifié : la page publique reste identique
-       (parité v3.25) et le bloc n'apparaît que si un moyen est activé. */
+       Chargés depuis /api/paiements, affichés sur la page Commander
+       (conteneur [data-cart-paiement] statique). Le tiroir n'en contient
+       plus aucun : sans hôte, rien n'est créé (page seule). */
     var PAIEMENTS = [];
     var paiementChoisi = '';
     function chargerPaiements() {
@@ -125,15 +125,10 @@
       return drawer ? (drawer.getAttribute('data-prefix') || '') : '';
     }
     function renderPaiements() {
+      // Page Commander seule : l'hôte est statique dans commander.html.
+      // Sans hôte (tiroir allégé), on ne crée rien et on sort.
       var host = document.querySelector('[data-cart-paiement]');
-      if (!host) {
-        var foot = document.querySelector('.drawer-foot');
-        if (!foot || !PAIEMENTS.length) return;
-        host = document.createElement('div');
-        host.className = 'cart-pay';
-        host.setAttribute('data-cart-paiement', '');
-        foot.insertBefore(host, foot.firstChild);
-      }
+      if (!host) return;
       if (!PAIEMENTS.length) { host.innerHTML = ''; host.hidden = true; return; }
       host.hidden = false;
       // un seul moyen actif → présélectionné (zéro friction)
@@ -162,10 +157,11 @@
     });
 
     /* ---------- Tunnel d'achat : livraison + formulaire + commande ----------
-       Injecté dans le tiroir (aucun HTML serveur modifié). Les zones
-       viennent de /api/livraison ; la commande part en POST /api/commande
-       (Idempotency-Key + CSRF), puis WhatsApp s'ouvre avec le récap et un
-       écran de confirmation s'affiche. */
+       Affiché sur la page Commander (conteneurs statiques [data-cart-livraison],
+       [data-checkout-form], [data-cart-paiement], [data-checkout-recap]).
+       Les zones viennent de /api/livraison ; la commande part en POST
+       /api/commande (Idempotency-Key + CSRF), puis WhatsApp s'ouvre avec le
+       récap et un écran de confirmation s'affiche. */
     var LOGOS_PAIEMENT = { orange: 'paiement-orange.png', mtn: 'paiement-mtn.jpg', wave: 'paiement-wave.jpg', moov: 'paiement-moov.png' };
     var MOYENS_MOBILE = ['orange', 'mtn', 'wave', 'moov'];
     var LIVRAISONS = [];
@@ -212,16 +208,10 @@
       }
     }
     function renderLivraison() {
-      var foot = document.querySelector('.drawer-foot');
-      if (!foot) return;
+      // Page Commander seule : l'hôte est statique dans commander.html.
+      // Sans hôte (tiroir allégé), on ne crée rien et on sort.
       var host = document.querySelector('[data-cart-livraison]');
-      if (!host) {
-        host = document.createElement('div');
-        host.className = 'cart-liv';
-        host.setAttribute('data-cart-livraison', '');
-        var pay = foot.querySelector('[data-cart-paiement]');
-        foot.insertBefore(host, pay || foot.firstChild);
-      }
+      if (!host) return;
       if (!LIVRAISONS.length) { host.innerHTML = ''; host.hidden = true; return; }
       host.hidden = false;
       host.innerHTML = '<div class="cp-titre">Livraison</div>' + LIVRAISONS.map(function (z) {
@@ -235,38 +225,32 @@
       }).join('');
       renderLivraisonSel();
     }
-    // Crée le formulaire + le récap + la confirmation s'ils manquent.
+    // Le formulaire vit sur la page Commander (statique) : jamais créé ici.
+    // Sans formulaire (tiroir, autres pages), le tunnel est inactif.
     function ensureCheckout() {
-      var foot = document.querySelector('.drawer-foot');
-      if (!foot) return null;
-      var form = document.querySelector('[data-checkout-form]');
-      if (!form) {
-        form = document.createElement('form');
-        form.className = 'cp-form';
-        form.setAttribute('data-checkout-form', '');
-        form.setAttribute('novalidate', '');
-        form.innerHTML =
-          '<div class="cp-titre">Vos coordonnées</div>' +
-          '<label class="cp-field">Nom complet *<input name="nom" required autocomplete="name" placeholder="Votre nom"></label>' +
-          '<label class="cp-field">Téléphone *<input name="tel" type="tel" required autocomplete="tel" placeholder="07 00 00 00 00"></label>' +
-          '<label class="cp-field" data-payeur hidden>Numéro ayant servi au paiement *<input name="numero_payeur" type="tel" inputmode="numeric" placeholder="07 00 00 00 00"></label>' +
-          '<label class="cp-field" data-adresse hidden>Adresse de livraison *<input name="adresse" autocomplete="street-address" placeholder="Commune, rue, repère"></label>' +
-          '<p class="cp-err" data-checkout-error hidden></p>' +
-          '<div class="cp-recap" data-checkout-recap></div>';
-        var order = foot.querySelector('[data-cart-order]');
-        foot.insertBefore(form, order);
-      }
-      var ok = document.querySelector('[data-checkout-ok]');
-      if (!ok) {
-        ok = document.createElement('div');
-        ok.className = 'cp-ok';
-        ok.setAttribute('data-checkout-ok', '');
-        ok.hidden = true;
-        var ord = foot.querySelector('[data-cart-order]');
-        foot.insertBefore(ok, ord);
-      }
-      return form;
+      return document.querySelector('[data-checkout-form]');
     }
+    // Pré-remplit nom/tél depuis le compte local (sans écraser la saisie).
+    // Le n° client (MED-…) n'est pas un téléphone : le tél vient de la
+    // première adresse enregistrée, s'il y en a une.
+    function prefillCheckout() {
+      var form = document.querySelector('[data-checkout-form]');
+      if (!form) return;
+      var a = loadAcct();
+      if (!a || !sessionOn()) return;
+      var nom = form.querySelector('[name="nom"]');
+      if (nom && !nom.value) nom.value = ((a.prenom || '') + ' ' + (a.nom || '')).trim();
+      var tel = form.querySelector('[name="tel"]');
+      if (tel && !tel.value && a.adresses && a.adresses.length && a.adresses[0].tel) tel.value = a.adresses[0].tel;
+    }
+    // Soumission réelle du tunnel (page Commander) : le formulaire est
+    // statique, la navigation native est bloquée au profit du POST fetch.
+    document.addEventListener('submit', function (e) {
+      var f = e.target && e.target.closest ? e.target.closest('[data-checkout-form]') : null;
+      if (!f) return;
+      e.preventDefault();
+      commander();
+    });
     // Bascule payeur/adresse selon le moyen et la zone (requis + visibles).
     function syncCheckoutForm() {
       var form = document.querySelector('[data-checkout-form]');
@@ -299,6 +283,11 @@
       if (!form) return;
       var hide = !cart.length;
       form.hidden = hide;
+      // Panier vide sur la page : message + lien boutique, Commander désactivé.
+      var empty = document.querySelector('[data-checkout-empty]');
+      if (empty) empty.hidden = !hide;
+      var submit = document.querySelector('[data-checkout-submit]');
+      if (submit) submit.disabled = hide;
       var livHost = document.querySelector('[data-cart-livraison]');
       if (livHost) livHost.hidden = hide || !LIVRAISONS.length;
       // Reprise d'achat après une commande : la confirmation précédente s'efface.
@@ -358,9 +347,11 @@
       if (moyenEstMobile(paiementChoisi)) body.append('numero_payeur', payeur.value.replace(/[\s-]/g, ''));
       if (promoInp && promoInp.value.trim()) body.append('promo', promoInp.value.trim());
       var key = uuid();
-      var btn = document.querySelector('[data-cart-order]');
+      // Bouton de la page en priorité, repli tiroir (même sélecteur partout).
+      function busyBtn() { return document.querySelector('[data-checkout-submit]') || document.querySelector('[data-cart-order]'); }
+      var btn = busyBtn();
       if (btn) { btn.classList.add('busy'); btn.setAttribute('aria-disabled', 'true'); }
-      function done() { var b = document.querySelector('[data-cart-order]'); if (b) { b.classList.remove('busy'); b.removeAttribute('aria-disabled'); } }
+      function done() { var b = busyBtn(); if (b) { b.classList.remove('busy'); b.removeAttribute('aria-disabled'); } }
       function send(csrfv, retried) {
         if (csrfv) body.set('csrf', csrfv);
         return fetch('/api/commande', { method: 'POST', body: body, credentials: 'same-origin', headers: { 'Idempotency-Key': key } })
@@ -492,22 +483,15 @@
       if (order) {
         // La commande passe par la page Commander (porte de connexion) :
         // le libellé est posé en JS pour ne toucher aucun HTML serveur (parité).
+        // Le message reste volontairement simple (sous-total + total) : promo,
+        // moyens et livraison sont choisis sur la page, qui porte le fetch.
         order.textContent = 'Passer commande';
         if (!cart.length) { order.classList.add('disabled'); order.removeAttribute('href'); }
         else {
           order.classList.remove('disabled');
           var lines = cart.map(function (it) { return '• ' + it.qty + ' × ' + it.nom + ' — ' + fmt(it.qty * it.prix); });
           var msg = 'Bonjour, je voudrais commander :\n' + lines.join('\n');
-          var promoInp = document.querySelector('[data-promo-input]');
-          var promoCode = promoInp ? promoInp.value.trim().toUpperCase() : '';
-          // Total boutique recalculé serveur (remise déduite) : le message
-          // affiche le sous-total + le code, jamais un total faux.
-          if (promoCode) { msg += '\nSous-total : ' + fmt(cartSubtotal()) + '\nCode promo : ' + promoCode + ' (remise appliquée par la boutique)'; }
-          else { msg += '\nTotal : ' + fmt(cartSubtotal()); }
-          var p = paiementChoisi ? libellePaiement(paiementChoisi) : null;
-          if (p) {
-            msg += '\nPaiement : ' + p.libelle + (p.numero ? ' — numéro ' + p.numero : '');
-          }
+          msg += '\nTotal : ' + fmt(cartSubtotal());
           order.setAttribute('href', 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg));
         }
       }
@@ -1490,6 +1474,7 @@
         ['prenom', 'nom', 'email', 'naissance', 'pseudo'].forEach(function (n) { var el = f.querySelector('[name="' + n + '"]'); if (el) el.value = a[n] || ''; });
       }
       renderOrders(); renderAdresses(); renderPaniers();
+      prefillCheckout();
     }
     /* ---------- Cloche d'alertes (abonnés connectés) : promos utilisables
        + commandes locales. Lus = codes promo masqués (localStorage).  */
