@@ -1472,15 +1472,14 @@
       document.querySelectorAll('[data-acct-id]').forEach(function (el) { el.hidden = !logged; });
       document.querySelectorAll('[data-acct-guest]').forEach(function (el) { el.hidden = logged; });
       if (!logged) return;
-      // Retour page après connexion : si une destination a été mémorisée
-      // (porte « Passer commande ») et qu'on n'y est pas déjà (cas
-      // commander.html : login sur place), on y navigue puis on nettoie.
-      // Rien d'absolu ni d'externe n'est suivi (anti open-redirect).
+      // Retour page après connexion : seule la page Commander est suivie
+      // (whitelist stricte : ni URL externe, ni schéma exotique, ni autre
+      // chemin). Sur place (login depuis commander.html), on nettoie
+      // sans naviguer.
       var next = takeNext();
-      if (next && !/^(https?:)?\/\//i.test(next)) {
+      if (next && /(^|\/)commander\.html([?#]|$)/.test(next)) {
         var here = (window.location.pathname || '').split('/').pop();
-        var there = String(next).split('/').pop().split('?')[0].split('#')[0];
-        if (there && there !== here) { window.location.href = next; return; }
+        if (here !== 'commander.html') { window.location.href = next; return; }
       }
       document.querySelectorAll('[data-acct-initials]').forEach(function (el) { el.textContent = acctInitials(a); });
       document.querySelectorAll('[data-acct-name]').forEach(function (el) { el.textContent = (a.prenom || '') + ' ' + (a.nom || ''); });
@@ -1736,19 +1735,10 @@
         saveList(CARTS_KEY, list); renderPaniers(); showToast('Panier sauvegardé.');
       });
     }
-    document.addEventListener('click', function (e) {
-      var ord = e.target.closest('[data-cart-order]');
-      // Porte de connexion : le clic ne passe plus commande (navigation ou
-      // modale, e.preventDefault), il ne doit donc plus enregistrer de
-      // commande locale — l'enregistrement aura lieu au succès réel (page
-      // Commander). Le garde !defaultPrevented protège aussi le flux sans JS.
-      if (ord && cart.length && ord.getAttribute('href') && !e.defaultPrevented) {
-        var list = loadList(ORDERS_KEY);
-        var d = new Date();
-        list.push({ id: 'CMD-' + d.getFullYear() + '-' + String(list.length + 1).padStart(4, '0'), date: d.toLocaleDateString('fr-FR'), items: JSON.parse(JSON.stringify(cart)), total: cartSubtotal() });
-        saveList(ORDERS_KEY, list); renderOrders();
-      }
-    });
+    // Historique local des commandes : plus aucun push depuis le tiroir
+    // (le clic « Passer commande » ne passe plus commande : navigation ou
+    // modale). L'enregistrement aura lieu au succès réel, page Commander (T3) ;
+    // renderOrders/la cloche continuent de lire les entrées existantes.
     renderAcct();
   });
 })();
